@@ -3,6 +3,15 @@ project(GPP)
  
 # States that CMake required version must be &gt;= 2.6
 cmake_minimum_required(VERSION 2.6)
+
+# Set to release
+# set(CMAKE_BUILD_TYPE Release)
+
+## Compiler flags
+if(CMAKE_COMPILER_IS_GNUCXX)
+  set(CMAKE_CXX_FLAGS "-O2 -Wall -Wextra -pedantic -std=c99") ## Optimize
+  set(CMAKE_EXE_LINKER_FLAGS "-s") ## Strip binary
+endif()
  
 # Appends the cmake/modules path inside the MAKE_MODULE_PATH variable which stores the
 # directories of additional CMake modules (eg MacroOutOfSourceBuild.cmake):

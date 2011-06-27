@@ -17,7 +17,10 @@ find_package(ClanLib COMPONENTS App Display GL Sound REQUIRED)
 
 # Include clanlib
 include_directories(${ClanLib_INCLUDE_DIRS})
- 
+
+# Add compiler flags
+add_definitions(${ClanLib_DEFINITIONS})
+
 # Create an executable file called helloworld from sources:
 add_executable(gpp ${GPP_SOURCES})
 

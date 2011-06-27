@@ -9,6 +9,7 @@
 # The following are defined by this module:
 #  ClanLib_FOUND - TRUE if ClanLib was found
 #  ClanLib_INCLUDE_DIRS - Directory containing the ClanLib headers
+#  ClanLib_DEFINITIONS - Compiler switches required for using ClanLib
 #  ClanLib_LIBRARIES - If invoked via FIND_PACKAGE(ClanLib COMPONENTS ...),
 #                      will only contain the libraries matching each component.
 #                      otherwise, it will contain all ClanLib libraries found.
@@ -60,6 +61,7 @@ MACRO(ClanLib_FIND_COMPONENT COMPONENT)
   ELSE (WIN32)
     LIBFIND_PKG_CHECK_MODULES(${COMPONENT}_PKGCONF clan${COMPONENT}-${ClanLib_MAJOR_VERSION}.${ClanLib_MINOR_VERSION})
     SET(ClanLib_${COMPONENT}_LIBRARY ${${COMPONENT}_PKGCONF_LIBRARIES})
+    SET(ClanLib_${COMPONENT}_DEFINITIONS ${${COMPONENT}_PKGCONF_CFLAGS_OTHER})
   ENDIF (WIN32)
 
   IF(ClanLib_${COMPONENT}_LIBRARY)
@@ -101,6 +103,10 @@ FOREACH(COMPONENT ${ClanLib_FIND_COMPONENTS})
   IF(ClanLib_${COMPONENT}_LIBRARY)
     LIST(APPEND ClanLib_LIBRARIES ${ClanLib_${COMPONENT}_LIBRARY})
   ENDIF(ClanLib_${COMPONENT}_LIBRARY)
+
+  IF(ClanLib_${COMPONENT}_DEFINITIONS)
+    LIST(APPEND ClanLib_DEFINITIONS ${ClanLib_${COMPONENT}_DEFINITIONS})
+  ENDIF(ClanLib_${COMPONENT}_DEFINITIONS)
 ENDFOREACH(COMPONENT)
 
 MARK_AS_ADVANCED(
