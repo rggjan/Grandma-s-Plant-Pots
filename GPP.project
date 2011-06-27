@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CodeLite_Project Name="GPP" InternalType="GUI">
+  <VirtualDirectory Name="cmake">
+    <VirtualDirectory Name="modules">
+      <File Name="cmake/modules/MacroOutOfSourceBuild.cmake"/>
+      <File Name="cmake/modules/FindClanLib.cmake"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
   <Description/>
   <Dependencies/>
   <Settings Type="Executable">
@@ -76,21 +82,21 @@
     <File Name="spritesrts"/>
     <File Name="resources.xml"/>
   </VirtualDirectory>
-  <VirtualDirectory Name="Sources">
-    <File Name="Sources/gameobject.h"/>
-    <File Name="Sources/building.h"/>
-    <File Name="Sources/missile.cpp"/>
-    <File Name="Sources/world.cpp"/>
-    <File Name="Sources/tankvehicle.cpp"/>
-    <File Name="Sources/precomp.cpp"/>
-    <File Name="Sources/app.cpp"/>
-    <File Name="Sources/tankvehicle.h"/>
-    <File Name="Sources/precomp.h"/>
-    <File Name="Sources/program.cpp"/>
-    <File Name="Sources/missile.h"/>
-    <File Name="Sources/app.h"/>
-    <File Name="Sources/program.h"/>
-    <File Name="Sources/world.h"/>
-    <File Name="Sources/building.cpp"/>
+  <VirtualDirectory Name="src">
+    <File Name="src/missile.cpp"/>
+    <File Name="src/world.cpp"/>
+    <File Name="src/tankvehicle.cpp"/>
+    <File Name="src/precomp.cpp"/>
+    <File Name="src/app.cpp"/>
+    <File Name="src/program.cpp"/>
+    <File Name="src/building.cpp"/>
+    <File Name="src/app.h"/>
+    <File Name="src/building.h"/>
+    <File Name="src/gameobject.h"/>
+    <File Name="src/missile.h"/>
+    <File Name="src/precomp.h"/>
+    <File Name="src/program.h"/>
+    <File Name="src/tankvehicle.h"/>
+    <File Name="src/world.h"/>
   </VirtualDirectory>
 </CodeLite_Project>
