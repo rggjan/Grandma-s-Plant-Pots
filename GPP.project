@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Project Name="GPP" InternalType="GUI">
+  <Description/>
+  <Dependencies/>
+  <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="" C_Options="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g;$(shell wx-config --cxxflags --unicode=yes --debug=yes)" C_Options="-g;$(shell wx-config --cxxflags --unicode=yes --debug=yes)" Required="yes" PreCompiledHeader="">
+        <Preprocessor Value="__WX__"/>
+      </Compiler>
+      <Linker Options="-mwindows;$(shell wx-config --debug=yes --libs --unicode=yes)" Required="yes"/>
+      <ResourceCompiler Options="$(shell wx-config --rcflags)" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O2;$(shell wx-config --cxxflags --unicode=yes --debug=no)" C_Options="-O2;$(shell wx-config --cxxflags --unicode=yes --debug=no)" Required="yes" PreCompiledHeader="">
+        <Preprocessor Value="__WX__"/>
+      </Compiler>
+      <Linker Options="-mwindows;-s;$(shell wx-config --debug=no --libs --unicode=yes)" Required="yes"/>
+      <ResourceCompiler Options="$(shell wx-config --rcflags)" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+    </Configuration>
+  </Settings>
+  <VirtualDirectory Name="GPP">
+    <File Name="Makefile"/>
+    <File Name="spritesrts"/>
+    <File Name="resources.xml"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Sources">
+    <File Name="Sources/gameobject.h"/>
+    <File Name="Sources/building.h"/>
+    <File Name="Sources/missile.cpp"/>
+    <File Name="Sources/world.cpp"/>
+    <File Name="Sources/tankvehicle.cpp"/>
+    <File Name="Sources/precomp.cpp"/>
+    <File Name="Sources/app.cpp"/>
+    <File Name="Sources/tankvehicle.h"/>
+    <File Name="Sources/precomp.h"/>
+    <File Name="Sources/program.cpp"/>
+    <File Name="Sources/missile.h"/>
+    <File Name="Sources/app.h"/>
+    <File Name="Sources/program.h"/>
+    <File Name="Sources/world.h"/>
+    <File Name="Sources/building.cpp"/>
+  </VirtualDirectory>
+</CodeLite_Project>
