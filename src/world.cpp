@@ -126,7 +126,6 @@ void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
   }
   
   if(key.id == CL_KEY_LEFT) {
-    printf("left=false\n");    
     moving_left = false;
   }
   
