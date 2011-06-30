@@ -30,6 +30,8 @@ class World {
 
     bool moving_down;
     bool moving_up;
+    bool moving_left;
+    bool moving_right;
 
 // Operations:
   public:

@@ -95,13 +95,42 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   if(key.id == CL_KEY_DOWN) {
     moving_down = true;
   }
+  
+  if(key.id == CL_KEY_UP) {
+    moving_up = true;
+  }
+  
+  if(key.id == CL_KEY_LEFT) { 
+    moving_left = true;
+  }
+  
+  if(key.id == CL_KEY_RIGHT) { 
+    moving_right = true;
+  }
+    
 }
 
 void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
+ 
+  
   if(key.id == CL_KEY_DOWN) {
     moving_down = false;
   }
-}
+  
+  if(key.id == CL_KEY_UP) {
+    moving_up = false;
+  }
+  
+  if(key.id == CL_KEY_LEFT) { 
+    moving_left = false;
+  }
+  
+  if(key.id == CL_KEY_RIGHT) { 
+    moving_right = false;
+  }
+  
+  }
+
 
 void World::onMouseDown(const CL_InputEvent &key, const CL_InputState &state) {
   // Start dragging on left click
@@ -213,7 +242,13 @@ void World::update() {
   // Move camera
   if (moving_down)
     center_y += timeElapsed_ms;
-
+  if (moving_up)
+    center_y -= timeElapsed_ms;
+  if (moving_left)
+    center_x -= timeElapsed_ms;
+  if (moving_right)
+    center_x += timeElapsed_ms;
+    
   // Update all gameobjects
   std::list<GameObject *>::iterator it;
   for(it = objects.begin(); it != objects.end(); ) {

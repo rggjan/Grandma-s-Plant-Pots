@@ -35,7 +35,13 @@
 		<translation origin="center"/>
 		<rotation origin="center"/>
 	</sprite>
-	
+
+	<sprite name="Cross" base_angle="0">
+		<image file="Gfx/steuerkreuzhhh.png" />
+		<translation origin="center"/>
+		<rotation origin="center"/>
+	</sprite>
+
 	<sprite name="SpaceShootTurretShooting" base_angle="180">
 		<image file="Gfx/spaceshoot_turret_shooting1.png" />
 		<image file="Gfx/spaceshoot_turret_shooting2.png" />
