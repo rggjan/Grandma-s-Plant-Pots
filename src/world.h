@@ -1,6 +1,7 @@
 #pragma once
 
-#include <ClanLib/core.h>
+#include <ClanLib/display.h>
+//#include <ClanLib/core.h>
 #include <list>
 
 class CL_Surface;
