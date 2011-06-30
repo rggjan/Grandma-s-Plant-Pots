@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <resources>
-	<texture name="background" file="Gfx/background.png"/>
+	<sprite name="Background" base_angle="0">
+		<image file="Gfx/background.png" />
+	</sprite>
 
 	<sprite name="SpaceShootSelected" base_angle="180">
 		<image file="Gfx/spaceshoot_selected.png" />

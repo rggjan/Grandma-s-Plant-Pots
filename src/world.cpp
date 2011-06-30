@@ -4,6 +4,7 @@
 #include "tankvehicle.h"
 #include "building.h"
 #include "cross.h"
+#include "background.h"
 
 #include "stdio.h"
 
@@ -22,7 +23,8 @@ World::World(CL_DisplayWindow &display_window) : window(display_window),
   // Setup resources
   resources = CL_ResourceManager("resources.xml");
 
-  background = CL_Texture("background", &resources, gc);
+  background = new Background(this);
+  background->setPos(0, 0);
 
   // Receive mouse clicks
   slotKeyDown = window.get_ic().get_keyboard().sig_key_down().connect(this, &World::onKeyDown);
@@ -60,7 +62,7 @@ void World::initLevel() {
 
   Cross *cross = new Cross(this);
   cross->setPos(400, 400);
-
+  
   addObject(helipad);
   addTank(tank1);
   addTank(tank2);
@@ -281,10 +283,7 @@ int World::calcTimeElapsed() {
 
 void World::draw() {
   // Draw background
-  CL_Rect window_rect = window.get_viewport();
-  gc.set_texture(0, background);
-  CL_Draw::texture(gc, window_rect);
-  gc.reset_texture(0);
+  background->draw(center_x, center_y);
 
   // Draw all gameobjects
   std::list<GameObject *>::iterator it;

@@ -10,6 +10,7 @@ class CL_Surface;
 class CL_InputEvent;
 class GameObject;
 class TankVehicle;
+class Background;
 
 class World {
   // Construction
@@ -64,7 +65,7 @@ class World {
     CL_Slot slotKeyDown;
     CL_Slot slotKeyUp;
 
-    CL_Texture background;
+    Background *background;
 
     bool dragging;
     bool mouseDown;
