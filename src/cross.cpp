@@ -3,12 +3,11 @@
 #include <ClanLib/display.h>
 
 #include "world.h"
-#include <stdio.h>
 
 Cross::Cross(World *world) : GameObject(world) {
   CL_GraphicContext gc = world->get_gc();
 
-  sprite = new CL_Sprite(gc, "helipad", &world->resources);
+  sprite = new CL_Sprite(gc, "Cross", &world->resources);
 }
 
 Cross::~Cross() {
@@ -21,7 +20,6 @@ void Cross::setPos(int x, int y) {
 }
 
 void Cross::draw(int x, int y) {
-  printf("cross\n");
   CL_GraphicContext gc = world->get_gc();
   sprite->draw(gc, posX, posY);
 }

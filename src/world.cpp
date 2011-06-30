@@ -5,12 +5,16 @@
 #include "building.h"
 #include "cross.h"
 
+#include "stdio.h"
+
 World::World(CL_DisplayWindow &display_window) : window(display_window),
   quit(false),
   center_x(0),
   center_y(0),
-  moving_down(0),
-  moving_up(0) {
+  moving_down(false),
+  moving_up(false),
+  moving_left(false),
+  moving_right(false) {
   CL_Slot slot_quit = window.sig_window_close().connect(this, &World::on_window_close);
 
   gc = window.get_gc();
@@ -100,11 +104,11 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
     moving_up = true;
   }
   
-  if(key.id == CL_KEY_LEFT) { 
+  if(key.id == CL_KEY_LEFT) {
     moving_left = true;
   }
   
-  if(key.id == CL_KEY_RIGHT) { 
+  if(key.id == CL_KEY_RIGHT) {
     moving_right = true;
   }
     
@@ -121,11 +125,12 @@ void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
     moving_up = false;
   }
   
-  if(key.id == CL_KEY_LEFT) { 
+  if(key.id == CL_KEY_LEFT) {
+    printf("left=false\n");    
     moving_left = false;
   }
   
-  if(key.id == CL_KEY_RIGHT) { 
+  if(key.id == CL_KEY_RIGHT) {
     moving_right = false;
   }
   
