@@ -55,7 +55,7 @@ void World::initLevel() {
   helipad->setPos(254, 222);
 
   Cross *cross = new Cross(this);
-  cross->setPos(300, 300);
+  cross->setPos(400, 400);
 
   addObject(helipad);
   addTank(tank1);
