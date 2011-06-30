@@ -50,7 +50,7 @@ public:
 	void setSpeed(float speed);
 	void move(float length);
 	
-	virtual void draw();
+	virtual void draw(int x, int y);
 	virtual bool update(int timeElapsed_ms);
 
 // Implementation:

@@ -1,38 +1,15 @@
-/*
-**  ClanLib SDK
-**  Copyright (c) 1997-2011 The ClanLib Team
-**
-**  This software is provided 'as-is', without any express or implied
-**  warranty.  In no event will the authors be held liable for any damages
-**  arising from the use of this software.
-**
-**  Permission is granted to anyone to use this software for any purpose,
-**  including commercial applications, and to alter it and redistribute it
-**  freely, subject to the following restrictions:
-**
-**  1. The origin of this software must not be misrepresented; you must not
-**     claim that you wrote the original software. If you use this software
-**     in a product, an acknowledgment in the product documentation would be
-**     appreciated but is not required.
-**  2. Altered source versions must be plainly marked as such, and must not be
-**     misrepresented as being the original software.
-**  3. This notice may not be removed or altered from any source distribution.
-**
-**  Note: Some of the libraries ClanLib may link to may have additional
-**  requirements or restrictions.
-**
-**  File Author(s):
-**
-**    
-*/
-
 #include "precomp.h"
 
 #include "world.h"
 #include "tankvehicle.h"
 #include "building.h"
 
-World::World(CL_DisplayWindow &display_window) : window(display_window), quit(false)
+World::World(CL_DisplayWindow &display_window) : window(display_window),
+             quit(false),
+             center_x(0),
+             center_y(0),
+             moving_down(0),
+             moving_up(0)
 {
 	CL_Slot slot_quit = window.sig_window_close().connect(this, &World::on_window_close);
 
@@ -45,6 +22,7 @@ World::World(CL_DisplayWindow &display_window) : window(display_window), quit(fa
 	
 	// Receive mouse clicks
 	slotKeyDown = window.get_ic().get_keyboard().sig_key_down().connect(this, &World::onKeyDown);
+	slotKeyUp = window.get_ic().get_keyboard().sig_key_up().connect(this, &World::onKeyUp);
 	slotMouseDown = window.get_ic().get_mouse().sig_key_down().connect(this, &World::onMouseDown);
 	slotMouseUp = window.get_ic().get_mouse().sig_key_up().connect(this, &World::onMouseUp);
 	slotMouseMove = window.get_ic().get_mouse().sig_pointer_move().connect(this, &World::onMouseMove);
@@ -101,7 +79,7 @@ bool World::hitCheck(CL_CollisionOutline *outline, GameObject *other)
 	{
 		if( (*it) != other )
 		{
-			if( (*it)->hitCheck(outline, other) )
+			if( (*it)->hitCheck(outline) )
 				return true;
 		}
 	}
@@ -118,6 +96,19 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state)
 		for(it = tanks.begin(); it != tanks.end(); ++it)
 			(*it)->fire(false);
 	}
+
+  if(key.id == CL_KEY_DOWN)
+  {
+    moving_down = true;
+  }
+}
+
+void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state)
+{
+  if(key.id == CL_KEY_DOWN)
+  {
+    moving_down = false;
+  }
 }
 
 void World::onMouseDown(const CL_InputEvent &key, const CL_InputState &state)
@@ -246,7 +237,11 @@ void World::run()
 void World::update()
 {
 	int timeElapsed_ms = calcTimeElapsed();
-	
+
+  // Move camera
+  if (moving_down)
+    center_y += timeElapsed_ms;
+
 	// Update all gameobjects
 	std::list<GameObject *>::iterator it;
 	for(it = objects.begin(); it != objects.end(); )
@@ -288,7 +283,7 @@ void World::draw()
 	// Draw all gameobjects
 	std::list<GameObject *>::iterator it;
 	for(it = objects.begin(); it != objects.end(); ++it)
-		(*it)->draw();
+		(*it)->draw(center_x, center_y);
 
 	// Draw drag area
 	if(dragging)

@@ -55,9 +55,9 @@ public:
 	void setPos(int x, int y);
 	void setAngle(float angle);
 	
-	virtual void draw();
+	virtual void draw(int x, int y);
 	virtual bool update(int timeElapsed_ms);
-	virtual bool hitCheck(CL_CollisionOutline *outline, GameObject *other);
+	virtual bool hitCheck(CL_CollisionOutline *outline);
 
 // Implementation:
 private:

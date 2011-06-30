@@ -1,31 +1,3 @@
-/*
-**  ClanLib SDK
-**  Copyright (c) 1997-2011 The ClanLib Team
-**
-**  This software is provided 'as-is', without any express or implied
-**  warranty.  In no event will the authors be held liable for any damages
-**  arising from the use of this software.
-**
-**  Permission is granted to anyone to use this software for any purpose,
-**  including commercial applications, and to alter it and redistribute it
-**  freely, subject to the following restrictions:
-**
-**  1. The origin of this software must not be misrepresented; you must not
-**     claim that you wrote the original software. If you use this software
-**     in a product, an acknowledgment in the product documentation would be
-**     appreciated but is not required.
-**  2. Altered source versions must be plainly marked as such, and must not be
-**     misrepresented as being the original software.
-**  3. This notice may not be removed or altered from any source distribution.
-**
-**  Note: Some of the libraries ClanLib may link to may have additional
-**  requirements or restrictions.
-**
-**  File Author(s):
-**
-**    
-*/
-
 #include "precomp.h"
 
 #include "tankvehicle.h"
@@ -182,7 +154,7 @@ void TankVehicle::setDestTurretAngle(float destAngle)
 	}
 }
 
-bool TankVehicle::hitCheck(CL_CollisionOutline *outline, GameObject *other)
+bool TankVehicle::hitCheck(CL_CollisionOutline *outline)
 {
 	return collisionBody->collide(*outline);
 }
@@ -338,7 +310,7 @@ bool TankVehicle::update(int timeElapsed_ms)
 	return true;
 }
 
-void TankVehicle::draw()
+void TankVehicle::draw(int x, int y)
 {
 	CL_GraphicContext gc = world->get_gc();
 
@@ -351,33 +323,33 @@ void TankVehicle::draw()
 	blend.set_blend_function(cl_blend_zero, cl_blend_one_minus_src_alpha, cl_blend_zero, cl_blend_one_minus_src_alpha);
 	gc.set_blend_mode(blend);
 	spriteBody->set_alpha(0.5f);
-	spriteBody->draw(gc, posX + 5, posY + 5);
+	spriteBody->draw(gc, posX + 5-x, posY + 5-y);
 
 	// Draw tankbody
 	blend.set_blend_function(cl_blend_src_alpha, cl_blend_one_minus_src_alpha, cl_blend_src_alpha, cl_blend_one_minus_src_alpha);
 	gc.set_blend_mode(blend);
 	spriteBody->set_alpha(1.0f);
-	spriteBody->draw(gc, posX, posY);
+	spriteBody->draw(gc, posX-x, posY-y);
 	
 	// Draw tankturret shadow
 	blend.set_blend_function(cl_blend_zero, cl_blend_one_minus_src_alpha, cl_blend_zero, cl_blend_one_minus_src_alpha);
 	gc.set_blend_mode(blend);
 	spriteTurret->set_alpha(0.5f);
-	spriteTurret->draw(gc, posX + 5, posY + 5);
+	spriteTurret->draw(gc, posX + 5-x, posY + 5-y);
 
 	// Draw tankturret
 	blend.set_blend_function(cl_blend_src_alpha, cl_blend_one_minus_src_alpha, cl_blend_src_alpha, cl_blend_one_minus_src_alpha);
 	gc.set_blend_mode(blend);
 	spriteTurret->set_alpha(1.0f);
-	spriteTurret->draw(gc, posX, posY);
+	spriteTurret->draw(gc, posX-x, posY-y);
 
 	CL_BlendMode default_blend_mode;
 	gc.set_blend_mode(default_blend_mode);
 
 	// Draw gunflash
 	if(spriteTurret == spriteTurretShooting)
-		spriteTurretGunFlash->draw(gc, posX, posY);
+		spriteTurretGunFlash->draw(gc, posX-x, posY-y);
 	
 	// Draw glow
-	spriteRedGlow->draw(gc, posX, posY);
+	spriteRedGlow->draw(gc, posX-x, posY-y);
 }

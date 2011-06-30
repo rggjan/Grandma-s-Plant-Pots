@@ -67,11 +67,11 @@ void Building::setAngle(float newAngle)
 	collisionBuilding->set_angle(CL_Angle(angle, cl_degrees));
 }
 
-void Building::draw()
+void Building::draw(int x, int y)
 {
 	
 	CL_GraphicContext gc = world->get_gc();
-	sprite->draw(gc, posX, posY);
+	sprite->draw(gc, posX-x, posY-y);
 }
 
 bool Building::update(int timeElapsed_ms)
@@ -80,7 +80,7 @@ bool Building::update(int timeElapsed_ms)
 	return true;
 }
 
-bool Building::hitCheck(CL_CollisionOutline *outline, GameObject *other)
+bool Building::hitCheck(CL_CollisionOutline *outline)
 {
 	return collisionBuilding->collide(*outline);
 }
