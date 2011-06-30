@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SRC_GAMEOBJECT_H
+#define SRC_GAMEOBJECT_H
 
 class World;
 class CL_CollisionOutline;
@@ -22,3 +23,4 @@ protected:
 	World *world;
 };
 
+#endif // SRC_GAMEOBJECT_H

@@ -3,6 +3,7 @@
 #include "world.h"
 #include "tankvehicle.h"
 #include "building.h"
+#include "cross.h"
 
 World::World(CL_DisplayWindow &display_window) : window(display_window),
   quit(false),
@@ -53,9 +54,13 @@ void World::initLevel() {
   Building *helipad = new Building(Building::HELI_PAD, this);
   helipad->setPos(254, 222);
 
+  Cross *cross = new Cross(this);
+  cross->setPos(300, 300);
+
   addObject(helipad);
   addTank(tank1);
   addTank(tank2);
+  addObject(cross);
 }
 
 void World::addObject(GameObject *object) {

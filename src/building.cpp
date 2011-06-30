@@ -1,5 +1,7 @@
-#include "precomp.h"
 #include "building.h"
+
+#include <ClanLib/display.h>
+
 #include "world.h"
 
 Building::Building(BuildingType buiding_type, World *world)

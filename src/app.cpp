@@ -14,7 +14,7 @@ int Application::main(const std::vector<CL_String> &args) {
   CL_DisplayWindowDescription desc;
   desc.set_title("Grandma's Plant Pots");
   // Use this resolution (as caption is disabled)
-  desc.set_size(CL_Size(1024, 768), true);
+  desc.set_size(CL_Size(600, 600), true);
 
   CL_DisplayWindow window(desc);
 

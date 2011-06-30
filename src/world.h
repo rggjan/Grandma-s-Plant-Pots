@@ -1,7 +1,9 @@
-#pragma once
+// Copyright 2011 Jan Rüegg <rggjan@gmail.com>
+
+#ifndef SRC_WORLD_H_
+#define SRC_WORLD_H_
 
 #include <ClanLib/display.h>
-//#include <ClanLib/core.h>
 #include <list>
 
 class CL_Surface;
@@ -9,68 +11,71 @@ class CL_InputEvent;
 class GameObject;
 class TankVehicle;
 
-class World
-{
-// Construction
-public:
-	World(CL_DisplayWindow &display_window);
-	~World();
-	
-// Attributes:
-public:
-	CL_ResourceManager resources;
-	
-	CL_GraphicContext get_gc() { return gc; }
+class World {
+  // Construction
+  public:
+    World(CL_DisplayWindow &display_window);
+    ~World();
 
-  int center_x;
-  int center_y;
+  // Attributes:
+  public:
+    CL_ResourceManager resources;
 
-  bool moving_down;
-  bool moving_up;
+    CL_GraphicContext get_gc() {
+      return gc;
+    }
+
+    int center_x;
+    int center_y;
+
+    bool moving_down;
+    bool moving_up;
 
 // Operations:
-public:
-	void initLevel();
-	
-	bool hitCheck(CL_CollisionOutline *outline, GameObject *other);
-	
-	void addObject(GameObject *object);
-	void addTank(TankVehicle *tank);
+  public:
+    void initLevel();
 
-	void run();
+    bool hitCheck(CL_CollisionOutline *outline, GameObject *other);
 
-// Implementation:
-private:
-	void draw();
-	void update();
+    void addObject(GameObject *object);
+    void addTank(TankVehicle *tank);
 
-	int calcTimeElapsed();
+    void run();
 
-	void onKeyDown(const CL_InputEvent &key, const CL_InputState &state);
-	void onKeyUp(const CL_InputEvent &key, const CL_InputState &state);
-	void onMouseDown(const CL_InputEvent &key, const CL_InputState &state);
-	void onMouseUp(const CL_InputEvent &key, const CL_InputState &state);
-	void onMouseMove(const CL_InputEvent &key, const CL_InputState &state);
-	void on_window_close();
+  // Implementation:
+  private:
+    void draw();
+    void update();
 
-	CL_Slot slotMouseDown;
-	CL_Slot slotMouseUp;
-	CL_Slot slotMouseMove;
-	CL_Slot slotKeyDown;
-	CL_Slot slotKeyUp;
+    int calcTimeElapsed();
 
-	CL_Texture background;
-	
-	bool dragging;
-	bool mouseDown;
-	CL_Rect dragArea;
-	float highlightValue;
-		
-	std::list<GameObject *> objects;
-	std::list<TankVehicle *> tanks;
+    void onKeyDown(const CL_InputEvent &key, const CL_InputState &state);
+    void onKeyUp(const CL_InputEvent &key, const CL_InputState &state);
+    void onMouseDown(const CL_InputEvent &key, const CL_InputState &state);
+    void onMouseUp(const CL_InputEvent &key, const CL_InputState &state);
+    void onMouseMove(const CL_InputEvent &key, const CL_InputState &state);
+    void on_window_close();
 
-	CL_DisplayWindow window;
-	CL_GraphicContext gc;
+    CL_Slot slotMouseDown;
+    CL_Slot slotMouseUp;
+    CL_Slot slotMouseMove;
+    CL_Slot slotKeyDown;
+    CL_Slot slotKeyUp;
 
-	bool quit;
+    CL_Texture background;
+
+    bool dragging;
+    bool mouseDown;
+    CL_Rect dragArea;
+    float highlightValue;
+
+    std::list<GameObject *> objects;
+    std::list<TankVehicle *> tanks;
+
+    CL_DisplayWindow window;
+    CL_GraphicContext gc;
+
+    bool quit;
 };
+
+#endif  // SRC_WORLD_H
