@@ -11,6 +11,7 @@ class CL_InputEvent;
 class GameObject;
 class TankVehicle;
 class Background;
+class Fly;
 
 class World {
   // Construction
@@ -52,6 +53,7 @@ class World {
 
     void addObject(GameObject *object);
     void addTank(TankVehicle *tank);
+    void addFly(Fly *fly);
 
     void run();
 
@@ -85,6 +87,7 @@ class World {
 
     std::list<GameObject *> objects;
     std::list<TankVehicle *> tanks;
+    std::list<Fly *> flies;
 
     CL_DisplayWindow window;
     CL_GraphicContext gc;

@@ -87,7 +87,7 @@ void World::initLevel() {
   addTank(tank1);
   addTank(tank2);
   addTank(tank3);
-  addObject(fly);
+  addFly(fly);
 }
 
 void World::addObject (GameObject *object) {
@@ -97,6 +97,11 @@ void World::addObject (GameObject *object) {
 void World::addTank (TankVehicle *tank) {
   objects.push_back (tank);
   tanks.push_back (tank);
+}
+
+void World::addFly (Fly *tank) {
+  objects.push_back (tank);
+  flies.push_back (tank);
 }
 
 bool World::hitCheck (CL_CollisionOutline *outline, GameObject *other) {
@@ -396,6 +401,13 @@ void World::update() {
     }
   }
 
+  // Make turrets target mousepos
+  std::list<Fly *>::iterator fly_it;
+  for (fly_it = flies.begin(); fly_it != flies.end(); ++fly_it) {
+    Fly *fly = (*fly_it);
+
+    fly->setTurretTargetPos(cross_x + center_x, cross_y + center_y);
+  }
 
   // Update all gameobjects
   std::list<GameObject *>::iterator it;
