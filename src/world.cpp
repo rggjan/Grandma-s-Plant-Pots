@@ -31,6 +31,8 @@ World::World (const CL_DisplayWindow &display_window)
   cross = new CL_Sprite (gc, "Cross", &resources);
   cross_x = window_width/2;
   cross_y = window_height/2;
+  center_x = 300;
+  center_y = 300;
 
   width = background->get_width();
   height = background->get_height();
@@ -262,16 +264,49 @@ void World::update() {
   const int max_x = window_width - min_border - 1;
   const int max_y = window_height - min_border - 1;
 
+  int move_x = 0;
+  int move_y = 0;
+
   // Move camera
   if (moving_down)
-    cross_y += timeElapsed_ms;
+    move_y += timeElapsed_ms;
   if (moving_up)
-    cross_y -= timeElapsed_ms;
+    move_y -= timeElapsed_ms;
   if (moving_left)
-    cross_x -= timeElapsed_ms;
+    move_x -= timeElapsed_ms;
   if (moving_right)
-    cross_x += timeElapsed_ms;
+    move_x += timeElapsed_ms;
 
+  if (move_y < 0) {
+    if (cross_y > min_y) {
+      cross_y += move_y;
+      move_y = 0;
+      if (cross_y < min_y) {
+        move_y = cross_y - min_y;
+        cross_y = min_y;
+      }
+    }
+
+    if (move_y < 0 && center_y > 0) {
+      center_y += move_y;
+      move_y = 0;
+      if (center_y < 0) {
+        move_y = center_y - 0;
+        center_y = 0;
+      }
+    }
+
+    if (move_y < 0) {
+      cross_y += move_y;
+      if (cross_y < 0)
+        cross_y = 0;
+    }
+  }
+
+  if (move_y > 0) {
+    cross_y += move_y;
+  }
+/*
   if (cross_y < min_y) {
     int diff = cross_y - min_y;
     cross_y = min_y;
@@ -290,7 +325,7 @@ void World::update() {
     int diff = cross_x - max_x;
     cross_x = max_x;
     center_x += diff;
-  }
+  }*/
 
   // Update all gameobjects
   std::list<GameObject *>::iterator it;
