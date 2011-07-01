@@ -7,8 +7,8 @@
 
 #include "./tankvehicle.h"
 #include "./building.h"
-#include "./cross.h"
 #include "./background.h"
+#include "./fly.h"
 
 World::World (const CL_DisplayWindow &display_window)
   : window (display_window),
@@ -68,6 +68,9 @@ World::~World() {
 }
 
 void World::initLevel() {
+  Fly *fly = new Fly(Fly::SPACE_SHOOT, this);
+  fly->setPos(400, 500);
+
   TankVehicle *tank1 = new TankVehicle (TankVehicle::SPACE_SHOOT, this);
   tank1->setPos (667, 207);
 
@@ -80,10 +83,11 @@ void World::initLevel() {
   Building *helipad = new Building (Building::HELI_PAD, this);
   helipad->setPos (254, 222);
 
-  addObject (helipad);
-  addTank (tank1);
-  addTank (tank2);
-  addTank (tank3);
+  addObject(helipad);
+  addTank(tank1);
+  addTank(tank2);
+  addTank(tank3);
+  addObject(fly);
 }
 
 void World::addObject (GameObject *object) {
