@@ -255,7 +255,7 @@ void World::run() {
 }
 
 void World::update() {
-  CL_Console::write_line ("cross x/y, center x/y: %1/%2, %3/%4\n", cross_x, cross_y, center_x, center_y);
+//  CL_Console::write_line ("cross x/y, center x/y: %1/%2, %3/%4\n", cross_x, cross_y, center_x, center_y);
 
   int timeElapsed_ms = calcTimeElapsed();
   const int min_border = 200;
