@@ -2,69 +2,31 @@
 
 #include "fly.h"
 #include "world.h"
-#include "missile.h"
 
 #ifndef WIN32
 // For rand()
 #include <stdlib.h>
 #endif
 
-Fly::Fly(TankType type, World *world)
-  : GameObject(world) {
+Fly::Fly(World *world) : GameObject(world) {
   CL_GraphicContext gc = world->get_gc();
 
-  switch(type) {
-  case SPACE_SHOOT:
-    spriteBodyStill = new CL_Sprite(gc, "SpaceShootBodyStill", &world->resources);
-    spriteBodyMoving = new CL_Sprite(gc, "SpaceShootBodyMoving", &world->resources);
-    spriteTurretStill = new CL_Sprite(gc, "SpaceShootTurretStill", &world->resources);
-    spriteTurretShooting = new CL_Sprite(gc, "SpaceShootTurretShooting", &world->resources);
-    spriteTurretReloading = new CL_Sprite(gc, "SpaceShootTurretReloading", &world->resources);
-    spriteTurretGunFlash = new CL_Sprite(gc, "SpaceShootTurretGunFlash", &world->resources);
-    spriteSelected = new CL_Sprite(gc, "SpaceShootSelected", &world->resources);
-    spriteRedGlow = new CL_Sprite(gc, "RedGlow", &world->resources);
+  spriteTurretShooting = new CL_Sprite(gc, "SpaceShootTurretShooting", &world->resources);
 
-    collisionBody = new CL_CollisionOutline("Gfx/spaceshoot_body_still1.png");
-    collisionBody->set_alignment(origin_center);
-
-    soundTurret = new CL_SoundBuffer("SpaceShootTurret", &world->resources);
-    soundTurret->set_volume(0.3f);
-    soundTurret->prepare();
-
-    bodyTurnSpeed = 80.0f;
-    turretTurnSpeed = 150.0f;
-    moveSpeed = 100.0f;
-
-    break;
-  }
+  bodyTurnSpeed = 80.0f;
+  turretTurnSpeed = 150.0f;
+  moveSpeed = 100.0f;
 
   bodyAngle = turretAngle = destBodyAngle = deltaBodyAngle = destTurretAngle = deltaTurretAngle = 0.0f;
 
   selected = false;
   isFiring = false;
   reverse = false;
-
-  spriteBody = spriteBodyStill;
-  spriteTurret = spriteTurretStill;
-}
-
-bool Fly::isSelected() const {
-  return selected;
-}
-
-void Fly::select() {
-  selected = true;
-}
-
-void Fly::deselect() {
-  selected = false;
 }
 
 void Fly::setPos(int x, int y) {
   posX = destPosX = (float)x;
   posY = destPosY = (float)y;
-
-  collisionBody->set_translation(posX, posY);
 }
 
 void Fly::setTurretTargetPos(int x, int y) {
@@ -79,49 +41,8 @@ void Fly::setTurretTargetPos(int x, int y) {
   setDestTurretAngle(angle);
 }
 
-void Fly::setTargetPos(int x, int y) {
-  destPosX = (float)x;
-  destPosY = (float)y;
-
-  CL_Vec2f vector(posX - destPosX, posY - destPosY);
-  CL_Vec2f up(0.0f, 1.0f);
-
-  // Calculate angle from current sprite position to mouse position
-  float angle = up.angle(vector).to_degrees();
-  if(x < posX)
-    angle = 360.0f - angle;
-
-  setDestAngle(angle);
-
-  // Calculate delta position (to be used per frame-update)
-  vector.normalize();
-  deltaPosX = -vector.x;
-  deltaPosY = -vector.y;
-
-  spriteBody = spriteBodyMoving;
-}
-
-void Fly::setAngle(float angle) {
-  bodyAngle = angle;
-  collisionBody->set_angle(CL_Angle(angle, cl_degrees));
-}
-
 void Fly::setTurretAngle(float angle) {
   turretAngle = angle;
-}
-
-void Fly::setDestAngle(float destAngle) {
-  destBodyAngle = destAngle;
-  deltaBodyAngle = destBodyAngle - bodyAngle;
-
-  if(deltaBodyAngle > 180.0f) {
-    deltaBodyAngle -= 360.0f;
-    bodyAngle += 360.0f;
-  }
-  if(deltaBodyAngle < -180.0f) {
-    deltaBodyAngle += 360.0f;
-    bodyAngle -= 360.0f;
-  }
 }
 
 void Fly::setDestTurretAngle(float destAngle) {
@@ -138,80 +59,10 @@ void Fly::setDestTurretAngle(float destAngle) {
   }
 }
 
-bool Fly::hitCheck(CL_CollisionOutline *outline) {
-  return collisionBody->collide(*outline);
-}
-
-bool Fly::hitCheck(const CL_Rect &rect) {
-  int width = spriteBody->get_width();
-  int height = spriteBody->get_height();
-
-  return (rect.left <= posX + width / 2 && rect.top <= posY + height / 2 && rect.right >= posX - width / 2 && rect.bottom >= posY - height / 2);
-}
-
-bool Fly::hitCheck(int x, int y) {
-  int width = spriteBody->get_width();
-  int height = spriteBody->get_height();
-
-  return (x >= posX - width / 2 && x <= posX + width / 2 && y >= posY - height / 2 && y <= posY + height / 2);
-}
-
-void Fly::fire(bool nuke) {
-  if(isFiring == false) {
-    spriteTurret = spriteTurretShooting;
-    spriteTurretShooting->restart();
-
-    soundTurret->play();
-
-    isFiring = true;
-
-    int delta;
-    if(nuke)
-      delta = 18;
-    else
-      delta = 360;
-
-    for(int i=0; i<360; i += delta) {
-      Missile *missile = new Missile(world, this);
-      missile->setPos((int)posX, (int)posY);
-      missile->setSpeed(1000.0f);
-      missile->setAngle(turretAngle + i);
-      missile->move(43);
-      world->addObject(missile);
-    }
-  }
-}
-
 bool Fly::update(int timeElapsed_ms) {
-  spriteBody->update(timeElapsed_ms);
-  spriteTurret->update(timeElapsed_ms);
+  spriteTurretShooting->update(timeElapsed_ms);
+  spriteTurretShooting->set_play_loop(true);
   float timeElapsed = (float) timeElapsed_ms / 1000.0f;
-
-  if(spriteTurretShooting->is_finished() && spriteTurret == spriteTurretShooting) {
-    spriteTurret = spriteTurretReloading;
-    spriteTurretReloading->restart();
-  } else if(spriteTurretReloading->is_finished() && spriteTurret == spriteTurretReloading) {
-    spriteTurret = spriteTurretStill;
-    spriteTurretStill->restart();
-
-    isFiring = false;
-  }
-
-  if(deltaBodyAngle) {
-    if(deltaBodyAngle > 0.0f) {
-      bodyAngle += bodyTurnSpeed * timeElapsed;
-      if(bodyAngle > destBodyAngle) {
-        bodyAngle = destBodyAngle;
-        deltaBodyAngle = 0.0f;
-      }
-    } else {
-      bodyAngle -= bodyTurnSpeed * timeElapsed;
-      if(bodyAngle < destBodyAngle) {
-        bodyAngle = destBodyAngle;
-        deltaBodyAngle = 0.0f;
-      }
-    }
-  }
 
   if(deltaTurretAngle) {
     if(deltaTurretAngle > 0.0f) {
@@ -228,41 +79,7 @@ bool Fly::update(int timeElapsed_ms) {
       }
     }
   }
-
-  if(deltaBodyAngle == 0.0f) {
-    if(destPosX != posX || destPosY != posY) {
-      posX += deltaPosX * moveSpeed * timeElapsed;
-      posY += deltaPosY * moveSpeed * timeElapsed;
-      collisionBody->set_translation(posX, posY);
-
-      if((deltaPosX > 0 && posX > destPosX) || (deltaPosX < 0 && posX < destPosX))
-        posX = destPosX;
-      if((deltaPosY > 0 && posY > destPosY) || (deltaPosY < 0 && posY < destPosY))
-        posY = destPosY;
-
-      if(posX == destPosX && posY == destPosY) {
-        spriteBody = spriteBodyStill;
-        reverse = false;
-      }
-    }
-  }
-
-  spriteBody->set_angle(CL_Angle(bodyAngle, cl_degrees));
-  spriteSelected->set_angle(CL_Angle(bodyAngle, cl_degrees));
-  spriteTurret->set_angle(CL_Angle(turretAngle, cl_degrees));
-  spriteTurretGunFlash->set_angle(CL_Angle(turretAngle, cl_degrees));
-
-  collisionBody->set_angle(CL_Angle(bodyAngle, cl_degrees));
-
-  if( !reverse ) {
-    if( world->hitCheck(collisionBody, this) ) {
-      setTargetPos(
-        int(posX+cos((CL_PI/180.0f)*(bodyAngle+90+int(rand()%60)-30))*30),
-        int(posY+sin((CL_PI/180.0f)*(bodyAngle+90+int(rand()%60)-30))*30));
-
-      reverse = true;
-    }
-  }
+  spriteTurretShooting->set_angle(CL_Angle(turretAngle, cl_degrees));
 
   return true;
 }
@@ -270,42 +87,6 @@ bool Fly::update(int timeElapsed_ms) {
 void Fly::draw(int x, int y) {
   CL_GraphicContext gc = world->get_gc();
 
-  // Draw selection
-  if(selected)
-    spriteSelected->draw(gc, posX, posY);
-
-  // Draw tankbody shadow
-  CL_BlendMode blend;
-  blend.set_blend_function(cl_blend_zero, cl_blend_one_minus_src_alpha, cl_blend_zero, cl_blend_one_minus_src_alpha);
-  gc.set_blend_mode(blend);
-  spriteBody->set_alpha(0.5f);
-  spriteBody->draw(gc, posX + 5-x, posY + 5-y);
-
-  // Draw tankbody
-  blend.set_blend_function(cl_blend_src_alpha, cl_blend_one_minus_src_alpha, cl_blend_src_alpha, cl_blend_one_minus_src_alpha);
-  gc.set_blend_mode(blend);
-  spriteBody->set_alpha(1.0f);
-  spriteBody->draw(gc, posX-x, posY-y);
-
-  // Draw tankturret shadow
-  blend.set_blend_function(cl_blend_zero, cl_blend_one_minus_src_alpha, cl_blend_zero, cl_blend_one_minus_src_alpha);
-  gc.set_blend_mode(blend);
-  spriteTurret->set_alpha(0.5f);
-  spriteTurret->draw(gc, posX + 5-x, posY + 5-y);
-
   // Draw tankturret
-  blend.set_blend_function(cl_blend_src_alpha, cl_blend_one_minus_src_alpha, cl_blend_src_alpha, cl_blend_one_minus_src_alpha);
-  gc.set_blend_mode(blend);
-  spriteTurret->set_alpha(1.0f);
-  spriteTurret->draw(gc, posX-x, posY-y);
-
-  CL_BlendMode default_blend_mode;
-  gc.set_blend_mode(default_blend_mode);
-
-  // Draw gunflash
-  if(spriteTurret == spriteTurretShooting)
-    spriteTurretGunFlash->draw(gc, posX-x, posY-y);
-
-  // Draw glow
-  spriteRedGlow->draw(gc, posX-x, posY-y);
+  spriteTurretShooting->draw(gc, posX-x, posY-y);
 }

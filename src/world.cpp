@@ -68,7 +68,7 @@ World::~World() {
 }
 
 void World::initLevel() {
-  Fly *fly = new Fly(Fly::SPACE_SHOOT, this);
+  Fly *fly = new Fly(this);
   fly->setPos(400, 500);
 
   TankVehicle *tank1 = new TankVehicle (TankVehicle::SPACE_SHOOT, this);

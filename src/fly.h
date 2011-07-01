@@ -8,16 +8,9 @@ class World;
 
 class Fly : public GameObject
 {
-// Enums
-public:
-	enum TankType
-	{
-		SPACE_SHOOT
-	};
-
 // Construction
 public:
-	Fly(TankType type, World *world);
+	Fly(World *world);
 
 // Attributes:
 public:
@@ -25,46 +18,20 @@ public:
 
 // Operations:
 public:
-	void setAngle(float angle);
-	void setDestAngle(float angle);
-
 	void setTurretAngle(float angle);
 	void setDestTurretAngle(float angle);
-	void setTurretTargetPos(int x, int y);
 
-	void getPos(int &x, int &y);
 	void setPos(int x, int y);
 	void setTargetPos(int x, int y);
 
-	void select();
-	void deselect();
-
-	void fire(bool nuke);
-
-	bool hitCheck(CL_CollisionOutline *outline);
-	bool hitCheck(const CL_Rect &rect);
-	bool hitCheck(int x, int y);
+  void setTurretTargetPos(int x, int y);
 
 	virtual void draw(int x, int y);
 	virtual bool update(int timeElapsed_ms);
 
 // Implementation:
 private:
-	CL_Sprite *spriteBody;
-	CL_Sprite *spriteTurret;
-
-	CL_Sprite *spriteBodyStill;
-	CL_Sprite *spriteBodyMoving;
-	CL_Sprite *spriteTurretStill;
 	CL_Sprite *spriteTurretShooting;
-	CL_Sprite *spriteTurretReloading;
-	CL_Sprite *spriteSelected;
-	CL_Sprite *spriteTurretGunFlash;
-	CL_Sprite *spriteRedGlow;
-
-	CL_SoundBuffer *soundTurret;
-
-	CL_CollisionOutline *collisionBody;
 
 	float bodyAngle;
 	float destBodyAngle, deltaBodyAngle;
