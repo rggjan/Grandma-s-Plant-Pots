@@ -451,6 +451,48 @@ void World::draw() {
   cross->draw (gc, cross_x, cross_y);
   cross->set_scale (0.25, 0.25);
   cross->draw (gc, cross_x, cross_y);
+
+/*
+  CL_PixelBuffer buffer(256, 256, cl_rgba8);
+  unsigned int *pixel_data = (unsigned int *) buffer.get_data();
+  CL_BezierCurve curve;
+  curve.add_control_point(0, 50);
+  curve.add_control_point(50, 50);
+  curve.add_control_point(50, 80);
+
+  CL_Pointf old_point(0, 0);
+
+  for (int p = 0; p < 100; p++) {
+    unsigned char red = 0;
+    unsigned char green = 255;
+    unsigned char blue = 0;
+    unsigned char alpha = 255;
+
+    CL_Pointf point = curve.get_point_relative(p/100.);
+    CL_Pointf direction = point-old_point;
+    direction.normalize();
+    //direction.x
+    direction.rotate(CL_Vec2f(0, 0), CL_Angle(90, cl_degrees));
+    int max_dist = p/10.+5.;
+
+    for (int dist=0; dist<max_dist; dist++) {
+      CL_Pointf current = point + direction*dist;
+      green = (max_dist-dist)/15.*255;
+      int x = current.x;
+      int y = current.y;
+      pixel_data[x + y * 256] = (red << 24) + (green << 16) + (blue << 8) + alpha;
+
+      current = point - direction*dist;
+      green = (max_dist-dist)/15.*255;
+      x = current.x;
+      y = current.y;
+      pixel_data[x + y * 256] = (red << 24) + (green << 16) + (blue << 8) + alpha;
+    }
+
+    old_point = point;
+  }
+
+  gc.draw_pixels(0, 0, buffer, CL_Rect(0, 0, 256, 256), CL_Colorf(1.0f, 0.0f, 0.0f));*/
 }
 
 void World::on_window_close() {
