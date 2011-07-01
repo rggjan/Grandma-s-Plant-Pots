@@ -25,8 +25,10 @@
     <File Name="src/program.h"/>
     <File Name="src/tankvehicle.h"/>
     <File Name="src/world.h"/>
-    <File Name="src/cross.cpp"/>
-    <File Name="src/cross.h"/>
+    <File Name="src/background.cpp"/>
+    <File Name="src/background.h"/>
+    <File Name="src/fly.cpp"/>
+    <File Name="src/fly.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="GPP">
     <File Name=".gitignore"/>

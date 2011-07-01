@@ -1,17 +1,17 @@
-#ifndef SRC_CROSS_H
-#define SRC_CROSS_H
+#ifndef SRC_BACKGROUND_H
+#define SRC_BACKGROUND_H
 
 #include "gameobject.h"
 
 class CL_Sprite;
 class CL_SoundBuffer;
 
-class Cross : public GameObject
+class Background : public GameObject
 {
 // Construction
 public:
-	Cross(World *world);
-	~Cross();
+	Background(World *world);
+	~Background();
 
 // Attributes
 public:
@@ -31,4 +31,4 @@ private:
 	float posY;
 };
 
-#endif // SRC_CROSS_H
+#endif // SRC_BACKGROUND_H

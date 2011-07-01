@@ -10,11 +10,13 @@ class CL_Surface;
 class CL_InputEvent;
 class GameObject;
 class TankVehicle;
+class Background;
+class Fly;
 
 class World {
   // Construction
   public:
-    World(CL_DisplayWindow &display_window);
+    explicit World(const CL_DisplayWindow &display_window);
     ~World();
 
   // Attributes:
@@ -27,6 +29,16 @@ class World {
 
     int center_x;
     int center_y;
+
+    int cross_x;
+    int cross_y;
+	float cross_speed;
+
+    int width;
+    int height;
+
+    int window_width;
+    int window_height;
 
     bool moving_down;
     bool moving_up;
@@ -41,6 +53,7 @@ class World {
 
     void addObject(GameObject *object);
     void addTank(TankVehicle *tank);
+    void addFly(Fly *fly);
 
     void run();
 
@@ -64,7 +77,8 @@ class World {
     CL_Slot slotKeyDown;
     CL_Slot slotKeyUp;
 
-    CL_Texture background;
+    CL_Sprite *background;
+    CL_Sprite *cross;
 
     bool dragging;
     bool mouseDown;
@@ -73,6 +87,7 @@ class World {
 
     std::list<GameObject *> objects;
     std::list<TankVehicle *> tanks;
+    std::list<Fly *> flies;
 
     CL_DisplayWindow window;
     CL_GraphicContext gc;
@@ -80,4 +95,4 @@ class World {
     bool quit;
 };
 
-#endif  // SRC_WORLD_H
+#endif  // SRC_WORLD_H_
