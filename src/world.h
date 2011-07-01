@@ -32,6 +32,9 @@ class World {
     int width;
     int height;
 
+    int window_width;
+    int window_height;
+
     bool moving_down;
     bool moving_up;
     bool moving_left;
@@ -69,6 +72,7 @@ class World {
     CL_Slot slotKeyUp;
 
     CL_Sprite *background;
+    CL_Sprite *cross;
 
     bool dragging;
     bool mouseDown;

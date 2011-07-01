@@ -26,8 +26,14 @@ World::World (const CL_DisplayWindow &display_window)
   // Setup resources
   resources = CL_ResourceManager ("resources.xml");
   background = new CL_Sprite (gc, "Background", &resources);
+  cross = new CL_Sprite (gc, "Cross", &resources);
+  cross->set_scale(0.5, 0.5);
+
   width = background->get_width();
   height = background->get_height();
+  
+  window_width = gc.get_width();
+  window_height = gc.get_height();
 
   // Receive mouse clicks
   slotKeyDown = window.get_ic().get_keyboard().sig_key_down().
@@ -292,6 +298,7 @@ int World::calcTimeElapsed() {
 void World::draw() {
   // Draw background
   background->draw(gc, -center_x, -center_y);
+  cross->draw(gc, window_width/2, window_height/2);
 
   // Draw all gameobjects
   std::list<GameObject *>::iterator it;
