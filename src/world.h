@@ -15,7 +15,7 @@ class Background;
 class World {
   // Construction
   public:
-    World(CL_DisplayWindow &display_window);
+    explicit World(const CL_DisplayWindow &display_window);
     ~World();
 
   // Attributes:
@@ -28,6 +28,9 @@ class World {
 
     int center_x;
     int center_y;
+
+    int width;
+    int height;
 
     bool moving_down;
     bool moving_up;
@@ -65,7 +68,7 @@ class World {
     CL_Slot slotKeyDown;
     CL_Slot slotKeyUp;
 
-    Background *background;
+    CL_Sprite *background;
 
     bool dragging;
     bool mouseDown;
@@ -81,4 +84,4 @@ class World {
     bool quit;
 };
 
-#endif  // SRC_WORLD_H
+#endif  // SRC_WORLD_H_
