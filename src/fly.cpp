@@ -45,7 +45,15 @@ bool Fly::update(int timeElapsed_ms) {
 
   direction = direction + target_direction/10;
   direction.normalize();
-  spriteTurretShooting->set_angle(CL_Angle(turretAngle, cl_degrees));
+
+  // Calculate angle from current sprite position to mouse position
+
+  CL_Vec2f up(0.0f, -1.0f);
+  float angle = up.angle(direction).to_degrees();
+  if(direction.x < 0)
+    angle = 360.0f - angle;
+
+  spriteTurretShooting->set_angle(CL_Angle(angle, cl_degrees));
 
   posX += direction.x * 10*(rand()%100)/100;
   posY += direction.y * 10*(rand()%100)/100;
