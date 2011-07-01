@@ -75,7 +75,7 @@ class World {
     CL_Slot slotKeyDown;
     CL_Slot slotKeyUp;
 
-    CL_Image *background;
+    CL_Sprite *background;
     CL_Sprite *cross;
 
     bool dragging;
