@@ -263,6 +263,9 @@ void World::update() {
   const int min_y = min_border;
   const int max_x = window_width - min_border - 1;
   const int max_y = window_height - min_border - 1;
+  
+  const int max_center_x = width - window_width - 1;
+  const int max_center_y = height - window_height - 1;
 
   int move_x = 0;
   int move_y = 0;
@@ -302,31 +305,34 @@ void World::update() {
         cross_y = 0;
     }
   }
+     
+   if (move_y > 0) {
+    if (cross_y < max_y) {
+      cross_y += move_y;
+      move_y = 0;
+      if (cross_y > max_y) {
+        move_y = cross_y - max_y;
+        cross_y = max_y;
+      }
+    }
 
-  if (move_y > 0) {
-    cross_y += move_y;
+    if (move_y > 0 && center_y < max_center_y) {
+      center_y += move_y;
+      move_y = 0;
+      if (center_y > max_center_y) {
+        move_y = center_y - max_center_y;
+        center_y = max_center_y;
+      }
+    }
+
+    if (move_y > 0) {
+      cross_y += move_y;
+      if (cross_y > window_height - 1)
+        cross_y = window_height -1;
+    }
   }
-/*
-  if (cross_y < min_y) {
-    int diff = cross_y - min_y;
-    cross_y = min_y;
-    center_y += diff;
-  } else if (cross_y > max_y) {
-    int diff = cross_y - max_y;
-    cross_y = max_y;
-    center_y += diff;
-  }
-
-  if (cross_x < min_x) {
-    int diff = cross_x - min_x;
-    cross_x = min_x;
-    center_x += diff;
-  } else if (cross_x > max_x) {
-    int diff = cross_x - max_x;
-    cross_x = max_x;
-    center_x += diff;
-  }*/
-
+  
+  
   // Update all gameobjects
   std::list<GameObject *>::iterator it;
   for (it = objects.begin(); it != objects.end();) {

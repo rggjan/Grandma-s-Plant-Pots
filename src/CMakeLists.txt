@@ -10,10 +10,10 @@ file(GLOB GPP_SOURCES *.cpp)
 
 # Find clanlib
 set(ClanLib_MAJOR_VERSION 2)
-set (ClanLib_MINOR_VERSION 2)
+set(ClanLib_MINOR_VERSION 2)
 
 # Add clanlib dependency
-find_package(ClanLib COMPONENTS App Display GL Sound REQUIRED)
+find_package(ClanLib COMPONENTS App Display GL GL1 Sound REQUIRED)
 
 # Include clanlib
 include_directories(${ClanLib_INCLUDE_DIRS})

@@ -13,7 +13,7 @@
 #  ClanLib_LIBRARIES - If invoked via FIND_PACKAGE(ClanLib COMPONENTS ...),
 #                      will only contain the libraries matching each component.
 #                      otherwise, it will contain all ClanLib libraries found.
-# For the components Core, App, Display, GL, GUI, GUIStyleSilver, MikMod,
+# For the components Core, App, Display, GL, GL1, GUI, GUIStyleSilver, MikMod,
 # Network, SDL, Signals, Sound and Vorbis, the following variables are set:
 #  ClanLib_${COMPONENT}_LIBRARY - Full path to the component's library.
 INCLUDE(LibFindMacros)
@@ -27,6 +27,7 @@ IF(NOT ClanLib_FIND_COMPONENTS)
     App
     Display
     GL
+    GL1
     GUI
     GUIStyleSilver
     MikMod
