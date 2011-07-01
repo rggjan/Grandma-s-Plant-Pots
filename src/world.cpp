@@ -77,9 +77,9 @@ void World::initLevel() {
   TankVehicle *tank2 = new TankVehicle (TankVehicle::SPACE_SHOOT, this);
   tank2->setPos (854, 422);
 
-TankVehicle *tank3 = new TankVehicle (TankVehicle::SPACE_SHOOT, this);
+  TankVehicle *tank3 = new TankVehicle (TankVehicle::SPACE_SHOOT, this);
   tank3->setPos (400, 422);
-  
+
   Building *helipad = new Building (Building::HELI_PAD, this);
   helipad->setPos (254, 222);
 
@@ -271,13 +271,13 @@ void World::update() {
   const int min_y = min_border;
   const int max_x = window_width - min_border - 1;
   const int max_y = window_height - min_border - 1;
-  
+
   const int max_center_x = width - window_width - 1;
   const int max_center_y = height - window_height - 1;
 
   int move_x = 0;
   int move_y = 0;
-  
+
   // Move camera
   if (moving_down)
     move_y += timeElapsed_ms*cross_speed;
@@ -314,7 +314,7 @@ void World::update() {
     }
   }
 
- if (move_x < 0) {
+  if (move_x < 0) {
     if (cross_x > min_x) {
       cross_x += move_x;
       move_x = 0;
@@ -341,7 +341,7 @@ void World::update() {
   }
 
 
-   if (move_y > 0) {
+  if (move_y > 0) {
     if (cross_y < max_y) {
       cross_y += move_y;
       move_y = 0;
@@ -367,8 +367,8 @@ void World::update() {
         cross_y = window_height -1;
     }
   }
-  
-   if (move_x > 0) {
+
+  if (move_x > 0) {
     if (cross_x < max_x) {
       cross_x += move_x;
       move_x = 0;
@@ -394,8 +394,8 @@ void World::update() {
         cross_x = window_width -1;
     }
   }
-  
-  
+
+
   // Update all gameobjects
   std::list<GameObject *>::iterator it;
   for (it = objects.begin(); it != objects.end();) {
