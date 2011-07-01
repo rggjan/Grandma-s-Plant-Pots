@@ -33,6 +33,7 @@ World::World (const CL_DisplayWindow &display_window)
   cross_y = window_height/2;
   center_x = 300;
   center_y = 300;
+  cross_speed = 0.7;
 
   width = background->get_width();
   height = background->get_height();
@@ -73,12 +74,16 @@ void World::initLevel() {
   TankVehicle *tank2 = new TankVehicle (TankVehicle::SPACE_SHOOT, this);
   tank2->setPos (854, 422);
 
+TankVehicle *tank3 = new TankVehicle (TankVehicle::SPACE_SHOOT, this);
+  tank3->setPos (400, 422);
+  
   Building *helipad = new Building (Building::HELI_PAD, this);
   helipad->setPos (254, 222);
 
   addObject (helipad);
   addTank (tank1);
   addTank (tank2);
+  addTank (tank3);
 }
 
 void World::addObject (GameObject *object) {
@@ -269,16 +274,16 @@ void World::update() {
 
   int move_x = 0;
   int move_y = 0;
-
+  
   // Move camera
   if (moving_down)
-    move_y += timeElapsed_ms;
+    move_y += timeElapsed_ms*cross_speed;
   if (moving_up)
-    move_y -= timeElapsed_ms;
+    move_y -= timeElapsed_ms*cross_speed;
   if (moving_left)
-    move_x -= timeElapsed_ms;
+    move_x -= timeElapsed_ms*cross_speed;
   if (moving_right)
-    move_x += timeElapsed_ms;
+    move_x += timeElapsed_ms*cross_speed;
 
   if (move_y < 0) {
     if (cross_y > min_y) {
@@ -333,11 +338,6 @@ void World::update() {
   }
 
 
-
-
-
-
-
    if (move_y > 0) {
     if (cross_y < max_y) {
       cross_y += move_y;
@@ -364,9 +364,6 @@ void World::update() {
         cross_y = window_height -1;
     }
   }
-  
-  
-  
   
    if (move_x > 0) {
     if (cross_x < max_x) {
