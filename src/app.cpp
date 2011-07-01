@@ -9,10 +9,10 @@
 
 #include "./world.h"
 
-int Application::main(const std::vector<CL_String> &args) {
+int Application::main (const std::vector<CL_String> &args) {
   // Create a window
   CL_DisplayWindowDescription desc;
-  desc.set_title("Grandma's Plant Pots");
+  desc.set_title ("Grandma's Plant Pots");
   // Use this resolution (as caption is disabled)
   desc.set_size(CL_Size(700, 700), true);
 
@@ -20,13 +20,22 @@ int Application::main(const std::vector<CL_String> &args) {
 
   CL_GraphicContext gc = window.get_gc();
 
-  CL_SoundOutput output(44100);
+  CL_SoundOutput output (44100);
 
-  // Create world
-  World world(window);
+  try {
+    // Create world
+    World world (window);
 
-  // Run the main loop
-  world.run();
+    // Run the main loop
+    world.run();
+  } catch (CL_Exception &exception) {
+    // Create a console window for text-output if not available
+    CL_ConsoleWindow console ("Console", 80, 160);
+    CL_Console::write_line ("Exception caught: " + exception.get_message_and_stack_trace());
+    console.display_close_message();
+
+    return -1;
+  }
 
   return 0;
 }

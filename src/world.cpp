@@ -27,7 +27,8 @@ World::World (const CL_DisplayWindow &display_window)
 
   // Setup resources
   resources = CL_ResourceManager ("resources.xml");
-  background = new CL_Sprite (gc, "Background", &resources);
+  background = new CL_Image (gc, "Gfx/background.png", CL_ImageImportDescription());
+
   cross = new CL_Sprite (gc, "Cross", &resources);
   cross_x = window_width/2;
   cross_y = window_height/2;
@@ -37,6 +38,8 @@ World::World (const CL_DisplayWindow &display_window)
 
   width = background->get_width();
   height = background->get_height();
+  //width = 800;
+  //height = 800;
 
   // Receive mouse clicks
   slotKeyDown = window.get_ic().get_keyboard().sig_key_down().
@@ -260,7 +263,7 @@ void World::run() {
 }
 
 void World::update() {
-  CL_Console::write_line ("cross x/y, center x/y: %1/%2, %3/%4\n", cross_x, cross_y, center_x, center_y);
+//  CL_Console::write_line ("cross x/y, center x/y: %1/%2, %3/%4\n", cross_x, cross_y, center_x, center_y);
 
   int timeElapsed_ms = calcTimeElapsed();
   const int min_border = 200;
