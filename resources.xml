@@ -44,26 +44,9 @@
 		<rotation origin="center"/>
 	</sprite>
 
-	<sprite name="SpaceShootTurretShooting" base_angle="180">
-		<image file="Gfx/spaceshoot_turret_shooting1.png" />
-		<image file="Gfx/spaceshoot_turret_shooting2.png" />
-		<image file="Gfx/spaceshoot_turret_shooting3.png" />
-		<image file="Gfx/spaceshoot_turret_shooting4.png" />
-		<image file="Gfx/spaceshoot_turret_shooting5.png" />
-		<image file="Gfx/spaceshoot_turret_shooting6.png" />
-		<image file="Gfx/spaceshoot_turret_shooting7.png" />
-		
-		<frame nr="0" y="0"/>
-		<frame nr="1" y="-1"/>
-		<frame nr="2" y="-2"/>
-		<frame nr="3" y="-3"/>
-		<frame nr="4" y="-2"/>
-		<frame nr="5" y="-1"/>
-		<frame nr="6" y="0"/>
-		
-		<translation origin="center" y="5"/>
-		<rotation origin="center" y="5"/>
-		<animation pingpong="no" loop="false" speed="50"/>
+	<sprite name="SpaceShootTurretShooting">
+		<image file="Gfx/firefly.png" />
+                <scale x="0.2" y="0.2" />
 	</sprite>
 
 	<sprite name="SpaceShootTurretReloading" base_angle="180">

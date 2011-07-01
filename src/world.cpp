@@ -68,8 +68,6 @@ World::~World() {
 }
 
 void World::initLevel() {
-
-
   TankVehicle *tank1 = new TankVehicle (TankVehicle::SPACE_SHOOT, this);
   tank1->setPos (667, 207);
 
