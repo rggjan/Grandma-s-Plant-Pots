@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #endif
 
-Fly::Fly(World *world) : GameObject(world) {
+Fly::Fly(World *world) : GameObject(world), direction(0, -1), target_direction(0, -1) {
   CL_GraphicContext gc = world->get_gc();
 
   spriteTurretShooting = new CL_Sprite(gc, "SpaceShootTurretShooting", &world->resources);
@@ -30,33 +30,12 @@ void Fly::setPos(int x, int y) {
 }
 
 void Fly::setTurretTargetPos(int x, int y) {
-  CL_Vec2f vector(posX - x, posY - y);
-  CL_Vec2f up(0.0f, 1.0f);
-
-  // Calculate angle from current sprite position to mouse position
-  float angle = up.angle(vector).to_degrees();
-  if(x < posX)
-    angle = 360.0f - angle;
-
-  setDestTurretAngle(angle);
+  target_direction = CL_Vec2f(x - posX, y - posY);
+  target_direction.normalize();
 }
 
 void Fly::setTurretAngle(float angle) {
   turretAngle = angle;
-}
-
-void Fly::setDestTurretAngle(float destAngle) {
-  destTurretAngle = destAngle;
-  deltaTurretAngle = destTurretAngle - turretAngle;
-
-  if(deltaTurretAngle > 180.0f) {
-    deltaTurretAngle -= 360.0f;
-    turretAngle += 360.0f;
-  }
-  if(deltaTurretAngle < -180.0f) {
-    deltaTurretAngle += 360.0f;
-    turretAngle -= 360.0f;
-  }
 }
 
 bool Fly::update(int timeElapsed_ms) {
@@ -64,22 +43,12 @@ bool Fly::update(int timeElapsed_ms) {
   spriteTurretShooting->set_play_loop(true);
   float timeElapsed = (float) timeElapsed_ms / 1000.0f;
 
-  if(deltaTurretAngle) {
-    if(deltaTurretAngle > 0.0f) {
-      turretAngle += turretTurnSpeed * timeElapsed;
-      if(turretAngle > destTurretAngle) {
-        turretAngle = destTurretAngle;
-        deltaTurretAngle = 0.0f;
-      }
-    } else {
-      turretAngle -= turretTurnSpeed * timeElapsed;
-      if(turretAngle < destTurretAngle) {
-        turretAngle = destTurretAngle;
-        deltaTurretAngle = 0.0f;
-      }
-    }
-  }
+  direction = direction + target_direction/10;
+  direction.normalize();
   spriteTurretShooting->set_angle(CL_Angle(turretAngle, cl_degrees));
+
+  posX += direction.x * 10*(rand()%100)/100;
+  posY += direction.y * 10*(rand()%100)/100;
 
   return true;
 }

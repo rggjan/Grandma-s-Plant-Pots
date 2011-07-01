@@ -31,6 +31,9 @@ public:
 
 // Implementation:
 private:
+  CL_Vec2f direction;
+  CL_Vec2f target_direction;
+
 	CL_Sprite *spriteTurretShooting;
 
 	float bodyAngle;

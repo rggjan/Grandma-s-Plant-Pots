@@ -68,8 +68,7 @@ World::~World() {
 }
 
 void World::initLevel() {
-  Fly *fly = new Fly(this);
-  fly->setPos(400, 500);
+
 
   TankVehicle *tank1 = new TankVehicle (TankVehicle::SPACE_SHOOT, this);
   tank1->setPos (667, 207);
@@ -87,7 +86,12 @@ void World::initLevel() {
   addTank(tank1);
   addTank(tank2);
   addTank(tank3);
-  addFly(fly);
+
+  for (int i=0; i<10; i++) {
+    Fly *fly = new Fly(this);
+    fly->setPos(i*10, i*10);
+    addFly(fly);
+  }
 }
 
 void World::addObject (GameObject *object) {
