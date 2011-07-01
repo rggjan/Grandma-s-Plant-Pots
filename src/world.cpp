@@ -22,18 +22,18 @@ World::World (const CL_DisplayWindow &display_window)
   CL_Slot slot_quit = window.sig_window_close().connect (this, &World::on_window_close);
 
   gc = window.get_gc();
+  window_width = gc.get_width();
+  window_height = gc.get_height();
 
   // Setup resources
   resources = CL_ResourceManager ("resources.xml");
   background = new CL_Sprite (gc, "Background", &resources);
   cross = new CL_Sprite (gc, "Cross", &resources);
-  cross->set_scale(0.5, 0.5);
+  cross_x = window_width/2;
+  cross_y = window_height/2;
 
   width = background->get_width();
   height = background->get_height();
-  
-  window_width = gc.get_width();
-  window_height = gc.get_height();
 
   // Receive mouse clicks
   slotKeyDown = window.get_ic().get_keyboard().sig_key_down().
@@ -74,13 +74,9 @@ void World::initLevel() {
   Building *helipad = new Building (Building::HELI_PAD, this);
   helipad->setPos (254, 222);
 
-  Cross *cross = new Cross (this);
-  cross->setPos (400, 400);
-
   addObject (helipad);
   addTank (tank1);
   addTank (tank2);
-  addObject (cross);
 }
 
 void World::addObject (GameObject *object) {
@@ -95,8 +91,8 @@ void World::addTank (TankVehicle *tank) {
 bool World::hitCheck (CL_CollisionOutline *outline, GameObject *other) {
   std::list<GameObject *>::iterator it;
   for (it = objects.begin(); it != objects.end(); ++it) {
-    if ( (*it) != other ) {
-      if ( (*it)->hitCheck (outline) )
+    if ( (*it) != other) {
+      if ( (*it)->hitCheck (outline))
         return true;
     }
   }
@@ -167,7 +163,7 @@ void World::onMouseDown (const CL_InputEvent &key, const CL_InputState &state) {
     for (it = tanks.begin(); it != tanks.end(); ++it) {
       TankVehicle *tank1 = (*it);
 
-      if (tank1->isSelected() ) {
+      if (tank1->isSelected()) {
         bool fire = false;
 
         // Force firing
@@ -184,7 +180,7 @@ void World::onMouseDown (const CL_InputEvent &key, const CL_InputState &state) {
           for (it2 = tanks.begin(); it2 != tanks.end(); ++it2) {
             TankVehicle *tank2 = (*it2);
 
-            if (tank1 != tank2 && tank2->hitCheck (key.mouse_pos.x, key.mouse_pos.y) ) {
+            if (tank1 != tank2 && tank2->hitCheck (key.mouse_pos.x, key.mouse_pos.y)) {
               tank1->fire (false);
               fire = true;
             }
@@ -212,7 +208,7 @@ void World::onMouseUp (const CL_InputEvent &key, const CL_InputState &state) {
     for (it = tanks.begin(); it != tanks.end(); ++it) {
       TankVehicle *tank = (*it);
 
-      if (tank->hitCheck (dragArea) )
+      if (tank->hitCheck (dragArea))
         tank->select();
       else if (!key.shift)
         tank->deselect();
@@ -238,13 +234,13 @@ void World::onMouseMove (const CL_InputEvent &key, const CL_InputState &state) {
   for (it = tanks.begin(); it != tanks.end(); ++it) {
     TankVehicle *tank = (*it);
 
-    if (tank->isSelected() )
+    if (tank->isSelected())
       tank->setTurretTargetPos (key.mouse_pos.x, key.mouse_pos.y);
   }
 }
 
 void World::run() {
-  while (!window.get_ic().get_keyboard().get_keycode (CL_KEY_ESCAPE) ) {
+  while (!window.get_ic().get_keyboard().get_keycode (CL_KEY_ESCAPE)) {
     if (quit)
       break;
 
@@ -257,21 +253,48 @@ void World::run() {
 }
 
 void World::update() {
+  CL_Console::write_line ("cross x/y, center x/y: %1/%2, %3/%4\n", cross_x, cross_y, center_x, center_y);
+
   int timeElapsed_ms = calcTimeElapsed();
+  const int min_border = 200;
+  const int min_x = min_border;
+  const int min_y = min_border;
+  const int max_x = window_width - min_border - 1;
+  const int max_y = window_height - min_border - 1;
 
   // Move camera
   if (moving_down)
-    center_y += timeElapsed_ms;
+    cross_y += timeElapsed_ms;
   if (moving_up)
-    center_y -= timeElapsed_ms;
+    cross_y -= timeElapsed_ms;
   if (moving_left)
-    center_x -= timeElapsed_ms;
+    cross_x -= timeElapsed_ms;
   if (moving_right)
-    center_x += timeElapsed_ms;
+    cross_x += timeElapsed_ms;
+
+  if (cross_y < min_y) {
+    int diff = cross_y - min_y;
+    cross_y = min_y;
+    center_y += diff;
+  } else if (cross_y > max_y) {
+    int diff = cross_y - max_y;
+    cross_y = max_y;
+    center_y += diff;
+  }
+
+  if (cross_x < min_x) {
+    int diff = cross_x - min_x;
+    cross_x = min_x;
+    center_x += diff;
+  } else if (cross_x > max_x) {
+    int diff = cross_x - max_x;
+    cross_x = max_x;
+    center_x += diff;
+  }
 
   // Update all gameobjects
   std::list<GameObject *>::iterator it;
-  for (it = objects.begin(); it != objects.end(); ) {
+  for (it = objects.begin(); it != objects.end();) {
     // If update returns false, object should be deleted
     if ( (*it)->update (timeElapsed_ms) == false) {
       delete (*it);
@@ -297,13 +320,18 @@ int World::calcTimeElapsed() {
 
 void World::draw() {
   // Draw background
-  background->draw(gc, -center_x, -center_y);
-  cross->draw(gc, window_width/2, window_height/2);
+  background->draw (gc, -center_x, -center_y);
 
   // Draw all gameobjects
   std::list<GameObject *>::iterator it;
   for (it = objects.begin(); it != objects.end(); ++it)
-    (*it)->draw(center_x, center_y);
+    (*it)->draw (center_x, center_y);
+
+  // Draw cross
+  cross->set_scale (0.5, 0.5);
+  cross->draw (gc, cross_x, cross_y);
+  cross->set_scale (0.25, 0.25);
+  cross->draw (gc, cross_x, cross_y);
 }
 
 void World::on_window_close() {

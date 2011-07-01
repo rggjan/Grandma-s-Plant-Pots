@@ -29,6 +29,9 @@ class World {
     int center_x;
     int center_y;
 
+    int cross_x;
+    int cross_y;
+
     int width;
     int height;
 
