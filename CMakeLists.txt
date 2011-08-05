@@ -27,3 +27,5 @@ macro_ensure_out_of_source_build("${PROJECT_NAME} requires an out of source buil
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
  
 add_subdirectory(src)
+
+add_custom_target(test WORKING_DIRECTORY ${GPP_SOURCE_DIR} COMMAND python2.7 ./cpplint.py src/*.cpp src/*.h)

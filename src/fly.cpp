@@ -14,7 +14,7 @@ Fly::Fly(World *world)
 
   spriteDragonfly = new CL_Sprite(gc, "SpaceShootTurretShooting",
                                   &world->resources);
-  spriteDragonfly->set_play_loop(true);                                  
+  spriteDragonfly->set_play_loop(true);
 }
 
 void Fly::setPos(int x, int y) {
