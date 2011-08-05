@@ -10,11 +10,11 @@
 class CL_Sprite;
 
 class Fly : public GameObject {
-// Construction
+  // Construction
   public:
-    Fly(World *world);
+    explicit Fly(World *world);
 
-// Operations:
+  // Operations:
   public:
 
     void setPos(int x, int y);
@@ -23,7 +23,7 @@ class Fly : public GameObject {
     virtual void draw(int x, int y);
     virtual bool update(int timeElapsed_ms);
 
-// Implementation:
+  // Implementation:
   private:
     CL_Vec2f direction;
     CL_Sprite *spriteDragonfly;

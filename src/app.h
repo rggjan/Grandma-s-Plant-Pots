@@ -1,13 +1,18 @@
-#pragma once
+// Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#include <vector>
+#ifndef SRC_APP_H_
+#define SRC_APP_H_
+
 #include <ClanLib/core.h>
 
-class Application
-{
-public:
-	Application() {};
+#include <vector>
 
-	virtual int main(const std::vector<CL_String> &args);
+class Application {
+  public:
+    Application() {}
+    virtual ~Application() {}
+
+    virtual int main(const std::vector<CL_String> &args);
 };
 
+#endif  // SRC_APP_H_

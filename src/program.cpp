@@ -1,15 +1,15 @@
-#include "program.h"
+// Copyright 2011 Jan Rüegg <rggjan@gmail.com>
+
+#include "./program.h"
 
 #include <ClanLib/core.h>
 #include <ClanLib/display.h>
 #include <ClanLib/application.h>
 
-#include "app.h"
-
 // Choose the target renderer
 #define USE_OPENGL_2
-//#define USE_OPENGL_1
-//#define USE_SOFTWARE_RENDERER
+// #define USE_OPENGL_1
+// #define USE_SOFTWARE_RENDERER
 
 #ifdef USE_SOFTWARE_RENDERER
 #include <ClanLib/swrender.h>
@@ -22,6 +22,10 @@
 #ifdef USE_OPENGL_2
 #include <ClanLib/gl.h>
 #endif
+
+#include <vector>
+
+#include "./app.h"
 
 int Program::main(const std::vector<CL_String> &args) {
   try {
@@ -49,10 +53,11 @@ int Program::main(const std::vector<CL_String> &args) {
     Application app;
     int retval = app.main(args);
     return retval;
-  } catch(CL_Exception &exception) {
+  } catch(CL_Exception exception) {
     // Create a console window for text-output if not available
     CL_ConsoleWindow console("Console", 80, 160);
-    CL_Console::write_line("Exception caught: " + exception.get_message_and_stack_trace());
+    CL_Console::write_line("Exception caught: " +
+                           exception.get_message_and_stack_trace());
     console.display_close_message();
 
     return -1;

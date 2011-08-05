@@ -1,8 +1,10 @@
-#include "background.h"
+// Copyright 2011 Jan Rüegg <rggjan@gmail.com>
+
+#include "./background.h"
 
 #include <ClanLib/display.h>
 
-#include "world.h"
+#include "./world.h"
 
 Background::Background(World *world) : GameObject(world) {
   CL_GraphicContext gc = world->get_gc();
@@ -15,8 +17,8 @@ Background::~Background() {
 }
 
 void Background::setPos(int x, int y) {
-  posX = (float)x;
-  posY = (float)y;
+  posX = static_cast<float>(x);
+  posY = static_cast<float>(y);
 }
 
 void Background::draw(int x, int y) {
