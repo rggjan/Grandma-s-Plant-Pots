@@ -12,7 +12,6 @@
   <VirtualDirectory Name="src">
     <File Name="src/missile.cpp"/>
     <File Name="src/world.cpp"/>
-    <File Name="src/tankvehicle.cpp"/>
     <File Name="src/precomp.cpp"/>
     <File Name="src/app.cpp"/>
     <File Name="src/program.cpp"/>
@@ -23,7 +22,6 @@
     <File Name="src/missile.h"/>
     <File Name="src/precomp.h"/>
     <File Name="src/program.h"/>
-    <File Name="src/tankvehicle.h"/>
     <File Name="src/world.h"/>
     <File Name="src/background.cpp"/>
     <File Name="src/background.h"/>

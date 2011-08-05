@@ -9,7 +9,6 @@
 class CL_Surface;
 class CL_InputEvent;
 class GameObject;
-class TankVehicle;
 class Background;
 class Fly;
 
@@ -54,7 +53,6 @@ class World {
     bool hitCheck(CL_CollisionOutline *outline, GameObject *other);
 
     void addObject(GameObject *object);
-    void addTank(TankVehicle *tank);
     void addFly(Fly *fly);
 
     void run();
@@ -88,7 +86,6 @@ class World {
     float highlightValue;
 
     std::list<GameObject *> objects;
-    std::list<TankVehicle *> tanks;
     std::list<Fly *> flies;
 
     CL_DisplayWindow window;

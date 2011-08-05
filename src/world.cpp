@@ -5,7 +5,6 @@
 #include <ClanLib/core.h>
 #include <list>
 
-#include "./tankvehicle.h"
 #include "./building.h"
 #include "./background.h"
 #include "./fly.h"
@@ -68,22 +67,10 @@ World::~World() {
 }
 
 void World::initLevel() {
-  TankVehicle *tank1 = new TankVehicle (TankVehicle::SPACE_SHOOT, this);
-  tank1->setPos (667, 207);
-
-  TankVehicle *tank2 = new TankVehicle (TankVehicle::SPACE_SHOOT, this);
-  tank2->setPos (854, 422);
-
-  TankVehicle *tank3 = new TankVehicle (TankVehicle::SPACE_SHOOT, this);
-  tank3->setPos (400, 422);
-
   Building *helipad = new Building (Building::HELI_PAD, this);
   helipad->setPos (254, 222);
 
   addObject(helipad);
-  addTank(tank1);
-  addTank(tank2);
-  addTank(tank3);
 
   for (int i=0; i<10; i++) {
     Fly *fly = new Fly(this);
@@ -94,11 +81,6 @@ void World::initLevel() {
 
 void World::addObject (GameObject *object) {
   objects.push_back (object);
-}
-
-void World::addTank (TankVehicle *tank) {
-  objects.push_back (tank);
-  tanks.push_back (tank);
 }
 
 void World::addFly (Fly *tank) {
@@ -119,13 +101,6 @@ bool World::hitCheck (CL_CollisionOutline *outline, GameObject *other) {
 }
 
 void World::onKeyDown (const CL_InputEvent &key, const CL_InputState &state) {
-  // Fire missile on space
-  if (key.id == CL_KEY_SPACE) {
-    std::list<TankVehicle *>::iterator it;
-    for (it = tanks.begin(); it != tanks.end(); ++it)
-      (*it)->fire (false);
-  }
-
   if (key.id == CL_KEY_DOWN) {
     moving_down = true;
   }
@@ -141,7 +116,6 @@ void World::onKeyDown (const CL_InputEvent &key, const CL_InputState &state) {
   if (key.id == CL_KEY_RIGHT) {
     moving_right = true;
   }
-
 }
 
 void World::onKeyUp (const CL_InputEvent &key, const CL_InputState &state) {
@@ -174,43 +148,6 @@ void World::onMouseDown (const CL_InputEvent &key, const CL_InputState &state) {
 
     mouseDown = true;
   }
-
-  // Right click = move or fire
-  if (key.id == CL_MOUSE_RIGHT) {
-    std::list<TankVehicle *>::iterator it;
-    for (it = tanks.begin(); it != tanks.end(); ++it) {
-      TankVehicle *tank1 = (*it);
-
-      if (tank1->isSelected()) {
-        bool fire = false;
-
-        // Force firing
-        if (key.shift) {
-          if (key.ctrl)	// Nuke when ctrl and shift is pressed
-            tank1->fire (true);
-          else
-            tank1->fire (false);
-
-          fire = true;
-        } else {
-          // Check if clicked on other tank
-          std::list<TankVehicle *>::iterator it2;
-          for (it2 = tanks.begin(); it2 != tanks.end(); ++it2) {
-            TankVehicle *tank2 = (*it2);
-
-            if (tank1 != tank2 && tank2->hitCheck (key.mouse_pos.x, key.mouse_pos.y)) {
-              tank1->fire (false);
-              fire = true;
-            }
-          }
-        }
-
-        // No fire, move unit
-        if (fire == false)
-          tank1->setTargetPos (key.mouse_pos.x, key.mouse_pos.y);
-      }
-    }
-  }
 }
 
 void World::onMouseUp (const CL_InputEvent &key, const CL_InputState &state) {
@@ -220,17 +157,6 @@ void World::onMouseUp (const CL_InputEvent &key, const CL_InputState &state) {
     dragArea.bottom = key.mouse_pos.y;
 
     dragArea.normalize();
-
-    // Select/deselect units
-    std::list<TankVehicle *>::iterator it;
-    for (it = tanks.begin(); it != tanks.end(); ++it) {
-      TankVehicle *tank = (*it);
-
-      if (tank->hitCheck (dragArea))
-        tank->select();
-      else if (!key.shift)
-        tank->deselect();
-    }
 
     dragging = false;
   }
@@ -245,15 +171,6 @@ void World::onMouseMove (const CL_InputEvent &key, const CL_InputState &state) {
 
     dragArea.right = key.mouse_pos.x;
     dragArea.bottom = key.mouse_pos.y;
-  }
-
-  // Make turrets target mousepos
-  std::list<TankVehicle *>::iterator it;
-  for (it = tanks.begin(); it != tanks.end(); ++it) {
-    TankVehicle *tank = (*it);
-
-    if (tank->isSelected())
-      tank->setTurretTargetPos (key.mouse_pos.x, key.mouse_pos.y);
   }
 }
 
