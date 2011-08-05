@@ -45,7 +45,9 @@
 	</sprite>
 
 	<sprite name="SpaceShootTurretShooting">
-		<image file="Gfx/firefly.png" />
+		<image file="Gfx/käfer21.png" />
+		<image file="Gfx/käfer22.png" />
+		<animation pingpong="no" loop="false" speed="100"/>
                 <scale x="0.2" y="0.2" />
 	</sprite>
 
