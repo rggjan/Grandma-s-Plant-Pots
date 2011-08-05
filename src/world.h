@@ -26,13 +26,15 @@ class World {
     CL_GraphicContext get_gc() {
       return gc;
     }
+    bool quit;
 
     int center_x;
     int center_y;
 
     int cross_x;
     int cross_y;
-	float cross_speed;
+    
+    float cross_speed;
 
     int width;
     int height;
@@ -91,8 +93,6 @@ class World {
 
     CL_DisplayWindow window;
     CL_GraphicContext gc;
-
-    bool quit;
-};
+  };
 
 #endif  // SRC_WORLD_H_

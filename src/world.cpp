@@ -11,14 +11,14 @@
 #include "./fly.h"
 
 World::World (const CL_DisplayWindow &display_window)
-  : window (display_window),
-    quit (false),
+  : quit (false),
     center_x (0),
     center_y (0),
     moving_down (false),
     moving_up (false),
     moving_left (false),
-    moving_right (false) {
+    moving_right (false),
+    window (display_window) {
   CL_Slot slot_quit = window.sig_window_close().connect (this, &World::on_window_close);
 
   gc = window.get_gc();
@@ -296,6 +296,7 @@ void World::update() {
   if (moving_right)
     move_x += timeElapsed_ms*cross_speed;
 
+  //Cross Up
   if (move_y < 0) {
     if (cross_y > min_y) {
       cross_y += move_y;
@@ -305,7 +306,6 @@ void World::update() {
         cross_y = min_y;
       }
     }
-
     if (move_y < 0 && center_y > 0) {
       center_y += move_y;
       move_y = 0;
@@ -314,7 +314,6 @@ void World::update() {
         center_y = 0;
       }
     }
-
     if (move_y < 0) {
       cross_y += move_y;
       if (cross_y < 0)
@@ -322,6 +321,7 @@ void World::update() {
     }
   }
 
+  //Cross Left
   if (move_x < 0) {
     if (cross_x > min_x) {
       cross_x += move_x;
@@ -331,7 +331,6 @@ void World::update() {
         cross_x = min_x;
       }
     }
-
     if (move_x < 0 && center_x > 0) {
       center_x += move_x;
       move_x = 0;
@@ -340,7 +339,6 @@ void World::update() {
         center_x = 0;
       }
     }
-
     if (move_x < 0) {
       cross_x += move_x;
       if (cross_x < 0)
@@ -348,7 +346,7 @@ void World::update() {
     }
   }
 
-
+  // Cross Down
   if (move_y > 0) {
     if (cross_y < max_y) {
       cross_y += move_y;
@@ -358,8 +356,6 @@ void World::update() {
         cross_y = max_y;
       }
     }
-
-
     if (move_y > 0 && center_y < max_center_y) {
       center_y += move_y;
       move_y = 0;
@@ -368,14 +364,13 @@ void World::update() {
         center_y = max_center_y;
       }
     }
-
-    if (move_y > 0) {
+  if (move_y > 0) {
       cross_y += move_y;
       if (cross_y > window_height - 1)
         cross_y = window_height -1;
     }
   }
-
+  // Cross Right
   if (move_x > 0) {
     if (cross_x < max_x) {
       cross_x += move_x;
@@ -385,8 +380,6 @@ void World::update() {
         cross_x = max_x;
       }
     }
-
-
     if (move_x > 0 && center_x < max_center_x) {
       center_x += move_x;
       move_x = 0;
@@ -395,8 +388,7 @@ void World::update() {
         center_x = max_center_x;
       }
     }
-
-    if (move_x > 0) {
+  if (move_x > 0) {
       cross_x += move_x;
       if (cross_x > window_width - 1)
         cross_x = window_width -1;
@@ -408,7 +400,7 @@ void World::update() {
   for (fly_it = flies.begin(); fly_it != flies.end(); ++fly_it) {
     Fly *fly = (*fly_it);
 
-    fly->setTurretTargetPos(cross_x + center_x, cross_y + center_y);
+    fly->setTargetPos(cross_x + center_x, cross_y + center_y);
   }
 
   // Update all gameobjects
