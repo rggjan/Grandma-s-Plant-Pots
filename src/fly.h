@@ -1,39 +1,35 @@
-#pragma once
+// Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#include "gameobject.h"
+#ifndef SRC_FLY_H_
+#define SRC_FLY_H_
+
+#include <ClanLib/core.h>
+
+#include "./gameobject.h"
 
 class CL_Sprite;
-class CL_SoundBuffer;
-class World;
 
-class Fly : public GameObject
-{
+class Fly : public GameObject {
 // Construction
-public:
-	Fly(World *world);
+  public:
+    Fly(World *world);
 
 // Operations:
-public:
-	
-	void setPos(int x, int y);
-	
-  void setTargetPos(int x, int y);
+  public:
 
-	virtual void draw(int x, int y);
-	virtual bool update(int timeElapsed_ms);
+    void setPos(int x, int y);
+    void setTargetPos(int x, int y);
+
+    virtual void draw(int x, int y);
+    virtual bool update(int timeElapsed_ms);
 
 // Implementation:
-private:
-  CL_Vec2f direction;
-  CL_Vec2f target_direction;
+  private:
+    CL_Vec2f direction;
+    CL_Sprite *spriteDragonfly;
 
-	CL_Sprite *spriteDragonfly;
-
-
-	float turretAngle;
-	float destTurretAngle, deltaTurretAngle;
-
-	float posX, posY;
-	float destPosX, destPosY;
-	float deltaPosX, deltaPosY;
+    float posX, posY;
+    float destPosX, destPosY;
 };
+
+#endif  // SRC_FLY_H_

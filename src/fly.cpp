@@ -1,47 +1,53 @@
-#include "precomp.h"
+// Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#include "fly.h"
-#include "world.h"
+#include "./fly.h"
 
-#ifndef WIN32
-// For rand()
 #include <stdlib.h>
-#endif
+#include <ClanLib/display.h>
 
-Fly::Fly(World *world) : GameObject(world), direction(0, -1), target_direction(0, -1) {
+#include "./world.h"
+
+Fly::Fly(World *world)
+  : GameObject(world),
+    direction(0, -1) {
   CL_GraphicContext gc = world->get_gc();
 
-  spriteDragonfly = new CL_Sprite(gc, "SpaceShootTurretShooting", &world->resources);
+  spriteDragonfly = new CL_Sprite(gc, "SpaceShootTurretShooting",
+                                  &world->resources);
+  spriteDragonfly->set_play_loop(true);                                  
 }
 
 void Fly::setPos(int x, int y) {
-  posX = destPosX = (float)x;
-  posY = destPosY = (float)y;
+  posX = destPosX = static_cast<float>(x);
+  posY = destPosY = static_cast<float>(y);
 }
 
 void Fly::setTargetPos(int x, int y) {
-  target_direction = CL_Vec2f(x - posX, y - posY);
-  target_direction.normalize();
+  destPosX = x;
+  destPosY = y;
 }
-
-
 
 bool Fly::update(int timeElapsed_ms) {
   spriteDragonfly->update(timeElapsed_ms);
-  spriteDragonfly->set_play_loop(true);
 
+  // Calculate target direction
+  CL_Vec2f target_direction;
+  target_direction = CL_Vec2f(destPosX - posX, destPosY - posY);
+  target_direction.normalize();
+
+  // Update direction
   direction = direction + target_direction/10;
   direction.normalize();
 
-  // Calculate angle from current sprite position to mouse position
-
+  // Update angle
   CL_Vec2f up(0.0f, -1.0f);
   float angle = up.angle(direction).to_degrees();
-  if(direction.x < 0)
+  if (direction.x < 0)
     angle = 360.0f - angle;
 
   spriteDragonfly->set_angle(CL_Angle(angle, cl_degrees));
 
+  // Update position
   posX += direction.x * 10*(rand()%100)/100;
   posY += direction.y * 10*(rand()%100)/100;
 
