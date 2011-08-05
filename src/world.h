@@ -32,7 +32,7 @@ class World {
 
     int cross_x;
     int cross_y;
-    
+
     float cross_speed;
 
     int width;

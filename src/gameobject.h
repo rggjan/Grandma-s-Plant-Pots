@@ -13,6 +13,8 @@ class GameObject {
       this->world = world;
     }
 
+    virtual ~GameObject() {}
+
   // Attributes
   public:
 

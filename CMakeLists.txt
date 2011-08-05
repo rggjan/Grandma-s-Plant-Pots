@@ -28,4 +28,4 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
  
 add_subdirectory(src)
 
-add_custom_target(test WORKING_DIRECTORY ${GPP_SOURCE_DIR} COMMAND python2.7 ./cpplint.py src/*.cpp src/*.h)
+add_custom_target(test WORKING_DIRECTORY ${GPP_SOURCE_DIR} COMMAND python2.7 ./cpplint.py --filter=-runtime/threadsafe_fn src/*.cpp src/*.h)
