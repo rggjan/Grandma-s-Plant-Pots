@@ -6,25 +6,34 @@
 #include <ClanLib/sound.h>
 
 #include <vector>
+#include <sstream>
 
 #include "./world.h"
 
+using std::vector;
+
 int Application::main(const std::vector<CL_String> &args) {
-  // Create a window
-  CL_DisplayWindowDescription desc;
-  desc.set_title("Grandma's Plant Pots");
-  // Use this resolution (as caption is disabled)
-  desc.set_size(CL_Size(700, 700), true);
+  vector<CL_DisplayWindow*> windows;
 
-  CL_DisplayWindow window(desc);
+  for (int i=0; i<4; i++) {
+    // Create a window description
+    CL_DisplayWindowDescription desc;
+    std::ostringstream stream;
+    stream << "Grandma's Plant Pots: Player " << i;
+    desc.set_title(stream.str());
+    
+    // Use this resolution (as caption is disabled)
+    desc.set_size(CL_Size(400, 400), true);
 
-  CL_GraphicContext gc = window.get_gc();
+    CL_DisplayWindow* window = new CL_DisplayWindow(desc);
+    windows.push_back(window);
+  }
 
   CL_SoundOutput output(44100);
 
   try {
     // Create world
-    World world(window);
+    World world(windows);
 
     // Run the main loop
     world.run();

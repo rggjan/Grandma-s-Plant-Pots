@@ -8,7 +8,7 @@
 #include "./background.h"
 #include "./fly.h"
 
-World::World(const CL_DisplayWindow &display_window)
+World::World(std::vector<CL_DisplayWindow*> windows)
   : quit(false),
     center_x(0),
     center_y(0),
@@ -16,11 +16,12 @@ World::World(const CL_DisplayWindow &display_window)
     moving_up(false),
     moving_left(false),
     moving_right(false),
-    window(display_window) {
-  CL_Slot slot_quit = window.sig_window_close()
+    display_windows(windows) {
+  // TODO do this for all windows
+  CL_Slot slot_quit = display_windows[0]->sig_window_close()
                       .connect(this, &World::on_window_close);
 
-  gc = window.get_gc();
+  gc = display_windows[0]->get_gc();
   window_width = gc.get_width();
   window_height = gc.get_height();
 
@@ -38,15 +39,15 @@ World::World(const CL_DisplayWindow &display_window)
   height = background->get_height();
 
   // Receive mouse clicks
-  slotKeyDown = window.get_ic().get_keyboard().sig_key_down().
+  slotKeyDown = display_windows[0]->get_ic().get_keyboard().sig_key_down().
                 connect(this, &World::onKeyDown);
-  slotKeyUp = window.get_ic().get_keyboard().sig_key_up().
+  slotKeyUp = display_windows[0]->get_ic().get_keyboard().sig_key_up().
               connect(this, &World::onKeyUp);
-  slotMouseDown = window.get_ic().get_mouse().sig_key_down().
+  slotMouseDown = display_windows[0]->get_ic().get_mouse().sig_key_down().
                   connect(this, &World::onMouseDown);
-  slotMouseUp = window.get_ic().get_mouse().sig_key_up().
+  slotMouseUp = display_windows[0]->get_ic().get_mouse().sig_key_up().
                 connect(this, &World::onMouseUp);
-  slotMouseMove = window.get_ic().get_mouse().sig_pointer_move().
+  slotMouseMove = display_windows[0]->get_ic().get_mouse().sig_pointer_move().
                   connect(this, &World::onMouseMove);
 
   dragging = mouseDown = false;
@@ -165,14 +166,14 @@ void World::onMouseMove(const CL_InputEvent &key, const CL_InputState &state) {
 }
 
 void World::run() {
-  while (!window.get_ic().get_keyboard().get_keycode(CL_KEY_ESCAPE)) {
+  while (!display_windows[0]->get_ic().get_keyboard().get_keycode(CL_KEY_ESCAPE)) {
     if (quit)
       break;
 
     update();
     draw();
 
-    window.flip(1);
+    display_windows[0]->flip(1);
     CL_KeepAlive::process();
   };
 }

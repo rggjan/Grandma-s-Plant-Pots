@@ -15,7 +15,7 @@ class Fly;
 class World {
   // Construction
   public:
-    explicit World(const CL_DisplayWindow &display_window);
+    explicit World(std::vector<CL_DisplayWindow*> windows);
     ~World();
 
   // Attributes:
@@ -88,8 +88,9 @@ class World {
     std::list<GameObject *> objects;
     std::list<Fly *> flies;
 
-    CL_DisplayWindow window;
     CL_GraphicContext gc;
+
+    std::vector<CL_DisplayWindow*> display_windows;
   };
 
 #endif  // SRC_WORLD_H_

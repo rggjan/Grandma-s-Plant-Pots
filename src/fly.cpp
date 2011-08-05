@@ -48,8 +48,10 @@ bool Fly::update(int timeElapsed_ms) {
   spriteDragonfly->set_angle(CL_Angle(angle, cl_degrees));
 
   // Update position
-  posX += direction.x * 10*(rand()%100)/100;
-  posY += direction.y * 10*(rand()%100)/100;
+  //posX += direction.x * 10*(rand()%100)/100;
+  //posY += direction.y * 10*(rand()%100)/100;
+  posX += direction.x*3;
+  posY += direction.y*3;
 
   return true;
 }
