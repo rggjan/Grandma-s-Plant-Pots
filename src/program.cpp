@@ -1,5 +1,9 @@
-#include "precomp.h"
 #include "program.h"
+
+#include <ClanLib/core.h>
+#include <ClanLib/display.h>
+#include <ClanLib/application.h>
+
 #include "app.h"
 
 // Choose the target renderer

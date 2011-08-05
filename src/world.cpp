@@ -5,7 +5,6 @@
 #include <ClanLib/core.h>
 #include <list>
 
-#include "./building.h"
 #include "./background.h"
 #include "./fly.h"
 
@@ -67,11 +66,6 @@ World::~World() {
 }
 
 void World::initLevel() {
-  Building *helipad = new Building (Building::HELI_PAD, this);
-  helipad->setPos (254, 222);
-
-  addObject(helipad);
-
   for (int i=0; i<10; i++) {
     Fly *fly = new Fly(this);
     fly->setPos(i*10, i*10);
