@@ -39,7 +39,7 @@
 	</sprite>
 
 	<sprite name="Cross" base_angle="0">
-		<image file="Gfx/steuerkreuzhhh.png" />
+		<image file="Gfx/cross1.png" />
 		<translation origin="center"/>
 		<rotation origin="center"/>
 	</sprite>
