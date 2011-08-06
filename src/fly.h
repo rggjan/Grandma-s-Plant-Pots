@@ -21,7 +21,7 @@ class Fly : public GameObject {
     void setPos(int x, int y);
     void setTargetPos(int x, int y);
 
-    virtual void draw(int x, int y, CL_GraphicContext &gc);
+    virtual void draw(CL_GraphicContext &gc, int x, int y);
     virtual bool update(int timeElapsed_ms);
 
   // Implementation:

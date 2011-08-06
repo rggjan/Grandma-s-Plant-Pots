@@ -54,7 +54,7 @@ bool Fly::update(int timeElapsed_ms) {
   return true;
 }
 
-void Fly::draw(int x, int y, CL_GraphicContext &gc) {
+void Fly::draw(CL_GraphicContext &gc, int x, int y) {
   // Draw tankturret
   spriteDragonfly->draw(gc, posX-x, posY-y);
 }

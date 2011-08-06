@@ -21,7 +21,7 @@ class GameObject {
 
   // Operations
   public:
-    virtual void draw(int x, int y, CL_GraphicContext &gc) {}
+    virtual void draw(CL_GraphicContext &gc, int x, int y) {}
     virtual bool update(int timeElapsed_ms) {
       return false;
     }

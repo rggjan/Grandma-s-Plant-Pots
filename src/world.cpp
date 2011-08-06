@@ -11,45 +11,45 @@
 
 World::World(std::vector<CL_DisplayWindow*> windows)
   : quit(false),
-    moving_down(false),
-    moving_up(false),
-    moving_left(false),
-    moving_right(false) {
+    default_gc(windows[0]->get_gc()) {
 
   num_players = windows.size();
 
-  for (int i=0; i<4; i++) {
-    Player *player = new Player(windows[i]);
-    players.push_back(player);
-  }
-
-  // TODO do this for all windows
-  /*CL_Slot slot_quit = display_windows[0]->sig_window_close()
-                      .connect(this, &World::on_window_close);*/
-
   // Setup resources
   resources = CL_ResourceManager("resources.xml");
-  background = new CL_Sprite(*(players[0]->gc), "Background", &resources);
-  cross = new CL_Sprite(*(players[0]->gc), "Cross", &resources);
+  background = new CL_Sprite(default_gc, "Background", &resources);
+  cross = new CL_Sprite(default_gc, "Cross", &resources);
 
-  width = background->get_width();
-  height = background->get_height();
+  for (int i=0; i<num_players; i++) {
+    Player *player = new Player(windows[i], background->get_width(), background->get_height());
+    players.push_back(player);
 
-  // Receive mouse clicks
-  /*slotKeyDown = display_windows[0]->get_ic().get_keyboard().sig_key_down().
-                connect(this, &World::onKeyDown);
-  slotKeyUp = display_windows[0]->get_ic().get_keyboard().sig_key_up().
-              connect(this, &World::onKeyUp);
-  slotMouseDown = display_windows[0]->get_ic().get_mouse().sig_key_down().
-                  connect(this, &World::onMouseDown);
-  slotMouseUp = display_windows[0]->get_ic().get_mouse().sig_key_up().
-                connect(this, &World::onMouseUp);
-  slotMouseMove = display_windows[0]->get_ic().get_mouse().sig_pointer_move().
-                  connect(this, &World::onMouseMove);*/
+    slotQuit[i] = players[i]->display_window->sig_window_close()
+                  .connect(this, &World::on_window_close);
+  }
+
+  for (int i=0; i<num_players; i++) {
+    slotKeyDown[i] = players[i]->display_window->get_ic().get_keyboard().
+                     sig_key_down().connect(this, &World::onKeyDown);
+    slotKeyUp[i] = players[i]->display_window->get_ic().get_keyboard().
+                   sig_key_up().connect(this, &World::onKeyUp);
+  }
+  /*
+
+    slotMouseDown = windows[0]->get_ic().get_mouse().sig_key_down().
+                      connect(this, &World::onMouseDown);
+                        slotMouseDown = windows[0]->get_ic().get_keyboard().sig_key_down().
+
+                      connect(this, &World::onMouseDown);
+      slotMouseUp = windows[0]->get_ic().get_mouse().sig_key_up().
+                    connect(this, &World::onMouseUp);
+      slotMouseMove = windows[0]->get_ic().get_mouse().sig_pointer_move().
+                      connect(this, &World::onMouseMove);
+    */
 
   dragging = mouseDown = false;
 
-  // Add some tanks
+  // Add some objects
   initLevel();
 
   // Run the main loop
@@ -65,7 +65,7 @@ World::~World() {
 
 void World::initLevel() {
   for (int i = 0; i < 10; i++) {
-    Fly *fly = new Fly(this, players[0]->gc);
+    Fly *fly = new Fly(this, &default_gc);
     fly->setPos(i*10, i*10);
     addFly(fly);
   }
@@ -94,41 +94,42 @@ bool World::hitCheck(CL_CollisionOutline *outline, GameObject *other) {
 
 void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   if (key.id == CL_KEY_DOWN) {
-    moving_down = true;
+    players[0]->moving_down = true;
   }
 
   if (key.id == CL_KEY_UP) {
-    moving_up = true;
+    players[0]->moving_up = true;
   }
 
   if (key.id == CL_KEY_LEFT) {
-    moving_left = true;
+    players[0]->moving_left = true;
   }
 
   if (key.id == CL_KEY_RIGHT) {
-    moving_right = true;
+    players[0]->moving_right = true;
   }
 }
 
 void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
   if (key.id == CL_KEY_DOWN) {
-    moving_down = false;
+    players[0]->moving_down = false;
   }
 
   if (key.id == CL_KEY_UP) {
-    moving_up = false;
+    players[0]->moving_up = false;
   }
 
   if (key.id == CL_KEY_LEFT) {
-    moving_left = false;
+    players[0]->moving_left = false;
   }
 
   if (key.id == CL_KEY_RIGHT) {
-    moving_right = false;
+    players[0]->moving_right = false;
   }
 }
 
 void World::onMouseDown(const CL_InputEvent &key, const CL_InputState &state) {
+  std::cout << "mouse" << std::endl;
   // Start dragging on left click
   if (key.id == CL_MOUSE_LEFT) {
     dragArea.left = key.mouse_pos.x;
@@ -163,8 +164,7 @@ void World::onMouseMove(const CL_InputEvent &key, const CL_InputState &state) {
 }
 
 void World::run() {
-  //while (!display_windows[0]->get_ic().get_keyboard().get_keycode(CL_KEY_ESCAPE)) {
-  while (true) {
+  while (!players[0]->display_window->get_ic().get_keyboard().get_keycode(CL_KEY_ESCAPE)) {
     if (quit)
       break;
 
@@ -172,134 +172,21 @@ void World::run() {
     draw();
 
     for (int i=0; i<num_players; i++) {
-      players[i]->display_window->flip(1);
+      players[i]->display_window->flip(0);
+      if (i == num_players-1) {
+        players[i]->display_window->flip(1);
+      }
     }
-  
+
     CL_KeepAlive::process();
   }
 }
 
-void World::update() {/*
+void World::update() {
   int timeElapsed_ms = calcTimeElapsed();
-  const int min_border = 200;
-  const int min_x = min_border;
-  const int min_y = min_border;
-  const int max_x = window_width - min_border - 1;
-  const int max_y = window_height - min_border - 1;
 
-  const int max_center_x = width - window_width - 1;
-  const int max_center_y = height - window_height - 1;
-
-  int move_x = 0;
-  int move_y = 0;
-
-  // Move camera
-  if (moving_down)
-    move_y += timeElapsed_ms*cross_speed;
-  if (moving_up)
-    move_y -= timeElapsed_ms*cross_speed;
-  if (moving_left)
-    move_x -= timeElapsed_ms*cross_speed;
-  if (moving_right)
-    move_x += timeElapsed_ms*cross_speed;
-
-  // Cross Up
-  if (move_y < 0) {
-    if (cross_y > min_y) {
-      cross_y += move_y;
-      move_y = 0;
-      if (cross_y < min_y) {
-        move_y = cross_y - min_y;
-        cross_y = min_y;
-      }
-    }
-    if (move_y < 0 && center_y > 0) {
-      center_y += move_y;
-      move_y = 0;
-      if (center_y < 0) {
-        move_y = center_y - 0;
-        center_y = 0;
-      }
-    }
-    if (move_y < 0) {
-      cross_y += move_y;
-      if (cross_y < 0)
-        cross_y = 0;
-    }
-  }
-
-  // Cross Left
-  if (move_x < 0) {
-    if (cross_x > min_x) {
-      cross_x += move_x;
-      move_x = 0;
-      if (cross_x < min_x) {
-        move_x = cross_x - min_x;
-        cross_x = min_x;
-      }
-    }
-    if (move_x < 0 && center_x > 0) {
-      center_x += move_x;
-      move_x = 0;
-      if (center_x < 0) {
-        move_x = center_x - 0;
-        center_x = 0;
-      }
-    }
-    if (move_x < 0) {
-      cross_x += move_x;
-      if (cross_x < 0)
-        cross_x = 0;
-    }
-  }
-
-  // Cross Down
-  if (move_y > 0) {
-    if (cross_y < max_y) {
-      cross_y += move_y;
-      move_y = 0;
-      if (cross_y > max_y) {
-        move_y = cross_y - max_y;
-        cross_y = max_y;
-      }
-    }
-    if (move_y > 0 && center_y < max_center_y) {
-      center_y += move_y;
-      move_y = 0;
-      if (center_y > max_center_y) {
-        move_y = center_y - max_center_y;
-        center_y = max_center_y;
-      }
-    }
-    if (move_y > 0) {
-      cross_y += move_y;
-      if (cross_y > window_height - 1)
-        cross_y = window_height -1;
-    }
-  }
-  // Cross Right
-  if (move_x > 0) {
-    if (cross_x < max_x) {
-      cross_x += move_x;
-      move_x = 0;
-      if (cross_x > max_x) {
-        move_x = cross_x - max_x;
-        cross_x = max_x;
-      }
-    }
-    if (move_x > 0 && center_x < max_center_x) {
-      center_x += move_x;
-      move_x = 0;
-      if (center_x > max_center_x) {
-        move_x = center_x - max_center_x;
-        center_x = max_center_x;
-      }
-    }
-    if (move_x > 0) {
-      cross_x += move_x;
-      if (cross_x > window_width - 1)
-        cross_x = window_width -1;
-    }
+  for (int i=0; i<num_players; i++) {
+    players[i]->update(timeElapsed_ms);
   }
 
   // Make turrets target mousepos
@@ -307,7 +194,7 @@ void World::update() {/*
   for (fly_it = flies.begin(); fly_it != flies.end(); ++fly_it) {
     Fly *fly = (*fly_it);
 
-    fly->setTargetPos(cross_x + center_x, cross_y + center_y);
+    fly->setTargetPos(players[0]->cross_x + players[0]->center_x, players[0]->cross_y + players[0]->center_y);
   }
 
   // Update all gameobjects
@@ -334,27 +221,26 @@ int World::calcTimeElapsed() {
   int deltaTime = (newTime - lastTime);
   lastTime = newTime;
 
-  return deltaTime;*/
+  return deltaTime;
 }
 
 void World::draw() {
-
   for (int i=0; i<num_players; i++) {
     background->draw(*(players[i]->gc),
                      -players[i]->center_x,
                      -players[i]->center_y);
-  }
-/*
-  // Draw all gameobjects
-  std::list<GameObject *>::iterator it;
-  for (it = objects.begin(); it != objects.end(); ++it)
-    (*it)->draw(center_x, center_y);
 
-  // Draw cross
-  cross->set_scale(0.5, 0.5);
-  cross->draw(gc, cross_x, cross_y);
-  cross->set_scale(0.25, 0.25);
-  cross->draw(gc, cross_x, cross_y);*/
+    // Draw all gameobjects
+    std::list<GameObject *>::iterator it;
+    for (it = objects.begin(); it != objects.end(); ++it)
+      (*it)->draw(*(players[i]->gc), players[i]->center_x, players[i]->center_y);
+
+    // Draw cross
+    cross->set_scale(0.5, 0.5);
+    cross->draw(*(players[i]->gc), players[i]->cross_x, players[i]->cross_y);
+    cross->set_scale(0.25, 0.25);
+    cross->draw(*(players[i]->gc), players[i]->cross_x, players[i]->cross_y);
+  }
 
   /*
     CL_PixelBuffer buffer(256, 256, cl_rgba8);
