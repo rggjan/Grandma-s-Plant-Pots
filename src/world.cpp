@@ -7,6 +7,7 @@
 
 #include "./background.h"
 #include "./fly.h"
+#include "./flower.h"
 
 World::World(std::vector<CL_DisplayWindow*> windows)
   : quit(false),
@@ -17,7 +18,7 @@ World::World(std::vector<CL_DisplayWindow*> windows)
     moving_left(false),
     moving_right(false),
     display_windows(windows) {
-  // TODO do this for all windows
+  // TODO(rggjan) do this for all windows
   CL_Slot slot_quit = display_windows[0]->sig_window_close()
                       .connect(this, &World::on_window_close);
 
@@ -67,12 +68,17 @@ World::~World() {
 }
 
 void World::initLevel() {
-  for (int i = 0; i < 10; i++) {
+    Flower *flower = new Flower(this, 20, 30);
+    Flower *flower2 = new Flower(this, 59, 60);
+    addFlower(flower);
+    addFlower(flower2);
+    for (int i = 0; i < 10; i++) {
     Fly *fly = new Fly(this);
     fly->setPos(i*10, i*10);
     addFly(fly);
   }
 }
+//
 
 void World::addObject(GameObject *object) {
   objects.push_back(object);
@@ -81,6 +87,10 @@ void World::addObject(GameObject *object) {
 void World::addFly(Fly *tank) {
   objects.push_back(tank);
   flies.push_back(tank);
+}
+
+void World::addFlower(Flower *flower) {
+  objects.push_back(flower);
 }
 
 bool World::hitCheck(CL_CollisionOutline *outline, GameObject *other) {

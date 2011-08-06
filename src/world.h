@@ -11,6 +11,8 @@ class CL_InputEvent;
 class GameObject;
 class Background;
 class Fly;
+class Flower;
+
 
 class World {
   // Construction
@@ -54,7 +56,9 @@ class World {
 
     void addObject(GameObject *object);
     void addFly(Fly *fly);
-
+    
+    void addFlower(Flower *flower);
+    
     void run();
 
   // Implementation:
