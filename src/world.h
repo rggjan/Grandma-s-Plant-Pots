@@ -5,14 +5,19 @@
 
 #include <ClanLib/display.h>
 #include <list>
+#include <vector>
 
 class CL_Surface;
 class CL_InputEvent;
 class GameObject;
 class Background;
 class Fly;
+class Player;
 class Flower;
+<<<<<<< HEAD
 class Leaf;
+=======
+>>>>>>> 19bd6e7ae4d3fa40998a8728af51ec3c47117db3
 
 class World {
   // Construction
@@ -24,29 +29,12 @@ class World {
   public:
     CL_ResourceManager resources;
 
-    CL_GraphicContext get_gc() {
-      return gc;
-    }
     bool quit;
 
-    int center_x;
-    int center_y;
-
-    int cross_x;
-    int cross_y;
-
-    float cross_speed;
+    int num_players;
 
     int width;
     int height;
-
-    int window_width;
-    int window_height;
-
-    bool moving_down;
-    bool moving_up;
-    bool moving_left;
-    bool moving_right;
 
 // Operations:
   public:
@@ -64,7 +52,7 @@ class World {
     void run();
 
   // Implementation:
-  private:
+private:
     void draw();
     void update();
 
@@ -80,8 +68,10 @@ class World {
     CL_Slot slotMouseDown;
     CL_Slot slotMouseUp;
     CL_Slot slotMouseMove;
-    CL_Slot slotKeyDown;
-    CL_Slot slotKeyUp;
+    // TODO(rggjan): set as max players
+    CL_Slot slotKeyDown[8];
+    CL_Slot slotKeyUp[8];
+    CL_Slot slotQuit[8];
 
     CL_Sprite *background;
     CL_Sprite *cross;
@@ -93,10 +83,9 @@ class World {
 
     std::list<GameObject *> objects;
     std::list<Fly *> flies;
+    std::vector<Player*> players;
 
-    CL_GraphicContext gc;
-
-    std::vector<CL_DisplayWindow*> display_windows;
+    CL_GraphicContext default_gc;
   };
 
 #endif  // SRC_WORLD_H_

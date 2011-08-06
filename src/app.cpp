@@ -23,7 +23,8 @@ int Application::main(const std::vector<CL_String> &args) {
     desc.set_title(stream.str());
     
     // Use this resolution (as caption is disabled)
-    desc.set_size(CL_Size(400, 400), true);
+    //desc.set_size(CL_Size(500, 500), true);
+    desc.set_position(CL_Rect(400*(i%2), 400*(i/2), 400*(i%2)+400, 400*(i/2)+400), false);
 
     CL_DisplayWindow* window = new CL_DisplayWindow(desc);
     windows.push_back(window);

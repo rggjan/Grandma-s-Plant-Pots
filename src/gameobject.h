@@ -4,32 +4,23 @@
 #define SRC_GAMEOBJECT_H_
 
 class World;
-class CL_CollisionOutline;
+class CL_GraphicContext;
+class CL_Sprite;
 
 class GameObject {
-  // Construction
   public:
-    explicit GameObject(World *world) {
-      this->world = world;
-    }
+    // Construction
+    explicit GameObject(World *world);
+    virtual ~GameObject() {};
 
-    virtual ~GameObject() {}
-
-  // Attributes
-  public:
-
-  // Operations
-  public:
-    virtual void draw(int x, int y) {}
-    virtual bool update(int timeElapsed_ms) {
-      return false;
-    }
-    virtual bool hitCheck(CL_CollisionOutline *outline) {
-      return false;
-    }
+    // Operations
+    virtual void draw(CL_GraphicContext &gc, int x, int y);
+    virtual bool update(int timeElapsed_ms);
 
   protected:
+    CL_Sprite *spriteImage;
     World *world;
+    float posX, posY;    
 };
 
 #endif  // SRC_GAMEOBJECT_H_

@@ -21,6 +21,8 @@
     <File Name="src/background.h"/>
     <File Name="src/fly.cpp"/>
     <File Name="src/fly.h"/>
+    <File Name="src/player.cpp"/>
+    <File Name="src/player.h"/>
     <File Name="src/flower.cpp"/>
     <File Name="src/flower.h"/>
     <File Name="src/leaf.cpp"/>

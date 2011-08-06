@@ -10,19 +10,7 @@ class CL_Sprite;
 class Flower : public GameObject {
   // Construction
   public:
-    explicit Flower(World *world, float posX, float posY);
-
-  // Operations:
-  public:
-    virtual void draw(int x, int y);
-    virtual bool update(int timeElapsed_ms);
-
-  // Implementation:
-  private:
-    CL_Vec2f direction;
-    CL_Sprite *flowerGraphic;
-
-    float posX, posY;
+    Flower(World *world, CL_GraphicContext &gc, float posX, float posY);
 };
 
 #endif  // 
