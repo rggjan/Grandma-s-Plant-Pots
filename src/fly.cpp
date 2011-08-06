@@ -48,8 +48,8 @@ bool Fly::update(int timeElapsed_ms) {
   // Update position
   //posX += direction.x * 10*(rand()%100)/100;
   //posY += direction.y * 10*(rand()%100)/100;
-  posX += direction.x*3;
-  posY += direction.y*3;
+  posX += direction.x*3*timeElapsed_ms/10;
+  posY += direction.y*3*timeElapsed_ms/10;
 
   return true;
 }
