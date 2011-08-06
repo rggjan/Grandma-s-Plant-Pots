@@ -14,10 +14,7 @@ class Background;
 class Fly;
 class Player;
 class Flower;
-<<<<<<< HEAD
 class Leaf;
-=======
->>>>>>> 19bd6e7ae4d3fa40998a8728af51ec3c47117db3
 
 class World {
   // Construction

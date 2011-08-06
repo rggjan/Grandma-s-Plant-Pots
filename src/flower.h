@@ -5,8 +5,6 @@
 
 #include "./gameobject.h"
 
-class CL_Sprite;
-
 class Flower : public GameObject {
   // Construction
   public:

@@ -66,25 +66,16 @@ World::~World() {
 }
 
 void World::initLevel() {
-<<<<<<< HEAD
-    Flower *flower = new Flower(this, 20, 30);
-    Flower *flower2 = new Flower(this, 59, 60);
-    addFlower(flower);
-    addFlower(flower2);
-    Leaf *leaf = new Leaf(this, 30, 40);
-    Leaf *leaf2 = new Leaf(this, 69, 70);
-    addLeaf(leaf);
-    addLeaf(leaf2);
-    for (int i = 0; i < 10; i++) {
-    Fly *fly = new Fly(this);
-=======
   Flower *flower = new Flower(this, default_gc, 20, 30);
   Flower *flower2 = new Flower(this, default_gc, 59, 60);
   addFlower(flower);
   addFlower(flower2);
+  Leaf *leaf = new Leaf(this, default_gc, 30, 40);
+  Leaf *leaf2 = new Leaf(this, default_gc, 69, 70);
+  addLeaf(leaf);
+  addLeaf(leaf2);
   for (int i = 0; i < 10; i++) {
     Fly *fly = new Fly(this, default_gc);
->>>>>>> 19bd6e7ae4d3fa40998a8728af51ec3c47117db3
     fly->setPos(i*10, i*10);
     addFly(fly);
   }
