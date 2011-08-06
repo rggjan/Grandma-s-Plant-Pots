@@ -5,6 +5,7 @@
 
 class World;
 class CL_CollisionOutline;
+class CL_GraphicContext;
 
 class GameObject {
   // Construction
@@ -20,7 +21,7 @@ class GameObject {
 
   // Operations
   public:
-    virtual void draw(int x, int y) {}
+    virtual void draw(int x, int y, CL_GraphicContext &gc) {}
     virtual bool update(int timeElapsed_ms) {
       return false;
     }

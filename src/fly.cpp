@@ -7,12 +7,10 @@
 
 #include "./world.h"
 
-Fly::Fly(World *world)
+Fly::Fly(World *world, CL_GraphicContext *gc)
   : GameObject(world),
     direction(0, -1) {
-  CL_GraphicContext gc = world->get_gc();
-
-  spriteDragonfly = new CL_Sprite(gc, "SpaceShootTurretShooting",
+  spriteDragonfly = new CL_Sprite(*gc, "SpaceShootTurretShooting",
                                   &world->resources);
   spriteDragonfly->set_play_loop(true);
 }
@@ -56,9 +54,7 @@ bool Fly::update(int timeElapsed_ms) {
   return true;
 }
 
-void Fly::draw(int x, int y) {
-  CL_GraphicContext gc = world->get_gc();
-
+void Fly::draw(int x, int y, CL_GraphicContext &gc) {
   // Draw tankturret
   spriteDragonfly->draw(gc, posX-x, posY-y);
 }

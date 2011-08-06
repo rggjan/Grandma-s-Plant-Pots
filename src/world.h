@@ -11,6 +11,7 @@ class CL_InputEvent;
 class GameObject;
 class Background;
 class Fly;
+class Player;
 
 class World {
   // Construction
@@ -22,24 +23,12 @@ class World {
   public:
     CL_ResourceManager resources;
 
-    CL_GraphicContext get_gc() {
-      return gc;
-    }
     bool quit;
 
-    int center_x;
-    int center_y;
-
-    int cross_x;
-    int cross_y;
-
-    float cross_speed;
+    int num_players;
 
     int width;
     int height;
-
-    int window_width;
-    int window_height;
 
     bool moving_down;
     bool moving_up;
@@ -58,7 +47,7 @@ class World {
     void run();
 
   // Implementation:
-  private:
+private:
     void draw();
     void update();
 
@@ -87,10 +76,7 @@ class World {
 
     std::list<GameObject *> objects;
     std::list<Fly *> flies;
-
-    CL_GraphicContext gc;
-
-    std::vector<CL_DisplayWindow*> display_windows;
+    std::vector<Player*> players;
   };
 
 #endif  // SRC_WORLD_H_

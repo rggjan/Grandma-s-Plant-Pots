@@ -8,11 +8,12 @@
 #include "./gameobject.h"
 
 class CL_Sprite;
+class CL_GraphicContext;
 
 class Fly : public GameObject {
   // Construction
   public:
-    explicit Fly(World *world);
+    Fly(World *world, CL_GraphicContext *gc);
 
   // Operations:
   public:
@@ -20,7 +21,7 @@ class Fly : public GameObject {
     void setPos(int x, int y);
     void setTargetPos(int x, int y);
 
-    virtual void draw(int x, int y);
+    virtual void draw(int x, int y, CL_GraphicContext &gc);
     virtual bool update(int timeElapsed_ms);
 
   // Implementation:

@@ -7,39 +7,36 @@
 
 #include "./background.h"
 #include "./fly.h"
+#include "./player.h"
 
 World::World(std::vector<CL_DisplayWindow*> windows)
   : quit(false),
-    center_x(0),
-    center_y(0),
     moving_down(false),
     moving_up(false),
     moving_left(false),
-    moving_right(false),
-    display_windows(windows) {
-  // TODO do this for all windows
-  CL_Slot slot_quit = display_windows[0]->sig_window_close()
-                      .connect(this, &World::on_window_close);
+    moving_right(false) {
 
-  gc = display_windows[0]->get_gc();
-  window_width = gc.get_width();
-  window_height = gc.get_height();
+  num_players = windows.size();
+
+  for (int i=0; i<4; i++) {
+    Player *player = new Player(windows[i]);
+    players.push_back(player);
+  }
+
+  // TODO do this for all windows
+  /*CL_Slot slot_quit = display_windows[0]->sig_window_close()
+                      .connect(this, &World::on_window_close);*/
 
   // Setup resources
   resources = CL_ResourceManager("resources.xml");
-  background = new CL_Sprite(gc, "Background", &resources);
-  cross = new CL_Sprite(gc, "Cross", &resources);
-  cross_x = window_width/2;
-  cross_y = window_height/2;
-  center_x = 300;
-  center_y = 300;
-  cross_speed = 0.7;
+  background = new CL_Sprite(*(players[0]->gc), "Background", &resources);
+  cross = new CL_Sprite(*(players[0]->gc), "Cross", &resources);
 
   width = background->get_width();
   height = background->get_height();
 
   // Receive mouse clicks
-  slotKeyDown = display_windows[0]->get_ic().get_keyboard().sig_key_down().
+  /*slotKeyDown = display_windows[0]->get_ic().get_keyboard().sig_key_down().
                 connect(this, &World::onKeyDown);
   slotKeyUp = display_windows[0]->get_ic().get_keyboard().sig_key_up().
               connect(this, &World::onKeyUp);
@@ -48,7 +45,7 @@ World::World(std::vector<CL_DisplayWindow*> windows)
   slotMouseUp = display_windows[0]->get_ic().get_mouse().sig_key_up().
                 connect(this, &World::onMouseUp);
   slotMouseMove = display_windows[0]->get_ic().get_mouse().sig_pointer_move().
-                  connect(this, &World::onMouseMove);
+                  connect(this, &World::onMouseMove);*/
 
   dragging = mouseDown = false;
 
@@ -68,7 +65,7 @@ World::~World() {
 
 void World::initLevel() {
   for (int i = 0; i < 10; i++) {
-    Fly *fly = new Fly(this);
+    Fly *fly = new Fly(this, players[0]->gc);
     fly->setPos(i*10, i*10);
     addFly(fly);
   }
@@ -166,19 +163,23 @@ void World::onMouseMove(const CL_InputEvent &key, const CL_InputState &state) {
 }
 
 void World::run() {
-  while (!display_windows[0]->get_ic().get_keyboard().get_keycode(CL_KEY_ESCAPE)) {
+  //while (!display_windows[0]->get_ic().get_keyboard().get_keycode(CL_KEY_ESCAPE)) {
+  while (true) {
     if (quit)
       break;
 
     update();
     draw();
 
-    display_windows[0]->flip(1);
+    for (int i=0; i<num_players; i++) {
+      players[i]->display_window->flip(1);
+    }
+  
     CL_KeepAlive::process();
-  };
+  }
 }
 
-void World::update() {
+void World::update() {/*
   int timeElapsed_ms = calcTimeElapsed();
   const int min_border = 200;
   const int min_x = min_border;
@@ -333,13 +334,17 @@ int World::calcTimeElapsed() {
   int deltaTime = (newTime - lastTime);
   lastTime = newTime;
 
-  return deltaTime;
+  return deltaTime;*/
 }
 
 void World::draw() {
-  // Draw background
-  background->draw(gc, -center_x, -center_y);
 
+  for (int i=0; i<num_players; i++) {
+    background->draw(*(players[i]->gc),
+                     -players[i]->center_x,
+                     -players[i]->center_y);
+  }
+/*
   // Draw all gameobjects
   std::list<GameObject *>::iterator it;
   for (it = objects.begin(); it != objects.end(); ++it)
@@ -349,7 +354,7 @@ void World::draw() {
   cross->set_scale(0.5, 0.5);
   cross->draw(gc, cross_x, cross_y);
   cross->set_scale(0.25, 0.25);
-  cross->draw(gc, cross_x, cross_y);
+  cross->draw(gc, cross_x, cross_y);*/
 
   /*
     CL_PixelBuffer buffer(256, 256, cl_rgba8);
