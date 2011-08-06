@@ -8,6 +8,7 @@
 #include "./background.h"
 #include "./fly.h"
 #include "./flower.h"
+#include "./leaf.h"
 
 World::World(std::vector<CL_DisplayWindow*> windows)
   : quit(false),
@@ -72,6 +73,10 @@ void World::initLevel() {
     Flower *flower2 = new Flower(this, 59, 60);
     addFlower(flower);
     addFlower(flower2);
+    Leaf *leaf = new Leaf(this, 30, 40);
+    Leaf *leaf2 = new Leaf(this, 69, 70);
+    addLeaf(leaf);
+    addLeaf(leaf2);
     for (int i = 0; i < 10; i++) {
     Fly *fly = new Fly(this);
     fly->setPos(i*10, i*10);
@@ -91,6 +96,9 @@ void World::addFly(Fly *tank) {
 
 void World::addFlower(Flower *flower) {
   objects.push_back(flower);
+}
+void World::addLeaf(Leaf *leaf) {
+  objects.push_back(leaf);
 }
 
 bool World::hitCheck(CL_CollisionOutline *outline, GameObject *other) {

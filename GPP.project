@@ -23,6 +23,8 @@
     <File Name="src/fly.h"/>
     <File Name="src/flower.cpp"/>
     <File Name="src/flower.h"/>
+    <File Name="src/leaf.cpp"/>
+    <File Name="src/leaf.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="GPP">
     <File Name=".gitignore"/>
