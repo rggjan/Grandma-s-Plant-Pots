@@ -21,10 +21,14 @@ int Application::main(const std::vector<CL_String> &args) {
     std::ostringstream stream;
     stream << "Grandma's Plant Pots: Player " << i;
     desc.set_title(stream.str());
-    
+
     // Use this resolution (as caption is disabled)
     //desc.set_size(CL_Size(500, 500), true);
-    desc.set_position(CL_Rect(400*(i%2), 400*(i/2), 400*(i%2)+400, 400*(i/2)+400), false);
+    int window_width = 400;
+    int window_height = 500;
+    desc.set_position(CL_Rect(window_width*(i%2), window_height*(i/2),
+                              window_width*(i%2)+window_width,
+                              window_height*(i/2)+window_height), false);
 
     CL_DisplayWindow* window = new CL_DisplayWindow(desc);
     windows.push_back(window);
