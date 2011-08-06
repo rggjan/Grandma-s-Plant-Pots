@@ -7,12 +7,12 @@
 
 #include "./world.h"
 
-Fly::Fly(World *world, CL_GraphicContext *gc)
-  : GameObject(world),
+Fly::Fly(World *world, CL_GraphicContext &gc)
+  : GameObject(world),  
     direction(0, -1) {
-  spriteDragonfly = new CL_Sprite(*gc, "SpaceShootTurretShooting",
+  spriteImage = new CL_Sprite(gc, "SpaceShootTurretShooting",
                                   &world->resources);
-  spriteDragonfly->set_play_loop(true);
+  spriteImage->set_play_loop(true);
 }
 
 void Fly::setPos(int x, int y) {
@@ -26,7 +26,7 @@ void Fly::setTargetPos(int x, int y) {
 }
 
 bool Fly::update(int timeElapsed_ms) {
-  spriteDragonfly->update(timeElapsed_ms);
+  GameObject::update(timeElapsed_ms);
 
   // Calculate target direction
   CL_Vec2f target_direction;
@@ -43,7 +43,7 @@ bool Fly::update(int timeElapsed_ms) {
   if (direction.x < 0)
     angle = 360.0f - angle;
 
-  spriteDragonfly->set_angle(CL_Angle(angle, cl_degrees));
+  spriteImage->set_angle(CL_Angle(angle, cl_degrees));
 
   // Update position
   //posX += direction.x * 10*(rand()%100)/100;
@@ -52,9 +52,4 @@ bool Fly::update(int timeElapsed_ms) {
   posY += direction.y*3;
 
   return true;
-}
-
-void Fly::draw(CL_GraphicContext &gc, int x, int y) {
-  // Draw tankturret
-  spriteDragonfly->draw(gc, posX-x, posY-y);
 }

@@ -23,6 +23,9 @@
     <File Name="src/fly.h"/>
     <File Name="src/player.cpp"/>
     <File Name="src/player.h"/>
+    <File Name="src/flower.cpp"/>
+    <File Name="src/flower.h"/>
+    <File Name="src/gameobject.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="GPP">
     <File Name=".gitignore"/>

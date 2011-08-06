@@ -13,6 +13,7 @@ class GameObject;
 class Background;
 class Fly;
 class Player;
+class Flower;
 
 class World {
   // Construction
@@ -39,7 +40,9 @@ class World {
 
     void addObject(GameObject *object);
     void addFly(Fly *fly);
-
+    
+    void addFlower(Flower *flower);
+    
     void run();
 
   // Implementation:

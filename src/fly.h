@@ -13,7 +13,7 @@ class CL_GraphicContext;
 class Fly : public GameObject {
   // Construction
   public:
-    Fly(World *world, CL_GraphicContext *gc);
+    Fly(World *world, CL_GraphicContext &gc);
 
   // Operations:
   public:
@@ -21,15 +21,12 @@ class Fly : public GameObject {
     void setPos(int x, int y);
     void setTargetPos(int x, int y);
 
-    virtual void draw(CL_GraphicContext &gc, int x, int y);
     virtual bool update(int timeElapsed_ms);
 
   // Implementation:
   private:
     CL_Vec2f direction;
-    CL_Sprite *spriteDragonfly;
 
-    float posX, posY;
     float destPosX, destPosY;
 };
 

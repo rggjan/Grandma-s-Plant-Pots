@@ -16,7 +16,7 @@ set(ClanLib_MINOR_VERSION 2)
 find_package(ClanLib COMPONENTS App Display GL GL1 SWRender Sound REQUIRED)
 
 # Include clanlib
-include_directories(${ClanLib_INCLUDE_DIRS})
+include_directories(${ClanLib_INCLUDE_DIRS} /usr/local/include/ClanLib-2.2)
 
 # Add compiler flags
 add_definitions(${ClanLib_DEFINITIONS})
