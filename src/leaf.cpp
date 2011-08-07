@@ -7,9 +7,9 @@
 
 #include "./world.h"
 
-Leaf::Leaf(World *world, CL_GraphicContext &gc, float posX, float posY)
+Leaf::Leaf(World *world, CL_GraphicContext &gc, const CL_StringRef &name, float posX, float posY)
   : GameObject(world) {
-  spriteImage = new CL_Sprite(gc, "Leaf1", &world->resources);
+  spriteImage = new CL_Sprite(gc, name, &world->resources);
   spriteImage->set_play_loop(true);
 
   this->posX = posX;
