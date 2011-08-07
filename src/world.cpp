@@ -76,8 +76,13 @@ void World::initLevel() {
   addLeaf(leaf);
   addLeaf(leaf2);
   for (int i = 0; i < 10; i++) {
-    Fly *fly = new Fly(this, default_gc);
+    Fly *fly = new Fly(this, default_gc, "SpaceShootTurretShooting");
     fly->setPos(i*10, i*10);
+    addFly(fly);
+  }
+  for (int i = 0; i < 10; i++) {
+    Fly *fly = new Fly(this, default_gc, "Bug2");
+    fly->setPos(i*60, i*60);
     addFly(fly);
   }
 }

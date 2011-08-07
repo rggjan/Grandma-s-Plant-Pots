@@ -33,4 +33,13 @@
 		<animation pingpong="no" loop="false" speed="100"/>
                 <scale x="0.2" y="0.2" />
 	</sprite>
+
+	<sprite name="Bug2">
+		<image file="Gfx/bug2_1.png" />
+		<image file="Gfx/bug2_2.png" />
+		<translation origin="center"/>
+		<rotation origin="center"/>
+		<animation pingpong="no" loop="false" speed="100"/>
+                <scale x="0.2" y="0.2" />
+	</sprite>
 </resources>

@@ -11,11 +11,10 @@
 #define SPEED 300
 #define MAX_CURVE 5
 
-Fly::Fly(World *world, CL_GraphicContext &gc)
+Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name)
   : GameObject(world),  
     direction(0, -1) {
-  spriteImage = new CL_Sprite(gc, "SpaceShootTurretShooting",
-                                  &world->resources);
+  spriteImage = new CL_Sprite(gc, name, &world->resources);
   spriteImage->set_play_loop(true);
 }
 

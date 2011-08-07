@@ -13,7 +13,7 @@ class CL_GraphicContext;
 class Fly : public GameObject {
   // Construction
   public:
-    Fly(World *world, CL_GraphicContext &gc);
+    Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name);
 
   // Operations:
   public:
