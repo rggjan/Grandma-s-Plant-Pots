@@ -86,7 +86,6 @@ void World::initLevel() {
     addFly(fly);
   }
 }
-//
 
 void World::addObject(GameObject *object) {
   objects.push_back(object);

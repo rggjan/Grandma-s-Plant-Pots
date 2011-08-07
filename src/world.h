@@ -7,6 +7,8 @@
 #include <list>
 #include <vector>
 
+#define MAX_PLAYERS 8
+
 class CL_Surface;
 class CL_InputEvent;
 class GameObject;
@@ -66,9 +68,9 @@ private:
     CL_Slot slotMouseUp;
     CL_Slot slotMouseMove;
     // TODO(rggjan): set as max players
-    CL_Slot slotKeyDown[8];
-    CL_Slot slotKeyUp[8];
-    CL_Slot slotQuit[8];
+    CL_Slot slotKeyDown[MAX_PLAYERS];
+    CL_Slot slotKeyUp[MAX_PLAYERS];
+    CL_Slot slotQuit[MAX_PLAYERS];
 
     CL_Sprite *background;
     CL_Sprite *cross;

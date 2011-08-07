@@ -11,10 +11,12 @@
 #define SPEED 300
 #define MAX_CURVE 5
 
+
 Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name)
-  : GameObject(world),  
+  : GameObject(world),
     direction(0, -1) {
   spriteImage = new CL_Sprite(gc, name, &world->resources);
+
   spriteImage->set_play_loop(true);
 }
 
@@ -62,8 +64,8 @@ bool Fly::update(int timeElapsed_ms) {
   spriteImage->set_angle(CL_Angle(angle, cl_degrees));
 
   // Update position
-  //posX += direction.x * 10*(rand()%100)/100;
-  //posY += direction.y * 10*(rand()%100)/100;
+  // posX += direction.x * 10*(rand()%100)/100;
+  // posY += direction.y * 10*(rand()%100)/100;
   posX += direction.x*timeElapsed_ms/1000*SPEED;
   posY += direction.y*timeElapsed_ms/1000*SPEED;
 
