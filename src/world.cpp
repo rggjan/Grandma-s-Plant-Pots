@@ -4,6 +4,7 @@
 
 #include <ClanLib/core.h>
 #include <list>
+#include <vector>
 
 #include "./background.h"
 #include "./fly.h"
@@ -14,7 +15,6 @@
 World::World(std::vector<CL_DisplayWindow*> windows)
   : quit(false),
     default_gc(windows[0]->get_gc()) {
-
   num_players = windows.size();
 
   // Setup resources
@@ -22,15 +22,16 @@ World::World(std::vector<CL_DisplayWindow*> windows)
   background = new CL_Sprite(default_gc, "Background", &resources);
   cross = new CL_Sprite(default_gc, "Cross", &resources);
 
-  for (int i=0; i<num_players; i++) {
-    Player *player = new Player(windows[i], background->get_width(), background->get_height());
+  for (int i = 0; i < num_players; i++) {
+    Player *player = new Player(windows[i], background->get_width(),
+    background->get_height());
     players.push_back(player);
 
     slotQuit[i] = players[i]->display_window->sig_window_close()
                   .connect(this, &World::on_window_close);
   }
 
-  for (int i=0; i<num_players; i++) {
+  for (int i = 0; i < num_players; i++) {
     slotKeyDown[i] = players[i]->display_window->get_ic().get_keyboard().
                      sig_key_down().connect(this, &World::onKeyDown);
     slotKeyUp[i] = players[i]->display_window->get_ic().get_keyboard().
@@ -99,12 +100,12 @@ void World::addLeaf(Leaf *leaf) {
 }
 
 void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
-
   if (key.id == CL_KEY_SPACE) {
-    Flower *flower = new Flower(this, default_gc, players[0]->cross_x + players[0]->center_x, players[0]->cross_y + players[0]->center_y);
+    Flower *flower = new Flower(this, default_gc, players[0]->cross_x +
+        players[0]->center_x, players[0]->cross_y + players[0]->center_y);
     addFlower(flower);
   }
-//key Player 0 onKeyDown
+  // key Player 0 onKeyDown
   if (key.id == CL_KEY_DOWN) {
     players[0]->moving_down = true;
   }
@@ -120,7 +121,7 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   if (key.id == CL_KEY_RIGHT) {
     players[0]->moving_right = true;
   }
-//key Player 1 onKeyDown
+  // key Player 1 onKeyDown
   if (key.id == CL_KEY_S) {
     players[1]->moving_down = true;
   }
@@ -136,7 +137,7 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   if (key.id == CL_KEY_D) {
     players[1]->moving_right = true;
   }
-//key Player 2 onKeyDown
+  // key Player 2 onKeyDown
   if (key.id == CL_KEY_J) {
     players[2]->moving_down = true;
   }
@@ -152,7 +153,7 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   if (key.id == CL_KEY_K) {
     players[2]->moving_right = true;
   }
-//key Player 3 onKeyDown
+  // key Player 3 onKeyDown
   if (key.id == CL_KEY_DOWN) {
     players[3]->moving_down = true;
   }
@@ -168,11 +169,11 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   if (key.id == CL_KEY_RIGHT) {
     players[3]->moving_right = true;
   }
-// key Player 4 onKeyDown
+  // key Player 4 onKeyDown
 }
 void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
-// key Player 0 onKeyUp
- if (key.id == CL_KEY_DOWN) {
+  // key Player 0 onKeyUp
+  if (key.id == CL_KEY_DOWN) {
     players[0]->moving_down = false;
   }
 
@@ -188,7 +189,7 @@ void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
     players[0]->moving_right = false;
   }
 
-//key Player 1 onKeyUp
+  // key Player 1 onKeyUp
   if (key.id == CL_KEY_S) {
     players[1]->moving_down = false;
   }
@@ -204,7 +205,7 @@ void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
   if (key.id == CL_KEY_D) {
     players[1]->moving_right = false;
   }
-//key Player 2 onKeyUp
+  // key Player 2 onKeyUp
 
   if (key.id == CL_KEY_J) {
     players[2]->moving_down = false;
@@ -221,7 +222,7 @@ void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
   if (key.id == CL_KEY_K) {
     players[2]->moving_right = false;
   }
-//key Player 3 onKeyUp
+  // key Player 3 onKeyUp
 
   if (key.id == CL_KEY_DOWN) {
     players[3]->moving_down = false;
@@ -238,7 +239,7 @@ void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
   if (key.id == CL_KEY_RIGHT) {
     players[3]->moving_right = false;
   }
-//key Player 4 onKeyUp
+  // key Player 4 onKeyUp
 }
 
 void World::onMouseDown(const CL_InputEvent &key, const CL_InputState &state) {
@@ -277,14 +278,15 @@ void World::onMouseMove(const CL_InputEvent &key, const CL_InputState &state) {
 }
 
 void World::run() {
-  while (!players[0]->display_window->get_ic().get_keyboard().get_keycode(CL_KEY_ESCAPE)) {
+  while (!players[0]->display_window->get_ic().get_keyboard()
+      .get_keycode(CL_KEY_ESCAPE)) {
     if (quit)
       break;
 
     update();
     draw();
 
-    for (int i=0; i<num_players; i++) {
+    for (int i = 0; i < num_players; i++) {
       players[i]->display_window->flip(0);
       if (i == num_players-1) {
         players[i]->display_window->flip(1);
@@ -298,7 +300,7 @@ void World::run() {
 void World::update() {
   int timeElapsed_ms = calcTimeElapsed();
 
-  for (int i=0; i<num_players; i++) {
+  for (int i = 0; i < num_players; i++) {
     players[i]->update(timeElapsed_ms);
   }
 
@@ -307,7 +309,8 @@ void World::update() {
   for (fly_it = flies.begin(); fly_it != flies.end(); ++fly_it) {
     Fly *fly = (*fly_it);
 
-    fly->setTargetPos(players[0]->cross_x + players[0]->center_x, players[0]->cross_y + players[0]->center_y);
+  fly->setTargetPos(players[0]->cross_x + players[0]->center_x,
+      players[0]->cross_y + players[0]->center_y);
   }
 
   // Update all gameobjects
@@ -338,15 +341,15 @@ int World::calcTimeElapsed() {
 }
 
 void World::draw() {
-  for (int i=0; i<num_players; i++) {
+  for (int i = 0; i < num_players; i++) {
     background->draw(*(players[i]->gc),
                      -players[i]->center_x,
                      -players[i]->center_y);
 
     // Draw all gameobjects
     std::list<GameObject *>::iterator it;
-    for (it = objects.begin(); it != objects.end(); ++it)
-      (*it)->draw(*(players[i]->gc), players[i]->center_x, players[i]->center_y);
+    for (it = objects.begin(); it != objects.end(); ++it)(*it)->draw
+        (*(players[i]->gc), players[i]->center_x, players[i]->center_y);
 
     // Draw cross
     cross->set_scale(0.5, 0.5);
