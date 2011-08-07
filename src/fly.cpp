@@ -7,7 +7,7 @@
 
 #include "./world.h"
 
-#define CONSTANT_ANGLE true
+#define CONSTANT_ANGLE false
 #define SPEED 300
 #define MAX_CURVE 5
 
@@ -42,7 +42,7 @@ bool Fly::update(int timeElapsed_ms) {
   right.x = -direction.y;
   right.y = direction.x;
 
-#ifdef CONSTANT_ANGLE
+#if CONSTANT_ANGLE
   if (right.dot(target_direction) > 0)
     direction = direction + right*MAX_CURVE*timeElapsed_ms/1000;
   else
