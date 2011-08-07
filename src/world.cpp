@@ -99,6 +99,12 @@ void World::addLeaf(Leaf *leaf) {
 }
 
 void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
+
+  if (key.id == CL_KEY_SPACE) {
+    Flower *flower = new Flower(this, default_gc, players[0]->cross_x + players[0]->center_x, players[0]->cross_y + players[0]->center_y);
+    addFlower(flower);
+  }
+//key Player 0 onKeyDown
   if (key.id == CL_KEY_DOWN) {
     players[0]->moving_down = true;
   }
@@ -114,10 +120,59 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   if (key.id == CL_KEY_RIGHT) {
     players[0]->moving_right = true;
   }
-}
+//key Player 1 onKeyDown
+  if (key.id == CL_KEY_S) {
+    players[1]->moving_down = true;
+  }
 
-void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
+  if (key.id == CL_KEY_W) {
+    players[1]->moving_up = true;
+  }
+
+  if (key.id == CL_KEY_A) {
+    players[1]->moving_left = true;
+  }
+
+  if (key.id == CL_KEY_D) {
+    players[1]->moving_right = true;
+  }
+//key Player 2 onKeyDown
+  if (key.id == CL_KEY_J) {
+    players[2]->moving_down = true;
+  }
+
+  if (key.id == CL_KEY_U) {
+    players[2]->moving_up = true;
+  }
+
+  if (key.id == CL_KEY_H) {
+    players[2]->moving_left = true;
+  }
+
+  if (key.id == CL_KEY_K) {
+    players[2]->moving_right = true;
+  }
+//key Player 3 onKeyDown
   if (key.id == CL_KEY_DOWN) {
+    players[3]->moving_down = true;
+  }
+
+  if (key.id == CL_KEY_UP) {
+    players[3]->moving_up = true;
+  }
+
+  if (key.id == CL_KEY_LEFT) {
+    players[3]->moving_left = true;
+  }
+
+  if (key.id == CL_KEY_RIGHT) {
+    players[3]->moving_right = true;
+  }
+// key Player 4 onKeyDown
+}
+void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
+// key Player 0 onKeyUp
+ if (key.id == CL_KEY_DOWN) {
     players[0]->moving_down = false;
   }
 
@@ -132,6 +187,58 @@ void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
   if (key.id == CL_KEY_RIGHT) {
     players[0]->moving_right = false;
   }
+
+//key Player 1 onKeyUp
+  if (key.id == CL_KEY_S) {
+    players[1]->moving_down = false;
+  }
+
+  if (key.id == CL_KEY_W) {
+    players[1]->moving_up = false;
+  }
+
+  if (key.id == CL_KEY_A) {
+    players[1]->moving_left = false;
+  }
+
+  if (key.id == CL_KEY_D) {
+    players[1]->moving_right = false;
+  }
+//key Player 2 onKeyUp
+
+  if (key.id == CL_KEY_J) {
+    players[2]->moving_down = false;
+  }
+
+  if (key.id == CL_KEY_U) {
+    players[2]->moving_up = false;
+  }
+
+  if (key.id == CL_KEY_H) {
+    players[2]->moving_left = false;
+  }
+
+  if (key.id == CL_KEY_K) {
+    players[2]->moving_right = false;
+  }
+//key Player 3 onKeyUp
+
+  if (key.id == CL_KEY_DOWN) {
+    players[3]->moving_down = false;
+  }
+
+  if (key.id == CL_KEY_UP) {
+    players[3]->moving_up = false;
+  }
+
+  if (key.id == CL_KEY_LEFT) {
+    players[3]->moving_left = false;
+  }
+
+  if (key.id == CL_KEY_RIGHT) {
+    players[3]->moving_right = false;
+  }
+//key Player 4 onKeyUp
 }
 
 void World::onMouseDown(const CL_InputEvent &key, const CL_InputState &state) {
