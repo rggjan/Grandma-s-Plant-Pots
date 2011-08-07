@@ -12,10 +12,10 @@
 #define MAX_CURVE 5
 
 Fly::Fly(World *world, CL_GraphicContext &gc)
-  : GameObject(world),  
+  : GameObject(world),
     direction(0, -1) {
   spriteImage = new CL_Sprite(gc, "SpaceShootTurretShooting",
-                                  &world->resources);
+                              &world->resources);
   spriteImage->set_play_loop(true);
 }
 

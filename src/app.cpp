@@ -10,12 +10,14 @@
 
 #include "./world.h"
 
+#define NUM_PLAYERS 4
+
 using std::vector;
 
 int Application::main(const std::vector<CL_String> &args) {
   vector<CL_DisplayWindow*> windows;
 
-  for (int i=0; i<4; i++) {
+  for (int i = 0; i < NUM_PLAYERS; i++) {
     // Create a window description
     CL_DisplayWindowDescription desc;
     std::ostringstream stream;
