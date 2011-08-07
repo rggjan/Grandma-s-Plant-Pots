@@ -8,7 +8,7 @@
 class Leaf : public GameObject {
   // Construction
   public:
-    Leaf(World *world, CL_GraphicContext &gc, float posX, float posY);
+    Leaf(World *world, CL_GraphicContext &gc, const CL_StringRef &name, float posX, float posY);
 };
 
 #endif  // 
