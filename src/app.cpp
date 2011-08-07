@@ -25,7 +25,7 @@ int Application::main(const std::vector<CL_String> &args) {
     // Use this resolution (as caption is disabled)
     //desc.set_size(CL_Size(500, 500), true);
     int window_width = 400;
-    int window_height = 500;
+    int window_height = 400;
     desc.set_position(CL_Rect(window_width*(i%2), window_height*(i/2),
                               window_width*(i%2)+window_width,
                               window_height*(i/2)+window_height), false);

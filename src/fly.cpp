@@ -7,6 +7,10 @@
 
 #include "./world.h"
 
+#define CONSTANT_ANGLE false
+#define SPEED 300
+#define MAX_CURVE 5
+
 Fly::Fly(World *world, CL_GraphicContext &gc)
   : GameObject(world),  
     direction(0, -1) {
@@ -33,8 +37,21 @@ bool Fly::update(int timeElapsed_ms) {
   target_direction = CL_Vec2f(destPosX - posX, destPosY - posY);
   target_direction.normalize();
 
-  // Update direction
-  direction = direction + target_direction/10;
+  // Right angle
+  CL_Vec2f right;
+  right.x = -direction.y;
+  right.y = direction.x;
+
+#if CONSTANT_ANGLE
+  if (right.dot(target_direction) > 0)
+    direction = direction + right*MAX_CURVE*timeElapsed_ms/1000;
+  else
+    direction = direction - right*MAX_CURVE*timeElapsed_ms/1000;
+#else
+  direction = direction + target_direction*MAX_CURVE*timeElapsed_ms/1000;
+#endif
+
+  // Normalize direction
   direction.normalize();
 
   // Update angle
@@ -48,8 +65,8 @@ bool Fly::update(int timeElapsed_ms) {
   // Update position
   //posX += direction.x * 10*(rand()%100)/100;
   //posY += direction.y * 10*(rand()%100)/100;
-  posX += direction.x*3*timeElapsed_ms/10;
-  posY += direction.y*3*timeElapsed_ms/10;
+  posX += direction.x*timeElapsed_ms/1000*SPEED;
+  posY += direction.y*timeElapsed_ms/1000*SPEED;
 
   return true;
 }
