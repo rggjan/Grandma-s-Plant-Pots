@@ -360,6 +360,8 @@ void World::draw() {
     cross->draw(*(players[i]->gc), players[i]->relative_cross_x, players[i]->cross_y);
     cross->set_scale(0.25, 0.25);
     cross->draw(*(players[i]->gc), players[i]->relative_cross_x, players[i]->cross_y);
+
+    players[i]->draw();
   }
 
   /*

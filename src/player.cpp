@@ -1,7 +1,8 @@
 #include "player.h"
 
 #include <iostream>
-#include <ClanLib/display.h>
+
+#include <ClanLib/core.h>
 
 #define CROSS_SPEED 0.7
 #define MIN_BORDER 100
@@ -23,6 +24,11 @@ Player::Player(CL_DisplayWindow* window, int width, int height)
   cross_y = window_height/2;
   center_x = 300;
   center_y = 300;
+
+
+  CL_FontDescription desc;
+  desc.set_height(20);
+  default_font = CL_Font_System(*gc, desc);
 }
 
 void Player::update(int timeElapsed_ms) {
@@ -145,4 +151,10 @@ void Player::update(int timeElapsed_ms) {
         relative_cross_x = window_width -1;
     }
   }
+}
+
+void Player::draw() {
+  CL_String s("Life: ");
+  s += CL_StringHelp::int_to_text(3);
+  default_font.draw_text(*gc, CL_Pointf(10, 30), s, CL_Colorf::white);
 }
