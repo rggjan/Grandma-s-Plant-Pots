@@ -23,15 +23,13 @@ class Player {
     bool moving_left;
     bool moving_right;
 
-    int cross_x;
+    int relative_cross_x;
     int cross_y;
 
   private:
     int window_width, window_height;
 
     int map_width, map_height;
-
-    float cross_speed;
 };
 
 #endif  // SRC_PLAYER_H_

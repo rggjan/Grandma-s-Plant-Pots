@@ -105,7 +105,7 @@ void World::addLeaf(Leaf *leaf) {
 
 void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   if (key.id == CL_KEY_SPACE) {
-    Flower *flower = new Flower(this, default_gc, players[0]->cross_x +
+    Flower *flower = new Flower(this, default_gc, players[0]->relative_cross_x +
         players[0]->center_x, players[0]->cross_y + players[0]->center_y);
     addFlower(flower);
   }
@@ -313,7 +313,7 @@ void World::update() {
   for (fly_it = flies.begin(); fly_it != flies.end(); ++fly_it) {
     Fly *fly = (*fly_it);
 
-  fly->setTargetPos(players[0]->cross_x + players[0]->center_x,
+  fly->setTargetPos(players[0]->relative_cross_x + players[0]->center_x,
       players[0]->cross_y + players[0]->center_y);
   }
 
@@ -357,9 +357,9 @@ void World::draw() {
 
     // Draw cross
     cross->set_scale(0.5, 0.5);
-    cross->draw(*(players[i]->gc), players[i]->cross_x, players[i]->cross_y);
+    cross->draw(*(players[i]->gc), players[i]->relative_cross_x, players[i]->cross_y);
     cross->set_scale(0.25, 0.25);
-    cross->draw(*(players[i]->gc), players[i]->cross_x, players[i]->cross_y);
+    cross->draw(*(players[i]->gc), players[i]->relative_cross_x, players[i]->cross_y);
   }
 
   /*
