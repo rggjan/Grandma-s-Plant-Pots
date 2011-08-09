@@ -35,6 +35,8 @@ class Player {
     int window_width, window_height;
     int map_width, map_height;
     CL_Font default_font;
+
+    int energy;
 };
 
 #endif  // SRC_PLAYER_H_

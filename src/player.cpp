@@ -6,6 +6,7 @@
 
 #define CROSS_SPEED 0.7
 #define MIN_BORDER 100
+#define START_ENERGY 100
 
 Player::Player(CL_DisplayWindow* window, int width, int height)
   : moving_down(false),
@@ -13,7 +14,8 @@ Player::Player(CL_DisplayWindow* window, int width, int height)
     moving_left(false),
     moving_right(false),
     map_width(width),
-    map_height(height) {
+    map_height(height),
+    energy(START_ENERGY) {
   display_window = window;
 
   gc = &(display_window->get_gc());
@@ -154,7 +156,6 @@ void Player::update(int timeElapsed_ms) {
 }
 
 void Player::draw() {
-  CL_String s("Life: ");
-  s += CL_StringHelp::int_to_text(3);
-  default_font.draw_text(*gc, CL_Pointf(10, 30), s, CL_Colorf::white);
+  default_font.draw_text(*gc, CL_Pointf(10, 30),
+                         cl_format("Energy: %1", energy), CL_Colorf::white);
 }
