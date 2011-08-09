@@ -9,7 +9,7 @@
 
 #include "./world.h"
 
-#define NUM_PLAYERS 5
+#define NUM_PLAYERS 4
 
 using std::vector;
 

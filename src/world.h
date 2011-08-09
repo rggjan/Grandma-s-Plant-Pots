@@ -79,9 +79,11 @@ class World {
     CL_Rect dragArea;
     float highlightValue;
 
-    std::list<GameObject *> objects;
-    std::list<Fly *> flies;
+    std::vector<GameObject *> objects;
+    std::vector<Fly *> flies;
     std::vector<Player*> players;
+
+    std::vector<Flower*> flowers;
 
     CL_GraphicContext default_gc;
 };

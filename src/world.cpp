@@ -70,7 +70,7 @@ World::World(std::vector<CL_DisplayWindow*> windows)
 World::~World() {
   // Delete all gameobjects
   // TODO(rggjan): real cleanup of everything
-  std::list<GameObject *>::iterator it;
+  std::vector<GameObject *>::iterator it;
   for (it = objects.begin(); it != objects.end(); ++it)
     delete(*it);
 }
@@ -107,6 +107,7 @@ void World::addFly(Fly *tank) {
 
 void World::addFlower(Flower *flower) {
   objects.push_back(flower);
+  flowers.push_back(flower);
 }
 void World::addLeaf(Leaf *leaf) {
   objects.push_back(leaf);
@@ -364,7 +365,7 @@ void World::update() {
   }
 
   // Make turrets target mousepos
-  std::list<Fly *>::iterator fly_it;
+  std::vector<Fly *>::iterator fly_it;
   for (fly_it = flies.begin(); fly_it != flies.end(); ++fly_it) {
     Fly *fly = (*fly_it);
 
@@ -373,7 +374,7 @@ void World::update() {
   }
 
   // Update all gameobjects
-  std::list<GameObject *>::iterator it;
+  std::vector<GameObject *>::iterator it;
   for (it = objects.begin(); it != objects.end();) {
     // If update returns false, object should be deleted
     if ((*it)->update(timeElapsed_ms) == false) {
@@ -406,9 +407,15 @@ void World::draw() {
                      -players[i]->center_y);
 
     // Draw all gameobjects
-    std::list<GameObject *>::iterator it;
-    for (it = objects.begin(); it != objects.end(); ++it)(*it)->draw
-      (players[i]->gc, players[i]->center_x, players[i]->center_y);
+    // Flowers
+    std::vector<Flower *>::iterator it1;
+    for (it1 = flowers.begin(); it1 != flowers.end(); ++it1)
+      (*it1)->draw(players[i]->gc, players[i]->center_x, players[i]->center_y);
+
+    // Flies
+    std::vector<Fly *>::iterator it2;
+    for (it2 = flies.begin(); it2 != flies.end(); ++it2)
+      (*it2)->draw(players[i]->gc, players[i]->center_x, players[i]->center_y);
 
     // Draw cross
     cross->set_scale(0.5, 0.5);
