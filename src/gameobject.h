@@ -17,10 +17,11 @@ class GameObject {
     virtual void draw(CL_GraphicContext *gc, int x, int y);
     virtual bool update(int timeElapsed_ms);
 
+    float posX, posY;
+    
   protected:
     CL_Sprite *spriteImage;
     World *world;
-    float posX, posY;
 };
 
 #endif  // SRC_GAMEOBJECT_H_

@@ -14,9 +14,12 @@ class PlantPlayer : public Player {
     PlantPlayer(CL_DisplayWindow* window, World *world, int width, int height);
 
     void ActionButtonPressed();
+    void draw();
 
   private:
     std::vector<Flower*> flowers;
+
+    CL_Sprite *selectedImage;    
 };
 
 #endif  // SRC_PLANTPLAYER_H_

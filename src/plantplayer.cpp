@@ -13,6 +13,8 @@ using std::vector;
 PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
                          int width, int height)
   : Player(window, world, width, height) {
+
+  selectedImage = new CL_Sprite(*gc, "Cross", &world->resources);
 }
 
 void PlantPlayer::ActionButtonPressed() {
@@ -28,4 +30,30 @@ void PlantPlayer::ActionButtonPressed() {
   } else {
     // TODO(rggjan): beep
   }
-};
+}
+
+void PlantPlayer::draw() {
+   // TODO(rggjan): infinity
+  int best_dist = -1;
+  Flower *best_flower = NULL;
+
+  // Get nearest flower
+  std::vector<Flower *>::iterator it;
+  for (it = flowers.begin(); it != flowers.end(); ++it) {
+    int x_diff = (*it)->posX - (center_x + cross_x);
+    int y_diff = (*it)->posY - (center_y + cross_y);
+    int dist_squared = y_diff*y_diff + x_diff*x_diff;
+
+    if (best_flower == NULL || dist_squared < best_dist) {
+      best_dist = dist_squared;
+      best_flower = (*it);
+    }
+  }
+
+  selectedImage->set_alpha(0.5);
+
+  if (best_flower != NULL)
+    selectedImage->draw(*gc, best_flower->posX - center_x, best_flower->posY - center_y);
+
+  Player::draw();
+}

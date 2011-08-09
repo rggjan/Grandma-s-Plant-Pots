@@ -17,8 +17,8 @@ class Player {
 
     virtual void ActionButtonPressed() {}
 
-    void update(int timeElapsed_ms);
-    void draw();
+    virtual void update(int timeElapsed_ms);
+    virtual void draw();
 
     CL_GraphicContext *gc;
     CL_DisplayWindow *display_window;

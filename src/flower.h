@@ -13,12 +13,8 @@ class Flower : public GameObject {
   // Construction
   public:
     Flower(World *world, CL_GraphicContext *gc, float posX, float posY);
-    virtual void draw(CL_GraphicContext *gc, int x, int y);
 
     static const int energy_cost = ENERGY_COST;
-
-  private:
-    CL_Sprite *selectedImage;
 };
 
 #endif  // SRC_FLOWER_H_
