@@ -8,13 +8,16 @@
 class CL_DisplayWindow;
 class CL_GraphicContext;
 class CL_Font;
+class World;
 
 class Player {
   public:
-    Player(CL_DisplayWindow* window, int width, int height);
+    Player(CL_DisplayWindow* window, World* world, int width, int height);
+    virtual ~Player() {}
+
+    virtual void ActionButtonPressed() {}
 
     void update(int timeElapsed_ms);
-
     void draw();
 
     CL_GraphicContext *gc;
@@ -28,15 +31,16 @@ class Player {
     bool moving_left;
     bool moving_right;
 
-    int relative_cross_x;
-    int cross_y;
+    int cross_x, cross_y;
 
-  private:
+  protected:
     int window_width, window_height;
     int map_width, map_height;
     CL_Font default_font;
 
     int energy;
+
+    World* world;
 };
 
 #endif  // SRC_PLAYER_H_

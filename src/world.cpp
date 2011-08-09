@@ -11,6 +11,7 @@
 #include "./player.h"
 #include "./flower.h"
 #include "./leaf.h"
+#include "./plantplayer.h"
 
 World::World(std::vector<CL_DisplayWindow*> windows)
   : quit(false),
@@ -23,8 +24,15 @@ World::World(std::vector<CL_DisplayWindow*> windows)
   cross = new CL_Sprite(default_gc, "Cross", &resources);
 
   for (int i = 0; i < num_players; i++) {
-    Player *player = new Player(windows[i], background->get_width(),
-                                background->get_height());
+    Player *player;
+
+    if (i%2 == 0) {
+      player = new PlantPlayer(windows[i], this, background->get_width(),
+                               background->get_height());
+    } else {
+      player = new PlantPlayer(windows[i], this, background->get_width(),
+                               background->get_height());
+    }
     players.push_back(player);
 
     slotQuit[i] = players[i]->display_window->sig_window_close()
@@ -61,6 +69,7 @@ World::World(std::vector<CL_DisplayWindow*> windows)
 
 World::~World() {
   // Delete all gameobjects
+  // TODO(rggjan): real cleanup of everything
   std::list<GameObject *>::iterator it;
   for (it = objects.begin(); it != objects.end(); ++it)
     delete(*it);
@@ -104,16 +113,12 @@ void World::addLeaf(Leaf *leaf) {
 }
 
 void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
-  if (key.id == CL_KEY_SPACE) {
-    Flower *flower = new Flower(this, &default_gc,
-                                players[0]->relative_cross_x
-                                + players[0]->center_x,
-                                players[0]->cross_y
-                                + players[0]->center_y);
-    addFlower(flower);
-  }
   // key Player 0 onKeyDown
   if (num_players > 0) {
+    if (key.id == CL_KEY_SPACE) {
+      players[0]->ActionButtonPressed();
+    }
+
     if (key.id == CL_KEY_DOWN) {
       players[0]->moving_down = true;
     }
@@ -363,7 +368,7 @@ void World::update() {
   for (fly_it = flies.begin(); fly_it != flies.end(); ++fly_it) {
     Fly *fly = (*fly_it);
 
-    fly->setTargetPos(players[0]->relative_cross_x + players[0]->center_x,
+    fly->setTargetPos(players[0]->cross_x + players[0]->center_x,
                       players[0]->cross_y + players[0]->center_y);
   }
 
@@ -408,10 +413,10 @@ void World::draw() {
     // Draw cross
     cross->set_scale(0.5, 0.5);
     cross->draw(*(players[i]->gc),
-                players[i]->relative_cross_x, players[i]->cross_y);
+                players[i]->cross_x, players[i]->cross_y);
     cross->set_scale(0.25, 0.25);
     cross->draw(*(players[i]->gc),
-                players[i]->relative_cross_x, players[i]->cross_y);
+                players[i]->cross_x, players[i]->cross_y);
 
     players[i]->draw();
   }

@@ -38,6 +38,7 @@ void get_display_size(int* width, int* height, int* border) {
 
 int Application::main(const std::vector<CL_String> &args) {
   vector<CL_DisplayWindow*> windows;
+  windows.resize(NUM_PLAYERS);
 
   int width;
   int height;
@@ -73,7 +74,7 @@ int Application::main(const std::vector<CL_String> &args) {
     }
 
     CL_DisplayWindow* window = new CL_DisplayWindow(desc);
-    windows.push_back(window);
+    windows[i] = window;
   }
 
   CL_SoundOutput output(44100);
