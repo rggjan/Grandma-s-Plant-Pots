@@ -12,11 +12,11 @@ class CL_Font;
 class Player {
   public:
     Player(CL_DisplayWindow* window, int width, int height);
-    
+
     void update(int timeElapsed_ms);
 
     void draw();
-    
+
     CL_GraphicContext *gc;
     CL_DisplayWindow *display_window;
 

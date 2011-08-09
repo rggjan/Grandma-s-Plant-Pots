@@ -1,3 +1,5 @@
+// Copyright 2011 Jan Rüegg <rggjan@gmail.com>
+
 #ifndef SRC_LEAF_H_
 #define SRC_LEAF_H_
 
@@ -8,7 +10,8 @@
 class Leaf : public GameObject {
   // Construction
   public:
-    Leaf(World *world, CL_GraphicContext &gc, const CL_StringRef &name, float posX, float posY);
+    Leaf(World *world, CL_GraphicContext &gc, const CL_StringRef &name,
+    float posX, float posY);
 };
 
-#endif  // 
+#endif  // SRC_LEAF_H_

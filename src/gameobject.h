@@ -11,16 +11,16 @@ class GameObject {
   public:
     // Construction
     explicit GameObject(World *world);
-    virtual ~GameObject() {};
+    virtual ~GameObject() {}
 
     // Operations
-    virtual void draw(CL_GraphicContext &gc, int x, int y);
+    virtual void draw(CL_GraphicContext *gc, int x, int y);
     virtual bool update(int timeElapsed_ms);
 
   protected:
     CL_Sprite *spriteImage;
     World *world;
-    float posX, posY;    
+    float posX, posY;
 };
 
 #endif  // SRC_GAMEOBJECT_H_

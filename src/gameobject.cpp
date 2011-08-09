@@ -4,9 +4,9 @@
 
 #include <ClanLib/display.h>
 
-void GameObject::draw(CL_GraphicContext &gc, int x, int y) {
+void GameObject::draw(CL_GraphicContext *gc, int x, int y) {
   // Draw graphic
-  spriteImage->draw(gc, posX-x, posY-y);
+  spriteImage->draw(*gc, posX-x, posY-y);
 }
 
 bool GameObject::update(int timeElapsed_ms) {

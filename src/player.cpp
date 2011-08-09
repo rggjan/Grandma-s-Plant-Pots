@@ -1,6 +1,6 @@
-#include "player.h"
+// Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#include <iostream>
+#include "./player.h"
 
 #include <ClanLib/core.h>
 

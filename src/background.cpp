@@ -7,8 +7,8 @@
 #include "./world.h"
 
 Background::Background(World *world) : GameObject(world) {
-  //CL_GraphicContext gc = world->get_gc();
-  //sprite = new CL_Sprite(gc, "Background", &world->resources);
+  // CL_GraphicContext gc = world->get_gc();
+  // sprite = new CL_Sprite(gc, "Background", &world->resources);
 }
 
 Background::~Background() {
@@ -21,8 +21,8 @@ void Background::setPos(int x, int y) {
 }
 
 void Background::draw(int x, int y) {
-  //CL_GraphicContext gc = world->get_gc();
-  //sprite->draw(gc, posX-x, posY-y);
+  // CL_GraphicContext gc = world->get_gc();
+  // sprite->draw(gc, posX-x, posY-y);
 }
 
 bool Background::update(int timeElapsed_ms) {

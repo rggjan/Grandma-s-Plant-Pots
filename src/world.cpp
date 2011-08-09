@@ -24,7 +24,7 @@ World::World(std::vector<CL_DisplayWindow*> windows)
 
   for (int i = 0; i < num_players; i++) {
     Player *player = new Player(windows[i], background->get_width(),
-    background->get_height());
+                                background->get_height());
     players.push_back(player);
 
     slotQuit[i] = players[i]->display_window->sig_window_close()
@@ -67,12 +67,12 @@ World::~World() {
 }
 
 void World::initLevel() {
-  Flower *flower = new Flower(this, default_gc, 20, 30);
-  Flower *flower2 = new Flower(this, default_gc, 59, 60);
+  Flower *flower = new Flower(this, &default_gc, 20, 30);
+  Flower *flower2 = new Flower(this, &default_gc, 59, 60);
   addFlower(flower);
   addFlower(flower2);
   Leaf *leaf = new Leaf(this, default_gc, "Leaf1", 30, 40);
-   addLeaf(leaf);
+  addLeaf(leaf);
   Leaf *leaf2 = new Leaf(this, default_gc, "Leaf2", 69, 70);
   addLeaf(leaf2);
   for (int i = 0; i < 10; i++) {
@@ -105,8 +105,11 @@ void World::addLeaf(Leaf *leaf) {
 
 void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   if (key.id == CL_KEY_SPACE) {
-    Flower *flower = new Flower(this, default_gc, players[0]->relative_cross_x +
-        players[0]->center_x, players[0]->cross_y + players[0]->center_y);
+    Flower *flower = new Flower(this, &default_gc,
+                                players[0]->relative_cross_x
+                                + players[0]->center_x,
+                                players[0]->cross_y
+                                + players[0]->center_y);
     addFlower(flower);
   }
   // key Player 0 onKeyDown
@@ -283,7 +286,7 @@ void World::onMouseMove(const CL_InputEvent &key, const CL_InputState &state) {
 
 void World::run() {
   while (!players[0]->display_window->get_ic().get_keyboard()
-      .get_keycode(CL_KEY_ESCAPE)) {
+         .get_keycode(CL_KEY_ESCAPE)) {
     if (quit)
       break;
 
@@ -313,8 +316,8 @@ void World::update() {
   for (fly_it = flies.begin(); fly_it != flies.end(); ++fly_it) {
     Fly *fly = (*fly_it);
 
-  fly->setTargetPos(players[0]->relative_cross_x + players[0]->center_x,
-      players[0]->cross_y + players[0]->center_y);
+    fly->setTargetPos(players[0]->relative_cross_x + players[0]->center_x,
+                      players[0]->cross_y + players[0]->center_y);
   }
 
   // Update all gameobjects
@@ -353,13 +356,15 @@ void World::draw() {
     // Draw all gameobjects
     std::list<GameObject *>::iterator it;
     for (it = objects.begin(); it != objects.end(); ++it)(*it)->draw
-        (*(players[i]->gc), players[i]->center_x, players[i]->center_y);
+      (players[i]->gc, players[i]->center_x, players[i]->center_y);
 
     // Draw cross
     cross->set_scale(0.5, 0.5);
-    cross->draw(*(players[i]->gc), players[i]->relative_cross_x, players[i]->cross_y);
+    cross->draw(*(players[i]->gc),
+                players[i]->relative_cross_x, players[i]->cross_y);
     cross->set_scale(0.25, 0.25);
-    cross->draw(*(players[i]->gc), players[i]->relative_cross_x, players[i]->cross_y);
+    cross->draw(*(players[i]->gc),
+                players[i]->relative_cross_x, players[i]->cross_y);
 
     players[i]->draw();
   }

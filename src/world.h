@@ -19,12 +19,12 @@ class Flower;
 class Leaf;
 
 class World {
-  // Construction
+    // Construction
   public:
     explicit World(std::vector<CL_DisplayWindow*> windows);
     ~World();
 
-  // Attributes:
+    // Attributes:
   public:
     CL_ResourceManager resources;
 
@@ -35,7 +35,7 @@ class World {
     int width;
     int height;
 
-// Operations:
+  // Operations:
   public:
     void initLevel();
 
@@ -43,15 +43,13 @@ class World {
 
     void addObject(GameObject *object);
     void addFly(Fly *fly);
-    
     void addFlower(Flower *flower);
-    
     void addLeaf(Leaf *leaf);
-    
+
     void run();
 
   // Implementation:
-private:
+  private:
     void draw();
     void update();
 
@@ -67,6 +65,7 @@ private:
     CL_Slot slotMouseDown;
     CL_Slot slotMouseUp;
     CL_Slot slotMouseMove;
+
     // TODO(rggjan): set as max players
     CL_Slot slotKeyDown[MAX_PLAYERS];
     CL_Slot slotKeyUp[MAX_PLAYERS];
@@ -85,6 +84,6 @@ private:
     std::vector<Player*> players;
 
     CL_GraphicContext default_gc;
-  };
+};
 
 #endif  // SRC_WORLD_H_

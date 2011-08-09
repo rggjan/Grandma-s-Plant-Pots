@@ -64,8 +64,10 @@ int Application::main(const std::vector<CL_String> &args) {
                                   (i+1)*window_width, window_height),
                           false);
       } else {
-        desc.set_position(CL_Rect((i-top_players)*window_width, border+window_height,
-                                  (i-top_players+1)*window_width, border+2*window_height),
+        desc.set_position(CL_Rect((i-top_players)*window_width,
+                                  border+window_height,
+                                  (i-top_players+1)*window_width,
+                                  border+2*window_height),
                           false);
       }
     }
