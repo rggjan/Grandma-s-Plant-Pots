@@ -13,7 +13,7 @@ set(ClanLib_MAJOR_VERSION 2)
 set(ClanLib_MINOR_VERSION 2)
 
 # Add clanlib dependency
-find_package(ClanLib COMPONENTS App Display GL GL1 SWRender Sound REQUIRED)
+find_package(ClanLib COMPONENTS App Display GL GL1 SWRender Sound Vorbis REQUIRED)
 
 # Include clanlib
 include_directories(${ClanLib_INCLUDE_DIRS} /usr/local/include/ClanLib-2.2)

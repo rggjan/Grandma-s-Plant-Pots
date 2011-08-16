@@ -3,6 +3,7 @@
 #include "./world.h"
 
 #include <ClanLib/core.h>
+#include <ClanLib/sound.h>
 #include <list>
 #include <vector>
 
@@ -338,6 +339,11 @@ void World::onMouseMove(const CL_InputEvent &key, const CL_InputState &state) {
 }
 
 void World::run() {
+  CL_SoundBuffer *sound = new CL_SoundBuffer("BackgroundMusic", &resources);
+	sound->set_volume(1.0f);
+	sound->prepare();
+	sound->play();  
+
   while (!players[0]->display_window->get_ic().get_keyboard()
          .get_keycode(CL_KEY_ESCAPE)) {
     if (quit)
