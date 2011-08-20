@@ -22,7 +22,6 @@ World::World(std::vector<CL_DisplayWindow*> windows)
   // Setup resources
   resources = CL_ResourceManager("resources.xml");
   background = new CL_Sprite(default_gc, "Background", &resources);
-  cross = new CL_Sprite(default_gc, "Cross", &resources);
 
   for (int i = 0; i < num_players; i++) {
     Player *player;
@@ -422,14 +421,6 @@ void World::draw() {
     std::vector<Fly *>::iterator it2;
     for (it2 = flies.begin(); it2 != flies.end(); ++it2)
       (*it2)->draw(players[i]->gc, players[i]->center_x, players[i]->center_y);
-
-    // Draw cross
-    cross->set_scale(0.5, 0.5);
-    cross->draw(*(players[i]->gc),
-                players[i]->cross_x, players[i]->cross_y);
-    cross->set_scale(0.25, 0.25);
-    cross->draw(*(players[i]->gc),
-                players[i]->cross_x, players[i]->cross_y);
 
     players[i]->draw();
   }

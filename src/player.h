@@ -37,10 +37,13 @@ class Player {
     int window_width, window_height;
     int map_width, map_height;
     CL_Font default_font;
+    CL_Sprite *cross;
 
     int energy;
 
     World* world;
+
+    virtual void draw_cross();
 };
 
 #endif  // SRC_PLAYER_H_

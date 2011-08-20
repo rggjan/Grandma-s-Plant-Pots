@@ -14,6 +14,8 @@ class Flower : public GameObject {
   public:
     Flower(World *world, CL_GraphicContext *gc, float posX, float posY);
 
+    void drawRed(CL_GraphicContext *gc, int x, int y);    
+
     static const int energy_cost = ENERGY_COST;
 };
 

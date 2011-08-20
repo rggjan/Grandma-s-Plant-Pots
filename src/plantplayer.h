@@ -9,6 +9,11 @@
 
 class Flower;
 
+enum State {
+  Idle,
+  Building
+};
+
 class PlantPlayer : public Player {
   public:
     PlantPlayer(CL_DisplayWindow* window, World *world, int width, int height);
@@ -18,8 +23,13 @@ class PlantPlayer : public Player {
 
   private:
     std::vector<Flower*> flowers;
+    State state;
 
     CL_Sprite *selectedImage;
+    Flower *tmpFlower;
+
+  protected:
+    virtual void draw_cross();
 };
 
 #endif  // SRC_PLANTPLAYER_H_

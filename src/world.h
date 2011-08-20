@@ -72,7 +72,6 @@ class World {
     CL_Slot slotQuit[MAX_PLAYERS];
 
     CL_Sprite *background;
-    CL_Sprite *cross;
 
     bool dragging;
     bool mouseDown;

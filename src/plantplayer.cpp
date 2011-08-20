@@ -12,11 +12,27 @@ using std::vector;
 
 PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
                          int width, int height)
-  : Player(window, world, width, height) {
+  : Player(window, world, width, height),
+    state(Idle) {
   selectedImage = new CL_Sprite(*gc, "Cross", &world->resources);
+
+  tmpFlower = new Flower(world, gc, 0, 0);
+  //tmpFlower->setRed();
 }
 
 void PlantPlayer::BuildButtonPressed() {
+  switch (state) {
+  case Idle:
+    state = Building;
+    break;
+  case Building:
+    state = Idle;
+    break;
+  default:
+    break;
+  }
+
+  /*
   if (energy >= Flower::energy_cost) {
     Flower *flower = new Flower(world, gc,
                                 cross_x + center_x,
@@ -28,7 +44,7 @@ void PlantPlayer::BuildButtonPressed() {
     energy -= Flower::energy_cost;
   } else {
     // TODO(rggjan): beep
-  }
+  }*/
 }
 
 void PlantPlayer::draw() {
@@ -56,4 +72,17 @@ void PlantPlayer::draw() {
                         best_flower->posY - center_y);
 
   Player::draw();
+}
+
+void PlantPlayer::draw_cross() {
+  switch (state) {
+  case Idle:
+    Player::draw_cross();
+    break;
+  case Building:
+    tmpFlower->drawRed(gc, cross_x, cross_y);      
+    break;
+  default:
+    break;
+  }
 }
