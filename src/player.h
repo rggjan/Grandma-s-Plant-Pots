@@ -15,7 +15,7 @@ class Player {
     Player(CL_DisplayWindow* window, World* world, int width, int height);
     virtual ~Player() {}
 
-    virtual void ActionButtonPressed() {}
+    virtual void BuildButtonPressed() {}
 
     virtual void update(int timeElapsed_ms);
     virtual void draw();

@@ -13,7 +13,7 @@ class PlantPlayer : public Player {
   public:
     PlantPlayer(CL_DisplayWindow* window, World *world, int width, int height);
 
-    void ActionButtonPressed();
+    void BuildButtonPressed();
     void draw();
 
   private:

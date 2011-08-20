@@ -16,7 +16,7 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
   selectedImage = new CL_Sprite(*gc, "Cross", &world->resources);
 }
 
-void PlantPlayer::ActionButtonPressed() {
+void PlantPlayer::BuildButtonPressed() {
   if (energy >= Flower::energy_cost) {
     Flower *flower = new Flower(world, gc,
                                 cross_x + center_x,
