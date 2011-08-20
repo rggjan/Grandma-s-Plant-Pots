@@ -19,7 +19,7 @@ class PlantPlayer : public Player {
   private:
     std::vector<Flower*> flowers;
 
-    CL_Sprite *selectedImage;    
+    CL_Sprite *selectedImage;
 };
 
 #endif  // SRC_PLANTPLAYER_H_

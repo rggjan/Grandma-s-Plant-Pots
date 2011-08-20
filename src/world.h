@@ -35,7 +35,7 @@ class World {
     int width;
     int height;
 
-  // Operations:
+    // Operations:
   public:
     void initLevel();
 
@@ -48,7 +48,7 @@ class World {
 
     void run();
 
-  // Implementation:
+    // Implementation:
   private:
     void draw();
     void update();
@@ -77,6 +77,7 @@ class World {
     bool dragging;
     bool mouseDown;
     CL_Rect dragArea;
+    float highlightValue;
     float highlightValue;
 
     std::vector<GameObject *> objects;
