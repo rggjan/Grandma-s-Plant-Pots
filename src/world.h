@@ -78,7 +78,6 @@ class World {
     bool mouseDown;
     CL_Rect dragArea;
     float highlightValue;
-    float highlightValue;
 
     std::vector<GameObject *> objects;
     std::vector<Fly *> flies;
