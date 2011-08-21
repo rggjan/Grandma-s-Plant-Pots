@@ -102,10 +102,10 @@ void PlantPlayer::draw_cross() {
     Player::draw_cross();
     break;
   case Building:
-    //if(tmpFlower.CanBuild(cross_x+center_x, cross_y+center_y))
+    if(tmpFlower->CanBuild(cross_x+center_x, cross_y+center_y))
+      tmpFlower->DrawGreen(gc, cross_x, cross_y);
+    else
       tmpFlower->DrawRed(gc, cross_x, cross_y);
-    //else
-      //tmpFlower->draGreen(gc, cross_x, cross_y);
     break;
   default:
     break;

@@ -48,6 +48,8 @@ class World {
 
     void run();
 
+    bool CanBuild(int x, int y);
+
     // Implementation:
   private:
     void draw();

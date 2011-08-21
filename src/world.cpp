@@ -14,6 +14,8 @@
 #include "./leaf.h"
 #include "./plantplayer.h"
 
+#define BACKGROUND_BORDER 65
+
 World::World(std::vector<CL_DisplayWindow*> windows)
   : quit(false),
     default_gc(windows[0]->get_gc()) {
@@ -22,16 +24,18 @@ World::World(std::vector<CL_DisplayWindow*> windows)
   // Setup resources
   resources = CL_ResourceManager("resources.xml");
   background = new CL_Sprite(default_gc, "Background", &resources);
+  width = background->get_width();
+  height = background->get_height();
+  if (width != height)
+    CL_Console::write_line("Error, height and width should be the same!");
 
   for (int i = 0; i < num_players; i++) {
     Player *player;
 
     if (i%2 == 0) {
-      player = new PlantPlayer(windows[i], this, background->get_width(),
-                               background->get_height());
+      player = new PlantPlayer(windows[i], this, width, height);
     } else {
-      player = new PlantPlayer(windows[i], this, background->get_width(),
-                               background->get_height());
+      player = new PlantPlayer(windows[i], this, width, height);
     }
     players.push_back(player);
 
@@ -94,6 +98,15 @@ void World::initLevel() {
     fly->setPos(i*60, i*60);
     addFly(fly);
   }
+}
+
+bool World::CanBuild(int x, int y) {
+  int xdiff = width/2-x;
+  int ydiff = height/2-y;
+  int dist_squared = xdiff*xdiff+ydiff*ydiff;
+
+  return dist_squared <
+         (height/2-BACKGROUND_BORDER)*(height/2-BACKGROUND_BORDER);
 }
 
 void World::addObject(GameObject *object) {
