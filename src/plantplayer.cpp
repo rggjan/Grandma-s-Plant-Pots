@@ -17,7 +17,6 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
   selectedImage = new CL_Sprite(*gc, "Cross", &world->resources);
 
   tmpFlower = new Flower(world, gc, 0, 0);
-  // tmpFlower->setRed();
 }
 
 bool PlantPlayer::BuildPlant() {
@@ -71,7 +70,7 @@ void PlantPlayer::BuildButtonPressed() {
 
 void PlantPlayer::draw() {
   // TODO(rggjan): infinity
-  int best_dist = -1;
+/*  int best_dist = -1;
   Flower *best_flower = NULL;
 
   // Get nearest flower
@@ -92,7 +91,7 @@ void PlantPlayer::draw() {
   if (best_flower != NULL)
     selectedImage->draw(*gc, best_flower->posX - center_x,
                         best_flower->posY - center_y);
-
+*/
   Player::draw();
 }
 
@@ -122,6 +121,7 @@ void PlantPlayer::draw_cross() {
       tmpFlower->DrawGreen(gc, cross_x, cross_y);
     else
       tmpFlower->DrawRed(gc, cross_x, cross_y);
+    // Player::draw_cross(); TODO(rggjan): better with this?
     break;
   default:
     break;
