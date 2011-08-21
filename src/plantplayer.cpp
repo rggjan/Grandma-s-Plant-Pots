@@ -20,19 +20,8 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
   //tmpFlower->setRed();
 }
 
-void PlantPlayer::BuildButtonPressed() {
-  switch (state) {
-  case Idle:
-    state = Building;
-    break;
-  case Building:
-    state = Idle;
-    break;
-  default:
-    break;
-  }
-
-  /*
+void PlantPlayer::BuildPlant() {
+  // TODO(rggjan): check inside plant!
   if (energy >= Flower::energy_cost) {
     Flower *flower = new Flower(world, gc,
                                 cross_x + center_x,
@@ -44,7 +33,40 @@ void PlantPlayer::BuildButtonPressed() {
     energy -= Flower::energy_cost;
   } else {
     // TODO(rggjan): beep
-  }*/
+  }
+}
+
+void PlantPlayer::SelectButtonPressed() {
+  switch (state) {
+  case Building:
+    BuildPlant();
+    break;
+  default:
+    break;
+  }
+}
+
+void PlantPlayer::CancelButtonPressed() {
+  switch (state) {
+  case Building:
+    state = Idle;
+    break;
+  default:
+    break;
+  }
+}
+
+void PlantPlayer::BuildButtonPressed() {
+  switch (state) {
+  case Idle:
+    state = Building;
+    break;
+  case Building:
+    BuildPlant();
+    break;
+  default:
+    break;
+  }
 }
 
 void PlantPlayer::draw() {
@@ -80,7 +102,10 @@ void PlantPlayer::draw_cross() {
     Player::draw_cross();
     break;
   case Building:
-    tmpFlower->drawRed(gc, cross_x, cross_y);      
+    //if(tmpFlower.CanBuild(cross_x+center_x, cross_y+center_y))
+      tmpFlower->drawRed(gc, cross_x, cross_y);
+    //else
+      //tmpFlower->draGreen(gc, cross_x, cross_y);
     break;
   default:
     break;

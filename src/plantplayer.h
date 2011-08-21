@@ -19,6 +19,8 @@ class PlantPlayer : public Player {
     PlantPlayer(CL_DisplayWindow* window, World *world, int width, int height);
 
     void BuildButtonPressed();
+    void SelectButtonPressed();
+    void CancelButtonPressed();
     void draw();
 
   private:
@@ -27,6 +29,9 @@ class PlantPlayer : public Player {
 
     CL_Sprite *selectedImage;
     Flower *tmpFlower;
+
+    void BuildPlant();
+
 
   protected:
     virtual void draw_cross();

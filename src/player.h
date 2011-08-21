@@ -16,6 +16,8 @@ class Player {
     virtual ~Player() {}
 
     virtual void BuildButtonPressed() {}
+    virtual void SelectButtonPressed() {}
+    virtual void CancelButtonPressed() {}
 
     virtual void update(int timeElapsed_ms);
     virtual void draw();

@@ -178,16 +178,28 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
       players[3]->moving_down = true;
     }
 
-    if (key.id == CL_KEY_NUMPAD8) {
+    if (key.id == CL_KEY_NUMPAD5) {
       players[3]->moving_up = true;
     }
 
-    if (key.id == CL_KEY_NUMPAD4) {
+    if (key.id == CL_KEY_NUMPAD1) {
       players[3]->moving_left = true;
     }
 
-    if (key.id == CL_KEY_NUMPAD6) {
+    if (key.id == CL_KEY_NUMPAD3) {
       players[3]->moving_right = true;
+    }
+
+    if (key.id == CL_KEY_NUMPAD6) {
+      players[3]->BuildButtonPressed();
+    }
+
+    if (key.id == CL_KEY_NUMPAD4) {
+      players[3]->SelectButtonPressed();
+    }
+
+    if (key.id == CL_KEY_NUMPAD0) {
+      players[3]->CancelButtonPressed();
     }
   }
   // key Player 4 onKeyDown
@@ -270,15 +282,15 @@ void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
       players[3]->moving_down = false;
     }
 
-    if (key.id == CL_KEY_NUMPAD8) {
+    if (key.id == CL_KEY_NUMPAD5) {
       players[3]->moving_up = false;
     }
 
-    if (key.id == CL_KEY_NUMPAD4) {
+    if (key.id == CL_KEY_NUMPAD1) {
       players[3]->moving_left = false;
     }
 
-    if (key.id == CL_KEY_NUMPAD6) {
+    if (key.id == CL_KEY_NUMPAD3) {
       players[3]->moving_right = false;
     }
   }
