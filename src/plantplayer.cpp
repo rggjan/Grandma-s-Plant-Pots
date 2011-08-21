@@ -21,10 +21,8 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
 }
 
 bool PlantPlayer::BuildPlant() {
-  if (energy >= Flower::energy_cost && tmpFlower->CanBuild(cross_x + center_x, cross_y + center_y)) {
-    Flower *flower = new Flower(world, gc,
-                                cross_x + center_x,
-                                cross_y + center_y);
+  if (energy >= Flower::energy_cost && tmpFlower->CanBuild(x(), y())) {
+    Flower *flower = new Flower(world, gc, x(), y());
 
     flowers.push_back(flower);
     world->addFlower(flower);
@@ -79,8 +77,8 @@ void PlantPlayer::draw() {
   // Get nearest flower
   std::vector<Flower *>::iterator it;
   for (it = flowers.begin(); it != flowers.end(); ++it) {
-    int x_diff = (*it)->posX - (center_x + cross_x);
-    int y_diff = (*it)->posY - (center_y + cross_y);
+    int x_diff = (*it)->posX - x();
+    int y_diff = (*it)->posY - y();
     int dist_squared = y_diff*y_diff + x_diff*x_diff;
 
     if (best_flower == NULL || dist_squared < best_dist) {
@@ -120,7 +118,7 @@ void PlantPlayer::draw_cross() {
     Player::draw_cross();
     break;
   case Building:
-    if(tmpFlower->CanBuild(cross_x+center_x, cross_y+center_y))
+    if(tmpFlower->CanBuild(x(), y()))
       tmpFlower->DrawGreen(gc, cross_x, cross_y);
     else
       tmpFlower->DrawRed(gc, cross_x, cross_y);

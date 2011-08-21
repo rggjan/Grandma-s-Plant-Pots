@@ -23,18 +23,24 @@ class Player {
     virtual void DrawEnergy();
     virtual void draw();
 
+    inline int x() {
+      return center_x + cross_x;
+    }
+    inline int y() {
+      return center_y + cross_y;
+    }
+
     CL_GraphicContext *gc;
     CL_DisplayWindow *display_window;
 
-    int center_x;
-    int center_y;
+    int center_x, center_y;
+    int cross_x, cross_y;
 
     bool moving_down;
     bool moving_up;
     bool moving_left;
     bool moving_right;
 
-    int cross_x, cross_y;
 
   protected:
     int window_width, window_height;

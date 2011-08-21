@@ -399,8 +399,7 @@ void World::update() {
   for (fly_it = flies.begin(); fly_it != flies.end(); ++fly_it) {
     Fly *fly = (*fly_it);
 
-    fly->setTargetPos(players[0]->cross_x + players[0]->center_x,
-                      players[0]->cross_y + players[0]->center_y);
+    fly->setTargetPos(players[0]->x(), players[0]->y());
   }
 
   // Update all gameobjects
