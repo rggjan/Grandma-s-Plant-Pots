@@ -127,6 +127,9 @@ void World::addLeaf(Leaf *leaf) {
 }
 
 void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
+  if (key.id == CL_KEY_ESCAPE)
+    quit = true;
+
   // key Player 0 onKeyDown
   if (num_players > 0) {
     if (key.id == CL_KEY_SPACE) {
@@ -368,11 +371,7 @@ void World::run() {
   sound->prepare();
   sound->play();
 
-  while (!players[0]->display_window->get_ic().get_keyboard()
-         .get_keycode(CL_KEY_ESCAPE)) {
-    if (quit)
-      break;
-
+  while (!quit) {
     update();
     draw();
 
