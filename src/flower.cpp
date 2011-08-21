@@ -16,7 +16,7 @@ Flower::Flower(World *world, CL_GraphicContext *gc, float posX, float posY)
   this->posY = posY;
 }
 
-void Flower::drawRed(CL_GraphicContext *gc, int x, int y) {
+void Flower::DrawRed(CL_GraphicContext *gc, int x, int y) {
   // Draw graphic
   spriteImage->set_color(CL_Color::green);
   spriteImage->set_alpha(0.9);
