@@ -20,6 +20,7 @@ class Player {
     virtual void CancelButtonPressed() {}
 
     virtual void update(int timeElapsed_ms);
+    virtual void DrawEnergy();
     virtual void draw();
 
     CL_GraphicContext *gc;

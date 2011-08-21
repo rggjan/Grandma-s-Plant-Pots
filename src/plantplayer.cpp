@@ -20,9 +20,8 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
   //tmpFlower->setRed();
 }
 
-void PlantPlayer::BuildPlant() {
-  // TODO(rggjan): check inside plant!
-  if (energy >= Flower::energy_cost) {
+bool PlantPlayer::BuildPlant() {
+  if (energy >= Flower::energy_cost && tmpFlower->CanBuild(cross_x + center_x, cross_y + center_y)) {
     Flower *flower = new Flower(world, gc,
                                 cross_x + center_x,
                                 cross_y + center_y);
@@ -31,15 +30,18 @@ void PlantPlayer::BuildPlant() {
     world->addFlower(flower);
 
     energy -= Flower::energy_cost;
+    return true;
   } else {
     // TODO(rggjan): beep
+    return false;
   }
 }
 
 void PlantPlayer::SelectButtonPressed() {
   switch (state) {
   case Building:
-    BuildPlant();
+    if (BuildPlant())
+      state = Idle;    
     break;
   default:
     break;
@@ -94,6 +96,22 @@ void PlantPlayer::draw() {
                         best_flower->posY - center_y);
 
   Player::draw();
+}
+
+void PlantPlayer::DrawEnergy() {
+  switch (state) {
+  case Building: {
+    CL_Colorf color = CL_Colorf::white;
+    if (tmpFlower->energy_cost > energy)
+      color = CL_Colorf::red;
+    default_font.draw_text(*gc, CL_Pointf(10, 30),
+                           cl_format("Energy: %1 (%2)", energy,
+                                     tmpFlower->energy_cost), color);
+    break;
+  }
+  default:
+    Player::DrawEnergy();
+  }
 }
 
 void PlantPlayer::draw_cross() {

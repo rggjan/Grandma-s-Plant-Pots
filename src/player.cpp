@@ -161,14 +161,16 @@ void Player::update(int timeElapsed_ms) {
 }
 
 void Player::draw() {
-  default_font.draw_text(*gc, CL_Pointf(10, 30),
-                         cl_format("Energy: %1", energy), CL_Colorf::white);
-
+  DrawEnergy();
   draw_cross();
 }
 
-void Player::draw_cross()
-{
+void Player::DrawEnergy() {
+  default_font.draw_text(*gc, CL_Pointf(10, 30),
+                         cl_format("Energy: %1", energy), CL_Colorf::white);
+}
+
+void Player::draw_cross() {
     // Draw cross
     cross->set_scale(0.5, 0.5);
     cross->draw(*gc, cross_x, cross_y);

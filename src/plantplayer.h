@@ -21,6 +21,7 @@ class PlantPlayer : public Player {
     void BuildButtonPressed();
     void SelectButtonPressed();
     void CancelButtonPressed();
+    void DrawEnergy();
     void draw();
 
   private:
@@ -30,7 +31,7 @@ class PlantPlayer : public Player {
     CL_Sprite *selectedImage;
     Flower *tmpFlower;
 
-    void BuildPlant();
+    bool BuildPlant();
 
 
   protected:
