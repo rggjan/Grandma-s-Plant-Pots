@@ -35,7 +35,7 @@ Player::Player(CL_DisplayWindow* window, World* world, int width, int height)
   desc.set_height(20);
   default_font = CL_Font_System(*gc, desc);
 
-  cross = new CL_Sprite(*gc, "Cross", &world->resources);  
+  cross = new CL_Sprite(*gc, "Cross", &world->resources);
 }
 
 void Player::update(int timeElapsed_ms) {

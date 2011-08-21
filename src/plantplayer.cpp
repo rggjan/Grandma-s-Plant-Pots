@@ -17,7 +17,7 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
   selectedImage = new CL_Sprite(*gc, "Cross", &world->resources);
 
   tmpFlower = new Flower(world, gc, 0, 0);
-  //tmpFlower->setRed();
+  // tmpFlower->setRed();
 }
 
 bool PlantPlayer::BuildPlant() {
@@ -39,7 +39,7 @@ void PlantPlayer::SelectButtonPressed() {
   switch (state) {
   case Building:
     if (BuildPlant())
-      state = Idle;    
+      state = Idle;
     break;
   default:
     break;
@@ -118,7 +118,7 @@ void PlantPlayer::draw_cross() {
     Player::draw_cross();
     break;
   case Building:
-    if(tmpFlower->CanBuild(x(), y()))
+    if (tmpFlower->CanBuild(x(), y()))
       tmpFlower->DrawGreen(gc, cross_x, cross_y);
     else
       tmpFlower->DrawRed(gc, cross_x, cross_y);
