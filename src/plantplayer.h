@@ -11,7 +11,9 @@ class Flower;
 
 enum State {
   Idle,
-  Building
+  Building,
+  Selecting,
+  Selected,
 };
 
 class PlantPlayer : public Player {
@@ -31,7 +33,10 @@ class PlantPlayer : public Player {
     CL_Sprite *selectedImage;
     Flower *tmpFlower;
 
+    Flower *selectedFlower;
+
     bool BuildPlant();
+    Flower* NearestFlower();
 
 
   protected:

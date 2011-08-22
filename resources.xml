@@ -10,6 +10,12 @@
 		<rotation origin="center"/>
 	</sprite>
 
+	<sprite name="Cross2" base_angle="0">
+		<image file="Gfx/cross2.png" />
+		<translation origin="center"/>
+		<rotation origin="center"/>
+	</sprite>
+
 	<sprite name="Plant1">
 		<image file="Gfx/flower1_2.png" />
 		<image file="Gfx/flower1_1.png" />

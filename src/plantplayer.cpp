@@ -14,7 +14,7 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
                          int width, int height)
   : Player(window, world, width, height),
     state(Idle) {
-  selectedImage = new CL_Sprite(*gc, "Cross", &world->resources);
+  selectedImage = new CL_Sprite(*gc, "Cross2", &world->resources);
 
   tmpFlower = new Flower(world, gc, 0, 0);
 }
@@ -40,6 +40,17 @@ void PlantPlayer::SelectButtonPressed() {
     if (BuildPlant())
       state = Idle;
     break;
+  case Idle:
+    state = Selecting;
+    break;
+  case Selecting:
+    state = Selected;
+    // TODO(rggjan): cache nearestflower
+    selectedFlower = NearestFlower();
+    break;
+  case Selected:
+    state = Selecting;
+    break;
   default:
     break;
   }
@@ -49,6 +60,12 @@ void PlantPlayer::CancelButtonPressed() {
   switch (state) {
   case Building:
     state = Idle;
+    break;
+  case Selecting:
+    state = Idle;
+    break;
+  case Selected:
+    state = Selecting;
     break;
   default:
     break;
@@ -68,10 +85,10 @@ void PlantPlayer::BuildButtonPressed() {
   }
 }
 
-void PlantPlayer::draw() {
+Flower* PlantPlayer::NearestFlower() {
   // TODO(rggjan): infinity
-/*  int best_dist = -1;
-  Flower *best_flower = NULL;
+  int best_dist = -1;
+  Flower *nearest_flower = NULL;
 
   // Get nearest flower
   std::vector<Flower *>::iterator it;
@@ -80,18 +97,31 @@ void PlantPlayer::draw() {
     int y_diff = (*it)->posY - y();
     int dist_squared = y_diff*y_diff + x_diff*x_diff;
 
-    if (best_flower == NULL || dist_squared < best_dist) {
+    if (nearest_flower == NULL || dist_squared < best_dist) {
       best_dist = dist_squared;
-      best_flower = (*it);
+      nearest_flower = (*it);
     }
   }
 
-  selectedImage->set_alpha(0.5);
+  return nearest_flower;
+}
 
-  if (best_flower != NULL)
-    selectedImage->draw(*gc, best_flower->posX - center_x,
-                        best_flower->posY - center_y);
-*/
+void PlantPlayer::draw() {
+
+  if (state == Selecting) {
+    Flower* nearest_flower = NearestFlower();
+
+    selectedImage->set_alpha(0.3);
+    if (nearest_flower != NULL)
+      selectedImage->draw(*gc, nearest_flower->posX - center_x,
+                          nearest_flower->posY - center_y);
+  } else if (state == Selected) {
+    selectedImage->set_alpha(0.8);
+
+    selectedImage->draw(*gc, selectedFlower->posX - center_x,
+                        selectedFlower->posY - center_y);
+  }
+
   Player::draw();
 }
 
@@ -124,6 +154,7 @@ void PlantPlayer::draw_cross() {
     // Player::draw_cross(); TODO(rggjan): better with this?
     break;
   default:
+    Player::draw_cross();
     break;
   }
 }
