@@ -107,7 +107,6 @@ Flower* PlantPlayer::NearestFlower() {
 }
 
 void PlantPlayer::draw() {
-
   if (state == Selecting) {
     Flower* nearest_flower = NearestFlower();
 

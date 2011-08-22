@@ -76,7 +76,7 @@ int Application::main(const std::vector<CL_String> &args) {
     CL_DisplayWindow* window = new CL_DisplayWindow(desc);
 
     // TODO(rggjan): HACK to make it work...
-    while (std::abs(desc.get_position().left - window->get_geometry().left) > 1) {
+    while (std::abs(desc.get_position().left-window->get_geometry().left) > 1) {
       window->set_position(position, false);
       CL_KeepAlive::process();
     }
