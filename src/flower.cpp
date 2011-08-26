@@ -13,20 +13,20 @@ Flower::Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position)
   spriteImage->set_play_loop(true);
 }
 
-void Flower::DrawRed(CL_GraphicContext *gc, int x, int y) {
+void Flower::DrawRed(CL_GraphicContext *gc, CL_Vec2f position) {
   // Draw graphic
   spriteImage->set_color(CL_Color::red);
   spriteImage->set_alpha(0.8);
   spriteImage->set_frame(spriteImage->get_frame_count()-1);
-  spriteImage->draw(*gc, x, y);
+  spriteImage->draw(*gc, position.x, position.y);
 }
 
-void Flower::DrawGreen(CL_GraphicContext *gc, int x, int y) {
+void Flower::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
   // Draw graphic
   spriteImage->set_color(CL_Color::green);
   spriteImage->set_alpha(0.8);
   spriteImage->set_frame(spriteImage->get_frame_count()-1);
-  spriteImage->draw(*gc, x, y);
+  spriteImage->draw(*gc, position.x, position.y);
 }
 
 bool Flower::CanBuild(CL_Vec2f position) {

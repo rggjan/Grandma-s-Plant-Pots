@@ -26,7 +26,7 @@ class PlantPlayer : public Player {
     void SelectButtonPressed();
     void CancelButtonPressed();
     void DrawEnergy();
-    void draw();
+    void Draw();
 
   private:
     std::vector<Flower*> flowers;
