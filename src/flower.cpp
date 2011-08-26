@@ -9,6 +9,7 @@
 
 #define TIME_TO_OPEN 5000
 #define TIME_TO_FINAL 10000
+#define MIN_FLOWER_DISTANCE 50
 
 Flower::Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position)
   : GameObject(world, position),
@@ -52,5 +53,10 @@ void Flower::Update(int time_ms) {
 }
 
 bool Flower::CanBuild(CL_Vec2f position) {
+  Flower *nearest_flower = world->NearestFlower(position);
+
+  if (nearest_flower &&
+      (nearest_flower->position() - position).length() < MIN_FLOWER_DISTANCE)
+    return false;
   return world->CanBuild(position);
 }

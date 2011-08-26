@@ -46,6 +46,8 @@ class World {
     void addFlower(Flower *flower);
     void addLeaf(Leaf *leaf);
 
+    Flower* NearestFlower(CL_Vec2f position);
+
     void run();
 
     bool CanBuild(CL_Vec2f position);
