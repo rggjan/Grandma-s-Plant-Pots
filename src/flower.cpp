@@ -29,6 +29,10 @@ void Flower::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
   spriteImage->draw(*gc, position.x, position.y);
 }
 
+void Flower::Update(int time_ms) {
+
+}
+
 bool Flower::CanBuild(CL_Vec2f position) {
   return world->CanBuild(position);
 }
