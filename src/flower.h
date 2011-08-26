@@ -30,6 +30,8 @@ class Flower : public GameObject {
 
     void Update(int time_ms);
 
+    Leaf* NearestLeaf(CL_Vec2f position);
+
     static const int energy_cost = ENERGY_COST;
 
     FlowerState state_;

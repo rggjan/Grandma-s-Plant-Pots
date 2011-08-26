@@ -65,6 +65,26 @@ void Flower::Update(int time_ms) {
   }
 }
 
+Leaf* Flower::NearestLeaf(CL_Vec2f position) {
+  // TODO(rggjan): infinity
+  int best_dist = -1;
+  Leaf *nearest_leaf = NULL;
+
+  // Get nearest flower
+  std::vector<Leaf *>::iterator it;
+  for (it = leaves.begin(); it != leaves.end(); ++it) {
+    float distance = ((*it)->position() - position).length();
+
+    if (nearest_leaf == NULL || distance < best_dist) {
+      best_dist = distance;
+      nearest_leaf = (*it);
+    }
+  }
+
+  return nearest_leaf;
+}
+
+
 bool Flower::CanBuild(CL_Vec2f position) {
   Flower *nearest_flower = world->NearestFlower(position);
 

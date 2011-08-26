@@ -211,14 +211,14 @@ void PlantPlayer::draw_cross() {
 
     CL_Colorf line_color;
 
-    if (diff.length() > LEAF_MAX_DISTANCE) {
-      tmpLeaf->DrawRed(gc, cross_position());
-      line_color = CL_Colorf::red;
-      cross_green_ = false;
-    } else {
+    if (diff.length() < LEAF_MAX_DISTANCE && tmpLeaf->CanBuild(position(), selectedFlower)) {
       tmpLeaf->DrawGreen(gc, cross_position());
       line_color = CL_Colorf::green;
       cross_green_ = true;
+    } else {
+      tmpLeaf->DrawRed(gc, cross_position());
+      line_color = CL_Colorf::red;
+      cross_green_ = false;
     }
 
     diff = selectedFlower->position() - map_position();

@@ -32,8 +32,8 @@
 
 	<sprite name="Leaf2" base_angle="-90">
 		<image file="Gfx/leaf2.png" />
-		<translation origin="bottom_center"/>
-		<rotation origin="bottom_center"/>
+		<translation origin="center"/>
+		<rotation origin="center"/>
                 <scale x="0.2" y="0.2" />
 	</sprite>
 
