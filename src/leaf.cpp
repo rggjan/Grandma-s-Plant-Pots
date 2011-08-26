@@ -6,8 +6,10 @@
 #include <ClanLib/display.h>
 
 #include "./world.h"
+#include "./flower.h"
 
 #define ENERGY_COLLECTED_PER_SECOND 0.1
+#define MIN_LEAF_DISTANCE 30
 
 Leaf::Leaf(World *world, CL_GraphicContext *gc, const CL_StringRef &name,
            CL_Vec2f position, Flower* flower)
@@ -37,11 +39,10 @@ float Leaf::Update(int time_ms) {
 }
 
 bool Leaf::CanBuild(CL_Vec2f position, Flower* flower) {
-  //Flower *nearest_flower = world->NearestFlower(position);
+  Leaf* nearest_leaf = flower->NearestLeaf(position);
+  
+  if (nearest_leaf && (nearest_leaf->position() - position).length() < MIN_LEAF_DISTANCE)
+    return false;
 
-  /*if (nearest_flower &&
-      (nearest_flower->position() - position).length() < MIN_FLOWER_DISTANCE)
-    return false;*/
-  //return world->CanBuild(position);
   return true;
 }
