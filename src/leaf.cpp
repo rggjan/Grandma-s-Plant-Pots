@@ -32,3 +32,7 @@ void Leaf::DrawGreen(CL_GraphicContext *gc, int x, int y) {
   spriteImage->set_frame(spriteImage->get_frame_count()-1);
   spriteImage->draw(*gc, x, y);
 }
+
+void Leaf::SetAngle(CL_Angle angle) {
+  spriteImage->set_angle(angle);
+}

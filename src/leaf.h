@@ -15,6 +15,8 @@ class Leaf : public GameObject {
 
     void DrawRed(CL_GraphicContext *gc, int x, int y);
     void DrawGreen(CL_GraphicContext *gc, int x, int y);
+
+    void SetAngle(CL_Angle angle);
 };
 
 #endif  // SRC_LEAF_H_

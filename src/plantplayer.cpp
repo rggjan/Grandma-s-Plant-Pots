@@ -157,16 +157,22 @@ void PlantPlayer::draw_cross() {
       tmpFlower->DrawRed(gc, cross_x, cross_y);
     // Player::draw_cross(); TODO(rggjan): better with this?
     break;
-  case SelectedBuilding:
-    CL_Draw::line(*gc, selectedFlower->posX - center_x,
-                  selectedFlower->posY - center_y, cross_x, cross_y, CL_Colorf::white);
+  case SelectedBuilding: {
+    /*CL_Draw::line(*gc, selectedFlower->posX - center_x,
+                  selectedFlower->posY - center_y, cross_x, cross_y, CL_Colorf::white);*/
+    float angle = atan2(cross_y - (selectedFlower->posY - center_y),
+                        cross_x - (selectedFlower->posX - center_x));
+    tmpLeaf->SetAngle(CL_Angle(angle, cl_radians));
     tmpLeaf->DrawGreen(gc, cross_x, cross_y);
     /*if (tmpFlower->CanBuild(x(), y()))
       tmpFlower->DrawGreen(gc, cross_x, cross_y);
     else
-      tmpFlower->DrawRed(gc, cross_x, cross_y);*/
-  default:
+    tmpFlower->DrawRed(gc, cross_x, cross_y);*/
+    break;
+  }
+  default: {
     Player::draw_cross();
     break;
+  }
   }
 }
