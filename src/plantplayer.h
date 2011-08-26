@@ -28,6 +28,8 @@ class PlantPlayer : public Player {
     void DrawEnergy();
     void Draw();
 
+    void Update(int time_ms);
+
   private:
     std::vector<Flower*> flowers;
     State state;

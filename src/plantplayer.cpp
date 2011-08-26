@@ -146,6 +146,14 @@ void PlantPlayer::DrawEnergy() {
   }
 }
 
+void PlantPlayer::Update(int time_ms) {
+  for (unsigned int i=0; i<flowers.size(); i++) {
+    flowers[i]->Update(time_ms);
+  }
+
+  Player::Update(time_ms);
+}
+
 void PlantPlayer::draw_cross() {
   switch (state) {
   case Idle:
