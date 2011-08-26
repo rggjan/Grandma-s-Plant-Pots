@@ -8,8 +8,9 @@
 #include "./world.h"
 
 Leaf::Leaf(World *world, CL_GraphicContext *gc, const CL_StringRef &name,
-           CL_Vec2f position)
-  : GameObject(world, position) {
+           CL_Vec2f position, Flower* flower)
+  : GameObject(world, position),
+    flower_(flower) {
   spriteImage = new CL_Sprite(*gc, name, &world->resources);
 }
 

@@ -9,6 +9,8 @@
 
 #define ENERGY_COST 10
 
+class Leaf;
+
 enum FlowerState {
   kClosed,
   kOpen,
@@ -23,6 +25,7 @@ class Flower : public GameObject {
     void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
     void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
     bool CanBuild(CL_Vec2f position);
+    void AddLeaf(Leaf* leaf);
 
     void Update(int time_ms);
 
@@ -30,8 +33,13 @@ class Flower : public GameObject {
 
     FlowerState state_;
 
-  private:
-    int age_;
-};
+    void Draw(CL_GraphicContext* gc, CL_Vec2f target);
+
+
+private:
+      std::vector<Leaf*> leaves;
+
+      int age_;
+    };
 
 #endif  // SRC_FLOWER_H_

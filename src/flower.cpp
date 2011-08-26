@@ -6,6 +6,7 @@
 #include <ClanLib/display.h>
 
 #include "./world.h"
+#include "./leaf.h"
 
 #define TIME_TO_OPEN 6000
 #define TIME_TO_FINAL 15000
@@ -16,6 +17,10 @@ Flower::Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position)
     state_(kClosed),
     age_(0) {
   spriteImage = new CL_Sprite(*gc, "Plant1", &world->resources);
+}
+
+void Flower::AddLeaf(Leaf* leaf) {
+  leaves.push_back(leaf);
 }
 
 void Flower::DrawRed(CL_GraphicContext *gc, CL_Vec2f position) {
@@ -59,4 +64,13 @@ bool Flower::CanBuild(CL_Vec2f position) {
       (nearest_flower->position() - position).length() < MIN_FLOWER_DISTANCE)
     return false;
   return world->CanBuild(position);
+}
+
+void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
+  unsigned int size = leaves.size();
+  for (unsigned int i=0; i<size; i++) {
+    leaves[i]->Draw(gc, target);
+  }
+  
+  GameObject::Draw(gc, target);
 }
