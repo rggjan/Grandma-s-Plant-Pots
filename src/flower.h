@@ -12,11 +12,11 @@
 class Flower : public GameObject {
   // Construction
   public:
-    Flower(World *world, CL_GraphicContext *gc, float posX, float posY);
+    Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position);
 
     void DrawRed(CL_GraphicContext *gc, int x, int y);
     void DrawGreen(CL_GraphicContext *gc, int x, int y);
-    bool CanBuild(int x, int y);
+    bool CanBuild(CL_Vec2f position);
 
     static const int energy_cost = ENERGY_COST;
 };

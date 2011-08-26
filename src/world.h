@@ -48,7 +48,7 @@ class World {
 
     void run();
 
-    bool CanBuild(int x, int y);
+    bool CanBuild(CL_Vec2f position);
 
     // Implementation:
   private:
