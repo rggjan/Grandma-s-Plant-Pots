@@ -110,8 +110,28 @@ void World::addFlower(Flower *flower) {
   objects.push_back(flower);
   flowers.push_back(flower);
 }
+
 void World::addLeaf(Leaf *leaf) {
   objects.push_back(leaf);
+}
+
+Flower* World::NearestFlower(CL_Vec2f position) {
+  // TODO(rggjan): infinity
+  int best_dist = -1;
+  Flower *nearest_flower = NULL;
+
+  // Get nearest flower
+  std::vector<Flower *>::iterator it;
+  for (it = flowers.begin(); it != flowers.end(); ++it) {
+    float distance = ((*it)->position() - position).length();
+
+    if (nearest_flower == NULL || distance < best_dist) {
+      best_dist = distance;
+      nearest_flower = (*it);
+    }
+  }
+
+  return nearest_flower;
 }
 
 void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
