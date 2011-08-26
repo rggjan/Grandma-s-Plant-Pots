@@ -175,7 +175,7 @@ void PlantPlayer::draw_cross() {
     }
 
     diff = selectedFlower->position() - map_position();
-    CL_Draw::line(*gc, diff.x, diff.y, map_position().x, map_position().y,
+    CL_Draw::line(*gc, diff.x, diff.y, cross_position().x, cross_position().y,
                   line_color);
     break;
   }
