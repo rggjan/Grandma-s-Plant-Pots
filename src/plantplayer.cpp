@@ -124,7 +124,7 @@ void PlantPlayer::Draw() {
     selectedImage->set_alpha(0.8);
 
     CL_Vec2f pos = selectedFlower->position() - map_position();
-    selectedFlower->Draw(gc, pos);
+    selectedImage->draw(*gc, pos.x, pos.y);
   }
 
   Player::Draw();
