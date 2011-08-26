@@ -3,6 +3,7 @@
 #include "./world.h"
 
 #include <ClanLib/core.h>
+#include <ClanLib/sound.h>
 #include <list>
 #include <vector>
 
@@ -13,6 +14,8 @@
 #include "./leaf.h"
 #include "./plantplayer.h"
 
+#define BACKGROUND_BORDER 65
+
 World::World(std::vector<CL_DisplayWindow*> windows)
   : quit(false),
     default_gc(windows[0]->get_gc()) {
@@ -21,17 +24,18 @@ World::World(std::vector<CL_DisplayWindow*> windows)
   // Setup resources
   resources = CL_ResourceManager("resources.xml");
   background = new CL_Sprite(default_gc, "Background", &resources);
-  cross = new CL_Sprite(default_gc, "Cross", &resources);
+  width = background->get_width();
+  height = background->get_height();
+  if (width != height)
+    CL_Console::write_line("Error, height and width should be the same!");
 
   for (int i = 0; i < num_players; i++) {
     Player *player;
 
     if (i%2 == 0) {
-      player = new PlantPlayer(windows[i], this, background->get_width(),
-                               background->get_height());
+      player = new PlantPlayer(windows[i], this, width, height);
     } else {
-      player = new PlantPlayer(windows[i], this, background->get_width(),
-                               background->get_height());
+      player = new PlantPlayer(windows[i], this, width, height);
     }
     players.push_back(player);
 
@@ -80,9 +84,9 @@ void World::initLevel() {
   Flower *flower2 = new Flower(this, &default_gc, 59, 60);
   addFlower(flower);
   addFlower(flower2);
-  Leaf *leaf = new Leaf(this, default_gc, "Leaf1", 30, 40);
+  Leaf *leaf = new Leaf(this, &default_gc, "Leaf1", 30, 40);
   addLeaf(leaf);
-  Leaf *leaf2 = new Leaf(this, default_gc, "Leaf2", 69, 70);
+  Leaf *leaf2 = new Leaf(this, &default_gc, "Leaf2", 69, 70);
   addLeaf(leaf2);
   for (int i = 0; i < 10; i++) {
     Fly *fly = new Fly(this, default_gc, "SpaceShootTurretShooting");
@@ -94,6 +98,15 @@ void World::initLevel() {
     fly->setPos(i*60, i*60);
     addFly(fly);
   }
+}
+
+bool World::CanBuild(int x, int y) {
+  int xdiff = width/2-x;
+  int ydiff = height/2-y;
+  int dist_squared = xdiff*xdiff+ydiff*ydiff;
+
+  return dist_squared <
+         (height/2-BACKGROUND_BORDER)*(height/2-BACKGROUND_BORDER);
 }
 
 void World::addObject(GameObject *object) {
@@ -114,10 +127,13 @@ void World::addLeaf(Leaf *leaf) {
 }
 
 void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
+  if (key.id == CL_KEY_ESCAPE)
+    quit = true;
+
   // key Player 0 onKeyDown
   if (num_players > 0) {
     if (key.id == CL_KEY_SPACE) {
-      players[0]->ActionButtonPressed();
+      players[0]->BuildButtonPressed();
     }
 
     if (key.id == CL_KEY_DOWN) {
@@ -178,16 +194,28 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
       players[3]->moving_down = true;
     }
 
-    if (key.id == CL_KEY_NUMPAD8) {
+    if (key.id == CL_KEY_NUMPAD5) {
       players[3]->moving_up = true;
     }
 
-    if (key.id == CL_KEY_NUMPAD4) {
+    if (key.id == CL_KEY_NUMPAD1) {
       players[3]->moving_left = true;
     }
 
-    if (key.id == CL_KEY_NUMPAD6) {
+    if (key.id == CL_KEY_NUMPAD3) {
       players[3]->moving_right = true;
+    }
+
+    if (key.id == CL_KEY_NUMPAD6) {
+      players[3]->BuildButtonPressed();
+    }
+
+    if (key.id == CL_KEY_NUMPAD4) {
+      players[3]->SelectButtonPressed();
+    }
+
+    if (key.id == CL_KEY_NUMPAD0) {
+      players[3]->CancelButtonPressed();
     }
   }
   // key Player 4 onKeyDown
@@ -270,15 +298,15 @@ void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
       players[3]->moving_down = false;
     }
 
-    if (key.id == CL_KEY_NUMPAD8) {
+    if (key.id == CL_KEY_NUMPAD5) {
       players[3]->moving_up = false;
     }
 
-    if (key.id == CL_KEY_NUMPAD4) {
+    if (key.id == CL_KEY_NUMPAD1) {
       players[3]->moving_left = false;
     }
 
-    if (key.id == CL_KEY_NUMPAD6) {
+    if (key.id == CL_KEY_NUMPAD3) {
       players[3]->moving_right = false;
     }
   }
@@ -338,11 +366,12 @@ void World::onMouseMove(const CL_InputEvent &key, const CL_InputState &state) {
 }
 
 void World::run() {
-  while (!players[0]->display_window->get_ic().get_keyboard()
-         .get_keycode(CL_KEY_ESCAPE)) {
-    if (quit)
-      break;
+  CL_SoundBuffer *sound = new CL_SoundBuffer("BackgroundMusic", &resources);
+  sound->set_volume(1.0f);
+  sound->prepare();
+  sound->play();
 
+  while (!quit) {
     update();
     draw();
 
@@ -369,8 +398,7 @@ void World::update() {
   for (fly_it = flies.begin(); fly_it != flies.end(); ++fly_it) {
     Fly *fly = (*fly_it);
 
-    fly->setTargetPos(players[0]->cross_x + players[0]->center_x,
-                      players[0]->cross_y + players[0]->center_y);
+    fly->setTargetPos(players[0]->x(), players[0]->y());
   }
 
   // Update all gameobjects
@@ -416,14 +444,6 @@ void World::draw() {
     std::vector<Fly *>::iterator it2;
     for (it2 = flies.begin(); it2 != flies.end(); ++it2)
       (*it2)->draw(players[i]->gc, players[i]->center_x, players[i]->center_y);
-
-    // Draw cross
-    cross->set_scale(0.5, 0.5);
-    cross->draw(*(players[i]->gc),
-                players[i]->cross_x, players[i]->cross_y);
-    cross->set_scale(0.25, 0.25);
-    cross->draw(*(players[i]->gc),
-                players[i]->cross_x, players[i]->cross_y);
 
     players[i]->draw();
   }

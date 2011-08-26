@@ -4,6 +4,8 @@
 
 #include <ClanLib/core.h>
 
+#include "./world.h"
+
 #define CROSS_SPEED 0.7
 #define MIN_BORDER 100
 #define START_ENERGY 100
@@ -32,6 +34,8 @@ Player::Player(CL_DisplayWindow* window, World* world, int width, int height)
   CL_FontDescription desc;
   desc.set_height(20);
   default_font = CL_Font_System(*gc, desc);
+
+  cross = new CL_Sprite(*gc, "Cross", &world->resources);
 }
 
 void Player::update(int timeElapsed_ms) {
@@ -157,6 +161,19 @@ void Player::update(int timeElapsed_ms) {
 }
 
 void Player::draw() {
+  DrawEnergy();
+  draw_cross();
+}
+
+void Player::DrawEnergy() {
   default_font.draw_text(*gc, CL_Pointf(10, 30),
                          cl_format("Energy: %1", energy), CL_Colorf::white);
+}
+
+void Player::draw_cross() {
+    // Draw cross
+    cross->set_scale(0.5, 0.5);
+    cross->draw(*gc, cross_x, cross_y);
+    cross->set_scale(0.25, 0.25);
+    cross->draw(*gc, cross_x, cross_y);
 }

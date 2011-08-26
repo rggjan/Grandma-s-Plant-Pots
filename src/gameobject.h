@@ -18,7 +18,7 @@ class GameObject {
     virtual bool update(int timeElapsed_ms);
 
     float posX, posY;
-    
+
   protected:
     CL_Sprite *spriteImage;
     World *world;

@@ -57,23 +57,29 @@ int Application::main(const std::vector<CL_String> &args) {
     CL_DisplayWindowDescription desc;
     desc.set_title(cl_format("GPP: Player %1", i));
 
+    CL_Rect position;
     if (NUM_PLAYERS == 2) {
-      desc.set_position(CL_Rect(i*width/2, 0, (i+1)*width/2, height), false);
+      position = CL_Rect(i*width/2, 0, (i+1)*width/2, height);
     } else {
       if (i < top_players) {
-        desc.set_position(CL_Rect(i*window_width, 0,
-                                  (i+1)*window_width, window_height),
-                          false);
+        position = CL_Rect(i*window_width, 0,
+                                  (i+1)*window_width, window_height);
       } else {
-        desc.set_position(CL_Rect((i-top_players)*window_width,
+        position = CL_Rect((i-top_players)*window_width,
                                   border+window_height,
                                   (i-top_players+1)*window_width,
-                                  border+2*window_height),
-                          false);
+                                  border+2*window_height);
       }
     }
+    desc.set_position(position, false);
 
     CL_DisplayWindow* window = new CL_DisplayWindow(desc);
+
+    // TODO(rggjan): HACK to make it work...
+    while (std::abs(desc.get_position().left-window->get_geometry().left) > 1) {
+      window->set_position(position, false);
+      CL_KeepAlive::process();
+    }
     windows[i] = window;
   }
 

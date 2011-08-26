@@ -5,6 +5,7 @@
 #include <ClanLib/core.h>
 #include <ClanLib/display.h>
 #include <ClanLib/application.h>
+#include <ClanLib/vorbis.h>
 
 // Choose the target renderer
 // #define USE_OPENGL_2
@@ -48,6 +49,7 @@ int Program::main(const std::vector<CL_String> &args) {
 #endif
 
     CL_SetupSound setup_sound;
+    CL_SetupVorbis setup_vorbis;
 
     // Start the Application
     Application app;

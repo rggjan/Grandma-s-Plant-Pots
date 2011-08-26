@@ -35,7 +35,7 @@ class World {
     int width;
     int height;
 
-  // Operations:
+    // Operations:
   public:
     void initLevel();
 
@@ -48,7 +48,9 @@ class World {
 
     void run();
 
-  // Implementation:
+    bool CanBuild(int x, int y);
+
+    // Implementation:
   private:
     void draw();
     void update();
@@ -72,7 +74,6 @@ class World {
     CL_Slot slotQuit[MAX_PLAYERS];
 
     CL_Sprite *background;
-    CL_Sprite *cross;
 
     bool dragging;
     bool mouseDown;
