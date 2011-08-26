@@ -9,18 +9,26 @@
 
 #define ENERGY_COST 10
 
+enum FlowerState {
+  kClosed,
+  kOpen,
+  kFinal
+};
+
 class Flower : public GameObject {
   // Construction
   public:
-    Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position);
+  Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position);
 
-    void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
-    void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
-    bool CanBuild(CL_Vec2f position);
-    
-    void Update(int time_ms);
+  void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
+  void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
+  bool CanBuild(CL_Vec2f position);
 
-    static const int energy_cost = ENERGY_COST;
+  void Update(int time_ms);
+
+  static const int energy_cost = ENERGY_COST;
+
+  FlowerState state_;
 };
 
 #endif  // SRC_FLOWER_H_

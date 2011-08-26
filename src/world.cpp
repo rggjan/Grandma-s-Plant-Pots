@@ -387,8 +387,9 @@ void World::update() {
     Fly *fly = (*fly_it);
 
     fly->set_target_position(players[0]->position());
+    fly->update(timeElapsed_ms);
   }
-
+/*
   // Update all gameobjects
   std::vector<GameObject *>::iterator it;
   for (it = objects.begin(); it != objects.end();) {
@@ -399,7 +400,7 @@ void World::update() {
     } else {
       ++it;
     }
-  }
+  }*/
 }
 
 // Calculate amount of time since last frame
