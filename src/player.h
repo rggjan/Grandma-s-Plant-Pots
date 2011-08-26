@@ -19,7 +19,7 @@ class Player {
     virtual void SelectButtonPressed() {}
     virtual void CancelButtonPressed() {}
 
-    virtual void update(int timeElapsed_ms);
+    virtual void Update(int timeElapsed_ms);
     virtual void DrawEnergy();
     virtual void Draw();
 
