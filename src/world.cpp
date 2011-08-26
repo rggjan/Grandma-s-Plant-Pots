@@ -139,6 +139,17 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
     if (key.id == CL_KEY_RIGHT) {
       players[0]->moving_right = true;
     }
+     if (key.id == CL_KEY_DELETE) {
+      players[0]->BuildButtonPressed();
+    }
+
+    if (key.id == CL_KEY_END) {
+      players[0]->SelectButtonPressed();
+    }
+
+    if (key.id == CL_KEY_HOME) {
+      players[0]->CancelButtonPressed();
+    }
   }
   // key Player 1 onKeyDown
   if (num_players > 1) {
@@ -157,6 +168,17 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
     if (key.id == CL_KEY_D) {
       players[1]->moving_right = true;
     }
+     if (key.id == CL_KEY_1) {
+      players[1]->BuildButtonPressed();
+    }
+
+    if (key.id == CL_KEY_2) {
+      players[1]->SelectButtonPressed();
+    }
+
+    if (key.id == CL_KEY_3) {
+      players[1]->CancelButtonPressed();
+    }
   }
   // key Player 2 onKeyDown
   if (num_players > 2) {
@@ -174,6 +196,17 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
 
     if (key.id == CL_KEY_K) {
       players[2]->moving_right = true;
+    }
+     if (key.id == CL_KEY_7) {
+      players[2]->BuildButtonPressed();
+    }
+
+    if (key.id == CL_KEY_8) {
+      players[2]->SelectButtonPressed();
+    }
+
+    if (key.id == CL_KEY_9) {
+      players[2]->CancelButtonPressed();
     }
   }
   // key Player 3 onKeyDown
@@ -222,6 +255,16 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
 
     if (key.id == CL_KEY_RIGHT) {
       players[4]->moving_right = true;
+    } if (key.id == CL_KEY_NUMPAD6) {
+      players[4]->BuildButtonPressed();
+    }
+
+    if (key.id == CL_KEY_NUMPAD4) {
+      players[4]->SelectButtonPressed();
+    }
+
+    if (key.id == CL_KEY_NUMPAD0) {
+      players[4]->CancelButtonPressed();
     }
   }
 }
