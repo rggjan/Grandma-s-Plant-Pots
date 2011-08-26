@@ -6,7 +6,7 @@
 
 #include "./world.h"
 
-#define CROSS_SPEED 0.7
+#define CROSS_SPEED 0.6
 #define MIN_BORDER 100
 #define START_ENERGY 100
 

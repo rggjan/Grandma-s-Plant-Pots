@@ -7,8 +7,8 @@
 
 #include "./world.h"
 
-#define TIME_TO_OPEN 5000
-#define TIME_TO_FINAL 10000
+#define TIME_TO_OPEN 6000
+#define TIME_TO_FINAL 15000
 #define MIN_FLOWER_DISTANCE 50
 
 Flower::Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position)
