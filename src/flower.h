@@ -16,19 +16,22 @@ enum FlowerState {
 };
 
 class Flower : public GameObject {
-  // Construction
+    // Construction
   public:
-  Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position);
+    Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position);
 
-  void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
-  void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
-  bool CanBuild(CL_Vec2f position);
+    void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
+    void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
+    bool CanBuild(CL_Vec2f position);
 
-  void Update(int time_ms);
+    void Update(int time_ms);
 
-  static const int energy_cost = ENERGY_COST;
+    static const int energy_cost = ENERGY_COST;
 
-  FlowerState state_;
+    FlowerState state_;
+
+  private:
+    int age_;
 };
 
 #endif  // SRC_FLOWER_H_
