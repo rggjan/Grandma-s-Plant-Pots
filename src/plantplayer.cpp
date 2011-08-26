@@ -27,6 +27,8 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
 bool PlantPlayer::BuildLeaf() {
   if (energy >= Leaf::energy_cost && cross_green_) {
     Leaf *leaf = new Leaf(world, gc, "Leaf2", position(), selectedFlower);
+    leaf->set_angle(tmpLeaf->angle());
+    
     energy -= Leaf::energy_cost;
     selectedFlower->AddLeaf(leaf);
     
@@ -196,7 +198,7 @@ void PlantPlayer::draw_cross() {
     CL_Vec2f diff = cross_position()-(selectedFlower->position()-map_position());
 
     float angle = atan2(diff.y, diff.x);
-    tmpLeaf->SetAngle(CL_Angle(angle, cl_radians));
+    tmpLeaf->set_angle(CL_Angle(angle, cl_radians));
 
     CL_Colorf line_color;
 

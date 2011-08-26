@@ -4,10 +4,9 @@
 #define SRC_GAMEOBJECT_H_
 
 #include <ClanLib/core.h>
+#include <ClanLib/display.h>
 
 class World;
-class CL_GraphicContext;
-class CL_Sprite;
 
 class GameObject {
   public:
@@ -15,6 +14,9 @@ class GameObject {
     GameObject(World *world, CL_Vec2f position_);
     GameObject(World *world);
     virtual ~GameObject() {}
+
+    inline void set_angle(CL_Angle angle) { spriteImage->set_angle(angle); }
+    inline CL_Angle angle() { return spriteImage->get_angle(); }
 
     // Operations
     virtual void Draw(CL_GraphicContext *gc, CL_Vec2f target);

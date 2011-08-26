@@ -25,8 +25,6 @@ class Leaf : public GameObject {
 
     bool CanBuild(CL_Vec2f position, Flower* flower);
 
-    void SetAngle(CL_Angle angle);
-
     Flower* flower_;
 };
 
