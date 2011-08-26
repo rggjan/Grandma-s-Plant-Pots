@@ -20,7 +20,7 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
     cross_green_(false) {
   selectedImage = new CL_Sprite(*gc, "Cross2", &world->resources);
 
-  tmpFlower = new Flower(world, gc, CL_Vec2f(0, 0));
+  tmpFlower = new Flower(world, gc, CL_Vec2f(0, 0), this);
   tmpLeaf = new Leaf(world, gc, "Leaf2", CL_Vec2f(0, 0), tmpFlower);
 }
 
@@ -41,7 +41,7 @@ bool PlantPlayer::BuildLeaf() {
 
 bool PlantPlayer::BuildPlant() {
   if (energy >= Flower::energy_cost && cross_green_) {
-    Flower *flower = new Flower(world, gc, position());
+    Flower *flower = new Flower(world, gc, position(), this);
 
     flowers.push_back(flower);
     world->addFlower(flower);

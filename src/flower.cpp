@@ -12,10 +12,11 @@
 #define TIME_TO_FINAL 15000
 #define MIN_FLOWER_DISTANCE 50
 
-Flower::Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position)
+Flower::Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position, Player* player)
   : GameObject(world, position),
     state_(kClosed),
-    age_(0) {
+    age_(0),
+    player_(player) {
   spriteImage = new CL_Sprite(*gc, "Plant1", &world->resources);
 }
 
@@ -40,6 +41,13 @@ void Flower::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
 }
 
 void Flower::Update(int time_ms) {
+  // Update energy from plants
+  unsigned int size = leaves.size();
+  for (unsigned int i=0; i<size; i++) {
+    player_->energy += leaves[i]->Update(time_ms);
+  }
+
+  // Update state
   age_ += time_ms;
 
   if (state_ == kClosed) {
@@ -71,6 +79,6 @@ void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
   for (unsigned int i=0; i<size; i++) {
     leaves[i]->Draw(gc, target);
   }
-  
+
   GameObject::Draw(gc, target);
 }
