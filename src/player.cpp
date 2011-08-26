@@ -35,7 +35,7 @@ Player::Player(CL_DisplayWindow* window, World* world, int width, int height)
   cross = new CL_Sprite(*gc, "Cross", &world->resources);
 }
 
-void Player::update(int timeElapsed_ms) {
+void Player::Update(int timeElapsed_ms) {
   const int min_x = MIN_BORDER;
   const int min_y = MIN_BORDER;
   const int max_x = window_width - MIN_BORDER - 1;

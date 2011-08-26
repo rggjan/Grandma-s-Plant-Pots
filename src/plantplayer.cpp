@@ -124,7 +124,7 @@ void PlantPlayer::Draw() {
     selectedImage->set_alpha(0.8);
 
     CL_Vec2f pos = selectedFlower->position() - map_position();
-    selectedFlower->Draw(gc, pos);
+    selectedImage->draw(*gc, pos.x, pos.y);
   }
 
   Player::Draw();
@@ -144,6 +144,14 @@ void PlantPlayer::DrawEnergy() {
   default:
     Player::DrawEnergy();
   }
+}
+
+void PlantPlayer::Update(int time_ms) {
+  for (unsigned int i=0; i<flowers.size(); i++) {
+    flowers[i]->Update(time_ms);
+  }
+
+  Player::Update(time_ms);
 }
 
 void PlantPlayer::draw_cross() {
@@ -175,7 +183,7 @@ void PlantPlayer::draw_cross() {
     }
 
     diff = selectedFlower->position() - map_position();
-    CL_Draw::line(*gc, diff.x, diff.y, map_position().x, map_position().y,
+    CL_Draw::line(*gc, diff.x, diff.y, cross_position().x, cross_position().y,
                   line_color);
     break;
   }

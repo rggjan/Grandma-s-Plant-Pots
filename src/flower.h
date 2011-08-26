@@ -17,6 +17,8 @@ class Flower : public GameObject {
     void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
     void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
     bool CanBuild(CL_Vec2f position);
+    
+    void Update(int time_ms);
 
     static const int energy_cost = ENERGY_COST;
 };

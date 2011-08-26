@@ -19,7 +19,7 @@ class Player {
     virtual void SelectButtonPressed() {}
     virtual void CancelButtonPressed() {}
 
-    virtual void update(int timeElapsed_ms);
+    virtual void Update(int time_ms);
     virtual void DrawEnergy();
     virtual void Draw();
 
@@ -38,7 +38,6 @@ class Player {
     bool moving_up;
     bool moving_left;
     bool moving_right;
-
 
   protected:
     int window_width, window_height;

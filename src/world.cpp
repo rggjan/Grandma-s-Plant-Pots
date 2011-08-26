@@ -378,7 +378,7 @@ void World::update() {
   int timeElapsed_ms = calcTimeElapsed();
 
   for (int i = 0; i < num_players; i++) {
-    players[i]->update(timeElapsed_ms);
+    players[i]->Update(timeElapsed_ms);
   }
 
   // Make turrets target mousepos
