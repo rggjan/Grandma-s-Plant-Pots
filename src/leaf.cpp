@@ -11,7 +11,6 @@ Leaf::Leaf(World *world, CL_GraphicContext *gc, const CL_StringRef &name,
            CL_Vec2f position)
   : GameObject(world, position) {
   spriteImage = new CL_Sprite(*gc, name, &world->resources);
-  spriteImage->set_play_loop(true);
 }
 
 void Leaf::DrawRed(CL_GraphicContext *gc, CL_Vec2f position) {

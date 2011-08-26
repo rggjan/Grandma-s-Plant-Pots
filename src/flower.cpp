@@ -7,9 +7,13 @@
 
 #include "./world.h"
 
+#define TIME_TO_OPEN 5000
+#define TIME_TO_FINAL 10000
+
 Flower::Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position)
   : GameObject(world, position),
-    state_(kClosed) {
+    state_(kClosed),
+    age_(0) {
   spriteImage = new CL_Sprite(*gc, "Plant1", &world->resources);
 }
 
@@ -30,7 +34,21 @@ void Flower::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
 }
 
 void Flower::Update(int time_ms) {
-  
+  age_ += time_ms;
+
+  if (state_ == kClosed) {
+    if (age_ > TIME_TO_OPEN) {
+      state_ = kOpen;
+      spriteImage->set_frame(1);
+    }
+  }
+
+  if (state_ == kOpen) {
+    if (age_ > TIME_TO_OPEN + TIME_TO_FINAL) {
+      state_ = kFinal;
+      spriteImage->set_frame(2);
+    }
+  }
 }
 
 bool Flower::CanBuild(CL_Vec2f position) {
