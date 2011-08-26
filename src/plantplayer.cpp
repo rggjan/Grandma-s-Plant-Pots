@@ -111,7 +111,7 @@ Flower* PlantPlayer::NearestFlower() {
   return nearest_flower;
 }
 
-void PlantPlayer::draw() {
+void PlantPlayer::Draw() {
   if (state == Selecting) {
     Flower* nearest_flower = NearestFlower();
 
@@ -153,9 +153,9 @@ void PlantPlayer::draw_cross() {
     break;
   case Building:
     if (tmpFlower->CanBuild(position()))
-      tmpFlower->DrawGreen(gc, cross_position_.x, cross_position_.y);
+      tmpFlower->DrawGreen(gc, cross_position());
     else
-      tmpFlower->DrawRed(gc, cross_position_.x, cross_position_.y);
+      tmpFlower->DrawRed(gc, cross_position());
     // Player::draw_cross(); TODO(rggjan): better with this?
     break;
   case SelectedBuilding: {
