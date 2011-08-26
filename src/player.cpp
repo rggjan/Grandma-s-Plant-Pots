@@ -164,7 +164,7 @@ void Player::Draw() {
 
 void Player::DrawEnergy() {
   default_font.draw_text(*gc, CL_Pointf(10, 30),
-                         cl_format("Energy: %1", energy), CL_Colorf::white);
+                         cl_format("Energy: %1", (int)energy), CL_Colorf::white);
 }
 
 void Player::draw_cross() {
