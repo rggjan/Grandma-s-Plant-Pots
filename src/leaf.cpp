@@ -7,6 +7,8 @@
 
 #include "./world.h"
 
+#define ENERGY_COLLECTED_PER_SECOND 0.1
+
 Leaf::Leaf(World *world, CL_GraphicContext *gc, const CL_StringRef &name,
            CL_Vec2f position, Flower* flower)
   : GameObject(world, position),
@@ -28,6 +30,10 @@ void Leaf::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
   spriteImage->set_alpha(0.8);
   spriteImage->set_frame(spriteImage->get_frame_count()-1);
   spriteImage->draw(*gc, position.x, position.y);
+}
+
+float Leaf::Update(int time_ms) {
+  return ENERGY_COLLECTED_PER_SECOND*time_ms/1000;
 }
 
 bool Leaf::CanBuild(CL_Vec2f position, Flower* flower) {

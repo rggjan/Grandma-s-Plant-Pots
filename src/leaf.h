@@ -8,7 +8,6 @@
 #include "./gameobject.h"
 
 #define ENERGY_COST 10
-#define ENERGY_COLLECTED_PER_SECOND 0.1
 
 class Flower;
 
@@ -24,6 +23,8 @@ class Leaf : public GameObject {
     static const int energy_cost = ENERGY_COST;
 
     bool CanBuild(CL_Vec2f position, Flower* flower);
+
+    float Update(int time_ms);
 
     Flower* flower_;
 };
