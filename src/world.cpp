@@ -140,10 +140,6 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
 
   // key Player 0 onKeyDown
   if (num_players > 0) {
-    if (key.id == CL_KEY_SPACE) {
-      players[0]->BuildButtonPressed();
-    }
-
     if (key.id == CL_KEY_DOWN) {
       players[0]->moving_down = true;
     }
