@@ -11,10 +11,12 @@ class Leaf : public GameObject {
     // Construction
   public:
     Leaf(World *world, CL_GraphicContext *gc, const CL_StringRef &name,
-         float posX, float posY);
+         CL_Vec2f position);
 
-    void DrawRed(CL_GraphicContext *gc, int x, int y);
-    void DrawGreen(CL_GraphicContext *gc, int x, int y);
+    void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
+    void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
+
+    void SetAngle(CL_Angle angle);
 };
 
 #endif  // SRC_LEAF_H_

@@ -80,33 +80,21 @@ World::~World() {
 }
 
 void World::initLevel() {
-  Flower *flower = new Flower(this, &default_gc, 20, 30);
-  Flower *flower2 = new Flower(this, &default_gc, 59, 60);
-  addFlower(flower);
-  addFlower(flower2);
-  Leaf *leaf = new Leaf(this, &default_gc, "Leaf1", 30, 40);
-  addLeaf(leaf);
-  Leaf *leaf2 = new Leaf(this, &default_gc, "Leaf2", 69, 70);
-  addLeaf(leaf2);
   for (int i = 0; i < 10; i++) {
     Fly *fly = new Fly(this, default_gc, "SpaceShootTurretShooting");
-    fly->setPos(i*10, i*10);
+    fly->set_position(CL_Vec2f(i*10, i*10));
     addFly(fly);
   }
   for (int i = 0; i < 10; i++) {
     Fly *fly = new Fly(this, default_gc, "Bug2");
-    fly->setPos(i*60, i*60);
+    fly->set_position(CL_Vec2f(i*60, i*60));
     addFly(fly);
   }
 }
 
-bool World::CanBuild(int x, int y) {
-  int xdiff = width/2-x;
-  int ydiff = height/2-y;
-  int dist_squared = xdiff*xdiff+ydiff*ydiff;
-
-  return dist_squared <
-         (height/2-BACKGROUND_BORDER)*(height/2-BACKGROUND_BORDER);
+bool World::CanBuild(CL_Vec2f position) {
+  CL_Vec2f diff = CL_Vec2f(width/2, height/2) - position;
+  return diff.length() < (height/2-BACKGROUND_BORDER);
 }
 
 void World::addObject(GameObject *object) {
@@ -398,7 +386,7 @@ void World::update() {
   for (fly_it = flies.begin(); fly_it != flies.end(); ++fly_it) {
     Fly *fly = (*fly_it);
 
-    fly->setTargetPos(players[0]->x(), players[0]->y());
+    fly->set_target_position(players[0]->position());
   }
 
   // Update all gameobjects
@@ -431,21 +419,21 @@ int World::calcTimeElapsed() {
 void World::draw() {
   for (int i = 0; i < num_players; i++) {
     background->draw(*(players[i]->gc),
-                     -players[i]->center_x,
-                     -players[i]->center_y);
+                     -players[i]->map_position_.x,
+                     -players[i]->map_position_.y);
 
     // Draw all gameobjects
     // Flowers
     std::vector<Flower *>::iterator it1;
     for (it1 = flowers.begin(); it1 != flowers.end(); ++it1)
-      (*it1)->draw(players[i]->gc, players[i]->center_x, players[i]->center_y);
+      (*it1)->Draw(players[i]->gc, players[i]->map_position());
 
     // Flies
     std::vector<Fly *>::iterator it2;
     for (it2 = flies.begin(); it2 != flies.end(); ++it2)
-      (*it2)->draw(players[i]->gc, players[i]->center_x, players[i]->center_y);
+      (*it2)->Draw(players[i]->gc, players[i]->map_position());
 
-    players[i]->draw();
+    players[i]->Draw();
   }
 
   /*

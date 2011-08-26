@@ -11,19 +11,21 @@
 
 using std::vector;
 
+#define LEAF_MAX_DISTANCE 300
+
 PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
                          int width, int height)
   : Player(window, world, width, height),
     state(Idle) {
   selectedImage = new CL_Sprite(*gc, "Cross2", &world->resources);
 
-  tmpFlower = new Flower(world, gc, 0, 0);
-  tmpLeaf = new Leaf(world, gc, "Leaf2", 0, 0);
+  tmpFlower = new Flower(world, gc, CL_Vec2f(0, 0));
+  tmpLeaf = new Leaf(world, gc, "Leaf2", CL_Vec2f(0, 0));
 }
 
 bool PlantPlayer::BuildPlant() {
-  if (energy >= Flower::energy_cost && tmpFlower->CanBuild(x(), y())) {
-    Flower *flower = new Flower(world, gc, x(), y());
+  if (energy >= Flower::energy_cost && tmpFlower->CanBuild(position())) {
+    Flower *flower = new Flower(world, gc, position());
 
     flowers.push_back(flower);
     world->addFlower(flower);
@@ -98,12 +100,10 @@ Flower* PlantPlayer::NearestFlower() {
   // Get nearest flower
   std::vector<Flower *>::iterator it;
   for (it = flowers.begin(); it != flowers.end(); ++it) {
-    int x_diff = (*it)->posX - x();
-    int y_diff = (*it)->posY - y();
-    int dist_squared = y_diff*y_diff + x_diff*x_diff;
+    float distance = ((*it)->position() - position()).length();
 
-    if (nearest_flower == NULL || dist_squared < best_dist) {
-      best_dist = dist_squared;
+    if (nearest_flower == NULL || distance < best_dist) {
+      best_dist = distance;
       nearest_flower = (*it);
     }
   }
@@ -116,17 +116,18 @@ void PlantPlayer::draw() {
     Flower* nearest_flower = NearestFlower();
 
     selectedImage->set_alpha(0.3);
-    if (nearest_flower != NULL)
-      selectedImage->draw(*gc, nearest_flower->posX - center_x,
-                          nearest_flower->posY - center_y);
+    if (nearest_flower != NULL) {
+      CL_Vec2f pos = nearest_flower->position() - map_position();
+      selectedImage->draw(*gc, pos.x, pos.y);
+    }
   } else if (state == Selected || state == SelectedBuilding) {
     selectedImage->set_alpha(0.8);
 
-    selectedImage->draw(*gc, selectedFlower->posX - center_x,
-                        selectedFlower->posY - center_y);
+    CL_Vec2f pos = selectedFlower->position() - map_position();
+    selectedFlower->Draw(gc, pos);
   }
 
-  Player::draw();
+  Player::Draw();
 }
 
 void PlantPlayer::DrawEnergy() {
@@ -151,22 +152,36 @@ void PlantPlayer::draw_cross() {
     Player::draw_cross();
     break;
   case Building:
-    if (tmpFlower->CanBuild(x(), y()))
-      tmpFlower->DrawGreen(gc, cross_x, cross_y);
+    if (tmpFlower->CanBuild(position()))
+      tmpFlower->DrawGreen(gc, cross_position_.x, cross_position_.y);
     else
-      tmpFlower->DrawRed(gc, cross_x, cross_y);
+      tmpFlower->DrawRed(gc, cross_position_.x, cross_position_.y);
     // Player::draw_cross(); TODO(rggjan): better with this?
     break;
-  case SelectedBuilding:
-    CL_Draw::line(*gc, selectedFlower->posX - center_x,
-                  selectedFlower->posY - center_y, cross_x, cross_y, CL_Colorf::white);
-    tmpLeaf->DrawGreen(gc, cross_x, cross_y);
-    /*if (tmpFlower->CanBuild(x(), y()))
-      tmpFlower->DrawGreen(gc, cross_x, cross_y);
-    else
-      tmpFlower->DrawRed(gc, cross_x, cross_y);*/
-  default:
+  case SelectedBuilding: {
+    CL_Vec2f diff = cross_position()-(selectedFlower->position()-map_position());
+
+    float angle = atan2(diff.y, diff.x);
+    tmpLeaf->SetAngle(CL_Angle(angle, cl_radians));
+
+    CL_Colorf line_color;
+
+    if (diff.length() > LEAF_MAX_DISTANCE) {
+      tmpLeaf->DrawRed(gc, cross_position());
+      line_color = CL_Colorf::red;
+    } else {
+      tmpLeaf->DrawGreen(gc, cross_position());
+      line_color = CL_Colorf::green;
+    }
+
+    diff = selectedFlower->position() - map_position();
+    CL_Draw::line(*gc, diff.x, diff.y, map_position().x, map_position().y,
+                  line_color);
+    break;
+  }
+  default: {
     Player::draw_cross();
     break;
+  }
   }
 }

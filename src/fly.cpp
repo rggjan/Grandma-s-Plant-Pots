@@ -20,22 +20,12 @@ Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name)
   spriteImage->set_play_loop(true);
 }
 
-void Fly::setPos(int x, int y) {
-  posX = destPosX = static_cast<float>(x);
-  posY = destPosY = static_cast<float>(y);
-}
-
-void Fly::setTargetPos(int x, int y) {
-  destPosX = x;
-  destPosY = y;
-}
-
 bool Fly::update(int timeElapsed_ms) {
   GameObject::update(timeElapsed_ms);
 
   // Calculate target direction
   CL_Vec2f target_direction;
-  target_direction = CL_Vec2f(destPosX - posX, destPosY - posY);
+  target_direction = target_position_ - position_;
   target_direction.normalize();
 
   // Right angle
@@ -66,8 +56,7 @@ bool Fly::update(int timeElapsed_ms) {
   // Update position
   // posX += direction.x * 10*(rand()%100)/100;
   // posY += direction.y * 10*(rand()%100)/100;
-  posX += direction.x*timeElapsed_ms/1000*SPEED;
-  posY += direction.y*timeElapsed_ms/1000*SPEED;
+  position_ += direction*timeElapsed_ms/1000*SPEED;
 
   return true;
 }

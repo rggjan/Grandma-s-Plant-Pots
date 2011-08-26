@@ -21,20 +21,18 @@ class Player {
 
     virtual void update(int timeElapsed_ms);
     virtual void DrawEnergy();
-    virtual void draw();
+    virtual void Draw();
 
-    inline int x() {
-      return center_x + cross_x;
-    }
-    inline int y() {
-      return center_y + cross_y;
-    }
+
+    inline CL_Vec2f position() { return map_position_ + cross_position_; }
+    inline CL_Vec2f cross_position() { return cross_position_; }
+    inline CL_Vec2f map_position() { return map_position_; }
 
     CL_GraphicContext *gc;
     CL_DisplayWindow *display_window;
 
-    int center_x, center_y;
-    int cross_x, cross_y;
+    CL_Vec2f map_position_;
+    CL_Vec2f cross_position_;
 
     bool moving_down;
     bool moving_up;

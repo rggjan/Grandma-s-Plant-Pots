@@ -7,13 +7,10 @@
 
 #include "./world.h"
 
-Flower::Flower(World *world, CL_GraphicContext *gc, float posX, float posY)
-  : GameObject(world) {
+Flower::Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position)
+  : GameObject(world, position) {
   spriteImage = new CL_Sprite(*gc, "Plant1", &world->resources);
   spriteImage->set_play_loop(true);
-
-  this->posX = posX;
-  this->posY = posY;
 }
 
 void Flower::DrawRed(CL_GraphicContext *gc, int x, int y) {
@@ -32,6 +29,6 @@ void Flower::DrawGreen(CL_GraphicContext *gc, int x, int y) {
   spriteImage->draw(*gc, x, y);
 }
 
-bool Flower::CanBuild(int x, int y) {
-  return world->CanBuild(x, y);
+bool Flower::CanBuild(CL_Vec2f position) {
+  return world->CanBuild(position);
 }

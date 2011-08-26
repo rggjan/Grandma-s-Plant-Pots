@@ -18,16 +18,15 @@ class Fly : public GameObject {
   // Operations:
   public:
 
-    void setPos(int x, int y);
-    void setTargetPos(int x, int y);
+    inline void set_position(CL_Vec2f position) { position_ = position; }
+    inline void set_target_position(CL_Vec2f target_position) { target_position_ = target_position; }
 
     virtual bool update(int timeElapsed_ms);
 
   // Implementation:
   private:
     CL_Vec2f direction;
-
-    float destPosX, destPosY;
+    CL_Vec2f target_position_;
 };
 
 #endif  // SRC_FLY_H_

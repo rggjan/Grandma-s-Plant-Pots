@@ -4,9 +4,9 @@
 
 #include <ClanLib/display.h>
 
-void GameObject::draw(CL_GraphicContext *gc, int x, int y) {
-  // Draw graphic
-  spriteImage->draw(*gc, posX-x, posY-y);
+void GameObject::Draw(CL_GraphicContext *gc, CL_Vec2f target) {
+  CL_Vec2f pos = position_ - target;
+  spriteImage->draw(*gc, pos.x, pos.y);
 }
 
 bool GameObject::update(int timeElapsed_ms) {
@@ -16,4 +16,9 @@ bool GameObject::update(int timeElapsed_ms) {
 
 GameObject::GameObject(World* world) {
   this->world = world;
+}
+
+GameObject::GameObject(World* world, CL_Vec2f position)
+  : position_(position) {
+    this->world = world;
 }
