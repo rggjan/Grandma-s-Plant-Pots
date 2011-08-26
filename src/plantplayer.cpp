@@ -11,7 +11,7 @@
 
 using std::vector;
 
-#define LEAF_MAX_DISTANCE 100
+#define LEAF_MAX_DISTANCE 80
 
 PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
                          int width, int height)
@@ -60,6 +60,9 @@ void PlantPlayer::SelectButtonPressed() {
   case Selected:
     state = Selecting;
     break;
+  case SelectedBuilding:
+    state = Selecting;
+    break;
   default:
     break;
   }
@@ -78,6 +81,7 @@ void PlantPlayer::CancelButtonPressed() {
     break;
   case SelectedBuilding:
     state = Selecting;
+    break;
   default:
     break;
   }
