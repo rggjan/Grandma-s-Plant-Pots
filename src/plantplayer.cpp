@@ -11,6 +11,8 @@
 
 using std::vector;
 
+#define LEAF_MAX_DISTANCE 300
+
 PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
                          int width, int height)
   : Player(window, world, width, height),
@@ -158,16 +160,30 @@ void PlantPlayer::draw_cross() {
     // Player::draw_cross(); TODO(rggjan): better with this?
     break;
   case SelectedBuilding: {
-    /*CL_Draw::line(*gc, selectedFlower->posX - center_x,
-                  selectedFlower->posY - center_y, cross_x, cross_y, CL_Colorf::white);*/
+
+
     float angle = atan2(cross_y - (selectedFlower->posY - center_y),
                         cross_x - (selectedFlower->posX - center_x));
+
+    float diff_x = (selectedFlower->posX - center_x - cross_x);
+    float diff_y = (selectedFlower->posY - center_y - cross_y);
+
     tmpLeaf->SetAngle(CL_Angle(angle, cl_radians));
-    tmpLeaf->DrawGreen(gc, cross_x, cross_y);
-    /*if (tmpFlower->CanBuild(x(), y()))
-      tmpFlower->DrawGreen(gc, cross_x, cross_y);
-    else
-    tmpFlower->DrawRed(gc, cross_x, cross_y);*/
+
+    CL_Colorf line_color;
+
+    if (diff_x*diff_x + diff_y*diff_y > LEAF_MAX_DISTANCE*LEAF_MAX_DISTANCE) {
+      tmpLeaf->DrawRed(gc, cross_x, cross_y);
+      line_color = CL_Colorf::red;
+    } else {
+      tmpLeaf->DrawGreen(gc, cross_x, cross_y);
+      line_color = CL_Colorf::green;
+    }
+
+
+    CL_Draw::line(*gc, selectedFlower->posX - center_x,
+                  selectedFlower->posY - center_y, cross_x, cross_y,
+                  line_color);
     break;
   }
   default: {
