@@ -41,6 +41,7 @@ class PlantPlayer : public Player {
     Flower *selectedFlower;
 
     bool BuildPlant();
+    bool BuildLeaf();
     Flower* NearestFlower();
 
 

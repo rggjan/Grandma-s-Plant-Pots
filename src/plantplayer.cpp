@@ -11,7 +11,7 @@
 
 using std::vector;
 
-#define LEAF_MAX_DISTANCE 300
+#define LEAF_MAX_DISTANCE 100
 
 PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
                          int width, int height)
@@ -21,6 +21,11 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
 
   tmpFlower = new Flower(world, gc, CL_Vec2f(0, 0));
   tmpLeaf = new Leaf(world, gc, "Leaf2", CL_Vec2f(0, 0));
+}
+
+bool PlantPlayer::BuildLeaf() {
+  CL_Console::write_line("Buil Leaf");
+     return false;
 }
 
 bool PlantPlayer::BuildPlant() {
@@ -71,6 +76,8 @@ void PlantPlayer::CancelButtonPressed() {
   case Selected:
     state = Selecting;
     break;
+  case SelectedBuilding:
+    state = Selecting;
   default:
     break;
   }
@@ -86,6 +93,9 @@ void PlantPlayer::BuildButtonPressed() {
     break;
   case Selected:
     state = SelectedBuilding;
+    break;
+  case SelectedBuilding:
+    BuildLeaf();
     break;
   default:
     break;
