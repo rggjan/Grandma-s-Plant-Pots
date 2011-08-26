@@ -72,8 +72,8 @@ void PlantPlayer::SelectButtonPressed() {
     state = Selecting;
     break;
   case SelectedBuilding:
-    state = Selecting;
-    break;
+    if (BuildLeaf())
+      state = Idle;
   default:
     break;
   }
