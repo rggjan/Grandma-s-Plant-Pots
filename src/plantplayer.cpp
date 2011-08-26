@@ -166,6 +166,15 @@ void PlantPlayer::DrawEnergy() {
                                      tmpFlower->energy_cost), color);
     break;
   }
+  case SelectedBuilding: {
+    CL_Colorf color = CL_Colorf::white;
+    if (tmpLeaf->energy_cost > energy)
+      color = CL_Colorf::red;
+    default_font.draw_text(*gc, CL_Pointf(10, 30),
+                           cl_format("Energy: %1 (%2)", (int)energy,
+                                     tmpLeaf->energy_cost), color);
+    break;
+  }
   default:
     Player::DrawEnergy();
   }
