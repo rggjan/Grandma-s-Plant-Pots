@@ -20,5 +20,5 @@ GameObject::GameObject(World* world) {
 
 GameObject::GameObject(World* world, CL_Vec2f position)
   : position_(position) {
-    this->world = world;
+  this->world = world;
 }

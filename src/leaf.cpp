@@ -32,3 +32,13 @@ void Leaf::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
 void Leaf::SetAngle(CL_Angle angle) {
   spriteImage->set_angle(angle);
 }
+
+bool Leaf::CanBuild(CL_Vec2f position, Flower* flower) {
+  //Flower *nearest_flower = world->NearestFlower(position);
+
+  /*if (nearest_flower &&
+      (nearest_flower->position() - position).length() < MIN_FLOWER_DISTANCE)
+    return false;*/
+  //return world->CanBuild(position);
+  return true;
+}

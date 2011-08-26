@@ -44,6 +44,8 @@ class PlantPlayer : public Player {
     bool BuildLeaf();
     Flower* NearestFlower();
 
+    bool cross_green_;
+
 
   protected:
     virtual void draw_cross();

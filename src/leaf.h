@@ -7,6 +7,11 @@
 
 #include "./gameobject.h"
 
+#define ENERGY_COST 10
+#define ENERGY_COLLECTED_PER_SECOND 0.1
+
+class Flower;
+
 class Leaf : public GameObject {
     // Construction
   public:
@@ -15,6 +20,10 @@ class Leaf : public GameObject {
 
     void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
     void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
+
+    static const int energy_cost = ENERGY_COST;
+
+    bool CanBuild(CL_Vec2f position, Flower* flower);
 
     void SetAngle(CL_Angle angle);
 };

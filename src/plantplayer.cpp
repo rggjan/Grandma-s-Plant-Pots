@@ -16,7 +16,8 @@ using std::vector;
 PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
                          int width, int height)
   : Player(window, world, width, height),
-    state(Idle) {
+    state(Idle),
+    cross_green_(false) {
   selectedImage = new CL_Sprite(*gc, "Cross2", &world->resources);
 
   tmpFlower = new Flower(world, gc, CL_Vec2f(0, 0));
@@ -24,12 +25,25 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
 }
 
 bool PlantPlayer::BuildLeaf() {
-  CL_Console::write_line("Buil Leaf");
-     return false;
+  if (energy >= Leaf::energy_cost && cross_green_) {
+    //Leaf *leaf = new Leaf(selectedFlower, gc, position());
+
+    energy -= Leaf::energy_cost;
+    /*Flower *flower = new Flower(world, gc, position());
+
+    flowers.push_back(flower);
+    world->addFlower(flower);
+
+    energy -= Flower::energy_cost;*/
+    return true;
+  } else {
+    // TODO(rggjan): beep
+    return false;
+  }
 }
 
 bool PlantPlayer::BuildPlant() {
-  if (energy >= Flower::energy_cost && tmpFlower->CanBuild(position())) {
+  if (energy >= Flower::energy_cost && cross_green_) {
     Flower *flower = new Flower(world, gc, position());
 
     flowers.push_back(flower);
@@ -170,10 +184,13 @@ void PlantPlayer::draw_cross() {
     Player::draw_cross();
     break;
   case Building:
-    if (tmpFlower->CanBuild(position()))
+    if (tmpFlower->CanBuild(position())) {
       tmpFlower->DrawGreen(gc, cross_position());
-    else
+      cross_green_ = true;
+    } else {
       tmpFlower->DrawRed(gc, cross_position());
+      cross_green_ = false;
+    }
     // Player::draw_cross(); TODO(rggjan): better with this?
     break;
   case SelectedBuilding: {
@@ -187,9 +204,11 @@ void PlantPlayer::draw_cross() {
     if (diff.length() > LEAF_MAX_DISTANCE) {
       tmpLeaf->DrawRed(gc, cross_position());
       line_color = CL_Colorf::red;
+      cross_green_ = false;
     } else {
       tmpLeaf->DrawGreen(gc, cross_position());
       line_color = CL_Colorf::green;
+      cross_green_ = true;
     }
 
     diff = selectedFlower->position() - map_position();
