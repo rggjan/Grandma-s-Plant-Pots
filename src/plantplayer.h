@@ -8,12 +8,14 @@
 #include "./player.h"
 
 class Flower;
+class Leaf;
 
 enum State {
   Idle,
   Building,
   Selecting,
   Selected,
+  SelectedBuilding,
 };
 
 class PlantPlayer : public Player {
@@ -32,6 +34,7 @@ class PlantPlayer : public Player {
 
     CL_Sprite *selectedImage;
     Flower *tmpFlower;
+    Leaf *tmpLeaf;
 
     Flower *selectedFlower;
 

@@ -8,10 +8,13 @@
 #include "./gameobject.h"
 
 class Leaf : public GameObject {
-  // Construction
+    // Construction
   public:
-    Leaf(World *world, CL_GraphicContext &gc, const CL_StringRef &name,
-    float posX, float posY);
+    Leaf(World *world, CL_GraphicContext *gc, const CL_StringRef &name,
+         float posX, float posY);
+
+    void DrawRed(CL_GraphicContext *gc, int x, int y);
+    void DrawGreen(CL_GraphicContext *gc, int x, int y);
 };
 
 #endif  // SRC_LEAF_H_

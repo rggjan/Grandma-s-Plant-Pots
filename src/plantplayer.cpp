@@ -7,6 +7,7 @@
 #include "./flower.h"
 #include "./player.h"
 #include "./world.h"
+#include "./leaf.h"
 
 using std::vector;
 
@@ -17,6 +18,7 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
   selectedImage = new CL_Sprite(*gc, "Cross2", &world->resources);
 
   tmpFlower = new Flower(world, gc, 0, 0);
+  tmpLeaf = new Leaf(world, gc, "Leaf2", 0, 0);
 }
 
 bool PlantPlayer::BuildPlant() {
@@ -80,6 +82,9 @@ void PlantPlayer::BuildButtonPressed() {
   case Building:
     BuildPlant();
     break;
+  case Selected:
+    state = SelectedBuilding;
+    break;
   default:
     break;
   }
@@ -114,7 +119,7 @@ void PlantPlayer::draw() {
     if (nearest_flower != NULL)
       selectedImage->draw(*gc, nearest_flower->posX - center_x,
                           nearest_flower->posY - center_y);
-  } else if (state == Selected) {
+  } else if (state == Selected || state == SelectedBuilding) {
     selectedImage->set_alpha(0.8);
 
     selectedImage->draw(*gc, selectedFlower->posX - center_x,
@@ -152,6 +157,14 @@ void PlantPlayer::draw_cross() {
       tmpFlower->DrawRed(gc, cross_x, cross_y);
     // Player::draw_cross(); TODO(rggjan): better with this?
     break;
+  case SelectedBuilding:
+    CL_Draw::line(*gc, selectedFlower->posX - center_x,
+                  selectedFlower->posY - center_y, cross_x, cross_y, CL_Colorf::white);
+    tmpLeaf->DrawGreen(gc, cross_x, cross_y);
+    /*if (tmpFlower->CanBuild(x(), y()))
+      tmpFlower->DrawGreen(gc, cross_x, cross_y);
+    else
+      tmpFlower->DrawRed(gc, cross_x, cross_y);*/
   default:
     Player::draw_cross();
     break;

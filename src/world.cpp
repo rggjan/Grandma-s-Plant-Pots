@@ -84,9 +84,9 @@ void World::initLevel() {
   Flower *flower2 = new Flower(this, &default_gc, 59, 60);
   addFlower(flower);
   addFlower(flower2);
-  Leaf *leaf = new Leaf(this, default_gc, "Leaf1", 30, 40);
+  Leaf *leaf = new Leaf(this, &default_gc, "Leaf1", 30, 40);
   addLeaf(leaf);
-  Leaf *leaf2 = new Leaf(this, default_gc, "Leaf2", 69, 70);
+  Leaf *leaf2 = new Leaf(this, &default_gc, "Leaf2", 69, 70);
   addLeaf(leaf2);
   for (int i = 0; i < 10; i++) {
     Fly *fly = new Fly(this, default_gc, "SpaceShootTurretShooting");
