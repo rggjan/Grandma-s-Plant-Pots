@@ -401,7 +401,7 @@ void World::run() {
   CL_SoundBuffer *sound = new CL_SoundBuffer("BackgroundMusic", &resources);
   sound->set_volume(1.0f);
   sound->prepare();
-  sound->play();
+ // sound->play();
 
   while (!quit) {
     update();

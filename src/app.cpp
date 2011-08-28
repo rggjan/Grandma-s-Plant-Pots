@@ -10,6 +10,7 @@
 #include "./world.h"
 
 #define NUM_PLAYERS 4
+
 #define CALCULATE_WINDOW_SIZES false
 
 using std::vector;

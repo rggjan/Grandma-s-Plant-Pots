@@ -52,7 +52,7 @@ private:
     Leaf *tmpLeaf;
     Flower *selectedFlower;
     CL_SoundBuffer *sound_plantgrowing_;
-    
+    CL_SoundBuffer *sound_beep1_;
     bool cross_green_;
     float energy_;
 };

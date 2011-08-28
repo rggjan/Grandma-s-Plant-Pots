@@ -26,11 +26,16 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
   tmpFlower = new Flower(world, gc, CL_Vec2f(0, 0), this);
   tmpLeaf = new Leaf(world, gc, "Leaf2", CL_Vec2f(0, 0), tmpFlower);
   
-  CL_SoundBuffer *sound_plantgrowing_ = 
+  
+  sound_plantgrowing_ =
   new CL_SoundBuffer("PlantgrowingMusic", &world->resources);
   sound_plantgrowing_->set_volume(1.0f);
   sound_plantgrowing_->prepare();
-  sound_plantgrowing_->play();
+  
+  sound_beep1_ = new CL_SoundBuffer("Beep1Music", &world->resources);
+  sound_beep1_->set_volume(0.1f);
+  sound_beep1_->prepare();
+
 }
 
 bool PlantPlayer::BuildLeaf() {
@@ -43,7 +48,7 @@ bool PlantPlayer::BuildLeaf() {
 
     return true;
   } else {
-    // TODO(rggjan): beep
+    sound_beep1_->play();
     return false;
   }
 }
@@ -56,9 +61,11 @@ bool PlantPlayer::BuildPlant() {
     world->addFlower(flower);
 
     energy_ -= Flower::energy_cost;
+    sound_plantgrowing_->play();
+    
     return true;
   } else {
-    // TODO(rggjan): beep
+    sound_beep1_->play();
     return false;
   }
 }
