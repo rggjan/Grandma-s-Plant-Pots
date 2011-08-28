@@ -6,6 +6,7 @@
 #include <ClanLib/core.h>
 
 #include "./gameobject.h"
+#include "./flower.h"
 
 class CL_Sprite;
 class CL_GraphicContext;
@@ -17,7 +18,6 @@ class Fly : public GameObject {
 
     // Operations:
   public:
-
     inline void set_position(CL_Vec2f position) {
       position_ = position;
     }
@@ -26,12 +26,17 @@ class Fly : public GameObject {
       target_position_ = target_position;
     }
 
+    inline void set_target_flower(Flower *flower) {
+      target_flower_ = flower;
+    }
+
     virtual bool update(int timeElapsed_ms);
 
     // Implementation:
   private:
     CL_Vec2f direction;
     CL_Vec2f target_position_;
+    Flower *target_flower_;
 };
 
 #endif  // SRC_FLY_H_

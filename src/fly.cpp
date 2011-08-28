@@ -14,7 +14,8 @@
 
 Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name)
   : GameObject(world),
-    direction(0, -1) {
+    direction(0, -1),
+    target_flower_(NULL) {
   spriteImage = new CL_Sprite(gc, name, &world->resources);
 
   spriteImage->set_play_loop(true);
@@ -25,7 +26,12 @@ bool Fly::update(int timeElapsed_ms) {
 
   // Calculate target direction
   CL_Vec2f target_direction;
-  target_direction = target_position_ - position_;
+
+  if (target_flower_ == NULL)
+    target_direction = target_position_ - position_;
+  else
+    target_direction = target_flower_->position() - position_;
+
   target_direction.normalize();
 
   // Right angle

@@ -74,6 +74,10 @@ class World {
     std::vector<Flower*> flowers;
 
     CL_GraphicContext default_gc;
+
+    int time_elapsed_ms_;
+
+    CL_Font default_font_;    
 };
 
 #endif  // SRC_WORLD_H_
