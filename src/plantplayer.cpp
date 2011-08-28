@@ -149,13 +149,13 @@ void PlantPlayer::DrawFloor() {
   if (state == Selecting) {
     Flower* nearest_flower = NearestFlower();
 
-    selectedImage->set_alpha(0.3);
+    //selectedImage->set_alpha(0.3);
     if (nearest_flower != NULL) {
       CL_Vec2f pos = nearest_flower->position() - map_position();
       selectedImage->draw(*gc, pos.x, pos.y);
     }
   } else if (state == Selected || state == SelectedBuilding) {
-    selectedImage->set_alpha(0.8);
+    //selectedImage->set_alpha(0.8);
 
     CL_Vec2f pos = selectedFlower->position() - map_position();
     selectedImage->draw(*gc, pos.x, pos.y);

@@ -81,8 +81,6 @@ bool Fly::update(int timeElapsed_ms) {
     if (distance > ATTACK_SPEED_DECREASE_DISTANCE) {
       speed = SPEED;
     } else {
-      CL_Console::write_line("distance: %1", distance);
-
       speed = SPEED * distance / ATTACK_SPEED_DECREASE_DISTANCE;
     }
   }

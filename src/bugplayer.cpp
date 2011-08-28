@@ -15,7 +15,7 @@ BugPlayer::BugPlayer(CL_DisplayWindow* window, World* world,
                      int width, int height)
   : Player(window, world, width, height) {
   selectedImage = new CL_Sprite(*gc, "Cross2", &world->resources);
-  selectedImage->set_alpha(0.3);
+  //selectedImage->set_alpha(0.3);
 
   for (int i = 0; i < NUM_BUGS; i++) {
     const char* name;
@@ -38,9 +38,12 @@ void BugPlayer::AddFly(Fly* fly) {
 }
 
 void BugPlayer::SelectButtonPressed() {
-  Flower* nearest_flower = world->NearestFlower(position());
+  Fly* fly = GetFreeBug();
 
-  flies[0]->SetTargetFlower(nearest_flower);
+  if (fly != NULL)
+    fly->SetTargetFlower(nearest_free_flower_);
+
+  // TODO(rggjan): beep
 }
 
 void BugPlayer::CancelButtonPressed() {
@@ -61,11 +64,22 @@ Flower* BugPlayer::GetFreeFlower() {
   return NULL;
 }
 
-void BugPlayer::DrawFloor() {
-    Flower* flower = GetFreeFlower();
+Fly* BugPlayer::GetFreeBug() {
+  int size = flies.size();
+  for (int i=0; i<size; i++) {
+    if (flies[i]->is_free()) {
+      return flies[i];
+    }
+  }
 
-    if (flower != NULL) {
-      CL_Vec2f pos = flower->position() - map_position();
+  return NULL;
+}
+
+void BugPlayer::DrawFloor() {
+    nearest_free_flower_ = GetFreeFlower();
+
+    if (nearest_free_flower_ != NULL) {
+      CL_Vec2f pos = nearest_free_flower_->position() - map_position();
       selectedImage->draw(*gc, pos.x, pos.y);
     }
 /*  } else if (state == Selected || state == SelectedBuilding) {

@@ -23,10 +23,13 @@ class BugPlayer : public Player {
 private:
 
     Flower* GetFreeFlower();
+    Fly* GetFreeBug();
 
     std::vector<Fly*> flies;
 
     CL_Sprite *selectedImage;
+
+    Flower* nearest_free_flower_;
 };
 
 #endif  // SRC_BUG_H_
