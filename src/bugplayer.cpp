@@ -40,9 +40,9 @@ void BugPlayer::AddFly(Fly* fly) {
 void BugPlayer::SelectButtonPressed() {
   Fly* fly = GetFreeBug();
 
-  if (fly != NULL)
+  if (fly != NULL && nearest_free_flower_ != NULL)
     fly->SetTargetFlower(nearest_free_flower_);
-
+  //else
   // TODO(rggjan): beep
 }
 
