@@ -10,7 +10,7 @@ file(GLOB GPP_SOURCES *.cpp)
 
 # Find clanlib
 set(ClanLib_MAJOR_VERSION 2)
-set(ClanLib_MINOR_VERSION 2)
+set(ClanLib_MINOR_VERSION 3)
 
 # Add clanlib dependency
 find_package(ClanLib COMPONENTS App Display GL GL1 SWRender Sound Vorbis REQUIRED)
