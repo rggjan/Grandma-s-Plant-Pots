@@ -40,7 +40,7 @@ void BugPlayer::AddFly(Fly* fly) {
 void BugPlayer::SelectButtonPressed() {
   Flower* nearest_flower = world->NearestFlower(position());
 
-  flies[0]->set_target_flower(nearest_flower);
+  flies[0]->SetTargetFlower(nearest_flower);
 }
 
 void BugPlayer::CancelButtonPressed() {
@@ -49,11 +49,23 @@ void BugPlayer::CancelButtonPressed() {
 void BugPlayer::BuildButtonPressed() {
 }
 
-void BugPlayer::Draw() {
-    vector<Flower*> *flowers = world->NearestFlowers(position());
+Flower* BugPlayer::GetFreeFlower() {
+  vector<Flower*> *flowers = world->NearestFlowers(position());
 
-    if (flowers->size() > 0) {
-      CL_Vec2f pos = (*flowers)[0]->position() - map_position();
+  int size = flowers->size();
+  for (int i=0; i < size; i++) {
+    if ((*flowers)[i]->free_space())
+      return (*flowers)[i];
+  }
+
+  return NULL;
+}
+
+void BugPlayer::Draw() {
+    Flower* flower = GetFreeFlower();
+
+    if (flower != NULL) {
+      CL_Vec2f pos = flower->position() - map_position();
       selectedImage->draw(*gc, pos.x, pos.y);
     }
 /*  } else if (state == Selected || state == SelectedBuilding) {

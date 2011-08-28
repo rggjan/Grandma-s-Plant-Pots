@@ -26,9 +26,7 @@ class Fly : public GameObject {
       target_position_ = target_position;
     }
 
-    inline void set_target_flower(Flower *flower) {
-      target_flower_ = flower;
-    }
+    void SetTargetFlower(Flower *flower);
 
     virtual bool update(int timeElapsed_ms);
 

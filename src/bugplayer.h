@@ -20,7 +20,10 @@ class BugPlayer : public Player {
     void Update(int time_ms);
     void Draw();
 
-  private:
+private:
+
+    Flower* GetFreeFlower();
+
     std::vector<Fly*> flies;
 
     CL_Sprite *selectedImage;

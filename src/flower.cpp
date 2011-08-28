@@ -20,7 +20,8 @@ Flower::Flower(World *world, CL_GraphicContext *gc,
   : GameObject(world, position),
     state_(kClosed),
     age_(0),
-    player_(player) {
+    player_(player),
+    eating_fly_(NULL) {
   spriteImage = new CL_Sprite(*gc, "Plant1", &world->resources);
 }
 
