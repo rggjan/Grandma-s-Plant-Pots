@@ -9,6 +9,7 @@
 
 class Flower;
 class Leaf;
+class CL_SoundBuffer;
 
 enum State {
   Idle,
@@ -49,6 +50,7 @@ private:
     Flower *tmpFlower;
     Leaf *tmpLeaf;
     Flower *selectedFlower;
+    CL_SoundBuffer *sound_plantgrowing_;
     
     bool cross_green_;
     float energy_;

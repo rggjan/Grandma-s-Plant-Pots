@@ -56,4 +56,14 @@
 	</sprite>
 
 	<sample name="BackgroundMusic" file="Sound/Background.ogg"/>
+
+	<sample name="BughummingMusic" file="Sound/bug_humming.ogg"/>
+
+	<sample name="PlantgrowingMusic" file="Sound/plant_growing.ogg"/>
+
+	<sample name="BackgroundMusic" file="Sound/Background.ogg"/>
+	
+	<sample name="BackgroundMusic" file="Sound/Background.ogg"/>
+
+
 </resources>
