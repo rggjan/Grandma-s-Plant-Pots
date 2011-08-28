@@ -10,7 +10,8 @@
 #define CONSTANT_ANGLE false
 #define SPEED 300
 #define MAX_CURVE 5
-
+#define ATTACK_SPEED_DECREASE_DISTANCE 200
+#define ATTACK_MIN_DISTANCE 5
 
 Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name)
   : GameObject(world),
@@ -32,7 +33,13 @@ bool Fly::update(int timeElapsed_ms) {
   else
     target_direction = target_flower_->position() - position_;
 
+  // Calculate distance
+  float distance;
+  distance = target_direction.length();
   target_direction.normalize();
+
+  if (target_flower_ != NULL and distance < ATTACK_MIN_DISTANCE)
+    return true;
 
   // Right angle
   CL_Vec2f right;
@@ -41,11 +48,11 @@ bool Fly::update(int timeElapsed_ms) {
 
 #if CONSTANT_ANGLE
   if (right.dot(target_direction) > 0)
-    direction = direction + right*MAX_CURVE*timeElapsed_ms/1000;
+    direction = direction + right * MAX_CURVE * timeElapsed_ms / 1000;
   else
-    direction = direction - right*MAX_CURVE*timeElapsed_ms/1000;
+    direction = direction - right * MAX_CURVE * timeElapsed_ms / 1000;
 #else
-  direction = direction + target_direction*MAX_CURVE*timeElapsed_ms/1000;
+  direction = direction + target_direction * MAX_CURVE * timeElapsed_ms / 1000;
 #endif
 
   // Normalize direction
@@ -62,7 +69,19 @@ bool Fly::update(int timeElapsed_ms) {
   // Update position
   // posX += direction.x * 10*(rand()%100)/100;
   // posY += direction.y * 10*(rand()%100)/100;
-  position_ += direction*timeElapsed_ms/1000*SPEED;
+  float speed;
+  if (target_flower_ == NULL) {
+    speed = SPEED;
+  } else {
+    if (distance > ATTACK_SPEED_DECREASE_DISTANCE) {
+      speed = SPEED;
+    } else {
+      CL_Console::write_line("distance: %1", distance);
+      
+      speed = SPEED*distance/ATTACK_SPEED_DECREASE_DISTANCE;
+    }
+  }
+    position_ += direction * timeElapsed_ms / 1000 * speed;
 
   return true;
 }

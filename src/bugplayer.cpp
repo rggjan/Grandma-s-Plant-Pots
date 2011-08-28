@@ -50,10 +50,10 @@ void BugPlayer::BuildButtonPressed() {
 }
 
 void BugPlayer::Draw() {
-    Flower* nearest_flower = world->NearestFlower(position());
+    vector<Flower*> *flowers = world->NearestFlowers(position());
 
-    if (nearest_flower != NULL) {
-      CL_Vec2f pos = nearest_flower->position() - map_position();
+    if (flowers->size() > 0) {
+      CL_Vec2f pos = (*flowers)[0]->position() - map_position();
       selectedImage->draw(*gc, pos.x, pos.y);
     }
 /*  } else if (state == Selected || state == SelectedBuilding) {

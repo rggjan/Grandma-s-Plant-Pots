@@ -44,6 +44,7 @@ class World {
     void addFlower(Flower *flower);
 
     Flower* NearestFlower(CL_Vec2f position);
+    std::vector<Flower *>* NearestFlowers(CL_Vec2f position);
 
     void run();
 
@@ -77,7 +78,10 @@ class World {
 
     int time_elapsed_ms_;
 
-    CL_Font default_font_;    
+    CL_Font default_font_;
+
+    CL_Vec2f current_sort_position_;
+
 };
 
 #endif  // SRC_WORLD_H_
