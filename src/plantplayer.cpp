@@ -2,6 +2,7 @@
 
 #include "./plantplayer.h"
 
+#include <ClanLib/sound.h>
 #include <vector>
 
 #include "./flower.h"
@@ -24,6 +25,12 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
 
   tmpFlower = new Flower(world, gc, CL_Vec2f(0, 0), this);
   tmpLeaf = new Leaf(world, gc, "Leaf2", CL_Vec2f(0, 0), tmpFlower);
+  
+  CL_SoundBuffer *sound_plantgrowing_ = 
+  new CL_SoundBuffer("PlantgrowingMusic", &world->resources);
+  sound_plantgrowing_->set_volume(1.0f);
+  sound_plantgrowing_->prepare();
+  sound_plantgrowing_->play();
 }
 
 bool PlantPlayer::BuildLeaf() {
