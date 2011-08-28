@@ -19,7 +19,8 @@
 
 World::World(std::vector<CL_DisplayWindow*> windows)
   : quit(false),
-    default_gc(windows[0]->get_gc()) {
+    default_gc(windows[0]->get_gc()),
+    time_elapsed_ms_(1) {
   num_players = windows.size();
 
   // Setup resources
@@ -50,6 +51,10 @@ World::World(std::vector<CL_DisplayWindow*> windows)
     slotKeyUp[i] = players[i]->display_window->get_ic().get_keyboard().
                    sig_key_up().connect(this, &World::onKeyUp);
   }
+
+  CL_FontDescription desc;
+  desc.set_height(20);
+  default_font_ = CL_Font_System(default_gc, desc);
 
   // Run the main loop
   run();
@@ -394,10 +399,10 @@ void World::run() {
 }
 
 void World::update() {
-  int timeElapsed_ms = calcTimeElapsed();
+  time_elapsed_ms_ = calcTimeElapsed();
 
   for (int i = 0; i < num_players; i++) {
-    players[i]->Update(timeElapsed_ms);
+    players[i]->Update(time_elapsed_ms_);
   }
 }
 
@@ -434,6 +439,11 @@ void World::draw() {
 
     players[i]->Draw();
   }
+
+  default_font_.draw_text(default_gc, CL_Pointf(80, 30),
+                          cl_format("FPS: (%1)",
+                                    (1 / (time_elapsed_ms_ + 0.0001) * 1000)),
+                          CL_Colorf::white);
 
   /*
     CL_PixelBuffer buffer(256, 256, cl_rgba8);

@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "./world.h"
+#include "./flower.h"
 
 #define NUM_BUGS 20
 
@@ -14,6 +15,7 @@ BugPlayer::BugPlayer(CL_DisplayWindow* window, World* world,
                      int width, int height)
   : Player(window, world, width, height) {
   selectedImage = new CL_Sprite(*gc, "Cross2", &world->resources);
+  selectedImage->set_alpha(0.3);
 
   for (int i = 0; i < NUM_BUGS; i++) {
     const char* name;
@@ -36,6 +38,9 @@ void BugPlayer::AddFly(Fly* fly) {
 }
 
 void BugPlayer::SelectButtonPressed() {
+  Flower* nearest_flower = world->NearestFlower(position());
+
+  flies[0]->set_target_flower(nearest_flower);
 }
 
 void BugPlayer::CancelButtonPressed() {
@@ -45,15 +50,13 @@ void BugPlayer::BuildButtonPressed() {
 }
 
 void BugPlayer::Draw() {
-  /*if (state == Selecting) {
-    Flower* nearest_flower = NearestFlower();
+    Flower* nearest_flower = world->NearestFlower(position());
 
-    selectedImage->set_alpha(0.3);
     if (nearest_flower != NULL) {
       CL_Vec2f pos = nearest_flower->position() - map_position();
       selectedImage->draw(*gc, pos.x, pos.y);
     }
-  } else if (state == Selected || state == SelectedBuilding) {
+/*  } else if (state == Selected || state == SelectedBuilding) {
     selectedImage->set_alpha(0.8);
 
     CL_Vec2f pos = selectedFlower->position() - map_position();
