@@ -37,7 +37,7 @@
                 <scale x="0.2" y="0.2" />
 	</sprite>
 
-	<sprite name="SpaceShootTurretShooting">
+	<sprite name="Bug1">
 		<image file="Gfx/bug1_1.png" />
 		<image file="Gfx/bug1_2.png" />
 		<translation origin="center"/>

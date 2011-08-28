@@ -16,6 +16,7 @@ class BugPlayer : public Player {
     void SelectButtonPressed();
     void CancelButtonPressed();
 
+    void AddFly(Fly* fly);
     void Update(int time_ms);
     void Draw();
 

@@ -50,23 +50,6 @@ World::World(std::vector<CL_DisplayWindow*> windows)
     slotKeyUp[i] = players[i]->display_window->get_ic().get_keyboard().
                    sig_key_up().connect(this, &World::onKeyUp);
   }
-  /*
-
-    slotMouseDown = windows[0]->get_ic().get_mouse().sig_key_down().
-                      connect(this, &World::onMouseDown);
-                        slotMouseDown = windows[0]->get_ic().get_keyboard().sig_key_down().
-
-                      connect(this, &World::onMouseDown);
-      slotMouseUp = windows[0]->get_ic().get_mouse().sig_key_up().
-                    connect(this, &World::onMouseUp);
-      slotMouseMove = windows[0]->get_ic().get_mouse().sig_pointer_move().
-                      connect(this, &World::onMouseMove);
-    */
-
-  dragging = mouseDown = false;
-
-  // Add some objects
-  initLevel();
 
   // Run the main loop
   run();
@@ -78,19 +61,6 @@ World::~World() {
   std::vector<GameObject *>::iterator it;
   for (it = objects.begin(); it != objects.end(); ++it)
     delete(*it);
-}
-
-void World::initLevel() {
-  for (int i = 0; i < 10; i++) {
-    Fly *fly = new Fly(this, default_gc, "SpaceShootTurretShooting");
-    fly->set_position(CL_Vec2f(i * 10, i * 10));
-    addFly(fly);
-  }
-  for (int i = 0; i < 10; i++) {
-    Fly *fly = new Fly(this, default_gc, "Bug2");
-    fly->set_position(CL_Vec2f(i * 60, i * 60));
-    addFly(fly);
-  }
 }
 
 bool World::CanBuild(CL_Vec2f position) {
@@ -110,10 +80,6 @@ void World::addFly(Fly *tank) {
 void World::addFlower(Flower *flower) {
   objects.push_back(flower);
   flowers.push_back(flower);
-}
-
-void World::addLeaf(Leaf *leaf) {
-  objects.push_back(leaf);
 }
 
 Flower* World::NearestFlower(CL_Vec2f position) {
@@ -381,41 +347,6 @@ void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
   }
 }
 
-void World::onMouseDown(const CL_InputEvent &key, const CL_InputState &state) {
-  std::cout << "mouse" << std::endl;
-  // Start dragging on left click
-  if (key.id == CL_MOUSE_LEFT) {
-    dragArea.left = key.mouse_pos.x;
-    dragArea.top = key.mouse_pos.y;
-
-    mouseDown = true;
-  }
-}
-
-void World::onMouseUp(const CL_InputEvent &key, const CL_InputState &state) {
-  if (key.id == CL_MOUSE_LEFT) {
-    // Set end of drag area
-    dragArea.right = key.mouse_pos.x;
-    dragArea.bottom = key.mouse_pos.y;
-
-    dragArea.normalize();
-
-    dragging = false;
-  }
-
-  mouseDown = false;
-}
-
-void World::onMouseMove(const CL_InputEvent &key, const CL_InputState &state) {
-  // Expand drag area
-  if (mouseDown) {
-    dragging = true;
-
-    dragArea.right = key.mouse_pos.x;
-    dragArea.bottom = key.mouse_pos.y;
-  }
-}
-
 void World::run() {
   CL_SoundBuffer *sound = new CL_SoundBuffer("BackgroundMusic", &resources);
   sound->set_volume(1.0f);
@@ -443,27 +374,6 @@ void World::update() {
   for (int i = 0; i < num_players; i++) {
     players[i]->Update(timeElapsed_ms);
   }
-
-  // Make turrets target mousepos
-  std::vector<Fly *>::iterator fly_it;
-  for (fly_it = flies.begin(); fly_it != flies.end(); ++fly_it) {
-    Fly *fly = (*fly_it);
-
-    fly->set_target_position(players[0]->position());
-    fly->update(timeElapsed_ms);
-  }
-  /*
-    // Update all gameobjects
-    std::vector<GameObject *>::iterator it;
-    for (it = objects.begin(); it != objects.end();) {
-      // If update returns false, object should be deleted
-      if ((*it)->update(timeElapsed_ms) == false) {
-        delete(*it);
-        it = objects.erase(it);
-      } else {
-        ++it;
-      }
-    }*/
 }
 
 // Calculate amount of time since last frame

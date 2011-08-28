@@ -37,14 +37,11 @@ class World {
 
     // Operations:
   public:
-    void initLevel();
-
     bool hitCheck(CL_CollisionOutline *outline, GameObject *other);
 
     void addObject(GameObject *object);
     void addFly(Fly *fly);
     void addFlower(Flower *flower);
-    void addLeaf(Leaf *leaf);
 
     Flower* NearestFlower(CL_Vec2f position);
 
@@ -61,14 +58,7 @@ class World {
 
     void onKeyDown(const CL_InputEvent &key, const CL_InputState &state);
     void onKeyUp(const CL_InputEvent &key, const CL_InputState &state);
-    void onMouseDown(const CL_InputEvent &key, const CL_InputState &state);
-    void onMouseUp(const CL_InputEvent &key, const CL_InputState &state);
-    void onMouseMove(const CL_InputEvent &key, const CL_InputState &state);
     void on_window_close();
-
-    CL_Slot slotMouseDown;
-    CL_Slot slotMouseUp;
-    CL_Slot slotMouseMove;
 
     // TODO(rggjan): set as max players
     CL_Slot slotKeyDown[MAX_PLAYERS];
@@ -76,11 +66,6 @@ class World {
     CL_Slot slotQuit[MAX_PLAYERS];
 
     CL_Sprite *background;
-
-    bool dragging;
-    bool mouseDown;
-    CL_Rect dragArea;
-    float highlightValue;
 
     std::vector<GameObject *> objects;
     std::vector<Fly *> flies;
