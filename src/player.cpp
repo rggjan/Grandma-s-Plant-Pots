@@ -15,9 +15,9 @@ Player::Player(CL_DisplayWindow* window, World* world, int width, int height)
     moving_up(false),
     moving_left(false),
     moving_right(false),
+    energy(START_ENERGY),
     map_width(width),
     map_height(height),
-    energy(START_ENERGY),
     world(world) {
   display_window = window;
 
@@ -25,7 +25,7 @@ Player::Player(CL_DisplayWindow* window, World* world, int width, int height)
   window_width = gc->get_width();
   window_height = gc->get_height();
 
-  cross_position_ = CL_Vec2f(window_width/2, window_height/2);
+  cross_position_ = CL_Vec2f(window_width / 2, window_height / 2);
   map_position_ = CL_Vec2f(300, 300);
 
   CL_FontDescription desc;
@@ -49,13 +49,13 @@ void Player::Update(int timeElapsed_ms) {
 
   // Move camera
   if (moving_down)
-    move_y += timeElapsed_ms*CROSS_SPEED;
+    move_y += timeElapsed_ms * CROSS_SPEED;
   if (moving_up)
-    move_y -= timeElapsed_ms*CROSS_SPEED;
+    move_y -= timeElapsed_ms * CROSS_SPEED;
   if (moving_left)
-    move_x -= timeElapsed_ms*CROSS_SPEED;
+    move_x -= timeElapsed_ms * CROSS_SPEED;
   if (moving_right)
-    move_x += timeElapsed_ms*CROSS_SPEED;
+    move_x += timeElapsed_ms * CROSS_SPEED;
 
   // Cross Up
   if (move_y < 0) {
@@ -128,7 +128,7 @@ void Player::Update(int timeElapsed_ms) {
     if (move_y > 0) {
       cross_position_.y += move_y;
       if (cross_position_.y > window_height - 1)
-        cross_position_.y = window_height -1;
+        cross_position_.y = window_height - 1;
     }
   }
   // Cross Right
@@ -152,7 +152,7 @@ void Player::Update(int timeElapsed_ms) {
     if (move_x > 0) {
       cross_position_.x += move_x;
       if (cross_position_.x > window_width - 1)
-        cross_position_.x = window_width -1;
+        cross_position_.x = window_width - 1;
     }
   }
 }
@@ -164,13 +164,14 @@ void Player::Draw() {
 
 void Player::DrawEnergy() {
   default_font.draw_text(*gc, CL_Pointf(10, 30),
-                         cl_format("Energy: %1", (int)energy), CL_Colorf::white);
+                         cl_format("Energy: %1", static_cast<int>(energy)),
+                         CL_Colorf::white);
 }
 
 void Player::draw_cross() {
-    // Draw cross
-    cross->set_scale(0.5, 0.5);
-    cross->draw(*gc, cross_position_.x, cross_position_.y);
-    cross->set_scale(0.25, 0.25);
-    cross->draw(*gc, cross_position_.x, cross_position_.y);
+  // Draw cross
+  cross->set_scale(0.5, 0.5);
+  cross->draw(*gc, cross_position_.x, cross_position_.y);
+  cross->set_scale(0.25, 0.25);
+  cross->draw(*gc, cross_position_.x, cross_position_.y);
 }

@@ -22,7 +22,6 @@ void Leaf::DrawRed(CL_GraphicContext *gc, CL_Vec2f position) {
   // Draw graphic
   spriteImage->set_color(CL_Color::red);
   spriteImage->set_alpha(0.8);
-  spriteImage->set_frame(spriteImage->get_frame_count()-1);
   spriteImage->draw(*gc, position.x, position.y);
 }
 
@@ -30,18 +29,19 @@ void Leaf::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
   // Draw graphic
   spriteImage->set_color(CL_Color::green);
   spriteImage->set_alpha(0.8);
-  spriteImage->set_frame(spriteImage->get_frame_count()-1);
+  spriteImage->set_frame(spriteImage->get_frame_count() - 1);
   spriteImage->draw(*gc, position.x, position.y);
 }
 
 float Leaf::Update(int time_ms) {
-  return ENERGY_COLLECTED_PER_SECOND*time_ms/1000;
+  return ENERGY_COLLECTED_PER_SECOND * time_ms / 1000;
 }
 
 bool Leaf::CanBuild(CL_Vec2f position, Flower* flower) {
   Leaf* nearest_leaf = flower->NearestLeaf(position);
-  
-  if (nearest_leaf && (nearest_leaf->position() - position).length() < MIN_LEAF_DISTANCE)
+
+  if (nearest_leaf &&
+      (nearest_leaf->position() - position).length() < MIN_LEAF_DISTANCE)
     return false;
 
   return true;

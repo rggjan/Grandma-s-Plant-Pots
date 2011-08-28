@@ -12,7 +12,7 @@ class GameObject {
   public:
     // Construction
     GameObject(World *world, CL_Vec2f position_);
-    GameObject(World *world);
+    explicit GameObject(World *world);
     virtual ~GameObject() {}
 
     inline void set_angle(CL_Angle angle) { spriteImage->set_angle(angle); }

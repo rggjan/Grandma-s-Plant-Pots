@@ -32,7 +32,7 @@ World::World(std::vector<CL_DisplayWindow*> windows)
   for (int i = 0; i < num_players; i++) {
     Player *player;
 
-    if (i%2 == 0) {
+    if (i % 2 == 0) {
       player = new PlantPlayer(windows[i], this, width, height);
     } else {
       player = new PlantPlayer(windows[i], this, width, height);
@@ -82,19 +82,19 @@ World::~World() {
 void World::initLevel() {
   for (int i = 0; i < 10; i++) {
     Fly *fly = new Fly(this, default_gc, "SpaceShootTurretShooting");
-    fly->set_position(CL_Vec2f(i*10, i*10));
+    fly->set_position(CL_Vec2f(i * 10, i * 10));
     addFly(fly);
   }
   for (int i = 0; i < 10; i++) {
     Fly *fly = new Fly(this, default_gc, "Bug2");
-    fly->set_position(CL_Vec2f(i*60, i*60));
+    fly->set_position(CL_Vec2f(i * 60, i * 60));
     addFly(fly);
   }
 }
 
 bool World::CanBuild(CL_Vec2f position) {
-  CL_Vec2f diff = CL_Vec2f(width/2, height/2) - position;
-  return diff.length() < (height/2-BACKGROUND_BORDER);
+  CL_Vec2f diff = CL_Vec2f(width / 2, height / 2) - position;
+  return diff.length() < (height / 2 - BACKGROUND_BORDER);
 }
 
 void World::addObject(GameObject *object) {
@@ -155,7 +155,7 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
     if (key.id == CL_KEY_RIGHT) {
       players[0]->moving_right = true;
     }
-     if (key.id == CL_KEY_DELETE) {
+    if (key.id == CL_KEY_DELETE) {
       players[0]->BuildButtonPressed();
     }
 
@@ -214,7 +214,7 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
     if (key.id == CL_KEY_K) {
       players[2]->moving_right = true;
     }
-     if (key.id == CL_KEY_7) {
+    if (key.id == CL_KEY_7) {
       players[2]->BuildButtonPressed();
     }
 
@@ -243,7 +243,7 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
     if (key.id == CL_KEY_D) {
       players[3]->moving_right = true;
     }
-     if (key.id == CL_KEY_1) {
+    if (key.id == CL_KEY_1) {
       players[3]->BuildButtonPressed();
     }
 
@@ -271,7 +271,9 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
 
     if (key.id == CL_KEY_RIGHT) {
       players[4]->moving_right = true;
-    } if (key.id == CL_KEY_NUMPAD6) {
+    }
+
+    if (key.id == CL_KEY_NUMPAD6) {
       players[4]->BuildButtonPressed();
     }
 
@@ -321,7 +323,7 @@ void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
       players[1]->moving_right = false;
     }
   }
-    
+
   // key Player 2 onKeyUp
   if (num_players > 2) {
     if (key.id == CL_KEY_J) {
@@ -425,7 +427,7 @@ void World::run() {
 
     for (int i = 0; i < num_players; i++) {
       players[i]->display_window->flip(0);
-      if (i == num_players-1) {
+      if (i == num_players - 1) {
         players[i]->display_window->flip(1);
       }
     }
@@ -449,18 +451,18 @@ void World::update() {
     fly->set_target_position(players[0]->position());
     fly->update(timeElapsed_ms);
   }
-/*
-  // Update all gameobjects
-  std::vector<GameObject *>::iterator it;
-  for (it = objects.begin(); it != objects.end();) {
-    // If update returns false, object should be deleted
-    if ((*it)->update(timeElapsed_ms) == false) {
-      delete(*it);
-      it = objects.erase(it);
-    } else {
-      ++it;
-    }
-  }*/
+  /*
+    // Update all gameobjects
+    std::vector<GameObject *>::iterator it;
+    for (it = objects.begin(); it != objects.end();) {
+      // If update returns false, object should be deleted
+      if ((*it)->update(timeElapsed_ms) == false) {
+        delete(*it);
+        it = objects.erase(it);
+      } else {
+        ++it;
+      }
+    }*/
 }
 
 // Calculate amount of time since last frame

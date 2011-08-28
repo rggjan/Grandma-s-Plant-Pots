@@ -5,6 +5,8 @@
 
 #include <ClanLib/core.h>
 
+#include <vector>
+
 #include "./gameobject.h"
 #include "./player.h"
 
@@ -21,7 +23,8 @@ enum FlowerState {
 class Flower : public GameObject {
     // Construction
   public:
-    Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position, Player* player);
+    Flower(World *world, CL_GraphicContext *gc,
+           CL_Vec2f position, Player* player);
 
     void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
     void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
@@ -39,11 +42,11 @@ class Flower : public GameObject {
     void Draw(CL_GraphicContext* gc, CL_Vec2f target);
 
 
-private:
-      std::vector<Leaf*> leaves;
+  private:
+    std::vector<Leaf*> leaves;
 
-      int age_;
-      Player* player_;
-    };
+    int age_;
+    Player* player_;
+};
 
 #endif  // SRC_FLOWER_H_

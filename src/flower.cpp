@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <ClanLib/display.h>
 
+#include <vector>
+
 #include "./world.h"
 #include "./leaf.h"
 
@@ -12,7 +14,8 @@
 #define TIME_TO_FINAL 15000
 #define MIN_FLOWER_DISTANCE 50
 
-Flower::Flower(World *world, CL_GraphicContext *gc, CL_Vec2f position, Player* player)
+Flower::Flower(World *world, CL_GraphicContext *gc,
+               CL_Vec2f position, Player* player)
   : GameObject(world, position),
     state_(kClosed),
     age_(0),
@@ -43,7 +46,7 @@ void Flower::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
 void Flower::Update(int time_ms) {
   // Update energy from plants
   unsigned int size = leaves.size();
-  for (unsigned int i=0; i<size; i++) {
+  for (unsigned int i = 0; i < size; i++) {
     player_->energy += leaves[i]->Update(time_ms);
   }
 
@@ -96,7 +99,7 @@ bool Flower::CanBuild(CL_Vec2f position) {
 
 void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
   unsigned int size = leaves.size();
-  for (unsigned int i=0; i<size; i++) {
+  for (unsigned int i = 0; i < size; i++) {
     leaves[i]->Draw(gc, target);
   }
 

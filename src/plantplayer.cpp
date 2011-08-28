@@ -28,10 +28,10 @@ bool PlantPlayer::BuildLeaf() {
   if (energy >= Leaf::energy_cost && cross_green_) {
     Leaf *leaf = new Leaf(world, gc, "Leaf2", position(), selectedFlower);
     leaf->set_angle(tmpLeaf->angle());
-    
+
     energy -= Leaf::energy_cost;
     selectedFlower->AddLeaf(leaf);
-    
+
     return true;
   } else {
     // TODO(rggjan): beep
@@ -162,7 +162,8 @@ void PlantPlayer::DrawEnergy() {
     if (tmpFlower->energy_cost > energy)
       color = CL_Colorf::red;
     default_font.draw_text(*gc, CL_Pointf(10, 30),
-                           cl_format("Energy: %1 (%2)", (int)energy,
+                           cl_format("Energy: %1 (%2)",
+                                     static_cast<int>(energy),
                                      tmpFlower->energy_cost), color);
     break;
   }
@@ -171,7 +172,8 @@ void PlantPlayer::DrawEnergy() {
     if (tmpLeaf->energy_cost > energy)
       color = CL_Colorf::red;
     default_font.draw_text(*gc, CL_Pointf(10, 30),
-                           cl_format("Energy: %1 (%2)", (int)energy,
+                           cl_format("Energy: %1 (%2)",
+                                     static_cast<int>(energy),
                                      tmpLeaf->energy_cost), color);
     break;
   }
@@ -181,7 +183,7 @@ void PlantPlayer::DrawEnergy() {
 }
 
 void PlantPlayer::Update(int time_ms) {
-  for (unsigned int i=0; i<flowers.size(); i++) {
+  for (unsigned int i = 0; i < flowers.size(); i++) {
     flowers[i]->Update(time_ms);
   }
 
@@ -204,14 +206,16 @@ void PlantPlayer::draw_cross() {
     // Player::draw_cross(); TODO(rggjan): better with this?
     break;
   case SelectedBuilding: {
-    CL_Vec2f diff = cross_position()-(selectedFlower->position()-map_position());
+    CL_Vec2f diff = cross_position() -
+                    (selectedFlower->position() - map_position());
 
     float angle = atan2(diff.y, diff.x);
     tmpLeaf->set_angle(CL_Angle(angle, cl_radians));
 
     CL_Colorf line_color;
 
-    if (diff.length() < LEAF_MAX_DISTANCE && tmpLeaf->CanBuild(position(), selectedFlower)) {
+    if (diff.length() < LEAF_MAX_DISTANCE &&
+        tmpLeaf->CanBuild(position(), selectedFlower)) {
       tmpLeaf->DrawGreen(gc, cross_position());
       line_color = CL_Colorf::green;
       cross_green_ = true;
