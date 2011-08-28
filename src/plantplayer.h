@@ -29,7 +29,8 @@ public:
     void SelectButtonPressed();
     void CancelButtonPressed();
     void DrawEnergy();
-    void Draw();
+    void DrawFloor();
+    void DrawTop();
     void Update(int time_ms);
 
     inline float energy() { return energy_; }
@@ -54,9 +55,6 @@ private:
     
     bool cross_green_;
     float energy_;
-
-  protected:
-    virtual void draw_cross();
 };
 
 #endif  // SRC_PLANTPLAYER_H_

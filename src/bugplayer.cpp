@@ -61,7 +61,7 @@ Flower* BugPlayer::GetFreeFlower() {
   return NULL;
 }
 
-void BugPlayer::Draw() {
+void BugPlayer::DrawFloor() {
     Flower* flower = GetFreeFlower();
 
     if (flower != NULL) {
@@ -74,8 +74,6 @@ void BugPlayer::Draw() {
     CL_Vec2f pos = selectedFlower->position() - map_position();
     selectedImage->draw(*gc, pos.x, pos.y);
   }*/
-
-  Player::Draw();
 }
 
 void BugPlayer::Update(int time_ms) {

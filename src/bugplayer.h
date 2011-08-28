@@ -18,7 +18,7 @@ class BugPlayer : public Player {
 
     void AddFly(Fly* fly);
     void Update(int time_ms);
-    void Draw();
+    void DrawFloor();
 
 private:
 

@@ -155,11 +155,10 @@ void Player::Update(int timeElapsed_ms) {
   }
 }
 
-void Player::Draw() {
-  draw_cross();
+void Player::DrawFloor() {
 }
 
-void Player::draw_cross() {
+void Player::DrawTop() {
   // Draw cross
   cross->set_scale(0.5, 0.5);
   cross->draw(*gc, cross_position_.x, cross_position_.y);
