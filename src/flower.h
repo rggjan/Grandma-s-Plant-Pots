@@ -8,11 +8,11 @@
 #include <vector>
 
 #include "./gameobject.h"
-#include "./player.h"
 
 #define ENERGY_COST 10
 
 class Leaf;
+class PlantPlayer;
 
 enum FlowerState {
   kClosed = 0,
@@ -24,7 +24,7 @@ class Flower : public GameObject {
 public:
     // Construction
     Flower(World *world, CL_GraphicContext *gc,
-           CL_Vec2f position, Player* player);
+           CL_Vec2f position, PlantPlayer* player);
 
     // Operations
     void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
@@ -45,7 +45,7 @@ public:
     std::vector<Leaf*> leaves;
 
     int age_;
-    Player* player_;
+    PlantPlayer* player_;
 };
 
 #endif  // SRC_FLOWER_H_

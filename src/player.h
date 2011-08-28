@@ -20,9 +20,7 @@ class Player {
     virtual void CancelButtonPressed() {}
 
     virtual void Update(int time_ms);
-    virtual void DrawEnergy();
     virtual void Draw();
-
 
     inline CL_Vec2f position() { return map_position_ + cross_position_; }
     inline CL_Vec2f cross_position() { return cross_position_; }
@@ -38,8 +36,6 @@ class Player {
     bool moving_up;
     bool moving_left;
     bool moving_right;
-
-    float energy;
 
   protected:
     int window_width, window_height;

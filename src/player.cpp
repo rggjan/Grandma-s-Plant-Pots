@@ -8,14 +8,12 @@
 
 #define CROSS_SPEED 0.6
 #define MIN_BORDER 100
-#define START_ENERGY 100
 
 Player::Player(CL_DisplayWindow* window, World* world, int width, int height)
   : moving_down(false),
     moving_up(false),
     moving_left(false),
     moving_right(false),
-    energy(START_ENERGY),
     map_width(width),
     map_height(height),
     world(world) {
@@ -158,14 +156,7 @@ void Player::Update(int timeElapsed_ms) {
 }
 
 void Player::Draw() {
-  DrawEnergy();
   draw_cross();
-}
-
-void Player::DrawEnergy() {
-  default_font.draw_text(*gc, CL_Pointf(10, 30),
-                         cl_format("Energy: %1", static_cast<int>(energy)),
-                         CL_Colorf::white);
 }
 
 void Player::draw_cross() {

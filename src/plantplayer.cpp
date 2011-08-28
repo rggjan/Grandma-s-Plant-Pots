@@ -12,12 +12,14 @@
 using std::vector;
 
 #define LEAF_MAX_DISTANCE 80
+#define START_ENERGY 100
 
 PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
                          int width, int height)
   : Player(window, world, width, height),
     state(Idle),
-    cross_green_(false) {
+    cross_green_(false),
+    energy_(START_ENERGY) {
   selectedImage = new CL_Sprite(*gc, "Cross2", &world->resources);
 
   tmpFlower = new Flower(world, gc, CL_Vec2f(0, 0), this);
@@ -25,11 +27,11 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
 }
 
 bool PlantPlayer::BuildLeaf() {
-  if (energy >= Leaf::energy_cost && cross_green_) {
+  if (energy() >= Leaf::energy_cost && cross_green_) {
     Leaf *leaf = new Leaf(world, gc, "Leaf2", position(), selectedFlower);
     leaf->set_angle(tmpLeaf->angle());
 
-    energy -= Leaf::energy_cost;
+    energy_ -= Leaf::energy_cost;
     selectedFlower->AddLeaf(leaf);
 
     return true;
@@ -40,13 +42,13 @@ bool PlantPlayer::BuildLeaf() {
 }
 
 bool PlantPlayer::BuildPlant() {
-  if (energy >= Flower::energy_cost && cross_green_) {
+  if (energy() >= Flower::energy_cost && cross_green_) {
     Flower *flower = new Flower(world, gc, position(), this);
 
     flowers.push_back(flower);
     world->addFlower(flower);
 
-    energy -= Flower::energy_cost;
+    energy_ -= Flower::energy_cost;
     return true;
   } else {
     // TODO(rggjan): beep
@@ -152,6 +154,7 @@ void PlantPlayer::Draw() {
     selectedImage->draw(*gc, pos.x, pos.y);
   }
 
+  DrawEnergy();
   Player::Draw();
 }
 
@@ -159,26 +162,29 @@ void PlantPlayer::DrawEnergy() {
   switch (state) {
   case Building: {
     CL_Colorf color = CL_Colorf::white;
-    if (tmpFlower->energy_cost > energy)
+    if (tmpFlower->energy_cost > energy_)
       color = CL_Colorf::red;
     default_font.draw_text(*gc, CL_Pointf(10, 30),
                            cl_format("Energy: %1 (%2)",
-                                     static_cast<int>(energy),
+                                     static_cast<int>(energy_),
                                      tmpFlower->energy_cost), color);
     break;
   }
   case SelectedBuilding: {
     CL_Colorf color = CL_Colorf::white;
-    if (tmpLeaf->energy_cost > energy)
+    if (tmpLeaf->energy_cost > energy_)
       color = CL_Colorf::red;
     default_font.draw_text(*gc, CL_Pointf(10, 30),
                            cl_format("Energy: %1 (%2)",
-                                     static_cast<int>(energy),
+                                     static_cast<int>(energy_),
                                      tmpLeaf->energy_cost), color);
     break;
   }
-  default:
-    Player::DrawEnergy();
+  default: {
+    default_font.draw_text(*gc, CL_Pointf(10, 30),
+                           cl_format("Energy: %1", static_cast<int>(energy_)),
+                           CL_Colorf::white);
+  }
   }
 }
 

@@ -9,13 +9,14 @@
 
 #include "./world.h"
 #include "./leaf.h"
+#include "./plantplayer.h"
 
 #define TIME_TO_OPEN 6000
 #define TIME_TO_FINAL 15000
 #define MIN_FLOWER_DISTANCE 50
 
 Flower::Flower(World *world, CL_GraphicContext *gc,
-               CL_Vec2f position, Player* player)
+               CL_Vec2f position, PlantPlayer* player)
   : GameObject(world, position),
     state_(kClosed),
     age_(0),
@@ -47,7 +48,7 @@ void Flower::Update(int time_ms) {
   // Update energy from plants
   unsigned int size = leaves.size();
   for (unsigned int i = 0; i < size; i++) {
-    player_->energy += leaves[i]->Update(time_ms);
+    player_->increase_energy(leaves[i]->Update(time_ms));
   }
 
   // Update state

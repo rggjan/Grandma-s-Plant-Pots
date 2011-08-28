@@ -19,33 +19,39 @@ enum State {
 };
 
 class PlantPlayer : public Player {
-  public:
+public:
+    // Constructor
     PlantPlayer(CL_DisplayWindow* window, World *world, int width, int height);
 
+    // Operations
     void BuildButtonPressed();
     void SelectButtonPressed();
     void CancelButtonPressed();
     void DrawEnergy();
     void Draw();
-
     void Update(int time_ms);
 
-  private:
+    inline float energy() { return energy_; }
+    inline void increase_energy(float amount) { energy_ += amount; };
+
+private:
+    // Operations
+    bool BuildPlant();
+    bool BuildLeaf();
+
+    // Queries
+    Flower* NearestFlower();
+
+    // Variables
     std::vector<Flower*> flowers;
     State state;
-
     CL_Sprite *selectedImage;
     Flower *tmpFlower;
     Leaf *tmpLeaf;
-
     Flower *selectedFlower;
-
-    bool BuildPlant();
-    bool BuildLeaf();
-    Flower* NearestFlower();
-
+    
     bool cross_green_;
-
+    float energy_;
 
   protected:
     virtual void draw_cross();
