@@ -7,7 +7,7 @@
 
 #include "./gameobject.h"
 
-#define ENERGY_COST 10
+#define LEAF_ENERGY_COST 5
 
 class Flower;
 
@@ -20,7 +20,7 @@ class Leaf : public GameObject {
     void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
     void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
 
-    static const int energy_cost = ENERGY_COST;
+    static const int energy_cost = LEAF_ENERGY_COST;
 
     bool CanBuild(CL_Vec2f position, Flower* flower);
 
