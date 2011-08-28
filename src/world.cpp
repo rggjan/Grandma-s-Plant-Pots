@@ -13,6 +13,7 @@
 #include "./flower.h"
 #include "./leaf.h"
 #include "./plantplayer.h"
+#include "./bugplayer.h"
 
 #define BACKGROUND_BORDER 65
 
@@ -33,7 +34,7 @@ World::World(std::vector<CL_DisplayWindow*> windows)
     Player *player;
 
     if (i % 2 == 0) {
-      player = new PlantPlayer(windows[i], this, width, height);
+      player = new BugPlayer(windows[i], this, width, height);
     } else {
       player = new PlantPlayer(windows[i], this, width, height);
     }

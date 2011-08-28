@@ -30,6 +30,8 @@
     <File Name="src/gameobject.cpp"/>
     <File Name="src/plantplayer.cpp"/>
     <File Name="src/plantplayer.h"/>
+    <File Name="src/bugplayer.cpp"/>
+    <File Name="src/bugplayer.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="GPP">
     <File Name=".gitignore"/>
