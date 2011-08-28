@@ -30,6 +30,10 @@ class Fly : public GameObject {
 
     virtual bool update(int timeElapsed_ms);
 
+    inline bool is_free() {
+      return target_flower_ == NULL;
+    }
+
     // Implementation:
   private:
     CL_Vec2f direction;
