@@ -6,6 +6,7 @@
 #include <ClanLib/sound.h>
 #include <list>
 #include <vector>
+#include <algorithm>
 
 #include "./background.h"
 #include "./fly.h"
@@ -16,6 +17,9 @@
 #include "./bugplayer.h"
 
 #define BACKGROUND_BORDER 65
+
+using std::vector;
+using std::sort;
 
 World::World(std::vector<CL_DisplayWindow*> windows)
   : quit(false),
@@ -85,6 +89,22 @@ void World::addFly(Fly *tank) {
 void World::addFlower(Flower *flower) {
   objects.push_back(flower);
   flowers.push_back(flower);
+}
+
+struct sort_class {
+  bool operator() (Flower *flower1, Flower* flower2) {
+    return ((flower2->position() - position).length() -
+            (flower1->position() - position).length()) > 0;
+  }
+  CL_Vec2f position;
+};
+
+vector<Flower *>* World::NearestFlowers(CL_Vec2f position) {
+  sort_class sort_object;
+  sort_object.position = position;
+
+  sort(flowers.begin(), flowers.end(), sort_object);
+  return &flowers;
 }
 
 Flower* World::NearestFlower(CL_Vec2f position) {
@@ -426,6 +446,8 @@ void World::draw() {
                      -players[i]->map_position_.x,
                      -players[i]->map_position_.y);
 
+    players[i]->DrawFloor();
+
     // Draw all gameobjects
     // Flowers
     std::vector<Flower *>::iterator it1;
@@ -437,7 +459,7 @@ void World::draw() {
     for (it2 = flies.begin(); it2 != flies.end(); ++it2)
       (*it2)->Draw(players[i]->gc, players[i]->map_position());
 
-    players[i]->Draw();
+    players[i]->DrawTop();
   }
 
   default_font_.draw_text(default_gc, CL_Pointf(80, 30),

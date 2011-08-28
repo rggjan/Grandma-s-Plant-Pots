@@ -20,7 +20,8 @@ class Player {
     virtual void CancelButtonPressed() {}
 
     virtual void Update(int time_ms);
-    virtual void Draw();
+    virtual void DrawTop();
+    virtual void DrawFloor();
 
     inline CL_Vec2f position() { return map_position_ + cross_position_; }
     inline CL_Vec2f cross_position() { return cross_position_; }
@@ -44,8 +45,6 @@ class Player {
     CL_Sprite *cross;
 
     World* world;
-
-    virtual void draw_cross();
 };
 
 #endif  // SRC_PLAYER_H_

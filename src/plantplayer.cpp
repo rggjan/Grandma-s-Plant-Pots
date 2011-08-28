@@ -152,7 +152,7 @@ Flower* PlantPlayer::NearestFlower() {
   return nearest_flower;
 }
 
-void PlantPlayer::Draw() {
+void PlantPlayer::DrawFloor() {
   if (state == Selecting) {
     Flower* nearest_flower = NearestFlower();
 
@@ -167,9 +167,6 @@ void PlantPlayer::Draw() {
     CL_Vec2f pos = selectedFlower->position() - map_position();
     selectedImage->draw(*gc, pos.x, pos.y);
   }
-
-  DrawEnergy();
-  Player::Draw();
 }
 
 void PlantPlayer::DrawEnergy() {
@@ -210,10 +207,10 @@ void PlantPlayer::Update(int time_ms) {
   Player::Update(time_ms);
 }
 
-void PlantPlayer::draw_cross() {
+void PlantPlayer::DrawTop() {  
   switch (state) {
   case Idle:
-    Player::draw_cross();
+    Player::DrawTop();
     break;
   case Building:
     if (tmpFlower->CanBuild(position())) {
@@ -251,8 +248,10 @@ void PlantPlayer::draw_cross() {
     break;
   }
   default: {
-    Player::draw_cross();
+    Player::DrawTop();
     break;
   }
   }
+
+  DrawEnergy();  
 }
