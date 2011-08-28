@@ -61,7 +61,7 @@
 
 	<sample name="PlantgrowingMusic" file="Sound/plant_growing.ogg"/>
 
-	<sample name="BackgroundMusic" file="Sound/Background.ogg"/>
+	<sample name="Beep1Music" file="Sound/beep1.ogg"/>
 	
 	<sample name="BackgroundMusic" file="Sound/Background.ogg"/>
 
