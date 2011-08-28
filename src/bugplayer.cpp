@@ -15,7 +15,7 @@ BugPlayer::BugPlayer(CL_DisplayWindow* window, World* world,
                      int width, int height)
   : Player(window, world, width, height) {
   selectedImage = new CL_Sprite(*gc, "Cross2", &world->resources);
-  //selectedImage->set_alpha(0.3);
+  selectedImage->set_alpha(0.5);
 
   for (int i = 0; i < NUM_BUGS; i++) {
     const char* name;
