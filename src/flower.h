@@ -15,34 +15,33 @@
 class Leaf;
 
 enum FlowerState {
-  kClosed,
-  kOpen,
-  kFinal
+  kClosed = 0,
+  kOpen = 1,
+  kFinal = 2
 };
 
 class Flower : public GameObject {
+public:
     // Construction
-  public:
     Flower(World *world, CL_GraphicContext *gc,
            CL_Vec2f position, Player* player);
 
+    // Operations
     void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
     void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
-    bool CanBuild(CL_Vec2f position);
     void AddLeaf(Leaf* leaf);
-
     void Update(int time_ms);
-
-    Leaf* NearestLeaf(CL_Vec2f position);
-
-    static const int energy_cost = ENERGY_COST;
-
-    FlowerState state_;
-
     void Draw(CL_GraphicContext* gc, CL_Vec2f target);
 
+    // Queries
+    bool CanBuild(CL_Vec2f position);
+    Leaf* NearestLeaf(CL_Vec2f position);
+    static const int energy_cost = ENERGY_COST;
+    inline FlowerState state() { return state_; };
 
   private:
+    FlowerState state_;
+
     std::vector<Leaf*> leaves;
 
     int age_;

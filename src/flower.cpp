@@ -100,6 +100,9 @@ bool Flower::CanBuild(CL_Vec2f position) {
 void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
   unsigned int size = leaves.size();
   for (unsigned int i = 0; i < size; i++) {
+    /*CL_Draw::line(*gc, position() - player_->map_position(),
+                  leaves[i]->position() - player_->map_position(),
+                  CL_Colorf::green);*/
     leaves[i]->Draw(gc, target);
   }
 

@@ -38,6 +38,10 @@ float Leaf::Update(int time_ms) {
 }
 
 bool Leaf::CanBuild(CL_Vec2f position, Flower* flower) {
+  if (flower->state() < kOpen) {
+    return false;
+  }
+
   Leaf* nearest_leaf = flower->NearestLeaf(position);
 
   if (nearest_leaf &&
