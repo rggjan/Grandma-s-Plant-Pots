@@ -13,6 +13,7 @@
 
 class Leaf;
 class PlantPlayer;
+class Fly;
 
 enum FlowerState {
   kClosed = 0,
@@ -21,7 +22,7 @@ enum FlowerState {
 };
 
 class Flower : public GameObject {
-public:
+  public:
     // Construction
     Flower(World *world, CL_GraphicContext *gc,
            CL_Vec2f position, PlantPlayer* player);
@@ -37,7 +38,17 @@ public:
     bool CanBuild(CL_Vec2f position);
     Leaf* NearestLeaf(CL_Vec2f position);
     static const int energy_cost = ENERGY_COST;
-    inline FlowerState state() { return state_; };
+    inline FlowerState state() {
+      return state_;
+    };
+
+    bool free_space() {
+      return eating_fly_ == NULL;
+    }
+
+    void add_eating_fly(Fly* fly) {
+      eating_fly_ = fly;
+    }
 
   private:
     FlowerState state_;
@@ -46,6 +57,7 @@ public:
 
     int age_;
     PlantPlayer* player_;
+    Fly* eating_fly_;
 };
 
 #endif  // SRC_FLOWER_H_

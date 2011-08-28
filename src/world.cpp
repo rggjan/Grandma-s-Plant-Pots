@@ -446,6 +446,8 @@ void World::draw() {
                      -players[i]->map_position_.x,
                      -players[i]->map_position_.y);
 
+    players[i]->DrawFloor();
+
     // Draw all gameobjects
     // Flowers
     std::vector<Flower *>::iterator it1;
@@ -457,7 +459,7 @@ void World::draw() {
     for (it2 = flies.begin(); it2 != flies.end(); ++it2)
       (*it2)->Draw(players[i]->gc, players[i]->map_position());
 
-    players[i]->Draw();
+    players[i]->DrawTop();
   }
 
   default_font_.draw_text(default_gc, CL_Pointf(80, 30),

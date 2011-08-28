@@ -22,6 +22,11 @@ Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name)
   spriteImage->set_play_loop(true);
 }
 
+void Fly::SetTargetFlower(Flower *flower) {
+  target_flower_ = flower;
+  flower->add_eating_fly(this);
+}
+
 bool Fly::update(int timeElapsed_ms) {
   GameObject::update(timeElapsed_ms);
 
@@ -77,11 +82,11 @@ bool Fly::update(int timeElapsed_ms) {
       speed = SPEED;
     } else {
       CL_Console::write_line("distance: %1", distance);
-      
-      speed = SPEED*distance/ATTACK_SPEED_DECREASE_DISTANCE;
+
+      speed = SPEED * distance / ATTACK_SPEED_DECREASE_DISTANCE;
     }
   }
-    position_ += direction * timeElapsed_ms / 1000 * speed;
+  position_ += direction * timeElapsed_ms / 1000 * speed;
 
   return true;
 }
