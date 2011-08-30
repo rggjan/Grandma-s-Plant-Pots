@@ -20,7 +20,7 @@ enum State {
 };
 
 class PlantPlayer : public Player {
-public:
+  public:
     // Constructor
     PlantPlayer(CL_DisplayWindow* window, World *world, int width, int height);
 
@@ -33,10 +33,14 @@ public:
     void DrawTop();
     void Update(int time_ms);
 
-    inline float energy() { return energy_; }
-    inline void increase_energy(float amount) { energy_ += amount; };
+    inline float energy() {
+      return energy_;
+    }
+    inline void increase_energy(float amount) {
+      energy_ += amount;
+    };
 
-private:
+  private:
     // Operations
     bool BuildPlant();
     bool BuildLeaf();

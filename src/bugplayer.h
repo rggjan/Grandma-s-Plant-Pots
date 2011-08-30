@@ -1,7 +1,7 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#ifndef SRC_BUG_H_
-#define SRC_BUG_H_
+#ifndef SRC_BUGPLAYER_H_
+#define SRC_BUGPLAYER_H_
 
 #include <vector>
 
@@ -20,7 +20,7 @@ class BugPlayer : public Player {
     void Update(int time_ms);
     void DrawFloor();
 
-private:
+  private:
 
     Flower* GetFreeFlower();
     Fly* GetFreeBug();
@@ -32,4 +32,4 @@ private:
     Flower* nearest_free_flower_;
 };
 
-#endif  // SRC_BUG_H_
+#endif  // SRC_BUGPLAYER_H_

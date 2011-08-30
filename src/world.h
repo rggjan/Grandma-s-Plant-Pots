@@ -81,7 +81,6 @@ class World {
     CL_Font default_font_;
 
     CL_Vec2f current_sort_position_;
-
 };
 
 #endif  // SRC_WORLD_H_

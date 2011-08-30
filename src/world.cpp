@@ -132,28 +132,28 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
 
   // key Player 0 onKeyDown
   if (num_players > 0) {
-    switch(key.id){
-      case CL_KEY_DOWN:
-       players[0]->moving_down = true;
-       break;
-       case CL_KEY_UP:
-        players[0]->moving_up = true;
-        break;
-       case CL_KEY_LEFT:
-        players[0]->moving_left = true;
-         break;
-        case CL_KEY_RIGHT:
-        players[0]->moving_right = true;
-        break;
-        case CL_KEY_DELETE:
-        players[0]->BuildButtonPressed();
-        break;
-        case CL_KEY_END:
-        players[0]->SelectButtonPressed();
-        break;
-        case CL_KEY_HOME:
-        players[0]->CancelButtonPressed();
-        break;
+    switch (key.id) {
+    case CL_KEY_DOWN:
+      players[0]->moving_down = true;
+      break;
+    case CL_KEY_UP:
+      players[0]->moving_up = true;
+      break;
+    case CL_KEY_LEFT:
+      players[0]->moving_left = true;
+      break;
+    case CL_KEY_RIGHT:
+      players[0]->moving_right = true;
+      break;
+    case CL_KEY_DELETE:
+      players[0]->BuildButtonPressed();
+      break;
+    case CL_KEY_END:
+      players[0]->SelectButtonPressed();
+      break;
+    case CL_KEY_HOME:
+      players[0]->CancelButtonPressed();
+      break;
     }
     /*
     if (key.id == CL_KEY_DOWN) {
@@ -401,7 +401,7 @@ void World::run() {
   CL_SoundBuffer *sound = new CL_SoundBuffer("BackgroundMusic", &resources);
   sound->set_volume(1.0f);
   sound->prepare();
- // sound->play();
+// sound->play();
 
   while (!quit) {
     update();

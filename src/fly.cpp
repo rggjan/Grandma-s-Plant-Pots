@@ -31,7 +31,7 @@ void Fly::StopEating() {
   if (this->is_free())
     return;
 
-  target_flower_->remove_flies();  
+  target_flower_->remove_flies();
   target_flower_ = NULL;
 }
 

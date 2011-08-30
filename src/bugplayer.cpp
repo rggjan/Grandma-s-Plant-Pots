@@ -42,7 +42,7 @@ void BugPlayer::SelectButtonPressed() {
 
   if (fly != NULL && nearest_free_flower_ != NULL)
     fly->SetTargetFlower(nearest_free_flower_);
-  //else
+  // else
   // TODO(rggjan): beep
 }
 
