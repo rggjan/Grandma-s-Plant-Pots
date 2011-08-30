@@ -27,12 +27,11 @@ class Fly : public GameObject {
     }
 
     void SetTargetFlower(Flower *flower);
-
     virtual bool update(int timeElapsed_ms);
-
     inline bool is_free() {
       return target_flower_ == NULL;
     }
+    void StopEating();
 
     // Implementation:
   private:

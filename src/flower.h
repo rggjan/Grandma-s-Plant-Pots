@@ -50,6 +50,10 @@ class Flower : public GameObject {
       eating_fly_ = fly;
     }
 
+    void remove_flies() {
+      eating_fly_ = NULL;
+    }
+
   private:
     FlowerState state_;
 

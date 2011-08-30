@@ -27,6 +27,14 @@ void Fly::SetTargetFlower(Flower *flower) {
   flower->add_eating_fly(this);
 }
 
+void Fly::StopEating() {
+  if (this->is_free())
+    return;
+
+  target_flower_->remove_flies();  
+  target_flower_ = NULL;
+}
+
 bool Fly::update(int timeElapsed_ms) {
   GameObject::update(timeElapsed_ms);
 
