@@ -19,49 +19,31 @@ class Flower;
 class Leaf;
 
 class World {
-    // Construction
   public:
+    // Construction
     explicit World(std::vector<CL_DisplayWindow*> windows);
     ~World();
 
-    // Attributes:
-  public:
+    // Attributes
     CL_ResourceManager resources;
-
     bool quit;
-
     int num_players;
-
     int width;
     int height;
 
-    // Operations:
-  public:
-    bool hitCheck(CL_CollisionOutline *outline, GameObject *other);
-
+    // Operations
     void addObject(GameObject *object);
     void addFly(Fly *fly);
     void addFlower(Flower *flower);
-
-    Flower* NearestFlower(CL_Vec2f position);
-    std::vector<Flower *>* NearestFlowers(CL_Vec2f position);
-
     void run();
 
+    // Queries
+    Flower* NearestFlower(CL_Vec2f position);
+    std::vector<Flower *>* NearestFlowers(CL_Vec2f position);
     bool CanBuild(CL_Vec2f position);
 
-    // Implementation:
   private:
-    void draw();
-    void update();
-
-    int calcTimeElapsed();
-
-    void onKeyDown(const CL_InputEvent &key, const CL_InputState &state);
-    void onKeyUp(const CL_InputEvent &key, const CL_InputState &state);
-    void on_window_close();
-
-    // TODO(rggjan): set as max players
+    // Attributes
     CL_Slot slotKeyDown[MAX_PLAYERS];
     CL_Slot slotKeyUp[MAX_PLAYERS];
     CL_Slot slotQuit[MAX_PLAYERS];
@@ -70,17 +52,23 @@ class World {
 
     std::vector<GameObject *> objects;
     std::vector<Fly *> flies;
+    std::vector<Flower*> flowers;
     std::vector<Player*> players;
 
-    std::vector<Flower*> flowers;
-
     CL_GraphicContext default_gc;
-
-    int time_elapsed_ms_;
-
     CL_Font default_font_;
 
-    CL_Vec2f current_sort_position_;
+    int time_elapsed_ms_;
+    float fps_;
+
+    // Operations
+    void draw();
+    void update();
+    int calcTimeElapsed();
+
+    void onKeyDown(const CL_InputEvent &key, const CL_InputState &state);
+    void onKeyUp(const CL_InputEvent &key, const CL_InputState &state);
+    void on_window_close();
 };
 
 #endif  // SRC_WORLD_H_

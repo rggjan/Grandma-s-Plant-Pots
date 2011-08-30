@@ -24,7 +24,8 @@ using std::sort;
 World::World(std::vector<CL_DisplayWindow*> windows)
   : quit(false),
     default_gc(windows[0]->get_gc()),
-    time_elapsed_ms_(1) {
+    time_elapsed_ms_(1),
+    fps_(0) {
   num_players = windows.size();
 
   // Setup resources
@@ -420,6 +421,8 @@ void World::run() {
 
 void World::update() {
   time_elapsed_ms_ = calcTimeElapsed();
+  if (time_elapsed_ms_ > 0)
+    fps_ = fps_*0.95 + 1000./time_elapsed_ms_*0.05;
 
   for (int i = 0; i < num_players; i++) {
     players[i]->Update(time_elapsed_ms_);
@@ -462,9 +465,8 @@ void World::draw() {
     players[i]->DrawTop();
   }
 
-  default_font_.draw_text(default_gc, CL_Pointf(80, 30),
-                          cl_format("FPS: (%1)",
-                                    (1 / (time_elapsed_ms_ + 0.0001) * 1000)),
+  default_font_.draw_text(default_gc, CL_Pointf(30, 30),
+                          cl_format("FPS: %1", (int)fps_),
                           CL_Colorf::white);
 
   /*
