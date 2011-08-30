@@ -114,7 +114,7 @@ int Application::main(const std::vector<CL_String> &args) {
     World world(windows);
 
     // Run the main loop
-    world.run();
+    world.Run();
   } catch(CL_Exception exception) {
     // Create a console window for text-output if not available
     CL_ConsoleWindow console("Console", 80, 160);
