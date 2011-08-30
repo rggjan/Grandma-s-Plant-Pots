@@ -52,12 +52,12 @@ bool PlantPlayer::BuildLeaf() {
   }
 }
 
-bool PlantPlayer::BuildPlant() {
+bool PlantPlayer::BuildFlower() {
   if (energy() >= Flower::energy_cost && cross_green_) {
     Flower *flower = new Flower(world, gc, position(), this);
 
     flowers.push_back(flower);
-    world->addFlower(flower);
+    world->AddFlower(flower);
 
     energy_ -= Flower::energy_cost;
     sound_plantgrowing_->play();
@@ -72,7 +72,7 @@ bool PlantPlayer::BuildPlant() {
 void PlantPlayer::SelectButtonPressed() {
   switch (state) {
   case Building:
-    if (BuildPlant())
+    if (BuildFlower())
       state = Idle;
     break;
   case Idle:
@@ -119,7 +119,7 @@ void PlantPlayer::BuildButtonPressed() {
     state = Building;
     break;
   case Building:
-    BuildPlant();
+    BuildFlower();
     break;
   case Selected:
     state = SelectedBuilding;

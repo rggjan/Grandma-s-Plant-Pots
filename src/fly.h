@@ -12,24 +12,21 @@ class CL_Sprite;
 class CL_GraphicContext;
 
 class Fly : public GameObject {
-    // Construction
-  public:
+public:
+    // Construction  
     Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name);
 
     // Operations:
-  public:
     inline void set_position(CL_Vec2f position) {
       position_ = position;
     }
-
     inline void set_target_position(CL_Vec2f target_position) {
       target_position_ = target_position;
     }
-
-    void SetTargetFlower(Flower *flower);
+    void SetTargetPlant(Plant *flower);
     virtual bool update(int timeElapsed_ms);
     inline bool is_free() {
-      return target_flower_ == NULL;
+      return target_plant_ == NULL;
     }
     void StopEating();
 
@@ -37,7 +34,7 @@ class Fly : public GameObject {
   private:
     CL_Vec2f direction;
     CL_Vec2f target_position_;
-    Flower *target_flower_;
+    Plant *target_plant_;
 };
 
 #endif  // SRC_FLY_H_

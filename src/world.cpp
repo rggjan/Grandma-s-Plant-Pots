@@ -62,15 +62,12 @@ World::World(std::vector<CL_DisplayWindow*> windows)
   default_font_ = CL_Font_System(default_gc, desc);
 
   // Run the main loop
-  run();
+  Run();
 }
 
 World::~World() {
   // Delete all gameobjects
   // TODO(rggjan): real cleanup of everything
-  std::vector<GameObject *>::iterator it;
-  for (it = objects.begin(); it != objects.end(); ++it)
-    delete(*it);
 }
 
 bool World::CanBuild(CL_Vec2f position) {
@@ -78,34 +75,33 @@ bool World::CanBuild(CL_Vec2f position) {
   return diff.length() < (height / 2 - BACKGROUND_BORDER);
 }
 
-void World::addObject(GameObject *object) {
-  objects.push_back(object);
+void World::AddFly(Fly *fly) {
+  flies.push_back(fly);
 }
 
-void World::addFly(Fly *tank) {
-  objects.push_back(tank);
-  flies.push_back(tank);
-}
-
-void World::addFlower(Flower *flower) {
-  objects.push_back(flower);
+void World::AddFlower(Flower *flower) {
+  AddPlant(flower);
   flowers.push_back(flower);
 }
 
+void World::AddPlant(Plant *plant) {
+  plants.push_back(plant);
+}
+
 struct sort_class {
-  bool operator() (Flower *flower1, Flower* flower2) {
-    return ((flower2->position() - position).length() -
-            (flower1->position() - position).length()) > 0;
+  bool operator() (Plant *plant1, Plant* plant2) {
+    return ((plant2->position() - position).length() -
+            (plant1->position() - position).length()) > 0;
   }
   CL_Vec2f position;
 };
 
-vector<Flower *>* World::NearestFlowers(CL_Vec2f position) {
+vector<Plant *>* World::NearestPlants(CL_Vec2f position) {
   sort_class sort_object;
   sort_object.position = position;
 
-  sort(flowers.begin(), flowers.end(), sort_object);
-  return &flowers;
+  sort(plants.begin(), plants.end(), sort_object);
+  return &plants;
 }
 
 Flower* World::NearestFlower(CL_Vec2f position) {
@@ -398,11 +394,11 @@ void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
   }
 }
 
-void World::run() {
+void World::Run() {
   CL_SoundBuffer *sound = new CL_SoundBuffer("BackgroundMusic", &resources);
   sound->set_volume(1.0f);
   sound->prepare();
-// sound->play();
+  // sound->play();
 
   while (!quit) {
     Update();

@@ -17,6 +17,7 @@ class Fly;
 class Player;
 class Flower;
 class Leaf;
+class Plant;
 
 class World {
   public:
@@ -32,14 +33,14 @@ class World {
     int height;
 
     // Operations
-    void addObject(GameObject *object);
-    void addFly(Fly *fly);
-    void addFlower(Flower *flower);
-    void run();
+    void AddFly(Fly *fly);
+    void AddFlower(Flower *flower);
+    void AddPlant(Plant *plant);
+    void Run();
 
     // Queries
     Flower* NearestFlower(CL_Vec2f position);
-    std::vector<Flower *>* NearestFlowers(CL_Vec2f position);
+    std::vector<Plant *>* NearestPlants(CL_Vec2f position);
     bool CanBuild(CL_Vec2f position);
 
   private:
@@ -50,8 +51,8 @@ class World {
 
     CL_Sprite *background;
 
-    std::vector<GameObject *> objects;
     std::vector<Fly *> flies;
+    std::vector<Plant*> plants;
     std::vector<Flower*> flowers;
     std::vector<Player*> players;
 

@@ -34,14 +34,14 @@ BugPlayer::BugPlayer(CL_DisplayWindow* window, World* world,
 
 void BugPlayer::AddFly(Fly* fly) {
   flies.push_back(fly);
-  world->addFly(fly);
+  world->AddFly(fly);
 }
 
 void BugPlayer::SelectButtonPressed() {
   Fly* fly = GetFreeBug();
 
-  if (fly != NULL && nearest_free_flower_ != NULL)
-    fly->SetTargetFlower(nearest_free_flower_);
+  if (fly != NULL && nearest_free_plant_ != NULL)
+    fly->SetTargetPlant(nearest_free_plant_);
   // else
   // TODO(rggjan): beep
 }
@@ -56,13 +56,13 @@ void BugPlayer::CancelButtonPressed() {
 void BugPlayer::BuildButtonPressed() {
 }
 
-Flower* BugPlayer::GetFreeFlower() {
-  vector<Flower*> *flowers = world->NearestFlowers(position());
+Plant* BugPlayer::GetFreePlant() {
+  vector<Plant*> *plants = world->NearestPlants(position());
 
-  int size = flowers->size();
+  int size = plants->size();
   for (int i = 0; i < size; i++) {
-    if ((*flowers)[i]->free_space())
-      return (*flowers)[i];
+    if ((*plants)[i]->free_space())
+      return (*plants)[i];
   }
 
   return NULL;
@@ -80,10 +80,10 @@ Fly* BugPlayer::GetFreeBug() {
 }
 
 void BugPlayer::DrawFloor() {
-  nearest_free_flower_ = GetFreeFlower();
+  nearest_free_plant_ = GetFreePlant();
 
-  if (nearest_free_flower_ != NULL) {
-    CL_Vec2f pos = nearest_free_flower_->position() - map_position();
+  if (nearest_free_plant_ != NULL) {
+    CL_Vec2f pos = nearest_free_plant_->position() - map_position();
     selectedImage->draw(*gc, pos.x, pos.y);
   }
   /*  } else if (state == Selected || state == SelectedBuilding) {

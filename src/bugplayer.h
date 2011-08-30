@@ -21,15 +21,14 @@ class BugPlayer : public Player {
     void DrawFloor();
 
   private:
-
-    Flower* GetFreeFlower();
-    Fly* GetFreeBug();
-
+    // Attributes
     std::vector<Fly*> flies;
-
     CL_Sprite *selectedImage;
+    Plant* nearest_free_plant_;
 
-    Flower* nearest_free_flower_;
+    // Queries
+    Plant* GetFreePlant();
+    Fly* GetFreeBug();
 };
 
 #endif  // SRC_BUGPLAYER_H_

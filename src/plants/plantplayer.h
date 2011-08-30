@@ -42,7 +42,7 @@ class PlantPlayer : public Player {
 
   private:
     // Operations
-    bool BuildPlant();
+    bool BuildFlower();
     bool BuildLeaf();
 
     // Queries

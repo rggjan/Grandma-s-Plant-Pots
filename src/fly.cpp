@@ -16,23 +16,23 @@
 Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name)
   : GameObject(world),
     direction(0, -1),
-    target_flower_(NULL) {
+    target_plant_(NULL) {
   spriteImage = new CL_Sprite(gc, name, &world->resources);
 
   spriteImage->set_play_loop(true);
 }
 
-void Fly::SetTargetFlower(Flower *flower) {
-  target_flower_ = flower;
-  flower->add_eating_fly(this);
+void Fly::SetTargetPlant(Plant *plant) {
+  target_plant_ = plant;
+  plant->add_eating_fly(this);
 }
 
 void Fly::StopEating() {
   if (this->is_free())
     return;
 
-  target_flower_->remove_flies();
-  target_flower_ = NULL;
+  target_plant_->remove_flies();
+  target_plant_ = NULL;
 }
 
 bool Fly::update(int timeElapsed_ms) {
@@ -41,17 +41,17 @@ bool Fly::update(int timeElapsed_ms) {
   // Calculate target direction
   CL_Vec2f target_direction;
 
-  if (target_flower_ == NULL)
+  if (target_plant_ == NULL)
     target_direction = target_position_ - position_;
   else
-    target_direction = target_flower_->position() - position_;
+    target_direction = target_plant_->position() - position_;
 
   // Calculate distance
   float distance;
   distance = target_direction.length();
   target_direction.normalize();
 
-  if (target_flower_ != NULL and distance < ATTACK_MIN_DISTANCE)
+  if (target_plant_ != NULL and distance < ATTACK_MIN_DISTANCE)
     return true;
 
   // Right angle
@@ -83,7 +83,7 @@ bool Fly::update(int timeElapsed_ms) {
   // posX += direction.x * 10*(rand()%100)/100;
   // posY += direction.y * 10*(rand()%100)/100;
   float speed;
-  if (target_flower_ == NULL) {
+  if (target_plant_ == NULL) {
     speed = SPEED;
   } else {
     if (distance > ATTACK_SPEED_DECREASE_DISTANCE) {
