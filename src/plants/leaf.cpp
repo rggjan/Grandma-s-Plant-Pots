@@ -2,10 +2,6 @@
 
 #include "./leaf.h"
 
-#include <stdlib.h>
-#include <ClanLib/display.h>
-
-#include "./world.h"
 #include "plants/flower.h"
 
 #define ENERGY_COLLECTED_PER_SECOND 0.1

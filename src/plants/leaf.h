@@ -3,8 +3,6 @@
 #ifndef SRC_LEAF_H_
 #define SRC_LEAF_H_
 
-#include <ClanLib/core.h>
-
 #include "./plant.h"
 
 #define LEAF_ENERGY_COST 5

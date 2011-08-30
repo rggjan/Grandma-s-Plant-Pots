@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "./world.h"
-#include "plants/flower.h"
+#include "plants/plant.h"
 
 #define NUM_BUGS 20
 

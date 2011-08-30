@@ -2,8 +2,6 @@
 
 #include "./player.h"
 
-#include <ClanLib/core.h>
-
 #include "./world.h"
 
 #define CROSS_SPEED 0.6

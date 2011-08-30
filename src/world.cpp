@@ -4,15 +4,10 @@
 
 #include <ClanLib/core.h>
 #include <ClanLib/sound.h>
-#include <list>
-#include <vector>
 #include <algorithm>
+#include <vector>
 
-#include "./background.h"
-#include "./fly.h"
-#include "./player.h"
 #include "plants/flower.h"
-#include "plants/leaf.h"
 #include "plants/plantplayer.h"
 #include "./bugplayer.h"
 
@@ -462,7 +457,7 @@ void World::Draw() {
   }
 
   default_font_.draw_text(default_gc, CL_Pointf(30, 30),
-                          cl_format("FPS: %1", (int)fps_),
+                          cl_format("FPS: %1", static_cast<int>(fps_)),
                           CL_Colorf::white);
 
   /*

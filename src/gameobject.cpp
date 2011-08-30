@@ -2,8 +2,6 @@
 
 #include "./gameobject.h"
 
-#include <ClanLib/display.h>
-
 void GameObject::Draw(CL_GraphicContext *gc, CL_Vec2f target) {
   CL_Vec2f pos = position_ - target;
   spriteImage->draw(*gc, pos.x, pos.y);

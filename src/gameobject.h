@@ -3,7 +3,6 @@
 #ifndef SRC_GAMEOBJECT_H_
 #define SRC_GAMEOBJECT_H_
 
-#include <ClanLib/core.h>
 #include <ClanLib/display.h>
 
 class World;

@@ -2,10 +2,10 @@
 
 #include "./fly.h"
 
-#include <stdlib.h>
 #include <ClanLib/display.h>
 
 #include "./world.h"
+#include "plants/plant.h"
 
 #define CONSTANT_ANGLE false
 #define SPEED 300

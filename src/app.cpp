@@ -2,9 +2,7 @@
 
 #include "./app.h"
 
-#include <ClanLib/display.h>
 #include <ClanLib/sound.h>
-
 #include <vector>
 
 #include "./world.h"

@@ -3,8 +3,6 @@
 #ifndef SRC_PLANTPLAYER_H_
 #define SRC_PLANTPLAYER_H_
 
-#include <vector>
-
 #include "./player.h"
 
 class Flower;

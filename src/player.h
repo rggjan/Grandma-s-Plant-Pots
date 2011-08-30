@@ -5,9 +5,6 @@
 
 #include <ClanLib/display.h>
 
-class CL_DisplayWindow;
-class CL_GraphicContext;
-class CL_Font;
 class World;
 
 class Player {

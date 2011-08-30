@@ -3,11 +3,9 @@
 #include "./plantplayer.h"
 
 #include <ClanLib/sound.h>
-#include <vector>
+#include <ClanLib/core.h>
 
 #include "plants/flower.h"
-#include "./player.h"
-#include "./world.h"
 #include "plants/leaf.h"
 
 using std::vector;

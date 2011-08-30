@@ -3,15 +3,10 @@
 #ifndef SRC_PLANT_H_
 #define SRC_PLANT_H_
 
-//#include <ClanLib/core.h>
-
-//#include <vector>
-
 #include "./gameobject.h"
 #include "./world.h"
 
 class PlantPlayer;
-class Fly;
 
 class Plant : public GameObject {
   public:

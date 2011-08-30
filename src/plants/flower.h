@@ -1,9 +1,7 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#ifndef SRC_FLOWER_H_
-#define SRC_FLOWER_H_
-
-#include <ClanLib/core.h>
+#ifndef SRC_PLANTS_FLOWER_H_
+#define SRC_PLANTS_FLOWER_H_
 
 #include <vector>
 
@@ -12,8 +10,6 @@
 #define ENERGY_COST 10
 
 class Leaf;
-class PlantPlayer;
-class Fly;
 
 enum FlowerState {
   kClosed = 0,
@@ -48,4 +44,4 @@ class Flower : public Plant {
     int age_;
 };
 
-#endif  // SRC_FLOWER_H_
+#endif  // SRC_PLANTS_FLOWER_H_

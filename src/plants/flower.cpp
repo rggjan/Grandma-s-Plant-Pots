@@ -2,12 +2,6 @@
 
 #include "./flower.h"
 
-#include <stdlib.h>
-#include <ClanLib/display.h>
-
-#include <vector>
-
-#include "./world.h"
 #include "./leaf.h"
 #include "plants/plantplayer.h"
 

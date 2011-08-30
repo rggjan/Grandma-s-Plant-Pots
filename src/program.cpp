@@ -2,8 +2,8 @@
 
 #include "./program.h"
 
-#include <ClanLib/core.h>
 #include <ClanLib/display.h>
+#include <ClanLib/sound.h>
 #include <ClanLib/application.h>
 #include <ClanLib/vorbis.h>
 

@@ -4,7 +4,6 @@
 #define SRC_PROGRAM_H_
 
 #include <ClanLib/core.h>
-#include <ClanLib/sound.h>
 
 #include <vector>
 

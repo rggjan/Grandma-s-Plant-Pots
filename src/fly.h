@@ -3,17 +3,13 @@
 #ifndef SRC_FLY_H_
 #define SRC_FLY_H_
 
-#include <ClanLib/core.h>
-
 #include "./gameobject.h"
-#include "plants/flower.h"
 
-class CL_Sprite;
-class CL_GraphicContext;
+class Plant;
 
 class Fly : public GameObject {
-public:
-    // Construction  
+  public:
+    // Construction
     Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name);
 
     // Operations:

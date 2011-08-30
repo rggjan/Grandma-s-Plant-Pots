@@ -4,20 +4,14 @@
 #define SRC_WORLD_H_
 
 #include <ClanLib/display.h>
-#include <list>
 #include <vector>
 
 #define MAX_PLAYERS 8
 
-class CL_Surface;
-class CL_InputEvent;
-class GameObject;
-class Background;
 class Fly;
-class Player;
 class Flower;
-class Leaf;
 class Plant;
+class Player;
 
 class World {
   public:
