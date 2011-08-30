@@ -11,9 +11,9 @@
 #include "./background.h"
 #include "./fly.h"
 #include "./player.h"
-#include "./flower.h"
-#include "./leaf.h"
-#include "./plantplayer.h"
+#include "plants/flower.h"
+#include "plants/leaf.h"
+#include "plants/plantplayer.h"
 #include "./bugplayer.h"
 
 #define BACKGROUND_BORDER 65

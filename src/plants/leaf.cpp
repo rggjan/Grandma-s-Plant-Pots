@@ -6,7 +6,7 @@
 #include <ClanLib/display.h>
 
 #include "./world.h"
-#include "./flower.h"
+#include "plants/flower.h"
 
 #define ENERGY_COLLECTED_PER_SECOND 0.1
 #define MIN_LEAF_DISTANCE 30

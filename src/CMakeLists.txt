@@ -6,7 +6,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
  
 # For a large number of source files you can create it in a simpler way
 # using file() function:
-file(GLOB GPP_SOURCES *.cpp)
+file(GLOB GPP_SOURCES *.cpp plants/*.cpp)
 
 # Find clanlib
 set(ClanLib_MAJOR_VERSION 2)
@@ -16,7 +16,7 @@ set(ClanLib_MINOR_VERSION 3)
 find_package(ClanLib COMPONENTS App Display GL GL1 SWRender Sound Vorbis REQUIRED)
 
 # Include clanlib
-include_directories(${ClanLib_INCLUDE_DIRS} /usr/local/include/ClanLib-2.2)
+include_directories(${ClanLib_INCLUDE_DIRS} /usr/local/include/ClanLib-2.3)
 
 # Add compiler flags
 add_definitions(${ClanLib_DEFINITIONS})

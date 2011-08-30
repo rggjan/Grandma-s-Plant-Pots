@@ -6,7 +6,7 @@
 #include <ClanLib/core.h>
 
 #include "./gameobject.h"
-#include "./flower.h"
+#include "plants/flower.h"
 
 class CL_Sprite;
 class CL_GraphicContext;

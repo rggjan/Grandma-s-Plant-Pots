@@ -9,7 +9,7 @@
 
 #include "./world.h"
 #include "./leaf.h"
-#include "./plantplayer.h"
+#include "plants/plantplayer.h"
 
 #define TIME_TO_OPEN 6000
 #define TIME_TO_FINAL 15000

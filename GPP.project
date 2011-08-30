@@ -23,15 +23,17 @@
     <File Name="src/fly.h"/>
     <File Name="src/player.cpp"/>
     <File Name="src/player.h"/>
-    <File Name="src/flower.cpp"/>
-    <File Name="src/flower.h"/>
-    <File Name="src/leaf.cpp"/>
-    <File Name="src/leaf.h"/>
     <File Name="src/gameobject.cpp"/>
-    <File Name="src/plantplayer.cpp"/>
-    <File Name="src/plantplayer.h"/>
     <File Name="src/bugplayer.cpp"/>
     <File Name="src/bugplayer.h"/>
+    <VirtualDirectory Name="plants">
+      <File Name="src/plants/flower.cpp"/>
+      <File Name="src/plants/flower.h"/>
+      <File Name="src/plants/plantplayer.cpp"/>
+      <File Name="src/plants/plantplayer.h"/>
+      <File Name="src/plants/leaf.cpp"/>
+      <File Name="src/plants/leaf.h"/>
+    </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="GPP">
     <File Name=".gitignore"/>
