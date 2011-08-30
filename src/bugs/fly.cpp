@@ -12,6 +12,7 @@
 #define MAX_CURVE 5
 #define ATTACK_SPEED_DECREASE_DISTANCE 200
 #define ATTACK_MIN_DISTANCE 5
+#define EAT_PER_SECOND 1
 
 Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name)
   : GameObject(world),
@@ -35,8 +36,8 @@ void Fly::StopEating() {
   target_plant_ = NULL;
 }
 
-bool Fly::update(int timeElapsed_ms) {
-  GameObject::Update(timeElapsed_ms);
+bool Fly::update(int time_ms) {
+  GameObject::Update(time_ms);
 
   // Calculate target direction
   CL_Vec2f target_direction;
@@ -51,8 +52,15 @@ bool Fly::update(int timeElapsed_ms) {
   distance = target_direction.length();
   target_direction.normalize();
 
-  if (target_plant_ != NULL and distance < ATTACK_MIN_DISTANCE)
+  if (target_plant_ != NULL and distance < ATTACK_MIN_DISTANCE) {
+    target_plant_->energy_ -= EAT_PER_SECOND * time_ms / 1000.;
+
+    if (target_plant_->energy_ < 0) {
+      target_plant_->energy_ = 0;
+      target_plant_ = NULL;
+    }
     return true;
+  }
 
   // Right angle
   CL_Vec2f right;
@@ -61,11 +69,11 @@ bool Fly::update(int timeElapsed_ms) {
 
 #if CONSTANT_ANGLE
   if (right.dot(target_direction) > 0)
-    direction = direction + right * MAX_CURVE * timeElapsed_ms / 1000;
+    direction = direction + right * MAX_CURVE * time_ms / 1000;
   else
-    direction = direction - right * MAX_CURVE * timeElapsed_ms / 1000;
+    direction = direction - right * MAX_CURVE * time_ms / 1000;
 #else
-  direction = direction + target_direction * MAX_CURVE * timeElapsed_ms / 1000;
+  direction = direction + target_direction * MAX_CURVE * time_ms / 1000;
 #endif
 
   // Normalize direction
@@ -92,7 +100,7 @@ bool Fly::update(int timeElapsed_ms) {
       speed = SPEED * distance / ATTACK_SPEED_DECREASE_DISTANCE;
     }
   }
-  position_ += direction * timeElapsed_ms / 1000 * speed;
+  position_ += direction * time_ms / 1000 * speed;
 
   return true;
 }

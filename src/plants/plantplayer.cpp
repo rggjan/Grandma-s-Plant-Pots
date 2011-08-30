@@ -217,10 +217,17 @@ void PlantPlayer::DrawSun() {
 void PlantPlayer::Update(int time_ms) {
   // Set sun to zero... will be added up in the update function!
   sun_ = 0;
-
   for (unsigned int i = 0; i < flowers.size(); i++) {
     flowers[i]->Update(time_ms);
   }
+
+  // Produce sugar
+  double sugar_production = sun_*time_ms/1000.;
+  if (co2_ < sun_)
+    sugar_production = co2_;
+
+  co2_ -= sugar_production;
+  sugar_ += sugar_production;
 
   Player::Update(time_ms);
 }

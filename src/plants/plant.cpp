@@ -7,6 +7,7 @@
 Plant::Plant(World *world, CL_GraphicContext *gc,
              CL_Vec2f position, PlantPlayer* player)
   : GameObject(world, position),
+    energy_(100),
     player_(player),
     eating_fly_(NULL),
     co2_collected_per_second_(0),
@@ -30,9 +31,30 @@ void Plant::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
 }
 
 void Plant::Update(int time_ms) {
-  // Update CO2 production
-  player_->co2_ += co2_collected_per_second_ * time_ms / 1000.;
+  if (energy_ > 0) {
+    // Update CO2 production
+    player_->co2_ += co2_collected_per_second_ * time_ms / 1000.;
 
-  // Update sun production
-  player_->sun_ += sun_collected_per_second_;
+    // Update sun production
+    player_->sun_ += sun_collected_per_second_;
+  }
+}
+
+void Plant::Draw(CL_GraphicContext *gc, CL_Vec2f position) {
+  CL_Vec2f pos = position_ - position;
+
+  if (energy_ == 0)
+    spriteImage->set_color(CL_Color::brown);
+
+  spriteImage->draw(*gc, pos.x, pos.y);
+
+  if (energy_ > 20) {
+    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 20, pos.x + energy_ / 3., pos.y - 20, CL_Colorf::green);
+    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 19, pos.x + energy_ / 3., pos.y - 19, CL_Colorf::darkgreen);
+    CL_Draw::line(*gc, pos.x - energy_ / 3. + 1, pos.y - 18, pos.x + energy_ / 3. + 1, pos.y - 18, CL_Colorf::black);
+  } else {
+    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 20, pos.x + energy_ / 3., pos.y - 20, CL_Colorf::red);
+    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 19, pos.x + energy_ / 3., pos.y - 19, CL_Colorf::darkred);
+    CL_Draw::line(*gc, pos.x - energy_ / 3. + 1, pos.y - 18, pos.x + energy_ / 3. + 1, pos.y - 18, CL_Colorf::black);
+  }
 }

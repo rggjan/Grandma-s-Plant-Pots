@@ -7,6 +7,7 @@
 #define MIN_LEAF_DISTANCE 30
 #define CO2_COLLECTED_PER_SECOND 0.001
 #define SUN_COLLECTED_PER_SECOND 0.02
+#define START_ENERGY 30
 
 Leaf::Leaf(World *world, CL_GraphicContext *gc, const CL_StringRef &name,
            CL_Vec2f position, Flower* flower)
@@ -16,6 +17,7 @@ Leaf::Leaf(World *world, CL_GraphicContext *gc, const CL_StringRef &name,
 
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
+  energy_ = START_ENERGY;
 }
 
 bool Leaf::CanBuild(CL_Vec2f position, Flower* flower) {

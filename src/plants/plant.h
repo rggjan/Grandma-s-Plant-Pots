@@ -14,9 +14,13 @@ class Plant : public GameObject {
     Plant(World *world, CL_GraphicContext *gc,
           CL_Vec2f position, PlantPlayer* player);
 
+    // Attributes
+    double energy_;
+
     // Operations
     void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
     void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
+    void Draw(CL_GraphicContext *gc, CL_Vec2f position);
 
     // Queries
     virtual inline bool CanBuild(CL_Vec2f position) {
@@ -35,7 +39,9 @@ class Plant : public GameObject {
       eating_fly_ = NULL;
     }
 
-    PlantPlayer* player() { return player_; }
+    PlantPlayer* player() {
+      return player_;
+    }
 
     virtual void Update(int time_ms);
 
