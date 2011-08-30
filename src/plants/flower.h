@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "./gameobject.h"
+#include "./plant.h"
 
 #define ENERGY_COST 10
 
@@ -21,15 +21,13 @@ enum FlowerState {
   kFinal = 2
 };
 
-class Flower : public GameObject {
+class Flower : public Plant {
   public:
     // Construction
     Flower(World *world, CL_GraphicContext *gc,
            CL_Vec2f position, PlantPlayer* player);
 
     // Operations
-    void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
-    void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
     void AddLeaf(Leaf* leaf);
     void Update(int time_ms);
     void Draw(CL_GraphicContext* gc, CL_Vec2f target);
@@ -42,26 +40,10 @@ class Flower : public GameObject {
       return state_;
     };
 
-    bool free_space() {
-      return eating_fly_ == NULL;
-    }
-
-    void add_eating_fly(Fly* fly) {
-      eating_fly_ = fly;
-    }
-
-    void remove_flies() {
-      eating_fly_ = NULL;
-    }
-
   private:
     FlowerState state_;
-
     std::vector<Leaf*> leaves;
-
     int age_;
-    PlantPlayer* player_;
-    Fly* eating_fly_;
 };
 
 #endif  // SRC_FLOWER_H_

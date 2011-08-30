@@ -17,32 +17,14 @@
 
 Flower::Flower(World *world, CL_GraphicContext *gc,
                CL_Vec2f position, PlantPlayer* player)
-  : GameObject(world, position),
+  : Plant(world, gc, position, player),
     state_(kClosed),
-    age_(0),
-    player_(player),
-    eating_fly_(NULL) {
+    age_(0) {
   spriteImage = new CL_Sprite(*gc, "Plant1", &world->resources);
 }
 
 void Flower::AddLeaf(Leaf* leaf) {
   leaves.push_back(leaf);
-}
-
-void Flower::DrawRed(CL_GraphicContext *gc, CL_Vec2f position) {
-  // Draw graphic
-  spriteImage->set_color(CL_Color::red);
-  spriteImage->set_alpha(0.8);
-  spriteImage->set_frame(2);
-  spriteImage->draw(*gc, position.x, position.y);
-}
-
-void Flower::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
-  // Draw graphic
-  spriteImage->set_color(CL_Color::green);
-  spriteImage->set_alpha(0.8);
-  spriteImage->set_frame(2);
-  spriteImage->draw(*gc, position.x, position.y);
 }
 
 void Flower::Update(int time_ms) {
@@ -108,5 +90,5 @@ void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
     leaves[i]->Draw(gc, target);
   }
 
-  GameObject::Draw(gc, target);
+  Plant::Draw(gc, target);
 }

@@ -33,6 +33,8 @@
       <File Name="src/plants/plantplayer.h"/>
       <File Name="src/plants/leaf.cpp"/>
       <File Name="src/plants/leaf.h"/>
+      <File Name="src/plants/plant.cpp"/>
+      <File Name="src/plants/plant.h"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="GPP">
