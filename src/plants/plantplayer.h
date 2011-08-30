@@ -45,7 +45,6 @@ class PlantPlayer : public Player {
     void DrawCO2();
     void DrawSun();
 
-
     // Queries
     Flower* NearestFlower();
 

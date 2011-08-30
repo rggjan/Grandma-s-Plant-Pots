@@ -12,6 +12,7 @@
 #define MIN_FLOWER_DISTANCE 50
 
 #define CO2_COLLECTED_PER_SECOND 0.1
+#define SUN_COLLECTED_PER_SECOND 0.001
 
 Flower::Flower(World *world, CL_GraphicContext *gc,
                CL_Vec2f position, PlantPlayer* player)
@@ -20,6 +21,7 @@ Flower::Flower(World *world, CL_GraphicContext *gc,
     age_(0) {
   spriteImage = new CL_Sprite(*gc, "Plant1", &world->resources);
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
+  sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
 }
 
 void Flower::AddLeaf(Leaf* leaf) {

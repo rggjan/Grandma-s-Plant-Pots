@@ -44,6 +44,7 @@ class Plant : public GameObject {
     Fly* eating_fly_;
 
     double co2_collected_per_second_;
+    double sun_collected_per_second_;
 };
 
 #endif  // SRC_PLANTS_PLANT_H_

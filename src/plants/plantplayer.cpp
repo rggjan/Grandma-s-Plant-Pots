@@ -210,11 +210,14 @@ void PlantPlayer::DrawCO2() {
 
 void PlantPlayer::DrawSun() {
   default_font.draw_text(*gc, CL_Pointf(10, 70),
-                         cl_format("Sun: %1",  static_cast<int>(sun_)),
+                         cl_format("Sun: %1",  static_cast<int>(sun_*60)),
                          CL_Colorf::white);
 }
 
 void PlantPlayer::Update(int time_ms) {
+  // Set sun to zero... will be added up in the update function!
+  sun_ = 0;
+
   for (unsigned int i = 0; i < flowers.size(); i++) {
     flowers[i]->Update(time_ms);
   }

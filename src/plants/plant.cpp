@@ -5,11 +5,12 @@
 #include "plants/plantplayer.h"
 
 Plant::Plant(World *world, CL_GraphicContext *gc,
-               CL_Vec2f position, PlantPlayer* player)
+             CL_Vec2f position, PlantPlayer* player)
   : GameObject(world, position),
     player_(player),
     eating_fly_(NULL),
-    co2_collected_per_second_(0) {
+    co2_collected_per_second_(0),
+    sun_collected_per_second_(0) {
 }
 
 void Plant::DrawRed(CL_GraphicContext *gc, CL_Vec2f position) {
@@ -31,4 +32,7 @@ void Plant::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
 void Plant::Update(int time_ms) {
   // Update CO2 production
   player_->co2_ += co2_collected_per_second_ * time_ms / 1000.;
+
+  // Update sun production
+  player_->sun_ += sun_collected_per_second_;
 }
