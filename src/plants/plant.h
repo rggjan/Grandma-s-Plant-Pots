@@ -1,7 +1,7 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#ifndef SRC_PLANT_H_
-#define SRC_PLANT_H_
+#ifndef SRC_PLANTS_PLANT_H_
+#define SRC_PLANTS_PLANT_H_
 
 #include "./gameobject.h"
 #include "./world.h"
@@ -42,4 +42,4 @@ class Plant : public GameObject {
     Fly* eating_fly_;
 };
 
-#endif  // SRC_PLANT_H_
+#endif  // SRC_PLANTS_PLANT_H_

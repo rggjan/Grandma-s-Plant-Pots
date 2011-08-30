@@ -6,7 +6,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
  
 # For a large number of source files you can create it in a simpler way
 # using file() function:
-file(GLOB GPP_SOURCES *.cpp plants/*.cpp)
+file(GLOB GPP_SOURCES *.cpp plants/*.cpp bugs/*.cpp)
 
 # Find clanlib
 set(ClanLib_MAJOR_VERSION 2)

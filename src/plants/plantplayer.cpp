@@ -4,6 +4,7 @@
 
 #include <ClanLib/sound.h>
 #include <ClanLib/core.h>
+#include <vector>
 
 #include "plants/flower.h"
 #include "plants/leaf.h"

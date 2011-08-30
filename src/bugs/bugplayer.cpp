@@ -1,6 +1,6 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#include "./bugplayer.h"
+#include "bugs/bugplayer.h"
 
 #include <vector>
 

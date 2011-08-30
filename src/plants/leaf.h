@@ -1,7 +1,7 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#ifndef SRC_LEAF_H_
-#define SRC_LEAF_H_
+#ifndef SRC_PLANTS_LEAF_H_
+#define SRC_PLANTS_LEAF_H_
 
 #include "./plant.h"
 
@@ -24,4 +24,4 @@ class Leaf : public Plant {
     Flower* flower_;
 };
 
-#endif  // SRC_LEAF_H_
+#endif  // SRC_PLANTS_LEAF_H_

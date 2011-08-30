@@ -1,12 +1,12 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#ifndef SRC_BUGPLAYER_H_
-#define SRC_BUGPLAYER_H_
+#ifndef SRC_BUGS_BUGPLAYER_H_
+#define SRC_BUGS_BUGPLAYER_H_
 
 #include <vector>
 
 #include "./player.h"
-#include "./fly.h"
+#include "bugs/fly.h"
 
 class BugPlayer : public Player {
   public:
@@ -31,4 +31,4 @@ class BugPlayer : public Player {
     Fly* GetFreeBug();
 };
 
-#endif  // SRC_BUGPLAYER_H_
+#endif  // SRC_BUGS_BUGPLAYER_H_

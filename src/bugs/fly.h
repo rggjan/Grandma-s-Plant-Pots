@@ -1,7 +1,7 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#ifndef SRC_FLY_H_
-#define SRC_FLY_H_
+#ifndef SRC_BUGS_FLY_H_
+#define SRC_BUGS_FLY_H_
 
 #include "./gameobject.h"
 
@@ -33,4 +33,4 @@ class Fly : public GameObject {
     Plant *target_plant_;
 };
 
-#endif  // SRC_FLY_H_
+#endif  // SRC_BUGS_FLY_H_

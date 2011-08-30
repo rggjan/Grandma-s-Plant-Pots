@@ -19,6 +19,9 @@ enum FlowerState {
 
 class Flower : public Plant {
   public:
+    // Static
+    static const int energy_cost = ENERGY_COST;
+
     // Construction
     Flower(World *world, CL_GraphicContext *gc,
            CL_Vec2f position, PlantPlayer* player);
@@ -31,8 +34,6 @@ class Flower : public Plant {
     // Queries
     bool CanBuild(CL_Vec2f position);
     Leaf* NearestLeaf(CL_Vec2f position);
-
-    const static int energy_cost = ENERGY_COST;
 
     inline FlowerState state() {
       return state_;

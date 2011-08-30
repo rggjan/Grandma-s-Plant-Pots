@@ -9,7 +9,7 @@
 
 #include "plants/flower.h"
 #include "plants/plantplayer.h"
-#include "./bugplayer.h"
+#include "bugs/bugplayer.h"
 
 #define BACKGROUND_BORDER 65
 

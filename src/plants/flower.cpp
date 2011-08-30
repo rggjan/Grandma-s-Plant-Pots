@@ -2,6 +2,8 @@
 
 #include "./flower.h"
 
+#include <vector>
+
 #include "./leaf.h"
 #include "plants/plantplayer.h"
 

@@ -1,7 +1,9 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#ifndef SRC_PLANTPLAYER_H_
-#define SRC_PLANTPLAYER_H_
+#ifndef SRC_PLANTS_PLANTPLAYER_H_
+#define SRC_PLANTS_PLANTPLAYER_H_
+
+#include <vector>
 
 #include "./player.h"
 
@@ -59,4 +61,4 @@ class PlantPlayer : public Player {
     float energy_;
 };
 
-#endif  // SRC_PLANTPLAYER_H_
+#endif  // SRC_PLANTS_PLANTPLAYER_H_

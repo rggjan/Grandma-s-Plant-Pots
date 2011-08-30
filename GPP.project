@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CodeLite_Project Name="GPP" InternalType="">
-  <VirtualDirectory Name="cmake">
-    <VirtualDirectory Name="modules">
-      <File Name="cmake/modules/MacroOutOfSourceBuild.cmake"/>
-      <File Name="cmake/modules/LibFindMacros.cmake"/>
-      <File Name="cmake/modules/FindClanLib.cmake"/>
-    </VirtualDirectory>
-  </VirtualDirectory>
-  <Description/>
-  <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="src/world.cpp"/>
-    <File Name="src/app.cpp"/>
-    <File Name="src/program.cpp"/>
-    <File Name="src/app.h"/>
-    <File Name="src/gameobject.h"/>
-    <File Name="src/program.h"/>
-    <File Name="src/world.h"/>
-    <File Name="src/background.cpp"/>
-    <File Name="src/background.h"/>
-    <File Name="src/fly.cpp"/>
-    <File Name="src/fly.h"/>
-    <File Name="src/player.cpp"/>
-    <File Name="src/player.h"/>
-    <File Name="src/gameobject.cpp"/>
-    <File Name="src/bugplayer.cpp"/>
-    <File Name="src/bugplayer.h"/>
     <VirtualDirectory Name="plants">
       <File Name="src/plants/flower.cpp"/>
       <File Name="src/plants/flower.h"/>
@@ -36,7 +11,34 @@
       <File Name="src/plants/plant.cpp"/>
       <File Name="src/plants/plant.h"/>
     </VirtualDirectory>
+    <VirtualDirectory Name="bugs">
+      <File Name="src/bugs/bugplayer.cpp"/>
+      <File Name="src/bugs/bugplayer.h"/>
+      <File Name="src/bugs/fly.cpp"/>
+      <File Name="src/bugs/fly.h"/>
+    </VirtualDirectory>
+    <File Name="src/app.h"/>
+    <File Name="src/gameobject.h"/>
+    <File Name="src/program.h"/>
+    <File Name="src/background.h"/>
+    <File Name="src/background.cpp"/>
+    <File Name="src/gameobject.cpp"/>
+    <File Name="src/world.h"/>
+    <File Name="src/player.h"/>
+    <File Name="src/program.cpp"/>
+    <File Name="src/player.cpp"/>
+    <File Name="src/app.cpp"/>
+    <File Name="src/world.cpp"/>
   </VirtualDirectory>
+  <VirtualDirectory Name="cmake">
+    <VirtualDirectory Name="modules">
+      <File Name="cmake/modules/MacroOutOfSourceBuild.cmake"/>
+      <File Name="cmake/modules/LibFindMacros.cmake"/>
+      <File Name="cmake/modules/FindClanLib.cmake"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <Description/>
+  <Dependencies/>
   <VirtualDirectory Name="GPP">
     <File Name=".gitignore"/>
   </VirtualDirectory>
