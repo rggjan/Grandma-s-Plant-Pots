@@ -44,6 +44,7 @@ bool PlantPlayer::BuildLeaf() {
 
     energy_ -= Leaf::energy_cost;
     selectedFlower->AddLeaf(leaf);
+    world->AddPlant(leaf);
 
     return true;
   } else {
