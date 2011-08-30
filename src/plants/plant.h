@@ -28,8 +28,6 @@ class Plant : public GameObject {
       return world->CanBuild(position);
     }
 
-    virtual const int energy_cost() = 0;
-
     bool free_space() {
       return eating_fly_ == NULL;
     }

@@ -35,7 +35,9 @@ class Flower : public Plant {
     // Queries
     bool CanBuild(CL_Vec2f position);
     Leaf* NearestLeaf(CL_Vec2f position);
-    static const int energy_cost = ENERGY_COST;
+
+    const static int energy_cost = ENERGY_COST;
+
     inline FlowerState state() {
       return state_;
     };
