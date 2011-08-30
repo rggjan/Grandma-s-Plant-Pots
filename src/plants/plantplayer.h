@@ -28,37 +28,38 @@ class PlantPlayer : public Player {
     void BuildButtonPressed();
     void SelectButtonPressed();
     void CancelButtonPressed();
-    void DrawEnergy();
     void DrawFloor();
     void DrawTop();
+
     void Update(int time_ms);
 
-    inline float energy() {
-      return energy_;
-    }
-    inline void increase_energy(float amount) {
-      energy_ += amount;
-    };
+    double co2_;
+    double sugar_;
+    double sun_;
 
   private:
     // Operations
     bool BuildFlower();
     bool BuildLeaf();
+    void DrawEnergy();
+    void DrawCO2();
+    void DrawSun();
+
 
     // Queries
     Flower* NearestFlower();
 
-    // Variables
+    // Attributes
     std::vector<Flower*> flowers;
     State state;
     CL_Sprite *selectedImage;
+    Flower *selectedFlower;    
     Flower *tmpFlower;
     Leaf *tmpLeaf;
-    Flower *selectedFlower;
+    bool cross_green_;
+
     CL_SoundBuffer *sound_plantgrowing_;
     CL_SoundBuffer *sound_beep1_;
-    bool cross_green_;
-    float energy_;
 };
 
 #endif  // SRC_PLANTS_PLANTPLAYER_H_

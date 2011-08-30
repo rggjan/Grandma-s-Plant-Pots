@@ -36,7 +36,7 @@ void Fly::StopEating() {
 }
 
 bool Fly::update(int timeElapsed_ms) {
-  GameObject::update(timeElapsed_ms);
+  GameObject::Update(timeElapsed_ms);
 
   // Calculate target direction
   CL_Vec2f target_direction;

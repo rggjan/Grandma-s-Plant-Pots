@@ -19,7 +19,7 @@ class GameObject {
 
     // Operations
     virtual void Draw(CL_GraphicContext *gc, CL_Vec2f target);
-    virtual bool update(int timeElapsed_ms);
+    virtual void Update(int time_ms);
 
     inline CL_Vec2f position() { return position_; }
 

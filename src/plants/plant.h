@@ -37,9 +37,13 @@ class Plant : public GameObject {
 
     PlantPlayer* player() { return player_; }
 
+    virtual void Update(int time_ms);
+
   protected:
     PlantPlayer* player_;
     Fly* eating_fly_;
+
+    double co2_collected_per_second_;
 };
 
 #endif  // SRC_PLANTS_PLANT_H_

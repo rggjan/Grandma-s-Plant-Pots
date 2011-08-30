@@ -12,14 +12,18 @@
 using std::vector;
 
 #define LEAF_MAX_DISTANCE 80
-#define START_ENERGY 100
+#define START_CO2 10
+#define START_SUGAR 100
+#define START_SUN 0
 
 PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
                          int width, int height)
   : Player(window, world, width, height),
+    co2_(START_CO2),
+    sugar_(START_SUGAR),
+    sun_(START_SUN),
     state(Idle),
-    cross_green_(false),
-    energy_(START_ENERGY) {
+    cross_green_(false) {
   selectedImage = new CL_Sprite(*gc, "Cross2", &world->resources);
 
   tmpFlower = new Flower(world, gc, CL_Vec2f(0, 0), this);
@@ -37,11 +41,11 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
 }
 
 bool PlantPlayer::BuildLeaf() {
-  if (energy() >= Leaf::energy_cost && cross_green_) {
+  if (sugar_ >= Leaf::kSugarCost && cross_green_) {
     Leaf *leaf = new Leaf(world, gc, "Leaf2", position(), selectedFlower);
     leaf->set_angle(tmpLeaf->angle());
 
-    energy_ -= Leaf::energy_cost;
+    sugar_ -= Leaf::kSugarCost;
     selectedFlower->AddLeaf(leaf);
     world->AddPlant(leaf);
 
@@ -53,13 +57,13 @@ bool PlantPlayer::BuildLeaf() {
 }
 
 bool PlantPlayer::BuildFlower() {
-  if (energy() >= Flower::energy_cost && cross_green_) {
+  if (sugar_ >= Flower::kSugarCost && cross_green_) {
     Flower *flower = new Flower(world, gc, position(), this);
 
     flowers.push_back(flower);
     world->AddFlower(flower);
 
-    energy_ -= Flower::energy_cost;
+    sugar_ -= Flower::kSugarCost;
     sound_plantgrowing_->play();
 
     return true;
@@ -172,30 +176,42 @@ void PlantPlayer::DrawEnergy() {
   switch (state) {
   case Building: {
     CL_Colorf color = CL_Colorf::white;
-    if (tmpFlower->energy_cost > energy_)
+    if (tmpFlower->kSugarCost > sugar_)
       color = CL_Colorf::red;
     default_font.draw_text(*gc, CL_Pointf(10, 30),
-                           cl_format("Energy: %1 (%2)",
-                                     static_cast<int>(energy_),
-                                     tmpFlower->energy_cost), color);
+                           cl_format("Sugar: %1 (%2)",
+                                     static_cast<int>(sugar_),
+                                     tmpFlower->kSugarCost), color);
     break;
   }
   case SelectedBuilding: {
     CL_Colorf color = CL_Colorf::white;
-    if (tmpLeaf->energy_cost > energy_)
+    if (tmpLeaf->kSugarCost > sugar_)
       color = CL_Colorf::red;
     default_font.draw_text(*gc, CL_Pointf(10, 30),
-                           cl_format("Energy: %1 (%2)",
-                                     static_cast<int>(energy_),
-                                     tmpLeaf->energy_cost), color);
+                           cl_format("Sugar: %1 (%2)",
+                                     static_cast<int>(sugar_),
+                                     tmpLeaf->kSugarCost), color);
     break;
   }
   default: {
     default_font.draw_text(*gc, CL_Pointf(10, 30),
-                           cl_format("Energy: %1", static_cast<int>(energy_)),
+                           cl_format("Sugar: %1", static_cast<int>(sugar_)),
                            CL_Colorf::white);
   }
   }
+}
+
+void PlantPlayer::DrawCO2() {
+  default_font.draw_text(*gc, CL_Pointf(10, 50),
+                         cl_format("CO2: %1",  static_cast<int>(co2_)),
+                         CL_Colorf::white);
+}
+
+void PlantPlayer::DrawSun() {
+  default_font.draw_text(*gc, CL_Pointf(10, 70),
+                         cl_format("Sun: %1",  static_cast<int>(sun_)),
+                         CL_Colorf::white);
 }
 
 void PlantPlayer::Update(int time_ms) {
@@ -253,4 +269,6 @@ void PlantPlayer::DrawTop() {
   }
 
   DrawEnergy();
+  DrawCO2();
+  DrawSun();
 }

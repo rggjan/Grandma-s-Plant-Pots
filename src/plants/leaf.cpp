@@ -4,17 +4,16 @@
 
 #include "plants/flower.h"
 
-#define ENERGY_COLLECTED_PER_SECOND 0.1
 #define MIN_LEAF_DISTANCE 30
+#define CO2_COLLECTED_PER_SECOND 0.01
 
 Leaf::Leaf(World *world, CL_GraphicContext *gc, const CL_StringRef &name,
            CL_Vec2f position, Flower* flower)
   : Plant(world, gc, position, flower->player()),
     flower_(flower) {
   spriteImage = new CL_Sprite(*gc, name, &world->resources);
-}
-float Leaf::Update(int time_ms) {
-  return ENERGY_COLLECTED_PER_SECOND * time_ms / 1000;
+
+  co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
 }
 
 bool Leaf::CanBuild(CL_Vec2f position, Flower* flower) {

@@ -20,7 +20,7 @@ enum FlowerState {
 class Flower : public Plant {
   public:
     // Static
-    static const int energy_cost = ENERGY_COST;
+    static const int kSugarCost = ENERGY_COST;
 
     // Construction
     Flower(World *world, CL_GraphicContext *gc,
