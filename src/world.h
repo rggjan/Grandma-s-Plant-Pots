@@ -62,9 +62,9 @@ class World {
     float fps_;
 
     // Operations
-    void draw();
-    void update();
-    int calcTimeElapsed();
+    void Draw();
+    void Update();
+    int CalcTimeElapsed();
 
     void onKeyDown(const CL_InputEvent &key, const CL_InputState &state);
     void onKeyUp(const CL_InputEvent &key, const CL_InputState &state);

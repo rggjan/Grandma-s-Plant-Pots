@@ -405,8 +405,8 @@ void World::run() {
 // sound->play();
 
   while (!quit) {
-    update();
-    draw();
+    Update();
+    Draw();
 
     for (int i = 0; i < num_players; i++) {
       players[i]->display_window->flip(0);
@@ -419,8 +419,8 @@ void World::run() {
   }
 }
 
-void World::update() {
-  time_elapsed_ms_ = calcTimeElapsed();
+void World::Update() {
+  time_elapsed_ms_ = CalcTimeElapsed();
   if (time_elapsed_ms_ > 0)
     fps_ = fps_*0.95 + 1000./time_elapsed_ms_*0.05;
 
@@ -430,7 +430,7 @@ void World::update() {
 }
 
 // Calculate amount of time since last frame
-int World::calcTimeElapsed() {
+int World::CalcTimeElapsed() {
   static unsigned int lastTime = 0;
 
   unsigned int newTime = CL_System::get_time();
@@ -443,7 +443,7 @@ int World::calcTimeElapsed() {
   return deltaTime;
 }
 
-void World::draw() {
+void World::Draw() {
   for (int i = 0; i < num_players; i++) {
     background->draw(*(players[i]->gc),
                      -players[i]->map_position_.x,
