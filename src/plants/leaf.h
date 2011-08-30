@@ -5,20 +5,17 @@
 
 #include <ClanLib/core.h>
 
-#include "./gameobject.h"
+#include "./plant.h"
 
 #define LEAF_ENERGY_COST 5
 
 class Flower;
 
-class Leaf : public GameObject {
+class Leaf : public Plant {
     // Construction
   public:
     Leaf(World *world, CL_GraphicContext *gc, const CL_StringRef &name,
          CL_Vec2f position, Flower *flower);
-
-    void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
-    void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
 
     static const int energy_cost = LEAF_ENERGY_COST;
 

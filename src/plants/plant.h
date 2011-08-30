@@ -40,6 +40,8 @@ class Plant : public GameObject {
       eating_fly_ = NULL;
     }
 
+    PlantPlayer* player() { return player_; }
+
   protected:
     PlantPlayer* player_;
     Fly* eating_fly_;
