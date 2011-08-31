@@ -35,10 +35,6 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
   sound_plantgrowing_->set_volume(1.0f);
   sound_plantgrowing_->prepare();
 
-  sound_beep1_ = new CL_SoundBuffer("Beep1Music", &world->resources);
-  sound_beep1_->set_volume(0.1f);
-  sound_beep1_->prepare();
-
   sound_leafgrowing_ = new CL_SoundBuffer("LeafgrowingMusic", &world->resources);
   sound_leafgrowing_->set_volume(0.1f);
   sound_leafgrowing_->prepare();
@@ -56,7 +52,7 @@ bool PlantPlayer::BuildLeaf() {
 
     return true;
   } else {
-    sound_beep1_->play();
+    world->PlayBeep();
     return false;
   }
 }
@@ -73,7 +69,7 @@ bool PlantPlayer::BuildFlower() {
 
     return true;
   } else {
-    sound_beep1_->play();
+    world->PlayBeep();
     return false;
   }
 }

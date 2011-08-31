@@ -56,6 +56,11 @@ World::World(std::vector<CL_DisplayWindow*> windows)
   desc.set_height(20);
   default_font_ = CL_Font_System(default_gc, desc);
 
+  // Setup sounds
+  sound_beep1_ = new CL_SoundBuffer("Beep1Music", &resources);
+  sound_beep1_->set_volume(0.1f);
+  sound_beep1_->prepare();
+
   // Run the main loop
   Run();
 }
@@ -63,6 +68,10 @@ World::World(std::vector<CL_DisplayWindow*> windows)
 World::~World() {
   // Delete all gameobjects
   // TODO(rggjan): real cleanup of everything
+}
+
+void World::PlayBeep() {
+  sound_beep1_->play();
 }
 
 bool World::CanBuild(CL_Vec2f position) {

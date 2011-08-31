@@ -58,7 +58,6 @@ class PlantPlayer : public Player {
     bool cross_green_;
 
     CL_SoundBuffer *sound_plantgrowing_;
-    CL_SoundBuffer *sound_beep1_;
     CL_SoundBuffer *sound_leafgrowing_;
 };
 

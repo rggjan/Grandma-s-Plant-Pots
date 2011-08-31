@@ -12,6 +12,7 @@ class Fly;
 class Flower;
 class Plant;
 class Player;
+class CL_SoundBuffer;
 
 class World {
   public:
@@ -25,12 +26,14 @@ class World {
     int num_players;
     int width;
     int height;
+    CL_SoundBuffer *sound_beep1_;
 
     // Operations
     void AddFly(Fly *fly);
     void AddFlower(Flower *flower);
     void AddPlant(Plant *plant);
     void Run();
+    void PlayBeep();
 
     // Queries
     Flower* NearestFlower(CL_Vec2f position);
