@@ -35,6 +35,8 @@ class Player {
     bool moving_left;
     bool moving_right;
 
+    bool Visible(CL_Vec2f position);
+
   protected:
     int window_width, window_height;
     int map_width, map_height;

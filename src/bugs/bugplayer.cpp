@@ -72,7 +72,8 @@ Plant* BugPlayer::GetFreePlant() {
 
   int size = plants->size();
   for (int i = 0; i < size; i++) {
-    if ((*plants)[i]->free_space())
+    Plant* plant = (*plants)[i];
+    if (plant->free_space() && Visible(plant->position()))
       return (*plants)[i];
   }
 

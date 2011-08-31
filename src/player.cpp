@@ -31,6 +31,21 @@ Player::Player(CL_DisplayWindow* window, World* world, int width, int height)
   cross = new CL_Sprite(*gc, "Cross", &world->resources);
 }
 
+bool Player::Visible(CL_Vec2f position) {
+  CL_Vec2f pos = position - map_position_;
+
+  if (pos.x < 0)
+    return false;
+  if (pos.y < 0)
+    return false;
+  if (pos.x > window_width)
+    return false;
+  if (pos.y > window_height)
+    return false;
+
+  return true;
+}
+
 void Player::Update(int timeElapsed_ms) {
   const int min_x = MIN_BORDER;
   const int min_y = MIN_BORDER;
