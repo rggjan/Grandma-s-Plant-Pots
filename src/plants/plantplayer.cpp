@@ -38,7 +38,7 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
   sound_beep1_ = new CL_SoundBuffer("Beep1Music", &world->resources);
   sound_beep1_->set_volume(0.1f);
   sound_beep1_->prepare();
-  
+
   sound_leafgrowing_ = new CL_SoundBuffer("LeafgrowingMusic", &world->resources);
   sound_leafgrowing_->set_volume(0.1f);
   sound_leafgrowing_->prepare();
@@ -215,7 +215,7 @@ void PlantPlayer::DrawCO2() {
 
 void PlantPlayer::DrawSun() {
   default_font.draw_text(*gc, CL_Pointf(10, 70),
-                         cl_format("Sun: %1",  static_cast<int>(sun_*60)),
+                         cl_format("Sun: %1",  static_cast<int>(sun_ * 60)),
                          CL_Colorf::white);
 }
 
@@ -227,7 +227,7 @@ void PlantPlayer::Update(int time_ms) {
   }
 
   // Produce sugar
-  double sugar_production = sun_*time_ms/1000.;
+  double sugar_production = sun_ * time_ms / 1000.;
   if (co2_ < sun_)
     sugar_production = co2_;
 

@@ -35,6 +35,7 @@ class BugPlayer : public Player {
     Plant* GetFreePlant();
     Fly* GetFreeBug();
     CL_SoundBuffer *sound_leafgrowing_;
+    CL_SoundBuffer *sound_bug_attack_;
 };
 
 #endif  // SRC_BUGS_BUGPLAYER_H_

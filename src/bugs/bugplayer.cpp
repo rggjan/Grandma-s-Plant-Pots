@@ -2,6 +2,7 @@
 
 #include "bugs/bugplayer.h"
 
+#include <ClanLib/sound.h>
 #include <vector>
 
 #include "./world.h"
@@ -20,20 +21,24 @@ BugPlayer::BugPlayer(CL_DisplayWindow* window, World* world,
   for (int i = 0; i < NUM_BUGS; i++) {
     const char* name;
 
-    if (i%2 == 0)
+    if (i % 2 == 0)
       name = "Bug1";
     else
       name = "Bug2";
 
-    CreateFly(name, CL_Vec2f(i*60, i*60));
+    CreateFly(name, CL_Vec2f(i * 60, i * 60));
   }
+
+  sound_bug_attack_ = new CL_SoundBuffer("BugAttack", &world->resources);
+  sound_bug_attack_->set_volume(0.1f);
+  sound_bug_attack_->prepare();
 }
 
 void BugPlayer::CreateFly(CL_StringRef name, CL_Vec2f position) {
-    Fly * fly = new Fly(world, *gc, name, this);
-    fly->set_position(position);
+  Fly * fly = new Fly(world, *gc, name, this);
+  fly->set_position(position);
 
-    AddFly(fly);
+  AddFly(fly);
 }
 
 void BugPlayer::AddFly(Fly* fly) {
@@ -44,8 +49,10 @@ void BugPlayer::AddFly(Fly* fly) {
 void BugPlayer::SelectButtonPressed() {
   Fly* fly = GetFreeBug();
 
-  if (fly != NULL && nearest_free_plant_ != NULL)
+  if (fly != NULL && nearest_free_plant_ != NULL) {
+    sound_bug_attack_->play();
     fly->SetTargetPlant(nearest_free_plant_);
+  }
   // else
   // TODO(rggjan): beep
 }
@@ -100,7 +107,7 @@ void BugPlayer::DrawFloor() {
 
 void BugPlayer::Update(int time_ms) {
   int size = flies.size();
-  for (int i=0; i<size; i++) {
+  for (int i = 0; i < size; i++) {
     Fly *fly = flies[i];
 
     fly->set_target_position(position());

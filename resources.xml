@@ -69,6 +69,8 @@
 
 	<sample name="BackgroundMusic" file="Sound/Background.ogg"/>
 
+	<sample name="BugAttack" file="Sound/bug_attack.ogg"/>
+
 
 
 
