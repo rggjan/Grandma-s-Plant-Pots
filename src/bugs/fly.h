@@ -6,11 +6,13 @@
 #include "./gameobject.h"
 
 class Plant;
+class BugPlayer;
 
 class Fly : public GameObject {
   public:
     // Construction
-    Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name);
+    Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name,
+        BugPlayer* player);
 
     // Operations:
     inline void set_position(CL_Vec2f position) {
@@ -31,6 +33,10 @@ class Fly : public GameObject {
     CL_Vec2f direction;
     CL_Vec2f target_position_;
     Plant *target_plant_;
-};
+
+    double food_eaten_;
+    CL_StringRef fly_name_;
+    BugPlayer *player_;
+  };
 
 #endif  // SRC_BUGS_FLY_H_

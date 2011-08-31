@@ -449,9 +449,10 @@ void World::Draw() {
       (*it1)->Draw(players[i]->gc, players[i]->map_position());
 
     // Flies
-    std::vector<Fly *>::iterator it2;
-    for (it2 = flies.begin(); it2 != flies.end(); ++it2)
-      (*it2)->Draw(players[i]->gc, players[i]->map_position());
+    int size = flies.size();
+    for (int j=0; j<size; j++) {
+      flies[j]->Draw(players[i]->gc, players[i]->map_position());
+    }
 
     players[i]->DrawTop();
   }

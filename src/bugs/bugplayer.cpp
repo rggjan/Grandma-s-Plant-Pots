@@ -7,7 +7,7 @@
 #include "./world.h"
 #include "plants/plant.h"
 
-#define NUM_BUGS 20
+#define NUM_BUGS 2
 
 using std::vector;
 
@@ -20,16 +20,20 @@ BugPlayer::BugPlayer(CL_DisplayWindow* window, World* world,
   for (int i = 0; i < NUM_BUGS; i++) {
     const char* name;
 
-    if (i < NUM_BUGS / 2)
+    if (i%2 == 0)
       name = "Bug1";
     else
       name = "Bug2";
 
-    Fly * fly = new Fly(world, *gc, name);
-    fly->set_position(CL_Vec2f(i * 60, i * 60));
+    CreateFly(name, CL_Vec2f(i*60, i*60));
+  }
+}
+
+void BugPlayer::CreateFly(CL_StringRef name, CL_Vec2f position) {
+    Fly * fly = new Fly(world, *gc, name, this);
+    fly->set_position(position);
 
     AddFly(fly);
-  }
 }
 
 void BugPlayer::AddFly(Fly* fly) {
@@ -95,10 +99,9 @@ void BugPlayer::DrawFloor() {
 }
 
 void BugPlayer::Update(int time_ms) {
-  // Make turrets target mousepos
-  std::vector<Fly *>::iterator fly_it;
-  for (fly_it = flies.begin(); fly_it != flies.end(); ++fly_it) {
-    Fly *fly = (*fly_it);
+  int size = flies.size();
+  for (int i=0; i<size; i++) {
+    Fly *fly = flies[i];
 
     fly->set_target_position(position());
     fly->update(time_ms);

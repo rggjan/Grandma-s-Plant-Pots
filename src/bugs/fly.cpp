@@ -6,20 +6,25 @@
 
 #include "./world.h"
 #include "plants/plant.h"
+#include "bugs/bugplayer.h"
 
 #define CONSTANT_ANGLE false
 #define SPEED 300
 #define MAX_CURVE 5
 #define ATTACK_SPEED_DECREASE_DISTANCE 200
 #define ATTACK_MIN_DISTANCE 5
-#define EAT_PER_SECOND 1
 
-Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name)
+#define EAT_PER_SECOND 1
+#define FOOD_NEEDED_TO_DUPLICATE 5
+
+Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name, BugPlayer* player)
   : GameObject(world),
     direction(0, -1),
-    target_plant_(NULL) {
+    target_plant_(NULL),
+    food_eaten_(0),
+    fly_name_(name),
+player_(player) {
   spriteImage = new CL_Sprite(gc, name, &world->resources);
-
   spriteImage->set_play_loop(true);
 }
 
@@ -39,6 +44,12 @@ void Fly::StopEating() {
 bool Fly::update(int time_ms) {
   GameObject::Update(time_ms);
 
+  // Check if we can reproduce
+  if (food_eaten_ > FOOD_NEEDED_TO_DUPLICATE) {
+    food_eaten_ -= FOOD_NEEDED_TO_DUPLICATE;
+    player_->CreateFly(fly_name_, position());
+  }
+
   // Calculate target direction
   CL_Vec2f target_direction;
 
@@ -53,9 +64,14 @@ bool Fly::update(int time_ms) {
   target_direction.normalize();
 
   if (target_plant_ != NULL and distance < ATTACK_MIN_DISTANCE) {
-    target_plant_->energy_ -= EAT_PER_SECOND * time_ms / 1000.;
+    double amount = EAT_PER_SECOND * time_ms / 1000.;
+    if (amount > target_plant_->energy_)
+      amount = target_plant_->energy_;
 
-    if (target_plant_->energy_ < 0) {
+    target_plant_->energy_ -= amount;
+    food_eaten_ += amount;
+
+    if (target_plant_->energy_ <= 0) {
       target_plant_->energy_ = 0;
       target_plant_ = NULL;
     }
