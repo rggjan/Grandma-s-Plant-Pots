@@ -52,9 +52,9 @@ void BugPlayer::SelectButtonPressed() {
   if (fly != NULL && nearest_free_plant_ != NULL) {
     sound_bug_attack_->play();
     fly->SetTargetPlant(nearest_free_plant_);
+  } else {
+    world->PlayBeep();
   }
-  // else
-  // TODO(rggjan): beep
 }
 
 void BugPlayer::CancelButtonPressed() {
