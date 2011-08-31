@@ -8,6 +8,9 @@
 #include "./player.h"
 #include "bugs/fly.h"
 
+
+class CL_SoundBuffer;
+
 class BugPlayer : public Player {
   public:
     BugPlayer(CL_DisplayWindow* window, World *world, int width, int height);
@@ -31,6 +34,7 @@ class BugPlayer : public Player {
     // Queries
     Plant* GetFreePlant();
     Fly* GetFreeBug();
+    CL_SoundBuffer *sound_leafgrowing_;
 };
 
 #endif  // SRC_BUGS_BUGPLAYER_H_
