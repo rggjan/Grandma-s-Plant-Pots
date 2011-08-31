@@ -38,6 +38,10 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
   sound_beep1_ = new CL_SoundBuffer("Beep1Music", &world->resources);
   sound_beep1_->set_volume(0.1f);
   sound_beep1_->prepare();
+  
+  sound_leafgrowing_ = new CL_SoundBuffer("LeafgrowingMusic", &world->resources);
+  sound_leafgrowing_->set_volume(0.1f);
+  sound_leafgrowing_->prepare();
 }
 
 bool PlantPlayer::BuildLeaf() {
@@ -46,6 +50,7 @@ bool PlantPlayer::BuildLeaf() {
     leaf->set_angle(tmpLeaf->angle());
 
     sugar_ -= Leaf::kSugarCost;
+    sound_leafgrowing_->play();
     selectedFlower->AddLeaf(leaf);
     world->AddPlant(leaf);
 

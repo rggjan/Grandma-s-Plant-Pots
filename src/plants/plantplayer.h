@@ -59,6 +59,7 @@ class PlantPlayer : public Player {
 
     CL_SoundBuffer *sound_plantgrowing_;
     CL_SoundBuffer *sound_beep1_;
+    CL_SoundBuffer *sound_leafgrowing_;
 };
 
 #endif  // SRC_PLANTS_PLANTPLAYER_H_
