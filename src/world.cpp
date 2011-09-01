@@ -472,9 +472,9 @@ void World::Draw() {
     default_gc.draw_pixels(((int)(i/2))*200, (i%2)*200, texture_->get_pixeldata(), CL_Rect(0, 0, 200, 200));
   }
 
-  /*default_font_.draw_text(default_gc, CL_Pointf(30, 30),
+  default_font_.draw_text(default_gc, CL_Pointf(30, 30),
                           cl_format("FPS: %1", static_cast<int>(fps_)),
-                          CL_Colorf::white);*/
+                          CL_Colorf::white);
 
   /*
     CL_PixelBuffer buffer(256, 256, cl_rgba8);
