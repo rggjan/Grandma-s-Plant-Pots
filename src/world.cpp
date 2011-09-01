@@ -414,7 +414,7 @@ void World::Run() {
     Update();
     Draw();
 
-    window_->flip(1);
+    window_->flip(0);
 
     CL_KeepAlive::process();
   }
@@ -469,7 +469,10 @@ void World::Draw() {
     players[i]->DrawTop();
 
     default_gc.reset_frame_buffer();
-    default_gc.draw_pixels(((int)(i/2))*200, (i%2)*200, texture_->get_pixeldata(), CL_Rect(0, 0, 200, 200));
+    default_gc.set_texture(0, *texture_);
+    CL_Draw::texture(default_gc, CL_Rect(((int)(i/2))*200, (i%2)*200, CL_Size(200, 200)));
+    default_gc.reset_texture(0);
+    //default_gc.draw_pixels(((int)(i/2))*200, (i%2)*200, texture_->get_pixeldata(), CL_Rect(0, 0, 200, 200));
   }
 
   default_font_.draw_text(default_gc, CL_Pointf(30, 30),
