@@ -96,7 +96,7 @@ int Application::main(const std::vector<CL_String> &args) {
       // desc.set_size(CL_Size(500, 500), true);
       int window_width = 400;
       int window_height = 400;
-      desc.set_position(CL_Rect(0, 0, 400, 400), false);
+      desc.set_position(CL_Rect(0, 0, 800, 800), false);
       //desc.set_fullscreen(true);
 
       window = new CL_DisplayWindow(desc);

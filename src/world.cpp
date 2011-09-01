@@ -33,7 +33,7 @@ window_(window) {
   if (width != height)
     CL_Console::write_line("Error, height and width should be the same!");
 
-  texture_ = new CL_Texture(default_gc, CL_Size(200, 200));
+  texture_ = new CL_Texture(default_gc, CL_Size(400, 400));
   framebuffer_ = new CL_FrameBuffer(default_gc);
   framebuffer_->attach_color_buffer(0, *texture_);
 
@@ -470,7 +470,7 @@ void World::Draw() {
 
     default_gc.reset_frame_buffer();
     default_gc.set_texture(0, *texture_);
-    CL_Draw::texture(default_gc, CL_Rect(((int)(i/2))*200, (i%2)*200, CL_Size(200, 200)));
+    CL_Draw::texture(default_gc, CL_Rect(((int)(i/2))*400, (i%2)*400, CL_Size(400, 400)));
     default_gc.reset_texture(0);
     //default_gc.draw_pixels(((int)(i/2))*200, (i%2)*200, texture_->get_pixeldata(), CL_Rect(0, 0, 200, 200));
   }
