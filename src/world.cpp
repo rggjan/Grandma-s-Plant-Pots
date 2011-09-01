@@ -13,17 +13,18 @@
 #include "bugs/bugplayer.h"
 
 #define BACKGROUND_BORDER 65
+#define NUM_PLAYERS 4
 
 using std::vector;
 using std::sort;
 
-World::World(CL_DisplayWindow* window, int num_players)
+World::World(CL_DisplayWindow* window)
   : quit(false),
     default_gc(window->get_gc()),
     time_elapsed_ms_(1),
     fps_(0),
-window_(window) {
-  this->num_players = num_players;
+    window_(window) {
+  num_players = NUM_PLAYERS;
 
   // Setup resources
   resources = CL_ResourceManager("resources.xml");
@@ -33,7 +34,10 @@ window_(window) {
   if (width != height)
     CL_Console::write_line("Error, height and width should be the same!");
 
-  texture_ = new CL_Texture(default_gc, CL_Size(400, 400));
+  player_width_ = default_gc.get_width()/2;
+  player_height_ = default_gc.get_height()/2;
+
+  texture_ = new CL_Texture(default_gc, CL_Size(player_width_, player_height_));
   framebuffer_ = new CL_FrameBuffer(default_gc);
   framebuffer_->attach_color_buffer(0, *texture_);
 
@@ -447,7 +451,7 @@ int World::CalcTimeElapsed() {
 void World::Draw() {
   for (int i = 0; i < num_players; i++) {
     default_gc.set_frame_buffer(*framebuffer_);
-    
+
     background->draw(*(players[i]->gc_),
                      -players[i]->map_position_.x,
                      -players[i]->map_position_.y);
@@ -470,7 +474,7 @@ void World::Draw() {
 
     default_gc.reset_frame_buffer();
     default_gc.set_texture(0, *texture_);
-    CL_Draw::texture(default_gc, CL_Rect(((int)(i/2))*400, (i%2)*400, CL_Size(400, 400)));
+    CL_Draw::texture(default_gc, CL_Rect(((int)(i / 2)) * player_width_, (i % 2) * player_height_, CL_Size(player_width_, player_height_)));
     default_gc.reset_texture(0);
     //default_gc.draw_pixels(((int)(i/2))*200, (i%2)*200, texture_->get_pixeldata(), CL_Rect(0, 0, 200, 200));
   }

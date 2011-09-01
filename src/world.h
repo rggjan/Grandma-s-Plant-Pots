@@ -17,7 +17,7 @@ class CL_SoundBuffer;
 class World {
   public:
     // Construction
-    explicit World(CL_DisplayWindow* window, int num_players);
+    explicit World(CL_DisplayWindow* window);
     ~World();
 
     // Attributes
@@ -26,6 +26,8 @@ class World {
     int num_players;
     int width;
     int height;
+    int player_width_;
+    int player_height_;
     CL_SoundBuffer *sound_beep1_;
 
     // Operations
