@@ -15,7 +15,7 @@ using std::vector;
 BugPlayer::BugPlayer(CL_DisplayWindow* window, World* world,
                      int width, int height)
   : Player(window, world, width, height) {
-  selectedImage = new CL_Sprite(*gc, "Cross2", &world->resources);
+  selectedImage = new CL_Sprite(*gc_, "Cross2", &world->resources);
   selectedImage->set_alpha(0.5);
 
   for (int i = 0; i < NUM_BUGS; i++) {
@@ -35,7 +35,7 @@ BugPlayer::BugPlayer(CL_DisplayWindow* window, World* world,
 }
 
 void BugPlayer::CreateFly(CL_StringRef name, CL_Vec2f position) {
-  Fly * fly = new Fly(world, *gc, name, this);
+  Fly * fly = new Fly(world, *gc_, name, this);
   fly->set_position(position);
 
   AddFly(fly);
@@ -96,7 +96,7 @@ void BugPlayer::DrawFloor() {
 
   if (nearest_free_plant_ != NULL) {
     CL_Vec2f pos = nearest_free_plant_->position() - map_position();
-    selectedImage->draw(*gc, pos.x, pos.y);
+    selectedImage->draw(*gc_, pos.x, pos.y);
   }
   /*  } else if (state == Selected || state == SelectedBuilding) {
       selectedImage->set_alpha(0.8);

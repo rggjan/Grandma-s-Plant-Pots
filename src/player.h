@@ -24,7 +24,7 @@ class Player {
     inline CL_Vec2f cross_position() { return cross_position_; }
     inline CL_Vec2f map_position() { return map_position_; }
 
-    CL_GraphicContext *gc;
+    CL_GraphicContext *gc_;
     CL_DisplayWindow *display_window;
 
     CL_Vec2f map_position_;

@@ -24,10 +24,10 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
     sun_(START_SUN),
     state(Idle),
     cross_green_(false) {
-  selectedImage = new CL_Sprite(*gc, "Cross2", &world->resources);
+  selectedImage = new CL_Sprite(*gc_, "Cross2", &world->resources);
 
-  tmpFlower = new Flower(world, gc, CL_Vec2f(0, 0), this);
-  tmpLeaf = new Leaf(world, gc, "Leaf2", CL_Vec2f(0, 0), tmpFlower);
+  tmpFlower = new Flower(world, gc_, CL_Vec2f(0, 0), this);
+  tmpLeaf = new Leaf(world, gc_, "Leaf2", CL_Vec2f(0, 0), tmpFlower);
 
 
   sound_plantgrowing_ =
@@ -42,7 +42,7 @@ PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
 
 bool PlantPlayer::BuildLeaf() {
   if (sugar_ >= Leaf::kSugarCost && cross_green_) {
-    Leaf *leaf = new Leaf(world, gc, "Leaf2", position(), selectedFlower);
+    Leaf *leaf = new Leaf(world, gc_, "Leaf2", position(), selectedFlower);
     leaf->set_angle(tmpLeaf->angle());
 
     sugar_ -= Leaf::kSugarCost;
@@ -59,7 +59,7 @@ bool PlantPlayer::BuildLeaf() {
 
 bool PlantPlayer::BuildFlower() {
   if (sugar_ >= Flower::kSugarCost && cross_green_) {
-    Flower *flower = new Flower(world, gc, position(), this);
+    Flower *flower = new Flower(world, gc_, position(), this);
 
     flowers.push_back(flower);
     world->AddFlower(flower);
@@ -163,13 +163,13 @@ void PlantPlayer::DrawFloor() {
     selectedImage->set_alpha(0.3);
     if (nearest_flower != NULL) {
       CL_Vec2f pos = nearest_flower->position() - map_position();
-      selectedImage->draw(*gc, pos.x, pos.y);
+      selectedImage->draw(*gc_, pos.x, pos.y);
     }
   } else if (state == Selected || state == SelectedBuilding) {
     selectedImage->set_alpha(0.8);
 
     CL_Vec2f pos = selectedFlower->position() - map_position();
-    selectedImage->draw(*gc, pos.x, pos.y);
+    selectedImage->draw(*gc_, pos.x, pos.y);
   }
 }
 
@@ -179,7 +179,7 @@ void PlantPlayer::DrawEnergy() {
     CL_Colorf color = CL_Colorf::white;
     if (tmpFlower->kSugarCost > sugar_)
       color = CL_Colorf::red;
-    default_font.draw_text(*gc, CL_Pointf(10, 30),
+    default_font.draw_text(*gc_, CL_Pointf(10, 30),
                            cl_format("Sugar: %1 (%2)",
                                      static_cast<int>(sugar_),
                                      tmpFlower->kSugarCost), color);
@@ -189,14 +189,14 @@ void PlantPlayer::DrawEnergy() {
     CL_Colorf color = CL_Colorf::white;
     if (tmpLeaf->kSugarCost > sugar_)
       color = CL_Colorf::red;
-    default_font.draw_text(*gc, CL_Pointf(10, 30),
+    default_font.draw_text(*gc_, CL_Pointf(10, 30),
                            cl_format("Sugar: %1 (%2)",
                                      static_cast<int>(sugar_),
                                      tmpLeaf->kSugarCost), color);
     break;
   }
   default: {
-    default_font.draw_text(*gc, CL_Pointf(10, 30),
+    default_font.draw_text(*gc_, CL_Pointf(10, 30),
                            cl_format("Sugar: %1", static_cast<int>(sugar_)),
                            CL_Colorf::white);
   }
@@ -204,13 +204,13 @@ void PlantPlayer::DrawEnergy() {
 }
 
 void PlantPlayer::DrawCO2() {
-  default_font.draw_text(*gc, CL_Pointf(10, 50),
+  default_font.draw_text(*gc_, CL_Pointf(10, 50),
                          cl_format("CO2: %1",  static_cast<int>(co2_)),
                          CL_Colorf::white);
 }
 
 void PlantPlayer::DrawSun() {
-  default_font.draw_text(*gc, CL_Pointf(10, 70),
+  default_font.draw_text(*gc_, CL_Pointf(10, 70),
                          cl_format("Sun: %1",  static_cast<int>(sun_ * 60)),
                          CL_Colorf::white);
 }
@@ -240,10 +240,10 @@ void PlantPlayer::DrawTop() {
     break;
   case Building:
     if (tmpFlower->CanBuild(position())) {
-      tmpFlower->DrawGreen(gc, cross_position());
+      tmpFlower->DrawGreen(gc_, cross_position());
       cross_green_ = true;
     } else {
-      tmpFlower->DrawRed(gc, cross_position());
+      tmpFlower->DrawRed(gc_, cross_position());
       cross_green_ = false;
     }
     // Player::draw_cross(); TODO(rggjan): better with this?
@@ -259,17 +259,17 @@ void PlantPlayer::DrawTop() {
 
     if (diff.length() < LEAF_MAX_DISTANCE &&
         tmpLeaf->CanBuild(position(), selectedFlower)) {
-      tmpLeaf->DrawGreen(gc, cross_position());
+      tmpLeaf->DrawGreen(gc_, cross_position());
       line_color = CL_Colorf::green;
       cross_green_ = true;
     } else {
-      tmpLeaf->DrawRed(gc, cross_position());
+      tmpLeaf->DrawRed(gc_, cross_position());
       line_color = CL_Colorf::red;
       cross_green_ = false;
     }
 
     diff = selectedFlower->position() - map_position();
-    CL_Draw::line(*gc, diff.x, diff.y, cross_position().x, cross_position().y,
+    CL_Draw::line(*gc_, diff.x, diff.y, cross_position().x, cross_position().y,
                   line_color);
     break;
   }

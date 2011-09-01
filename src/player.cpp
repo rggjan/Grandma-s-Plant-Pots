@@ -17,18 +17,18 @@ Player::Player(CL_DisplayWindow* window, World* world, int width, int height)
     world(world) {
   display_window = window;
 
-  gc = &(display_window->get_gc());
-  window_width = gc->get_width();
-  window_height = gc->get_height();
+  gc_ = &(display_window->get_gc());
+  window_width = gc_->get_width();
+  window_height = gc_->get_height();
 
   cross_position_ = CL_Vec2f(window_width / 2, window_height / 2);
   map_position_ = CL_Vec2f(300, 300);
 
   CL_FontDescription desc;
   desc.set_height(20);
-  default_font = CL_Font_System(*gc, desc);
+  default_font = CL_Font_System(*gc_, desc);
 
-  cross = new CL_Sprite(*gc, "Cross", &world->resources);
+  cross = new CL_Sprite(*gc_, "Cross", &world->resources);
 }
 
 bool Player::Visible(CL_Vec2f position) {
@@ -174,7 +174,7 @@ void Player::DrawFloor() {
 void Player::DrawTop() {
   // Draw cross
   cross->set_scale(0.5, 0.5);
-  cross->draw(*gc, cross_position_.x, cross_position_.y);
+  cross->draw(*gc_, cross_position_.x, cross_position_.y);
   cross->set_scale(0.25, 0.25);
-  cross->draw(*gc, cross_position_.x, cross_position_.y);
+  cross->draw(*gc_, cross_position_.x, cross_position_.y);
 }

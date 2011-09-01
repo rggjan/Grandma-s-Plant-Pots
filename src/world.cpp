@@ -445,7 +445,7 @@ int World::CalcTimeElapsed() {
 
 void World::Draw() {
   for (int i = 0; i < num_players; i++) {
-    background->draw(*(players[i]->gc),
+    background->draw(*(players[i]->gc_),
                      -players[i]->map_position_.x,
                      -players[i]->map_position_.y);
 
@@ -455,12 +455,12 @@ void World::Draw() {
     // Flowers
     std::vector<Flower *>::iterator it1;
     for (it1 = flowers.begin(); it1 != flowers.end(); ++it1)
-      (*it1)->Draw(players[i]->gc, players[i]->map_position());
+      (*it1)->Draw(players[i]->gc_, players[i]->map_position());
 
     // Flies
     int size = flies.size();
     for (int j=0; j<size; j++) {
-      flies[j]->Draw(players[i]->gc, players[i]->map_position());
+      flies[j]->Draw(players[i]->gc_, players[i]->map_position());
     }
 
     players[i]->DrawTop();
