@@ -16,9 +16,9 @@ using std::vector;
 #define START_SUGAR 100
 #define START_SUN 0
 
-PlantPlayer::PlantPlayer(CL_DisplayWindow* window, World* world,
+PlantPlayer::PlantPlayer(CL_GraphicContext* gc, World* world,
                          int width, int height)
-  : Player(window, world, width, height),
+  : Player(gc, world, width, height),
     co2_(START_CO2),
     sugar_(START_SUGAR),
     sun_(START_SUN),

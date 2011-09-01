@@ -38,6 +38,7 @@ void get_display_size(int* width, int* height, int* border) {
 
 int Application::main(const std::vector<CL_String> &args) {
   vector<CL_DisplayWindow*> windows;
+  CL_DisplayWindow* window;
 
   if (CALCULATE_WINDOW_SIZES) {
     windows.resize(NUM_PLAYERS);
@@ -86,30 +87,26 @@ int Application::main(const std::vector<CL_String> &args) {
       windows[i] = window;
     }
   } else {
-    for (int i = 0; i < NUM_PLAYERS; i++) {
+    //for (int i = 0; i < NUM_PLAYERS; i++) {
       // Create a window description
       CL_DisplayWindowDescription desc;
-      desc.set_title(cl_format("GPP: Player %1", i));
+      desc.set_title(cl_format("GPP: Player %1", 1));
 
       // Use this resolution (as caption is disabled)
       // desc.set_size(CL_Size(500, 500), true);
       int window_width = 400;
       int window_height = 400;
-      desc.set_position(CL_Rect(window_width * (i % 2), window_height * (i / 2),
-                                window_width * (i % 2) + window_width,
-                                window_height * (i / 2) + window_height),
-                        false);
+      desc.set_position(CL_Rect(0, 0, 400, 400), false);
 
-      CL_DisplayWindow* window = new CL_DisplayWindow(desc);
-      windows.push_back(window);
-    }
+      window = new CL_DisplayWindow(desc);
+    //}
   }
 
   CL_SoundOutput output(44100);
 
   try {
     // Create world
-    World world(windows);
+    World world(window, NUM_PLAYERS);
 
     // Run the main loop
     world.Run();

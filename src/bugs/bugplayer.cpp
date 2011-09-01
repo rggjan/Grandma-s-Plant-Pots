@@ -12,9 +12,9 @@
 
 using std::vector;
 
-BugPlayer::BugPlayer(CL_DisplayWindow* window, World* world,
+BugPlayer::BugPlayer(CL_GraphicContext* gc, World* world,
                      int width, int height)
-  : Player(window, world, width, height) {
+  : Player(gc, world, width, height) {
   selectedImage = new CL_Sprite(*gc_, "Cross2", &world->resources);
   selectedImage->set_alpha(0.5);
 

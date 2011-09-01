@@ -3,6 +3,7 @@
 #include "./world.h"
 
 #include <ClanLib/core.h>
+#include <ClanLib/display.h>
 #include <ClanLib/sound.h>
 #include <algorithm>
 #include <vector>
@@ -16,12 +17,13 @@
 using std::vector;
 using std::sort;
 
-World::World(std::vector<CL_DisplayWindow*> windows)
+World::World(CL_DisplayWindow* window, int num_players)
   : quit(false),
-    default_gc(windows[0]->get_gc()),
+    default_gc(window->get_gc()),
     time_elapsed_ms_(1),
-    fps_(0) {
-  num_players = windows.size();
+    fps_(0),
+window_(window) {
+  this->num_players = num_players;
 
   // Setup resources
   resources = CL_ResourceManager("resources.xml");
@@ -31,26 +33,30 @@ World::World(std::vector<CL_DisplayWindow*> windows)
   if (width != height)
     CL_Console::write_line("Error, height and width should be the same!");
 
+  texture_ = new CL_Texture(default_gc, CL_Size(200, 200));
+  framebuffer_ = new CL_FrameBuffer(default_gc);
+  framebuffer_->attach_color_buffer(0, *texture_);
+
+  default_gc.set_frame_buffer(*framebuffer_);
   for (int i = 0; i < num_players; i++) {
     Player *player;
 
     if (i % 2 == 0) {
-      player = new BugPlayer(windows[i], this, width, height);
+      player = new BugPlayer(&default_gc, this, width, height);
     } else {
-      player = new PlantPlayer(windows[i], this, width, height);
+      player = new PlantPlayer(&default_gc, this, width, height);
     }
     players.push_back(player);
-
-    slotQuit[i] = players[i]->display_window->sig_window_close()
-                  .connect(this, &World::on_window_close);
   }
+  default_gc.reset_frame_buffer();
 
-  for (int i = 0; i < num_players; i++) {
-    slotKeyDown[i] = players[i]->display_window->get_ic().get_keyboard().
-                     sig_key_down().connect(this, &World::onKeyDown);
-    slotKeyUp[i] = players[i]->display_window->get_ic().get_keyboard().
-                   sig_key_up().connect(this, &World::onKeyUp);
-  }
+  slotQuit[0] = window->sig_window_close()
+                .connect(this, &World::on_window_close);
+  slotKeyDown[0] = window->get_ic().get_keyboard().
+                   sig_key_down().connect(this, &World::onKeyDown);
+  slotKeyUp[0] = window->get_ic().get_keyboard().
+                 sig_key_up().connect(this, &World::onKeyUp);
+
 
   CL_FontDescription desc;
   desc.set_height(20);
@@ -408,12 +414,7 @@ void World::Run() {
     Update();
     Draw();
 
-    for (int i = 0; i < num_players; i++) {
-      players[i]->display_window->flip(0);
-      if (i == num_players - 1) {
-        players[i]->display_window->flip(1);
-      }
-    }
+    window_->flip(1);
 
     CL_KeepAlive::process();
   }
@@ -422,7 +423,7 @@ void World::Run() {
 void World::Update() {
   time_elapsed_ms_ = CalcTimeElapsed();
   if (time_elapsed_ms_ > 0)
-    fps_ = fps_*0.95 + 1000./time_elapsed_ms_*0.05;
+    fps_ = fps_ * 0.95 + 1000. / time_elapsed_ms_ * 0.05;
 
   for (int i = 0; i < num_players; i++) {
     players[i]->Update(time_elapsed_ms_);
@@ -445,6 +446,8 @@ int World::CalcTimeElapsed() {
 
 void World::Draw() {
   for (int i = 0; i < num_players; i++) {
+    default_gc.set_frame_buffer(*framebuffer_);
+    
     background->draw(*(players[i]->gc_),
                      -players[i]->map_position_.x,
                      -players[i]->map_position_.y);
@@ -459,16 +462,19 @@ void World::Draw() {
 
     // Flies
     int size = flies.size();
-    for (int j=0; j<size; j++) {
+    for (int j = 0; j < size; j++) {
       flies[j]->Draw(players[i]->gc_, players[i]->map_position());
     }
 
     players[i]->DrawTop();
+
+    default_gc.reset_frame_buffer();
+    default_gc.draw_pixels(((int)(i/2))*200, (i%2)*200, texture_->get_pixeldata(), CL_Rect(0, 0, 200, 200));
   }
 
-  default_font_.draw_text(default_gc, CL_Pointf(30, 30),
+  /*default_font_.draw_text(default_gc, CL_Pointf(30, 30),
                           cl_format("FPS: %1", static_cast<int>(fps_)),
-                          CL_Colorf::white);
+                          CL_Colorf::white);*/
 
   /*
     CL_PixelBuffer buffer(256, 256, cl_rgba8);

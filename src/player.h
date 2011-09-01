@@ -9,7 +9,7 @@ class World;
 
 class Player {
   public:
-    Player(CL_DisplayWindow* window, World* world, int width, int height);
+    Player(CL_GraphicContext* gc, World* world, int width, int height);
     virtual ~Player() {}
 
     virtual void BuildButtonPressed() {}
@@ -25,7 +25,6 @@ class Player {
     inline CL_Vec2f map_position() { return map_position_; }
 
     CL_GraphicContext *gc_;
-    CL_DisplayWindow *display_window;
 
     CL_Vec2f map_position_;
     CL_Vec2f cross_position_;
