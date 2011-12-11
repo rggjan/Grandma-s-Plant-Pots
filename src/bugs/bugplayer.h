@@ -13,7 +13,7 @@ class CL_SoundBuffer;
 
 class BugPlayer : public Player {
   public:
-    BugPlayer(CL_DisplayWindow* window, World *world, int width, int height);
+    BugPlayer(CL_GraphicContext* gc, World *world, int width, int height);
 
     void BuildButtonPressed();
     void SelectButtonPressed();

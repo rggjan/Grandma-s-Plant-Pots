@@ -7,17 +7,15 @@
 #define CROSS_SPEED 0.6
 #define MIN_BORDER 100
 
-Player::Player(CL_DisplayWindow* window, World* world, int width, int height)
-  : moving_down(false),
+Player::Player(CL_GraphicContext* gc, World* world, int width, int height)
+  : gc_(gc),
+    moving_down(false),
     moving_up(false),
     moving_left(false),
     moving_right(false),
     map_width(width),
     map_height(height),
     world(world) {
-  display_window = window;
-
-  gc_ = &(display_window->get_gc());
   window_width = gc_->get_width();
   window_height = gc_->get_height();
 

@@ -22,7 +22,7 @@ enum State {
 class PlantPlayer : public Player {
   public:
     // Constructor
-    PlantPlayer(CL_DisplayWindow* window, World *world, int width, int height);
+    PlantPlayer(CL_GraphicContext* gc, World *world, int width, int height);
 
     // Operations
     void BuildButtonPressed();

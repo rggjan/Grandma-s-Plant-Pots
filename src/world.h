@@ -17,7 +17,7 @@ class CL_SoundBuffer;
 class World {
   public:
     // Construction
-    explicit World(std::vector<CL_DisplayWindow*> windows);
+    explicit World(CL_DisplayWindow* window);
     ~World();
 
     // Attributes
@@ -26,6 +26,8 @@ class World {
     int num_players;
     int width;
     int height;
+    int player_width_;
+    int player_height_;
     CL_SoundBuffer *sound_beep1_;
 
     // Operations
@@ -67,6 +69,11 @@ class World {
     void onKeyDown(const CL_InputEvent &key, const CL_InputState &state);
     void onKeyUp(const CL_InputEvent &key, const CL_InputState &state);
     void on_window_close();
+
+    CL_DisplayWindow* window_;
+
+    CL_FrameBuffer* framebuffer_;
+    CL_Texture* texture_;
 };
 
 #endif  // SRC_WORLD_H_
