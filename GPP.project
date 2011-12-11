@@ -14,8 +14,8 @@
     <VirtualDirectory Name="bugs">
       <File Name="src/bugs/bugplayer.cpp"/>
       <File Name="src/bugs/bugplayer.h"/>
-      <File Name="src/bugs/fly.cpp"/>
       <File Name="src/bugs/fly.h"/>
+      <File Name="src/bugs/fly.cpp"/>
     </VirtualDirectory>
     <File Name="src/app.h"/>
     <File Name="src/gameobject.h"/>

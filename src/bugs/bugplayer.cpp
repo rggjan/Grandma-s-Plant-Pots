@@ -10,6 +10,7 @@
 #include "plants/plant.h"
 
 #define NUM_BUGS 2
+#define START_ENERGY 10
 
 using std::vector;
 

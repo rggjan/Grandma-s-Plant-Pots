@@ -103,7 +103,7 @@ void World::AddPlant(Plant *plant) {
 }
 
 struct sort_class {
-  bool operator() (Plant *plant1, Plant* plant2) {
+  bool operator() (GameObject *plant1, GameObject* plant2) {
     return ((plant2->position() - position).length() -
             (plant1->position() - position).length()) > 0;
   }
@@ -118,22 +118,12 @@ vector<Plant *>* World::NearestPlants(CL_Vec2f position) {
   return &plants;
 }
 
-Fly* World::NearestBug(CL_Vec2f position) {
-  int best_dist = -1;
-  Fly *nearest_fly = NULL;
+vector<Fly*>* World::NearestBugs(CL_Vec2f position) {
+  sort_class sort_object;
+  sort_object.position = position;
 
-  // Get nearest flower
-  std::vector<Fly *>::iterator it;
-  for (it = flies.begin(); it != flies.end(); ++it) {
-    float distance = ((*it)->position() - position).length();
-
-    if (nearest_fly == NULL || distance < best_dist) {
-      best_dist = distance;
-      nearest_fly = (*it);
-    }
-  }
-
-  return nearest_fly;
+  sort(flies.begin(), flies.end(), sort_object);
+  return &flies;
 }
 
 Flower* World::NearestFlower(CL_Vec2f position) {

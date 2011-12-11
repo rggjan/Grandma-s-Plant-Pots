@@ -13,6 +13,7 @@
 #define MAX_CURVE 5
 #define ATTACK_SPEED_DECREASE_DISTANCE 200
 #define ATTACK_MIN_DISTANCE 5
+#define START_ENERGY 30
 
 #define EAT_PER_SECOND 1
 #define FOOD_NEEDED_TO_DUPLICATE 50
@@ -21,8 +22,10 @@ Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name, BugPlaye
   : GameObject(world),
     direction(0, -1),
     target_plant_(NULL),
+    energy_(START_ENERGY),
     food_eaten_(0),
     fly_name_(name),
+    
 player_(player) {
   spriteImage = new CL_Sprite(gc, name, &world->resources);
   spriteImage->set_play_loop(true);
@@ -42,6 +45,11 @@ void Fly::StopEating() {
 }
 
 bool Fly::update(int time_ms) {
+  if (energy_ <= 0) {
+    spriteImage->set_color(CL_Color::red);
+    return true;
+  }
+
   GameObject::Update(time_ms);
 
   // Check if we can reproduce
