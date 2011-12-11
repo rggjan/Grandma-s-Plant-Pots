@@ -45,9 +45,12 @@ void Fly::StopEating() {
 }
 
 bool Fly::update(int time_ms) {
-  GameObject::Update(time_ms);
+  if (energy_ <= 0) {
+    spriteImage->set_color(CL_Color::red);
+    return true;
+  }
 
-  spriteImage->set_scale(energy_/100., energy_/100.);
+  GameObject::Update(time_ms);
 
   // Check if we can reproduce
   if (food_eaten_ > FOOD_NEEDED_TO_DUPLICATE) {
