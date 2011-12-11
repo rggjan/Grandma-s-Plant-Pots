@@ -8,8 +8,8 @@
 #include "./leaf.h"
 #include "plants/plantplayer.h"
 
-#define TIME_TO_OPEN 150
-#define TIME_TO_FINAL 300
+#define TIME_TO_OPEN 15000
+#define TIME_TO_FINAL 30000
 #define MIN_FLOWER_DISTANCE 50
 
 #define CO2_COLLECTED_PER_SECOND 0.1
@@ -64,10 +64,23 @@ void Flower::Update(int time_ms) {
   }
 
   if (state_ == kShooting) {
-    targeting_fly = world->NearestBug(position());
-    targeting_fly->energy_ -= ATTACK_ENERGY_PER_SECOND*time_ms/1000.;
-    if (targeting_fly->energy_ < 0)
-      targeting_fly->energy_ = 0;
+    std::vector<Fly*> *bugs = world->NearestBugs(position());
+
+    targeting_fly = NULL;
+
+    int size = bugs->size();
+    for (int i = 0; i < size; i++) {
+      Fly* bug = (*bugs)[i];
+
+      if (bug->energy_ > 0) {
+        targeting_fly = bug;
+        break;
+      }
+    }
+
+    if(targeting_fly) {
+      targeting_fly->energy_ -= ATTACK_ENERGY_PER_SECOND*time_ms/100;
+    }
   }
 
   Plant::Update(time_ms);
@@ -113,7 +126,7 @@ void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
   }
 
   // Shoot!
-  if (state_ == kShooting) {
+  if (state_ == kShooting && targeting_fly) {
     CL_Draw::line(*gc, position() - target,
                   targeting_fly->position() - target,
                   CL_Colorf::green);

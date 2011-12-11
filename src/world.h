@@ -39,7 +39,7 @@ class World {
 
     // Queries
     Flower* NearestFlower(CL_Vec2f position);
-    Fly* NearestBug(CL_Vec2f position);
+    std::vector<Fly *>* NearestBugs(CL_Vec2f position);
     std::vector<Plant *>* NearestPlants(CL_Vec2f position);
     bool CanBuild(CL_Vec2f position);
 

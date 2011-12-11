@@ -46,6 +46,11 @@ void Fly::StopEating() {
 }
 
 bool Fly::update(int time_ms) {
+  if (energy_ <= 0) {
+    spriteImage->set_color(CL_Color::red);
+    return true;
+  }
+
   GameObject::Update(time_ms);
 
   // Check if we can reproduce
