@@ -7,12 +7,12 @@
 #include "./leaf.h"
 #include "plants/plantplayer.h"
 
-#define TIME_TO_OPEN 6000
-#define TIME_TO_FINAL 15000
+#define TIME_TO_OPEN 15000
+#define TIME_TO_FINAL 30000
 #define MIN_FLOWER_DISTANCE 50
 
 #define CO2_COLLECTED_PER_SECOND 0.1
-#define SUN_COLLECTED_PER_SECOND 0.001
+#define SUN_COLLECTED_PER_SECOND 0.01
 #define START_ENERGY 100
 
 Flower::Flower(World *world, CL_GraphicContext *gc,

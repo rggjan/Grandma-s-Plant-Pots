@@ -7,7 +7,7 @@
 
 #include "./plant.h"
 
-#define ENERGY_COST 10
+#define ENERGY_COST 6
 
 class Leaf;
 
