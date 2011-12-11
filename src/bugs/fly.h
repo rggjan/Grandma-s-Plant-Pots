@@ -24,7 +24,7 @@ class Fly : public GameObject {
     void SetTargetPlant(Plant *flower);
     virtual bool update(int timeElapsed_ms);
     inline bool is_free() {
-      return target_plant_ == NULL;
+      return target_plant_ == NULL && energy_ > 0;
     }
     void StopEating();
 
