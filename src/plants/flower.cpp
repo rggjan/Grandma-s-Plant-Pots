@@ -8,8 +8,8 @@
 #include "./leaf.h"
 #include "plants/plantplayer.h"
 
-#define TIME_TO_OPEN 150
-#define TIME_TO_FINAL 300
+#define TIME_TO_OPEN 15000
+#define TIME_TO_FINAL 30000
 #define MIN_FLOWER_DISTANCE 50
 
 #define CO2_COLLECTED_PER_SECOND 0.1
