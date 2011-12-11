@@ -12,9 +12,10 @@
 class Leaf;
 
 enum FlowerState {
-  kClosed = 0,
-  kOpen = 1,
-  kFinal = 2
+  kClosed,
+  kOpen,
+  kProducing,
+  kShooting
 };
 
 class Flower : public Plant {
