@@ -15,7 +15,7 @@
 #define ATTACK_MIN_DISTANCE 5
 
 #define EAT_PER_SECOND 1
-#define FOOD_NEEDED_TO_DUPLICATE 5
+#define FOOD_NEEDED_TO_DUPLICATE 30
 
 Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name, BugPlayer* player)
   : GameObject(world),
