@@ -3,6 +3,7 @@
 #include "bugs/bugplayer.h"
 
 #include <ClanLib/sound.h>
+#include <ClanLib/core.h>
 #include <vector>
 
 #include "./world.h"
@@ -104,6 +105,12 @@ void BugPlayer::DrawFloor() {
       CL_Vec2f pos = selectedFlower->position() - map_position();
       selectedImage->draw(*gc, pos.x, pos.y);
     }*/
+}
+
+void BugPlayer::DrawTop() {
+  CL_Colorf color = CL_Colorf::white;
+    default_font.draw_text(*gc_, CL_Pointf(10, 30),
+                           cl_format("Bugs: %1", flies.size()), color);
 }
 
 void BugPlayer::Update(int time_ms) {
