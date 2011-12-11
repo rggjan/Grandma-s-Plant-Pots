@@ -8,8 +8,8 @@
 #include "./leaf.h"
 #include "plants/plantplayer.h"
 
-#define TIME_TO_OPEN 6000
-#define TIME_TO_FINAL 15000
+#define TIME_TO_OPEN 600
+#define TIME_TO_FINAL 1500
 #define MIN_FLOWER_DISTANCE 50
 
 #define CO2_COLLECTED_PER_SECOND 0.1
@@ -84,6 +84,7 @@ bool Flower::CanBuild(CL_Vec2f position) {
   if (nearest_flower &&
       (nearest_flower->position() - position).length() < MIN_FLOWER_DISTANCE)
     return false;
+
   return world->CanBuild(position);
 }
 
@@ -100,8 +101,8 @@ void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
   if (state_ == kShooting) {
     Fly* nearest_fly = world->NearestBug(position());
 
-    CL_Draw::line(*gc, position() - player_->map_position(),
-                  nearest_fly->position() - player_->map_position(),
+    CL_Draw::line(*gc, position() - target,
+                  nearest_fly->position() - target,
                   CL_Colorf::green);
   }
 
