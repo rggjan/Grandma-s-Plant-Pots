@@ -16,6 +16,7 @@
 #define SUN_COLLECTED_PER_SECOND 0.01
 #define START_ENERGY 100
 
+#define ATTACK_DISTANCE 100
 #define ATTACK_ENERGY_PER_SECOND 10
 
 Flower::Flower(World *world, CL_GraphicContext *gc,
@@ -66,8 +67,12 @@ void Flower::Update(int time_ms) {
     for (int i = 0; i < size; i++) {
       Fly* bug = (*bugs)[i];
 
-      if (bug->energy_ > 0) {
-        targeting_fly = bug;
+      if ((position() - bug->position()).length() <= ATTACK_DISTANCE) {
+        if (bug->energy_ > 0) {
+          targeting_fly = bug;
+          break;
+        }
+      } else {
         break;
       }
     }
