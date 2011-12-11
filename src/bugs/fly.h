@@ -33,7 +33,9 @@ class Fly : public GameObject {
     CL_Vec2f direction;
     CL_Vec2f target_position_;
     Plant *target_plant_;
-
+    
+    double energy_;
+    
     double food_eaten_;
     CL_StringRef fly_name_;
     BugPlayer *player_;

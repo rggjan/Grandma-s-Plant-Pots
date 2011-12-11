@@ -31,7 +31,8 @@ class BugPlayer : public Player {
     std::vector<Fly*> tmp_flies;
     CL_Sprite *selectedImage;
     Plant* nearest_free_plant_;
-
+    
+    
     // Queries
     Plant* GetFreePlant();
     Fly* GetFreeBug();
