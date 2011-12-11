@@ -7,14 +7,15 @@
 
 #include "./plant.h"
 
-#define ENERGY_COST 10
+#define ENERGY_COST 6
 
 class Leaf;
 
 enum FlowerState {
-  kClosed = 0,
-  kOpen = 1,
-  kFinal = 2
+  kClosed,
+  kOpen,
+  kProducing,
+  kShooting
 };
 
 class Flower : public Plant {

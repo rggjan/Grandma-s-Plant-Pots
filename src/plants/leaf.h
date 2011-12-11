@@ -5,7 +5,7 @@
 
 #include "./plant.h"
 
-#define LEAF_SUGAR_COST 5
+#define LEAF_SUGAR_COST 3
 
 class Flower;
 

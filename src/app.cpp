@@ -23,6 +23,8 @@ int Application::main(const std::vector<CL_String> &args) {
     CL_KeepAlive::process();
   }
 
+  CL_KeepAlive::process();
+
   CL_SoundOutput output(44100);
 
   try {
