@@ -21,7 +21,7 @@ Leaf::Leaf(World *world, CL_GraphicContext *gc, const CL_StringRef &name,
 }
 
 bool Leaf::CanBuild(CL_Vec2f position, Flower* flower) {
-  if (flower->state() < kOpen) {
+  if (flower->state() != kOpen) {
     return false;
   }
 

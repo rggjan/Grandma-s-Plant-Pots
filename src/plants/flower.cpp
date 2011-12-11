@@ -1,6 +1,7 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
 #include "./flower.h"
+#include "bugs/fly.h"
 
 #include <vector>
 
@@ -49,7 +50,7 @@ void Flower::Update(int time_ms) {
 
   if (state_ == kOpen) {
     if (age_ > TIME_TO_OPEN + TIME_TO_FINAL) {
-      state_ = kFinal;
+      state_ = kShooting;
       spriteImage->set_frame(2);
     }
   }
@@ -83,6 +84,7 @@ bool Flower::CanBuild(CL_Vec2f position) {
   if (nearest_flower &&
       (nearest_flower->position() - position).length() < MIN_FLOWER_DISTANCE)
     return false;
+
   return world->CanBuild(position);
 }
 
@@ -93,6 +95,15 @@ void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
                   leaves[i]->position() - player_->map_position(),
                   CL_Colorf::green);*/
     leaves[i]->Draw(gc, target);
+  }
+
+  // Shoot!
+  if (state_ == kShooting) {
+    Fly* nearest_fly = world->NearestBug(position());
+
+    CL_Draw::line(*gc, position() - target,
+                  nearest_fly->position() - target,
+                  CL_Colorf::green);
   }
 
   Plant::Draw(gc, target);

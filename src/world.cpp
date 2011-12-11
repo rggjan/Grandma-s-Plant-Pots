@@ -118,6 +118,24 @@ vector<Plant *>* World::NearestPlants(CL_Vec2f position) {
   return &plants;
 }
 
+Fly* World::NearestBug(CL_Vec2f position) {
+  int best_dist = -1;
+  Fly *nearest_fly = NULL;
+
+  // Get nearest flower
+  std::vector<Fly *>::iterator it;
+  for (it = flies.begin(); it != flies.end(); ++it) {
+    float distance = ((*it)->position() - position).length();
+
+    if (nearest_fly == NULL || distance < best_dist) {
+      best_dist = distance;
+      nearest_fly = (*it);
+    }
+  }
+
+  return nearest_fly;
+}
+
 Flower* World::NearestFlower(CL_Vec2f position) {
   // TODO(rggjan): infinity
   int best_dist = -1;
