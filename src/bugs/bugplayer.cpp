@@ -111,6 +111,7 @@ void BugPlayer::DrawTop() {
   CL_Colorf color = CL_Colorf::white;
     default_font.draw_text(*gc_, CL_Pointf(10, 30),
                            cl_format("Bugs: %1", flies.size()), color);
+  Player::DrawTop();
 }
 
 void BugPlayer::Update(int time_ms) {
