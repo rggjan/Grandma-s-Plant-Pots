@@ -28,13 +28,13 @@ class Fly : public GameObject {
     }
     void StopEating();
 
+    double energy_;
+
     // Implementation:
   private:
     CL_Vec2f direction;
     CL_Vec2f target_position_;
     Plant *target_plant_;
-    
-    double energy_;
     
     double food_eaten_;
     CL_StringRef fly_name_;

@@ -12,7 +12,8 @@ int Application::main(const std::vector<CL_String> &args) {
   // Create window
   CL_DisplayWindowDescription desc;
   desc.set_title("Grandma's Plant Pots");
-  desc.set_allow_resize(true);  
+  desc.set_allow_resize(true);
+  desc.set_size(CL_Size(640, 480), true);
   CL_DisplayWindow *window = new CL_DisplayWindow(desc);
 
   // Maximise

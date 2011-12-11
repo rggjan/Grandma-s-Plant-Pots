@@ -15,6 +15,7 @@
       <File Name="src/bugs/bugplayer.cpp"/>
       <File Name="src/bugs/bugplayer.h"/>
       <File Name="src/bugs/fly.h"/>
+      <File Name="src/bugs/fly.cpp"/>
     </VirtualDirectory>
     <File Name="src/app.h"/>
     <File Name="src/gameobject.h"/>
@@ -40,7 +41,6 @@
   <Dependencies/>
   <VirtualDirectory Name="GPP">
     <File Name=".gitignore"/>
-    <File Name="src/bugs/fly.cpp"/>
   </VirtualDirectory>
   <Settings Type="Dynamic Library">
     <GlobalSettings>

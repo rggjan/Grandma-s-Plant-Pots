@@ -18,7 +18,6 @@
 #define EAT_PER_SECOND 1
 #define FOOD_NEEDED_TO_DUPLICATE 50
 
-
 Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name, BugPlayer* player)
   : GameObject(world),
     direction(0, -1),
@@ -47,6 +46,8 @@ void Fly::StopEating() {
 
 bool Fly::update(int time_ms) {
   GameObject::Update(time_ms);
+
+  spriteImage->set_scale(energy_/100., energy_/100.);
 
   // Check if we can reproduce
   if (food_eaten_ > FOOD_NEEDED_TO_DUPLICATE) {

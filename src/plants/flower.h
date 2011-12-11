@@ -44,6 +44,8 @@ class Flower : public Plant {
     FlowerState state_;
     std::vector<Leaf*> leaves;
     int age_;
+
+    Fly *targeting_fly;
 };
 
 #endif  // SRC_PLANTS_FLOWER_H_
