@@ -8,9 +8,9 @@
 #include "plants/plant.h"
 #include "bugs/bugplayer.h"
 
-#define CONSTANT_ANGLE false
+#define CONSTANT_ANGLE true
 #define SPEED 300
-#define MAX_CURVE 5
+#define MAX_CURVE 10
 #define ATTACK_SPEED_DECREASE_DISTANCE 200
 #define ATTACK_MIN_DISTANCE 5
 #define START_ENERGY 30

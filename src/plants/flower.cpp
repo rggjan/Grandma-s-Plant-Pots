@@ -14,10 +14,10 @@
 
 #define CO2_COLLECTED_PER_SECOND 0.1
 #define SUN_COLLECTED_PER_SECOND 0.01
-#define START_ENERGY 100
+#define START_ENERGY 30
 
 #define ATTACK_DISTANCE 100
-#define ATTACK_ENERGY_PER_SECOND 0.5
+#define ATTACK_ENERGY_PER_SECOND 0.3
 
 Flower::Flower(World *world, CL_GraphicContext *gc,
                CL_Vec2f position, PlantPlayer* player)
