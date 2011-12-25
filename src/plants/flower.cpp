@@ -16,7 +16,7 @@
 #define SUN_COLLECTED_PER_SECOND 0.01
 #define START_ENERGY 100
 
-#define ATTACK_ENERGY_PER_SECOND 10
+#define ATTACK_ENERGY_PER_SECOND 0.5
 
 Flower::Flower(World *world, CL_GraphicContext *gc,
                CL_Vec2f position, PlantPlayer* player)
