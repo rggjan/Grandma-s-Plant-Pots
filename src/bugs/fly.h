@@ -39,6 +39,8 @@ class Fly : public GameObject {
     double food_eaten_;
     CL_StringRef fly_name_;
     BugPlayer *player_;
+
+    double curve_;
   };
 
 #endif  // SRC_BUGS_FLY_H_

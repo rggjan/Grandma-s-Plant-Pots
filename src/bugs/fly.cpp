@@ -8,16 +8,20 @@
 #include "plants/plant.h"
 #include "bugs/bugplayer.h"
 
+// Flying
 #define CONSTANT_ANGLE false
 #define SPEED 300
 #define MAX_CURVE 5
+#define CURVE_VARIANCE 20
+
+// Attacking
 #define ATTACK_SPEED_DECREASE_DISTANCE 200
 #define ATTACK_MIN_DISTANCE 5
-#define START_ENERGY 30
-
 #define EAT_PER_SECOND 1
 #define FOOD_NEEDED_TO_DUPLICATE 50
 
+// General
+#define START_ENERGY 30
 
 Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name, BugPlayer* player)
   : GameObject(world),
@@ -26,10 +30,13 @@ Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name, BugPlaye
     energy_(START_ENERGY),
     food_eaten_(0),
     fly_name_(name),
-    
-player_(player) {
+    player_(player) {
   spriteImage = new CL_Sprite(gc, name, &world->resources);
   spriteImage->set_play_loop(true);
+
+  double max_add = CURVE_VARIANCE/100.*MAX_CURVE;
+  double diff = ((double)rand()/RAND_MAX)*max_add*2-max_add;
+  curve_ = MAX_CURVE + diff;
 }
 
 void Fly::SetTargetPlant(Plant *plant) {
@@ -94,11 +101,11 @@ bool Fly::update(int time_ms) {
 
 #if CONSTANT_ANGLE
   if (right.dot(target_direction) > 0)
-    direction = direction + right * MAX_CURVE * time_ms / 1000;
+    direction = direction + right * curve_ * time_ms / 1000;
   else
-    direction = direction - right * MAX_CURVE * time_ms / 1000;
+    direction = direction - right * curve_ * time_ms / 1000;
 #else
-  direction = direction + target_direction * MAX_CURVE * time_ms / 1000;
+  direction = direction + target_direction * curve_ * time_ms / 1000;
 #endif
 
   // Normalize direction
