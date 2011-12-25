@@ -17,7 +17,7 @@
 // Attacking
 #define ATTACK_SPEED_DECREASE_DISTANCE 200
 #define ATTACK_MIN_DISTANCE 5
-#define EAT_PER_SECOND 3
+#define EAT_PER_SECOND 30
 #define FOOD_NEEDED_TO_DUPLICATE 45
 
 // General
@@ -25,9 +25,9 @@
 
 Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name, BugPlayer* player)
   : GameObject(world),
+    energy_(START_ENERGY),
     direction(0, -1),
     target_plant_(NULL),
-    energy_(START_ENERGY),
     food_eaten_(0),
     fly_name_(name),
     player_(player) {
@@ -81,16 +81,17 @@ bool Fly::update(int time_ms) {
 
   if (target_plant_ != NULL and distance < ATTACK_MIN_DISTANCE) {
     double amount = EAT_PER_SECOND * time_ms / 1000.;
-    if (amount > target_plant_->energy_)
-      amount = target_plant_->energy_;
+    if (amount > target_plant_->energy_) {
+      food_eaten_ += target_plant_->energy_;
+
+      target_plant_->set_dead();
+      target_plant_ = NULL;
+      return true;
+    }
 
     target_plant_->energy_ -= amount;
     food_eaten_ += amount;
 
-    if (target_plant_->energy_ <= 0) {
-      target_plant_->energy_ = 0;
-      target_plant_ = NULL;
-    }
     return true;
   }
 
