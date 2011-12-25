@@ -18,6 +18,7 @@ class GameObject {
     inline CL_Angle angle() { return spriteImage->get_angle(); }
 
     inline bool is_alive() { return alive_; }
+    inline void set_dead() { alive_ = false; }
 
     // Operations
     virtual void Draw(CL_GraphicContext *gc, CL_Vec2f target);
