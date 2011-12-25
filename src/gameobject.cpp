@@ -11,11 +11,10 @@ void GameObject::Update(int time_ms) {
   spriteImage->update(time_ms);
 }
 
-GameObject::GameObject(World* world) {
-  this->world = world;
+GameObject::GameObject(World* world) : world_(world) {
 }
 
 GameObject::GameObject(World* world, CL_Vec2f position)
-  : position_(position) {
-  this->world = world;
+  : position_(position),
+    world_(world) {
 }

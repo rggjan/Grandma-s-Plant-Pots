@@ -27,7 +27,8 @@ class GameObject {
 
   protected:
     CL_Sprite *spriteImage;
-    World *world;
+    World *world_;
+    bool is_alive_;
 };
 
 #endif  // SRC_GAMEOBJECT_H_
