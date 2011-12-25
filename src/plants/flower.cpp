@@ -65,7 +65,7 @@ void Flower::Update(int time_ms) {
   }
 
   if (state_ == kShooting) {
-    std::vector<Fly*> *bugs = world->NearestBugs(position());
+    std::vector<Fly*> *bugs = world_->NearestBugs(position());
 
     targeting_fly = NULL;
 
@@ -112,13 +112,13 @@ Leaf* Flower::NearestLeaf(CL_Vec2f position) {
 
 
 bool Flower::CanBuild(CL_Vec2f position) {
-  Flower *nearest_flower = world->NearestFlower(position);
+  Flower *nearest_flower = world_->NearestFlower(position);
 
   if (nearest_flower &&
       (nearest_flower->position() - position).length() < MIN_FLOWER_DISTANCE)
     return false;
 
-  return world->CanBuild(position);
+  return world_->CanBuild(position);
 }
 
 void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {

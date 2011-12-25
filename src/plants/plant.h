@@ -24,7 +24,7 @@ class Plant : public GameObject {
 
     // Queries
     virtual inline bool CanBuild(CL_Vec2f position) {
-      return world->CanBuild(position);
+      return world_->CanBuild(position);
     }
 
     bool free_space() {
