@@ -16,6 +16,7 @@
 #define SUN_COLLECTED_PER_SECOND 0.01
 #define START_ENERGY 100
 
+#define ATTACK_DISTANCE 100
 #define ATTACK_ENERGY_PER_SECOND 0.5
 
 Flower::Flower(World *world, CL_GraphicContext *gc,
@@ -27,6 +28,12 @@ Flower::Flower(World *world, CL_GraphicContext *gc,
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;
+  
+  sound_shot_ =
+    new CL_SoundBuffer("FlowerShoot", &world->resources);
+  sound_shot_->set_volume(1.0f);
+  sound_session_shot_= sound_shot_->prepare();
+  
 }
 
 void Flower::AddLeaf(Leaf* leaf) {
@@ -46,7 +53,7 @@ void Flower::Update(int time_ms) {
   if (state_ == kClosed) {
     if (age_ > TIME_TO_OPEN) {
       state_ = kOpen;
-      spriteImage->set_frame(1);
+      spriteImage->set_frame(1);      
     }
   }
 
@@ -66,8 +73,12 @@ void Flower::Update(int time_ms) {
     for (int i = 0; i < size; i++) {
       Fly* bug = (*bugs)[i];
 
-      if (bug->energy_ > 0) {
-        targeting_fly = bug;
+      if ((position() - bug->position()).length() <= ATTACK_DISTANCE) {
+        if (bug->energy_ > 0) {
+          targeting_fly = bug;
+          break;
+        }
+      } else {
         break;
       }
     }
@@ -124,6 +135,8 @@ void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
     CL_Draw::line(*gc, position() - target,
                   targeting_fly->position() - target,
                   CL_Colorf::green);
+      if(!sound_session_shot_.is_playing())
+        sound_session_shot_ = sound_shot_->play();
   }
 
 
