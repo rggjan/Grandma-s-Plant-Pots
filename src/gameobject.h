@@ -17,6 +17,8 @@ class GameObject {
     inline void set_angle(CL_Angle angle) { spriteImage->set_angle(angle); }
     inline CL_Angle angle() { return spriteImage->get_angle(); }
 
+    inline bool is_alive() { return alive_; }
+
     // Operations
     virtual void Draw(CL_GraphicContext *gc, CL_Vec2f target);
     virtual void Update(int time_ms);
@@ -28,7 +30,8 @@ class GameObject {
   protected:
     CL_Sprite *spriteImage;
     World *world_;
-    bool is_alive_;
+    bool alive_;
+    double dead_time_;
 };
 
 #endif  // SRC_GAMEOBJECT_H_

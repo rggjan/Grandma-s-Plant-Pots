@@ -25,9 +25,9 @@
 
 Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name, BugPlayer* player)
   : GameObject(world),
+    energy_(START_ENERGY),
     direction(0, -1),
     target_plant_(NULL),
-    energy_(START_ENERGY),
     food_eaten_(0),
     fly_name_(name),
     player_(player) {
