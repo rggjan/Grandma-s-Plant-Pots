@@ -5,6 +5,8 @@
 
 #include <vector>
 
+#include <ClanLib/sound.h>
+
 #include "./plant.h"
 
 #define ENERGY_COST 6
@@ -45,6 +47,8 @@ class Flower : public Plant {
     std::vector<Leaf*> leaves;
     int age_;
 
+    CL_SoundBuffer *sound_shot_;
+    CL_SoundBuffer_Session sound_session_shot_;
     Fly *targeting_fly;
 };
 

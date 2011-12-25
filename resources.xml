@@ -82,5 +82,14 @@
 
 	<sample name="BackgroundMusic" file="Sound/Background.ogg"/>
 
+	
+
+
+	<sample name="FlowerShoot" file="Sound/flower_shot.ogg"/>	
+
+	<sample name="BackgroundMusic" file="Sound/Background.ogg"/>
+
+	<sample name="BackgroundMusic" file="Sound/Background.ogg"/>
+
 
 </resources>
