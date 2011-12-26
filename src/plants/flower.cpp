@@ -104,6 +104,9 @@ Leaf* Flower::NearestLeaf(CL_Vec2f position) {
   // Get nearest flower
   std::vector<Leaf *>::iterator it;
   for (it = leaves.begin(); it != leaves.end(); ++it) {
+    if (!(*it)->is_alive())
+      continue;
+
     float distance = ((*it)->position() - position).length();
 
     if (nearest_leaf == NULL || distance < best_dist) {

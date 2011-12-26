@@ -75,7 +75,7 @@ Plant* BugPlayer::GetFreePlant() {
   int size = plants->size();
   for (int i = 0; i < size; i++) {
     Plant* plant = (*plants)[i];
-    if (plant->free_space() && Visible(plant->position()))
+    if (plant->is_alive() && plant->free_space() && Visible(plant->position()))
       return (*plants)[i];
   }
 
@@ -85,7 +85,7 @@ Plant* BugPlayer::GetFreePlant() {
 Fly* BugPlayer::GetFreeBug() {
   int size = flies.size();
   for (int i = 0; i < size; i++) {
-    if (flies[i]->is_free()) {
+    if (flies[i]->is_alive() && flies[i]->is_free()) {
       return flies[i];
     }
   }
@@ -94,8 +94,6 @@ Fly* BugPlayer::GetFreeBug() {
 }
 
 void BugPlayer::DrawFloor() {
-  nearest_free_plant_ = GetFreePlant();
-
   if (nearest_free_plant_ != NULL) {
     CL_Vec2f pos = nearest_free_plant_->position() - map_position();
     selectedImage->draw(*gc_, pos.x, pos.y);
@@ -109,9 +107,14 @@ void BugPlayer::DrawFloor() {
 }
 
 void BugPlayer::DrawTop() {
+  int size=0;
+  for (unsigned int i=0; i<flies.size(); i++) {
+    size += flies[i]->is_alive();
+  }
+
   CL_Colorf color = CL_Colorf::white;
     default_font.draw_text(*gc_, CL_Pointf(10, 30),
-                           cl_format("Bugs: %1", (int)flies.size()), color);
+                           cl_format("Bugs: %1", size), color);
   Player::DrawTop();
 }
 
@@ -123,6 +126,8 @@ void BugPlayer::Update(int time_ms) {
     fly->set_target_position(position());
     fly->update(time_ms);
   }
+
+  nearest_free_plant_ = GetFreePlant();  
 
   Player::Update(time_ms);
 }
