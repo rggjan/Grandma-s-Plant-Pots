@@ -47,6 +47,11 @@ void Flower::Update(int time_ms) {
     leaves[i]->Update(time_ms);
   }
 
+  if (!is_alive()) {
+    Plant::Update(time_ms);
+    return;
+  }
+
   // Update state
   age_ += time_ms;
 
@@ -110,7 +115,6 @@ Leaf* Flower::NearestLeaf(CL_Vec2f position) {
   return nearest_leaf;
 }
 
-
 bool Flower::CanBuild(CL_Vec2f position) {
   Flower *nearest_flower = world_->NearestFlower(position);
 
@@ -130,6 +134,11 @@ void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
     leaves[i]->Draw(gc, target);
   }
 
+  if (!is_alive()) {
+    Plant::Draw(gc, target);
+    return;
+  }
+
   // Shoot!
   if (state_ == kShooting && targeting_fly) {
     CL_Draw::line(*gc, position() - target,
@@ -138,7 +147,6 @@ void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
       if(!sound_session_shot_.is_playing())
         sound_session_shot_ = sound_shot_->play();
   }
-
 
   Plant::Draw(gc, target);
 }

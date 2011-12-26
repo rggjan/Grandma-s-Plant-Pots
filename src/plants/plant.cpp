@@ -52,7 +52,7 @@ void Plant::Draw(CL_GraphicContext *gc, CL_Vec2f position) {
     spriteImage->set_color(CL_Color::brown);
 
     if (dead_time_ > ZOMBIE_SECONDS)
-      ; // TODO(rggjan): delete!
+      ; // TODO(rggjan): delete if no leaves left!
 
     spriteImage->set_alpha(1 - dead_time_/(ZOMBIE_SECONDS*1000.));
 
