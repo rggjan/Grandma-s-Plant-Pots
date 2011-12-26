@@ -32,10 +32,11 @@ void Plant::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
   spriteImage->draw(*gc, position.x, position.y);
 }
 
-void Plant::Update(int time_ms) {
+bool Plant::Update(int time_ms) {
   if (!is_alive()) {
     dead_time_ += time_ms;
-    return;
+    // TODO(rggjan): Leaves!
+    return (dead_time_ <= ZOMBIE_SECONDS*1000.);
   }
 
   // Update CO2 production
@@ -43,6 +44,8 @@ void Plant::Update(int time_ms) {
 
   // Update sun production
   player_->sun_ += sun_collected_per_second_;
+
+  return true;
 }
 
 void Plant::Draw(CL_GraphicContext *gc, CL_Vec2f position) {

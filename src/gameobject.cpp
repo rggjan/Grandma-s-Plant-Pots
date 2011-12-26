@@ -7,8 +7,9 @@ void GameObject::Draw(CL_GraphicContext *gc, CL_Vec2f target) {
   spriteImage->draw(*gc, pos.x, pos.y);
 }
 
-void GameObject::Update(int time_ms) {
+bool GameObject::Update(int time_ms) {
   spriteImage->update(time_ms);
+  return is_alive();
 }
 
 GameObject::GameObject(World* world)

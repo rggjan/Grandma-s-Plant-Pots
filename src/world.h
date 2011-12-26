@@ -5,6 +5,7 @@
 
 #include <ClanLib/display.h>
 #include <vector>
+#include <list>
 
 #define MAX_PLAYERS 8
 
@@ -33,6 +34,7 @@ class World {
     // Operations
     void AddFly(Fly *fly);
     void AddFlower(Flower *flower);
+    void RemoveFlower(Flower *flower);
     void AddPlant(Plant *plant);
     void Run();
     void PlayBeep();
@@ -53,7 +55,7 @@ class World {
 
     std::vector<Fly *> flies;
     std::vector<Plant*> plants;
-    std::vector<Flower*> flowers;
+    std::list<Flower*> flowers;
     std::vector<Player*> players;
 
     CL_GraphicContext default_gc;

@@ -143,8 +143,11 @@ Flower* PlantPlayer::NearestFlower() {
   Flower *nearest_flower = NULL;
 
   // Get nearest flower
-  std::vector<Flower *>::iterator it;
+  std::list<Flower *>::iterator it;
   for (it = flowers.begin(); it != flowers.end(); ++it) {
+    if (!(*it)->is_alive())
+      continue;
+
     float distance = ((*it)->position() - position()).length();
 
     if (nearest_flower == NULL || distance < best_dist) {
@@ -218,8 +221,15 @@ void PlantPlayer::DrawSun() {
 void PlantPlayer::Update(int time_ms) {
   // Set sun to zero... will be added up in the update function!
   sun_ = 0;
-  for (unsigned int i = 0; i < flowers.size(); i++) {
-    flowers[i]->Update(time_ms);
+  std::list<Flower *>::iterator it;
+  for (it = flowers.begin(); it != flowers.end();) {
+    if (!(*it)->Update(time_ms)) {
+      world->RemoveFlower(*it);
+      delete *it;
+      it = flowers.erase(it);
+    } else {
+      ++it;
+    }
   }
 
   // Produce sugar

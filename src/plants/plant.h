@@ -43,7 +43,7 @@ class Plant : public GameObject {
       return player_;
     }
 
-    virtual void Update(int time_ms);
+    virtual bool Update(int time_ms);
 
   protected:
     PlantPlayer* player_;

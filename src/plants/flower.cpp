@@ -40,16 +40,20 @@ void Flower::AddLeaf(Leaf* leaf) {
   leaves.push_back(leaf);
 }
 
-void Flower::Update(int time_ms) {
-  // Update leaves
-  unsigned int size = leaves.size();
-  for (unsigned int i = 0; i < size; i++) {
-    leaves[i]->Update(time_ms);
+bool Flower::Update(int time_ms) {
+  // Update leaves  
+  std::list<Leaf *>::iterator it;
+  for (it = leaves.begin(); it != leaves.end();) {
+    if (!(*it)->Update(time_ms)) {
+      delete *it;
+      it = leaves.erase(it);
+    } else {
+      ++it;
+    }
   }
 
   if (!is_alive()) {
-    Plant::Update(time_ms);
-    return;
+    return Plant::Update(time_ms) || leaves.size() > 0;
   }
 
   // Update state
@@ -93,7 +97,7 @@ void Flower::Update(int time_ms) {
     }
   }
 
-  Plant::Update(time_ms);
+  return Plant::Update(time_ms);
 }
 
 Leaf* Flower::NearestLeaf(CL_Vec2f position) {
@@ -102,7 +106,7 @@ Leaf* Flower::NearestLeaf(CL_Vec2f position) {
   Leaf *nearest_leaf = NULL;
 
   // Get nearest flower
-  std::vector<Leaf *>::iterator it;
+  std::list<Leaf *>::iterator it;
   for (it = leaves.begin(); it != leaves.end(); ++it) {
     if (!(*it)->is_alive())
       continue;
@@ -129,12 +133,12 @@ bool Flower::CanBuild(CL_Vec2f position) {
 }
 
 void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
-  unsigned int size = leaves.size();
-  for (unsigned int i = 0; i < size; i++) {
+  std::list<Leaf *>::iterator it;
+  for (it = leaves.begin(); it != leaves.end(); ++it) {
+    (*it)->Draw(gc, target);
     /*CL_Draw::line(*gc, position() - player_->map_position(),
                   leaves[i]->position() - player_->map_position(),
                   CL_Colorf::green);*/
-    leaves[i]->Draw(gc, target);
   }
 
   if (!is_alive()) {

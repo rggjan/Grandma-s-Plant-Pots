@@ -3,7 +3,7 @@
 #ifndef SRC_PLANTS_PLANTPLAYER_H_
 #define SRC_PLANTS_PLANTPLAYER_H_
 
-#include <vector>
+#include <list>
 
 #include "./player.h"
 
@@ -49,7 +49,7 @@ class PlantPlayer : public Player {
     Flower* NearestFlower();
 
     // Attributes
-    std::vector<Flower*> flowers;
+    std::list<Flower*> flowers;
     State state;
     CL_Sprite *selectedImage;
     Flower *selectedFlower;    

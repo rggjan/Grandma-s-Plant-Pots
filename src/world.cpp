@@ -98,6 +98,10 @@ void World::AddFlower(Flower *flower) {
   flowers.push_back(flower);
 }
 
+void World::RemoveFlower(Flower *flower) {
+  flowers.remove(flower);
+}
+
 void World::AddPlant(Plant *plant) {
   plants.push_back(plant);
 }
@@ -132,8 +136,11 @@ Flower* World::NearestFlower(CL_Vec2f position) {
   Flower *nearest_flower = NULL;
 
   // Get nearest flower
-  std::vector<Flower *>::iterator it;
+  std::list<Flower *>::iterator it;
   for (it = flowers.begin(); it != flowers.end(); ++it) {
+    if (!(*it)->is_alive())
+      continue;
+
     float distance = ((*it)->position() - position).length();
 
     if (nearest_flower == NULL || distance < best_dist) {
@@ -468,7 +475,7 @@ void World::Draw() {
 
     // Draw all gameobjects
     // Flowers
-    std::vector<Flower *>::iterator it1;
+    std::list<Flower *>::iterator it1;
     for (it1 = flowers.begin(); it1 != flowers.end(); ++it1)
       (*it1)->Draw(players[i]->gc_, players[i]->map_position());
 
