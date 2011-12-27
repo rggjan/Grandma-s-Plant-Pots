@@ -76,7 +76,7 @@ bool Flower::Update(int time_ms) {
   if (state_ == kShooting) {
     std::vector<Bug*> *bugs = world_->NearestBugs(position());
 
-    targeting_fly = NULL;
+    targeting_bug = NULL;
 
     int size = bugs->size();
     for (int i = 0; i < size; i++) {
@@ -84,7 +84,7 @@ bool Flower::Update(int time_ms) {
 
       if ((position() - bug->position()).length() <= ATTACK_DISTANCE) {
         if (bug->energy_ > 0) {
-          targeting_fly = bug;
+          targeting_bug = bug;
           break;
         }
       } else {
@@ -92,8 +92,8 @@ bool Flower::Update(int time_ms) {
       }
     }
 
-    if(targeting_fly) {
-      targeting_fly->energy_ -= ATTACK_ENERGY_PER_SECOND*time_ms/100;
+    if(targeting_bug) {
+      targeting_bug->energy_ -= ATTACK_ENERGY_PER_SECOND*time_ms/100;
     }
   }
 
@@ -147,9 +147,9 @@ void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
   }
 
   // Shoot!
-  if (state_ == kShooting && targeting_fly) {
+  if (state_ == kShooting && targeting_bug) {
     CL_Draw::line(*gc, position() - target,
-                  targeting_fly->position() - target,
+                  targeting_bug->position() - target,
                   CL_Colorf::green);
       if(!sound_session_shot_.is_playing())
         sound_session_shot_ = sound_shot_->play();
