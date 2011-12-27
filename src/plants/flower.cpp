@@ -38,6 +38,7 @@ Flower::Flower(World *world, CL_GraphicContext *gc,
 
 void Flower::AddLeaf(Leaf* leaf) {
   leaves.push_back(leaf);
+  state_ = kProducing;
 }
 
 bool Flower::Update(int time_ms) {
