@@ -82,7 +82,7 @@ bool Flower::Update(int time_ms) {
     for (int i = 0; i < size; i++) {
       Bug* bug = (*bugs)[i];
 
-      if ((position() - bug->position()).length() <= ATTACK_DISTANCE) {
+      if ((position() - bug->position()).length() <= ATTACK_DISTANCE && bug->is_alive()) {
         if (bug->energy_ > 0) {
           targeting_bug = bug;
           break;
@@ -94,6 +94,10 @@ bool Flower::Update(int time_ms) {
 
     if(targeting_bug) {
       targeting_bug->energy_ -= ATTACK_ENERGY_PER_SECOND*time_ms/100;
+      if (targeting_bug->energy_ < 0) {
+        targeting_bug->set_dead();
+        targeting_bug->StopEating();
+      }
     }
   }
 
