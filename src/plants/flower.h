@@ -48,7 +48,7 @@ class Flower : public Plant {
     int age_;
 
     CL_SoundBuffer sound_shot_;
-    CL_SoundBuffer_Session sound_session_shot_;
+    static CL_SoundBuffer_Session sound_session_shot_;
     Bug *targeting_bug;
 };
 

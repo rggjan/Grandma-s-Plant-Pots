@@ -19,6 +19,8 @@
 #define ATTACK_DISTANCE 100
 #define ATTACK_ENERGY_PER_SECOND 0.5
 
+CL_SoundBuffer_Session Flower::sound_session_shot_;
+
 Flower::Flower(World *world, CL_GraphicContext *gc,
                CL_Vec2f position, PlantPlayer* player)
   : Plant(world, gc, position, player),
