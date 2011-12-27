@@ -28,7 +28,7 @@ BugPlayer::BugPlayer(CL_GraphicContext* gc, World* world,
     else
       name = "Bug2";
 
-    CreateFly(name, CL_Vec2f(i * 60, i * 60));
+    CreateBug(name, CL_Vec2f(i * 60, i * 60));
   }
 
   sound_bug_attack_ = new CL_SoundBuffer("BugAttack", &world->resources);
@@ -36,33 +36,33 @@ BugPlayer::BugPlayer(CL_GraphicContext* gc, World* world,
   sound_bug_attack_->prepare();
 }
 
-void BugPlayer::CreateFly(CL_StringRef name, CL_Vec2f position) {
-  Fly * fly = new Fly(world, *gc_, name, this);
-  fly->set_position(position);
+void BugPlayer::CreateBug(CL_StringRef name, CL_Vec2f position) {
+  Bug * bug = new Bug(world, *gc_, name, this);
+  bug->set_position(position);
 
-  AddFly(fly);
+  AddBug(bug);
 }
 
-void BugPlayer::AddFly(Fly* fly) {
-  flies.push_back(fly);
-  world->AddFly(fly);
+void BugPlayer::AddBug(Bug* bug) {
+  bugs.push_back(bug);
+  world->AddBug(bug);
 }
 
 void BugPlayer::SelectButtonPressed() {
-  Fly* fly = GetFreeBug();
+  Bug* bug = GetFreeBug();
 
-  if (fly != NULL && nearest_free_plant_ != NULL) {
+  if (bug != NULL && nearest_free_plant_ != NULL) {
     sound_bug_attack_->play();
-    fly->SetTargetPlant(nearest_free_plant_);
+    bug->SetTargetPlant(nearest_free_plant_);
   } else {
     world->PlayBeep();
   }
 }
 
 void BugPlayer::CancelButtonPressed() {
-  int size = flies.size();
+  int size = bugs.size();
   for (int i = 0; i < size; i++) {
-    flies[i]->StopEating();
+    bugs[i]->StopEating();
   }
 }
 
@@ -82,11 +82,11 @@ Plant* BugPlayer::GetFreePlant() {
   return NULL;
 }
 
-Fly* BugPlayer::GetFreeBug() {
-  int size = flies.size();
+Bug* BugPlayer::GetFreeBug() {
+  int size = bugs.size();
   for (int i = 0; i < size; i++) {
-    if (flies[i]->is_alive() && flies[i]->is_free()) {
-      return flies[i];
+    if (bugs[i]->is_alive() && bugs[i]->is_free()) {
+      return bugs[i];
     }
   }
 
@@ -108,8 +108,8 @@ void BugPlayer::DrawFloor() {
 
 void BugPlayer::DrawTop() {
   int size=0;
-  for (unsigned int i=0; i<flies.size(); i++) {
-    size += flies[i]->is_alive();
+  for (unsigned int i=0; i<bugs.size(); i++) {
+    size += bugs[i]->is_alive();
   }
 
   CL_Colorf color = CL_Colorf::white;
@@ -119,12 +119,12 @@ void BugPlayer::DrawTop() {
 }
 
 void BugPlayer::Update(int time_ms) {
-  int size = flies.size();
+  int size = bugs.size();
   for (int i = 0; i < size; i++) {
-    Fly *fly = flies[i];
+    Bug *bug = bugs[i];
 
-    fly->set_target_position(position());
-    fly->update(time_ms);
+    bug->set_target_position(position());
+    bug->update(time_ms);
   }
 
   nearest_free_plant_ = GetFreePlant();  

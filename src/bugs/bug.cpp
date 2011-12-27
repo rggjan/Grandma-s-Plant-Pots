@@ -1,6 +1,6 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#include "./fly.h"
+#include "./bug.h"
 
 #include <ClanLib/display.h>
 
@@ -8,7 +8,7 @@
 #include "plants/plant.h"
 #include "bugs/bugplayer.h"
 
-// Flying
+// Buging
 #define CONSTANT_ANGLE false
 #define SPEED 300
 #define MAX_CURVE 5
@@ -23,13 +23,13 @@
 // General
 #define START_ENERGY 30
 
-Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name, BugPlayer* player)
+Bug::Bug(World *world, CL_GraphicContext &gc, const CL_StringRef &name, BugPlayer* player)
   : GameObject(world),
     energy_(START_ENERGY),
     direction(0, -1),
     target_plant_(NULL),
     food_eaten_(0),
-    fly_name_(name),
+    bug_name_(name),
     player_(player) {
   spriteImage = new CL_Sprite(gc, name, &world->resources);
   spriteImage->set_play_loop(true);
@@ -39,12 +39,12 @@ Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name, BugPlaye
   curve_ = MAX_CURVE + diff;
 }
 
-void Fly::SetTargetPlant(Plant *plant) {
+void Bug::SetTargetPlant(Plant *plant) {
   target_plant_ = plant;
-  plant->add_eating_fly(this);
+  plant->add_eating_bug(this);
 }
 
-void Fly::StopEating() {
+void Bug::StopEating() {
   if (this->is_free())
     return;
 
@@ -52,7 +52,7 @@ void Fly::StopEating() {
   target_plant_ = NULL;
 }
 
-bool Fly::update(int time_ms) {
+bool Bug::update(int time_ms) {
   if (energy_ <= 0) {
     spriteImage->set_color(CL_Color::red);
     return true;
@@ -63,7 +63,7 @@ bool Fly::update(int time_ms) {
   // Check if we can reproduce
   if (food_eaten_ > FOOD_NEEDED_TO_DUPLICATE) {
     food_eaten_ -= FOOD_NEEDED_TO_DUPLICATE;
-    player_->CreateFly(fly_name_, position());
+    player_->CreateBug(bug_name_, position());
   }
 
   // Calculate target direction

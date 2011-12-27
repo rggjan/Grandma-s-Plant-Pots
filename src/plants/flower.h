@@ -49,7 +49,7 @@ class Flower : public Plant {
 
     CL_SoundBuffer *sound_shot_;
     CL_SoundBuffer_Session sound_session_shot_;
-    Fly *targeting_fly;
+    Bug *targeting_fly;
 };
 
 #endif  // SRC_PLANTS_FLOWER_H_

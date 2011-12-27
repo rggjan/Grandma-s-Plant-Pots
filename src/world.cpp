@@ -89,8 +89,8 @@ bool World::CanBuild(CL_Vec2f position) {
   return diff.length() < (height / 2 - BACKGROUND_BORDER);
 }
 
-void World::AddFly(Fly *fly) {
-  flies.push_back(fly);
+void World::AddBug(Bug *bug) {
+  bugs.push_back(bug);
 }
 
 void World::AddFlower(Flower *flower) {
@@ -122,12 +122,12 @@ vector<Plant *>* World::NearestPlants(CL_Vec2f position) {
   return &plants;
 }
 
-vector<Fly*>* World::NearestBugs(CL_Vec2f position) {
+vector<Bug*>* World::NearestBugs(CL_Vec2f position) {
   sort_class sort_object;
   sort_object.position = position;
 
-  sort(flies.begin(), flies.end(), sort_object);
-  return &flies;
+  sort(bugs.begin(), bugs.end(), sort_object);
+  return &bugs;
 }
 
 Flower* World::NearestFlower(CL_Vec2f position) {
@@ -480,9 +480,9 @@ void World::Draw() {
       (*it1)->Draw(players[i]->gc_, players[i]->map_position());
 
     // Flies
-    int size = flies.size();
+    int size = bugs.size();
     for (int j = 0; j < size; j++) {
-      flies[j]->Draw(players[i]->gc_, players[i]->map_position());
+      bugs[j]->Draw(players[i]->gc_, players[i]->map_position());
     }
 
     players[i]->DrawTop();

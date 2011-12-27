@@ -11,7 +11,7 @@ Plant::Plant(World *world, CL_GraphicContext *gc,
   : GameObject(world, position),
     energy_(100),
     player_(player),
-    eating_fly_(NULL),
+    eating_bug_(NULL),
     co2_collected_per_second_(0),
     sun_collected_per_second_(0) {
 }

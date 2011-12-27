@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "./player.h"
-#include "bugs/fly.h"
+#include "bugs/bug.h"
 
 
 class CL_SoundBuffer;
@@ -19,23 +19,23 @@ class BugPlayer : public Player {
     void SelectButtonPressed();
     void CancelButtonPressed();
 
-    void AddFly(Fly* fly);
-    void CreateFly(CL_StringRef name, CL_Vec2f position);
+    void AddBug(Bug* fly);
+    void CreateBug(CL_StringRef name, CL_Vec2f position);
     void Update(int time_ms);
     void DrawTop();
     void DrawFloor();
 
   private:
     // Attributes
-    std::vector<Fly*> flies;
-    std::vector<Fly*> tmp_flies;
+    std::vector<Bug*> bugs;
+    std::vector<Bug*> tmp_bugs;
     CL_Sprite *selectedImage;
     Plant* nearest_free_plant_;
-    
-    
+
+
     // Queries
     Plant* GetFreePlant();
-    Fly* GetFreeBug();
+    Bug* GetFreeBug();
     CL_SoundBuffer *sound_leafgrowing_;
     CL_SoundBuffer *sound_bug_attack_;
 };

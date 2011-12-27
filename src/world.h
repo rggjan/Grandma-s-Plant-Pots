@@ -9,7 +9,7 @@
 
 #define MAX_PLAYERS 8
 
-class Fly;
+class Bug;
 class Flower;
 class Plant;
 class Player;
@@ -32,7 +32,7 @@ class World {
     CL_SoundBuffer *sound_beep1_;
 
     // Operations
-    void AddFly(Fly *fly);
+    void AddBug(Bug *bug);
     void AddFlower(Flower *flower);
     void RemoveFlower(Flower *flower);
     void AddPlant(Plant *plant);
@@ -41,7 +41,7 @@ class World {
 
     // Queries
     Flower* NearestFlower(CL_Vec2f position);
-    std::vector<Fly *>* NearestBugs(CL_Vec2f position);
+    std::vector<Bug *>* NearestBugs(CL_Vec2f position);
     std::vector<Plant *>* NearestPlants(CL_Vec2f position);
     bool CanBuild(CL_Vec2f position);
 
@@ -53,7 +53,7 @@ class World {
 
     CL_Sprite *background;
 
-    std::vector<Fly *> flies;
+    std::vector<Bug *> bugs;
     std::vector<Plant*> plants;
     std::list<Flower*> flowers;
     std::vector<Player*> players;

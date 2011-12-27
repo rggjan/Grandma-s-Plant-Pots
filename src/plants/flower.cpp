@@ -1,7 +1,7 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
 #include "./flower.h"
-#include "bugs/fly.h"
+#include "bugs/bug.h"
 
 #include <vector>
 
@@ -28,12 +28,12 @@ Flower::Flower(World *world, CL_GraphicContext *gc,
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;
-  
+
   sound_shot_ =
     new CL_SoundBuffer("FlowerShoot", &world->resources);
   sound_shot_->set_volume(1.0f);
   sound_session_shot_= sound_shot_->prepare();
-  
+
 }
 
 void Flower::AddLeaf(Leaf* leaf) {
@@ -41,7 +41,7 @@ void Flower::AddLeaf(Leaf* leaf) {
 }
 
 bool Flower::Update(int time_ms) {
-  // Update leaves  
+  // Update leaves
   std::list<Leaf *>::iterator it;
   for (it = leaves.begin(); it != leaves.end();) {
     if (!(*it)->Update(time_ms)) {
@@ -62,7 +62,7 @@ bool Flower::Update(int time_ms) {
   if (state_ == kClosed) {
     if (age_ > TIME_TO_OPEN) {
       state_ = kOpen;
-      spriteImage->set_frame(1);      
+      spriteImage->set_frame(1);
     }
   }
 
@@ -74,13 +74,13 @@ bool Flower::Update(int time_ms) {
   }
 
   if (state_ == kShooting) {
-    std::vector<Fly*> *bugs = world_->NearestBugs(position());
+    std::vector<Bug*> *bugs = world_->NearestBugs(position());
 
     targeting_fly = NULL;
 
     int size = bugs->size();
     for (int i = 0; i < size; i++) {
-      Fly* bug = (*bugs)[i];
+      Bug* bug = (*bugs)[i];
 
       if ((position() - bug->position()).length() <= ATTACK_DISTANCE) {
         if (bug->energy_ > 0) {

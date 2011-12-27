@@ -28,15 +28,15 @@ class Plant : public GameObject {
     }
 
     bool free_space() {
-      return eating_fly_ == NULL;
+      return eating_bug_ == NULL;
     }
 
-    void add_eating_fly(Fly* fly) {
-      eating_fly_ = fly;
+    void add_eating_bug(Bug* bug) {
+      eating_bug_ = bug;
     }
 
     void remove_flies() {
-      eating_fly_ = NULL;
+      eating_bug_ = NULL;
     }
 
     PlantPlayer* player() {
@@ -47,7 +47,7 @@ class Plant : public GameObject {
 
   protected:
     PlantPlayer* player_;
-    Fly* eating_fly_;
+    Bug* eating_bug_;
 
     double co2_collected_per_second_;
     double sun_collected_per_second_;
