@@ -286,15 +286,15 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
     if (key.id == CL_KEY_D) {
       players[3]->moving_right = true;
     }
-    if (key.id == CL_KEY_1) {
+    if (key.id == CL_KEY_E) {
       players[3]->BuildButtonPressed();
     }
 
-    if (key.id == CL_KEY_2) {
+    if (key.id == CL_KEY_Q) {
       players[3]->SelectButtonPressed();
     }
 
-    if (key.id == CL_KEY_3) {
+    if (key.id == CL_KEY_Y) {
       players[3]->CancelButtonPressed();
     }
   }
