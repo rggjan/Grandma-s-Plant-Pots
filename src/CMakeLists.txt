@@ -25,4 +25,5 @@ add_definitions(${ClanLib_DEFINITIONS})
 add_executable(gpp ${GPP_SOURCES})
 
 # Link with clanlib
-target_link_libraries(gpp ${ClanLib_LIBRARIES})
+# TODO(rggjan): pthread should be handled by clanlib!
+target_link_libraries(gpp ${ClanLib_LIBRARIES} pthread)
