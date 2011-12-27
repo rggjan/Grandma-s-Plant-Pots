@@ -23,16 +23,15 @@ Flower::Flower(World *world, CL_GraphicContext *gc,
                CL_Vec2f position, PlantPlayer* player)
   : Plant(world, gc, position, player),
     state_(kClosed),
-    age_(0) {
+    age_(0),
+    sound_shot_("FlowerShoot", &world->resources) {
   spriteImage = new CL_Sprite(*gc, "Plant1", &world->resources);
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;
 
-  sound_shot_ =
-    new CL_SoundBuffer("FlowerShoot", &world->resources);
-  sound_shot_->set_volume(1.0f);
-  sound_session_shot_= sound_shot_->prepare();
+  sound_shot_.set_volume(0.5f);
+  sound_session_shot_=sound_shot_.prepare();
 
 }
 
@@ -157,7 +156,7 @@ void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
                   targeting_bug->position() - target,
                   CL_Colorf::green);
       if(!sound_session_shot_.is_playing())
-        sound_session_shot_ = sound_shot_->play();
+        sound_session_shot_ = sound_shot_.play();
   }
 
   Plant::Draw(gc, target);
