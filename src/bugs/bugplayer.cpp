@@ -107,14 +107,14 @@ void BugPlayer::DrawFloor() {
 }
 
 void BugPlayer::DrawTop() {
-  int size=0;
-  for (unsigned int i=0; i<bugs.size(); i++) {
+  int size = 0;
+  for (unsigned int i = 0; i < bugs.size(); i++) {
     size += bugs[i]->is_alive();
   }
 
   CL_Colorf color = CL_Colorf::white;
-    default_font.draw_text(*gc_, CL_Pointf(10, 30),
-                           cl_format("Bugs: %1", size), color);
+  default_font.draw_text(*gc_, CL_Pointf(10, 30),
+                         cl_format("Bugs: %1", size), color);
   Player::DrawTop();
 }
 
@@ -127,7 +127,7 @@ void BugPlayer::Update(int time_ms) {
     bug->update(time_ms);
   }
 
-  nearest_free_plant_ = GetFreePlant();  
+  nearest_free_plant_ = GetFreePlant();
 
   Player::Update(time_ms);
 }

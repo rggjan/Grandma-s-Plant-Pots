@@ -1,15 +1,16 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
 #include "./flower.h"
-#include "bugs/bug.h"
 
 #include <vector>
+#include <list>
 
+#include "bugs/bug.h"
 #include "./leaf.h"
 #include "plants/plantplayer.h"
 
-#define TIME_TO_OPEN 15000
-#define TIME_TO_FINAL 30000
+#define TIME_TO_OPEN 1500
+#define TIME_TO_FINAL 3000
 #define MIN_FLOWER_DISTANCE 50
 
 #define CO2_COLLECTED_PER_SECOND 0.1
@@ -33,8 +34,7 @@ Flower::Flower(World *world, CL_GraphicContext *gc,
   energy_ = START_ENERGY;
 
   sound_shot_.set_volume(0.5f);
-  sound_session_shot_=sound_shot_.prepare();
-
+  sound_session_shot_ = sound_shot_.prepare();
 }
 
 void Flower::AddLeaf(Leaf* leaf) {
@@ -84,7 +84,8 @@ bool Flower::Update(int time_ms) {
     for (int i = 0; i < size; i++) {
       Bug* bug = (*bugs)[i];
 
-      if ((position() - bug->position()).length() <= ATTACK_DISTANCE && bug->is_alive()) {
+      if ((position() - bug->position()).length() <= ATTACK_DISTANCE &&
+          bug->is_alive()) {
         if (bug->energy_ > 0) {
           targeting_bug = bug;
           break;
@@ -94,8 +95,8 @@ bool Flower::Update(int time_ms) {
       }
     }
 
-    if(targeting_bug) {
-      targeting_bug->energy_ -= ATTACK_ENERGY_PER_SECOND*time_ms/100;
+    if (targeting_bug) {
+      targeting_bug->energy_ -= ATTACK_ENERGY_PER_SECOND * time_ms / 100;
       if (targeting_bug->energy_ <= 0) {
         targeting_bug->set_dead();
         targeting_bug->StopEating();
@@ -157,8 +158,8 @@ void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
     CL_Draw::line(*gc, position() - target,
                   targeting_bug->position() - target,
                   CL_Colorf::green);
-      if(!sound_session_shot_.is_playing())
-        sound_session_shot_ = sound_shot_.play();
+    if (!sound_session_shot_.is_playing())
+      sound_session_shot_ = sound_shot_.play();
   }
 
   Plant::Draw(gc, target);

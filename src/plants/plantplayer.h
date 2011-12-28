@@ -52,7 +52,7 @@ class PlantPlayer : public Player {
     std::list<Flower*> flowers;
     State state;
     CL_Sprite *selectedImage;
-    Flower *selectedFlower;    
+    Flower *selectedFlower;
     Flower *tmpFlower;
     Leaf *tmpLeaf;
     bool cross_green_;

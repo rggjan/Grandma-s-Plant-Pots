@@ -3,6 +3,7 @@
 #include "./app.h"
 
 #include <ClanLib/sound.h>
+#include <vector>
 
 #include "./world.h"
 

@@ -7,6 +7,7 @@
 #include <ClanLib/sound.h>
 #include <algorithm>
 #include <vector>
+#include <list>
 
 #include "plants/flower.h"
 #include "plants/plantplayer.h"
@@ -34,8 +35,8 @@ World::World(CL_DisplayWindow* window)
   if (width != height)
     CL_Console::write_line("Error, height and width should be the same!");
 
-  player_width_ = default_gc.get_width()/2;
-  player_height_ = default_gc.get_height()/2;
+  player_width_ = default_gc.get_width() / 2;
+  player_height_ = default_gc.get_height() / 2;
 
   texture_ = new CL_Texture(default_gc, CL_Size(player_width_, player_height_));
   framebuffer_ = new CL_FrameBuffer(default_gc);
@@ -489,9 +490,13 @@ void World::Draw() {
 
     default_gc.reset_frame_buffer();
     default_gc.set_texture(0, *texture_);
-    CL_Draw::texture(default_gc, CL_Rect(((int)(i / 2)) * player_width_, (i % 2) * player_height_, CL_Size(player_width_, player_height_)));
+    CL_Draw::texture(default_gc,
+                     CL_Rect((static_cast<int>(i / 2)) * player_width_,
+                             (i % 2) * player_height_,
+                             CL_Size(player_width_, player_height_)));
     default_gc.reset_texture(0);
-    //default_gc.draw_pixels(((int)(i/2))*200, (i%2)*200, texture_->get_pixeldata(), CL_Rect(0, 0, 200, 200));
+    // default_gc.draw_pixels(((int)(i/2))*200,
+    // (i%2)*200, texture_->get_pixeldata(), CL_Rect(0, 0, 200, 200));
   }
 
   default_font_.draw_text(default_gc, CL_Pointf(10, 100),

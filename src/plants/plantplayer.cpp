@@ -6,6 +6,8 @@
 #include <ClanLib/core.h>
 #include <vector>
 
+#include <list>
+
 #include "plants/flower.h"
 #include "plants/leaf.h"
 
@@ -35,7 +37,8 @@ PlantPlayer::PlantPlayer(CL_GraphicContext* gc, World* world,
   sound_plantgrowing_->set_volume(1.0f);
   sound_plantgrowing_->prepare();
 
-  sound_leafgrowing_ = new CL_SoundBuffer("LeafgrowingMusic", &world->resources);
+  sound_leafgrowing_ = new CL_SoundBuffer("LeafgrowingMusic",
+                                          &world->resources);
   sound_leafgrowing_->set_volume(0.1f);
   sound_leafgrowing_->prepare();
 }

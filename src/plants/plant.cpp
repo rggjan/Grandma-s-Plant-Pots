@@ -36,7 +36,7 @@ bool Plant::Update(int time_ms) {
   if (!is_alive()) {
     dead_time_ += time_ms;
     // TODO(rggjan): Leaves!
-    return (dead_time_ <= ZOMBIE_SECONDS*1000.);
+    return (dead_time_ <= ZOMBIE_SECONDS * 1000.);
   }
 
   // Update CO2 production
@@ -53,12 +53,7 @@ void Plant::Draw(CL_GraphicContext *gc, CL_Vec2f position) {
 
   if (!is_alive()) {
     spriteImage->set_color(CL_Color::brown);
-
-    if (dead_time_ > ZOMBIE_SECONDS)
-      ; // TODO(rggjan): delete if no leaves left!
-
-    spriteImage->set_alpha(1 - dead_time_/(ZOMBIE_SECONDS*1000.));
-
+    spriteImage->set_alpha(1 - dead_time_ / (ZOMBIE_SECONDS * 1000.));
     spriteImage->draw(*gc, pos.x, pos.y);
     return;
   }
@@ -66,11 +61,16 @@ void Plant::Draw(CL_GraphicContext *gc, CL_Vec2f position) {
   spriteImage->draw(*gc, pos.x, pos.y);
 
   if (energy_ > 20) {
-    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 20, pos.x + energy_ / 3., pos.y - 20, CL_Colorf::green);
-    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 19, pos.x + energy_ / 3., pos.y - 19, CL_Colorf::darkgreen);
+    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 20,
+                  pos.x + energy_ / 3., pos.y - 20, CL_Colorf::green);
+    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 19,
+                  pos.x + energy_ / 3., pos.y - 19, CL_Colorf::darkgreen);
   } else {
-    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 20, pos.x + energy_ / 3., pos.y - 20, CL_Colorf::red);
-    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 19, pos.x + energy_ / 3., pos.y - 19, CL_Colorf::darkred);
+    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 20,
+                  pos.x + energy_ / 3., pos.y - 20, CL_Colorf::red);
+    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 19,
+                  pos.x + energy_ / 3., pos.y - 19, CL_Colorf::darkred);
   }
-  CL_Draw::line(*gc, pos.x - energy_ / 3. + 1, pos.y - 18, pos.x + energy_ / 3. + 1, pos.y - 18, CL_Colorf::black);
+  CL_Draw::line(*gc, pos.x - energy_ / 3. + 1, pos.y - 18,
+                pos.x + energy_ / 3. + 1, pos.y - 18, CL_Colorf::black);
 }

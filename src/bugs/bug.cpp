@@ -23,7 +23,8 @@
 // General
 #define START_ENERGY 30
 
-Bug::Bug(World *world, CL_GraphicContext &gc, const CL_StringRef &name, BugPlayer* player)
+Bug::Bug(World *world, CL_GraphicContext &gc, const CL_StringRef &name,
+         BugPlayer* player)
   : GameObject(world),
     energy_(START_ENERGY),
     direction(0, -1),
@@ -34,8 +35,9 @@ Bug::Bug(World *world, CL_GraphicContext &gc, const CL_StringRef &name, BugPlaye
   spriteImage = new CL_Sprite(gc, name, &world->resources);
   spriteImage->set_play_loop(true);
 
-  double max_add = CURVE_VARIANCE/100.*MAX_CURVE;
-  double diff = ((double)rand()/RAND_MAX)*max_add*2-max_add;
+  double max_add = CURVE_VARIANCE / 100.*MAX_CURVE;
+  double diff = (static_cast<double>(rand()) / RAND_MAX) *
+                max_add * 2 - max_add;
   curve_ = MAX_CURVE + diff;
 }
 

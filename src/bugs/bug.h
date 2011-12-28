@@ -24,7 +24,7 @@ class Bug : public GameObject {
     void SetTargetPlant(Plant *flower);
     virtual bool update(int timeElapsed_ms);
     inline bool is_free() {
-      return target_plant_ == NULL && energy_ > 0;
+      return target_plant_ == NULL;
     }
     void StopEating();
 
@@ -35,7 +35,7 @@ class Bug : public GameObject {
     CL_Vec2f direction;
     CL_Vec2f target_position_;
     Plant *target_plant_;
-    
+
     double food_eaten_;
     CL_StringRef bug_name_;
     BugPlayer *player_;
