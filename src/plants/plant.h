@@ -42,6 +42,8 @@ class Plant : public GameObject {
 
     virtual bool Update(int time_ms);
 
+    virtual void UpdateAnimation(int time_ms) {}
+
   protected:
     PlantPlayer* player_;
     Bug* eating_bug_;

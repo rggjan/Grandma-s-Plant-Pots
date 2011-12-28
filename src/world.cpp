@@ -16,7 +16,7 @@
 #define BACKGROUND_BORDER 65
 #define NUM_PLAYERS 4
 
-using std::vector;
+using std::list;
 using std::sort;
 
 World::World(CL_DisplayWindow* window)
@@ -94,17 +94,26 @@ void World::AddBug(Bug *bug) {
   bugs.push_back(bug);
 }
 
+void World::RemoveBug(Bug *bug) {
+  bugs.remove(bug);
+}
+
 void World::AddFlower(Flower *flower) {
   AddPlant(flower);
   flowers.push_back(flower);
 }
 
 void World::RemoveFlower(Flower *flower) {
+  RemovePlant(flower);
   flowers.remove(flower);
 }
 
 void World::AddPlant(Plant *plant) {
   plants.push_back(plant);
+}
+
+void World::RemovePlant(Plant *plant) {
+  plants.remove(plant);
 }
 
 struct sort_class {
@@ -115,19 +124,19 @@ struct sort_class {
   CL_Vec2f position;
 };
 
-vector<Plant *>* World::NearestPlants(CL_Vec2f position) {
+list<Plant *>* World::NearestPlants(CL_Vec2f position) {
   sort_class sort_object;
   sort_object.position = position;
 
-  sort(plants.begin(), plants.end(), sort_object);
+  plants.sort(sort_object);
   return &plants;
 }
 
-vector<Bug*>* World::NearestBugs(CL_Vec2f position) {
+list<Bug*>* World::NearestBugs(CL_Vec2f position) {
   sort_class sort_object;
   sort_object.position = position;
 
-  sort(bugs.begin(), bugs.end(), sort_object);
+  bugs.sort(sort_object);
   return &bugs;
 }
 
@@ -480,11 +489,10 @@ void World::Draw() {
     for (it1 = flowers.begin(); it1 != flowers.end(); ++it1)
       (*it1)->Draw(players[i]->gc_, players[i]->map_position());
 
-    // Flies
-    int size = bugs.size();
-    for (int j = 0; j < size; j++) {
-      bugs[j]->Draw(players[i]->gc_, players[i]->map_position());
-    }
+    // Bugs
+    std::list<Bug *>::iterator it2;
+    for (it2 = bugs.begin(); it2 != bugs.end(); ++it2)
+      (*it2)->Draw(players[i]->gc_, players[i]->map_position());
 
     players[i]->DrawTop();
 

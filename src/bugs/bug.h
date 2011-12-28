@@ -24,15 +24,13 @@ class Bug : public GameObject {
 
     void SetTargetPlant(Plant *flower);
 
-    virtual bool update(int timeElapsed_ms);
+    virtual bool Update(int time_ms);
 
     inline bool is_free() {
       return target_plant_ == NULL;
     }
 
     void StopEating();
-
-    double energy_;
 
     // Implementation:
   private:

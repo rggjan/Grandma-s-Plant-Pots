@@ -31,7 +31,7 @@ void Plant::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
 }
 
 bool Plant::Update(int time_ms) {
-  if (!GameObject::Update(time_ms, false))
+  if (!GameObject::Update(time_ms))
     return false;
 
   // Update CO2 production

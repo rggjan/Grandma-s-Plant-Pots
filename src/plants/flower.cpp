@@ -47,6 +47,7 @@ bool Flower::Update(int time_ms) {
   std::list<Leaf *>::iterator it;
   for (it = leaves.begin(); it != leaves.end();) {
     if (!(*it)->Update(time_ms)) {
+      world_->RemovePlant(*it);
       delete *it;
       it = leaves.erase(it);
     } else {
@@ -76,20 +77,18 @@ bool Flower::Update(int time_ms) {
   }
 
   if (state_ == kShooting) {
-    std::vector<Bug*> *bugs = world_->NearestBugs(position());
+    std::list<Bug*> *bugs = world_->NearestBugs(position());
 
     targeting_bug = NULL;
 
-    int size = bugs->size();
-    for (int i = 0; i < size; i++) {
-      Bug* bug = (*bugs)[i];
+    std::list<Bug *>::iterator it;
+    for (it = bugs->begin(); it != bugs->end(); ++it) {
+      Bug* bug = *it;
 
       if ((position() - bug->position()).length() <= ATTACK_DISTANCE &&
           bug->is_alive()) {
-        if (bug->energy_ > 0) {
-          targeting_bug = bug;
-          break;
-        }
+        targeting_bug = bug;
+        break;
       } else {
         break;
       }

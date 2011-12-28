@@ -26,7 +26,8 @@ class GameObject {
 
     // Operations
     virtual void Draw(CL_GraphicContext *gc, CL_Vec2f target);
-    virtual bool Update(int time_ms, bool update_animation = true);
+    virtual bool Update(int time_ms);
+    virtual void UpdateAnimation(int time_ms);
 
     virtual double DecreaseEnergy(double amount);
 

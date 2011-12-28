@@ -4,7 +4,6 @@
 #define SRC_WORLD_H_
 
 #include <ClanLib/display.h>
-#include <vector>
 #include <list>
 
 #define MAX_PLAYERS 8
@@ -33,16 +32,21 @@ class World {
 
     // Operations
     void AddBug(Bug *bug);
+    void RemoveBug(Bug *bug);
+
     void AddFlower(Flower *flower);
     void RemoveFlower(Flower *flower);
+
     void AddPlant(Plant *plant);
+    void RemovePlant(Plant *plant);
+
     void Run();
     void PlayBeep();
 
     // Queries
     Flower* NearestFlower(CL_Vec2f position);
-    std::vector<Bug *>* NearestBugs(CL_Vec2f position);
-    std::vector<Plant *>* NearestPlants(CL_Vec2f position);
+    std::list<Bug *>* NearestBugs(CL_Vec2f position);
+    std::list<Plant *>* NearestPlants(CL_Vec2f position);
     bool CanBuild(CL_Vec2f position);
 
   private:
@@ -53,9 +57,10 @@ class World {
 
     CL_Sprite *background;
 
-    std::vector<Bug *> bugs;
-    std::vector<Plant*> plants;
+    std::list<Bug *> bugs;
+    std::list<Plant*> plants;
     std::list<Flower*> flowers;
+
     std::vector<Player*> players;
 
     CL_GraphicContext default_gc;

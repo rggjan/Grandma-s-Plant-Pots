@@ -27,7 +27,6 @@ Bug::Bug(World *world, CL_GraphicContext &gc, const CL_StringRef &name,
          BugPlayer* player)
   // TODO(rggjan): Real position
   : GameObject(world, CL_Vec2f(0, 0)),
-    energy_(START_ENERGY),
     direction(0, -1),
     target_plant_(NULL),
     food_eaten_(0),
@@ -37,6 +36,7 @@ Bug::Bug(World *world, CL_GraphicContext &gc, const CL_StringRef &name,
   spriteImage->set_play_loop(true);
 
   dead_color_ = CL_Color::red;
+  energy_ = START_ENERGY;
 
   // Set curve with variance
   double max_add = CURVE_VARIANCE / 100.*MAX_CURVE;
@@ -58,7 +58,7 @@ void Bug::StopEating() {
   target_plant_ = NULL;
 }
 
-bool Bug::update(int time_ms) {
+bool Bug::Update(int time_ms) {
   GameObject::Update(time_ms);
 
   if (!is_alive())

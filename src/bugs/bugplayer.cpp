@@ -4,7 +4,8 @@
 
 #include <ClanLib/sound.h>
 #include <ClanLib/core.h>
-#include <vector>
+#include <list>
+#include <algorithm>
 
 #include "./world.h"
 #include "plants/plant.h"
@@ -12,7 +13,8 @@
 #define NUM_BUGS 2
 #define START_ENERGY 10
 
-using std::vector;
+using std::list;
+using std::count_if;
 
 BugPlayer::BugPlayer(CL_GraphicContext* gc, World* world,
                      int width, int height)
@@ -60,9 +62,9 @@ void BugPlayer::SelectButtonPressed() {
 }
 
 void BugPlayer::CancelButtonPressed() {
-  int size = bugs.size();
-  for (int i = 0; i < size; i++) {
-    bugs[i]->StopEating();
+  std::list<Bug *>::iterator it;
+  for (it = bugs.begin(); it != bugs.end(); ++it) {
+    (*it)->StopEating();
   }
 }
 
@@ -70,24 +72,23 @@ void BugPlayer::BuildButtonPressed() {
 }
 
 Plant* BugPlayer::GetFreePlant() {
-  vector<Plant*> *plants = world_->NearestPlants(position());
+  list<Plant*> *plants = world_->NearestPlants(position());
 
-  int size = plants->size();
-  for (int i = 0; i < size; i++) {
-    Plant* plant = (*plants)[i];
+  list<Plant*>::iterator it;
+  for (it = plants->begin(); it != plants->end(); ++it) {
+    Plant* plant = *it;
     if (plant->is_alive() && plant->free_space() && Visible(plant->position()))
-      return (*plants)[i];
+      return plant;
   }
 
   return NULL;
 }
 
 Bug* BugPlayer::GetFreeBug() {
-  int size = bugs.size();
-  for (int i = 0; i < size; i++) {
-    if (bugs[i]->is_alive() && bugs[i]->is_free()) {
-      return bugs[i];
-    }
+  std::list<Bug *>::iterator it;
+  for (it = bugs.begin(); it != bugs.end(); ++it) {
+    if ((*it)->is_alive() && (*it)->is_free())
+      return *it;
   }
 
   return NULL;
@@ -106,11 +107,10 @@ void BugPlayer::DrawFloor() {
     }*/
 }
 
+bool IsAlive(Bug *bug) { return bug->is_alive(); }
+
 void BugPlayer::DrawTop() {
-  int size = 0;
-  for (unsigned int i = 0; i < bugs.size(); i++) {
-    size += bugs[i]->is_alive();
-  }
+  int size = count_if(bugs.begin(), bugs.end(), IsAlive);
 
   CL_Colorf color = CL_Colorf::white;
   default_font_.draw_text(*gc_, CL_Pointf(10, 30),
@@ -119,12 +119,18 @@ void BugPlayer::DrawTop() {
 }
 
 void BugPlayer::Update(int time_ms) {
-  int size = bugs.size();
-  for (int i = 0; i < size; i++) {
-    Bug *bug = bugs[i];
-
+  std::list<Bug *>::iterator it;
+  for (it = bugs.begin(); it != bugs.end();) {
+    Bug* bug = *it;
     bug->set_target_position(position());
-    bug->update(time_ms);
+
+    if (!bug->Update(time_ms)) {
+      world_->RemoveBug(bug);
+      delete bug;
+      it = bugs.erase(it);
+    } else {
+      ++it;
+    }
   }
 
   nearest_free_plant_ = GetFreePlant();

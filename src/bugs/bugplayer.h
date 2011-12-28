@@ -3,7 +3,7 @@
 #ifndef SRC_BUGS_BUGPLAYER_H_
 #define SRC_BUGS_BUGPLAYER_H_
 
-#include <vector>
+#include <list>
 
 #include "./player.h"
 #include "bugs/bug.h"
@@ -27,8 +27,9 @@ class BugPlayer : public Player {
 
   private:
     // Attributes
-    std::vector<Bug*> bugs;
-    std::vector<Bug*> tmp_bugs;
+    std::list<Bug*> bugs;
+
+    //std::vector<Bug*> tmp_bugs;
     CL_Sprite *selectedImage;
     Plant* nearest_free_plant_;
 
