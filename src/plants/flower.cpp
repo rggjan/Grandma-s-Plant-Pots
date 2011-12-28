@@ -96,11 +96,9 @@ bool Flower::Update(int time_ms) {
     }
 
     if (targeting_bug) {
-      targeting_bug->energy_ -= ATTACK_ENERGY_PER_SECOND * time_ms / 100;
-      if (targeting_bug->energy_ <= 0) {
-        targeting_bug->set_dead();
+      targeting_bug->DecreaseEnergy(ATTACK_ENERGY_PER_SECOND * time_ms / 100);
+      if (!targeting_bug->is_alive())
         targeting_bug->StopEating();
-      }
     }
   }
 

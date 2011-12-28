@@ -9,7 +9,6 @@
 Plant::Plant(World *world, CL_GraphicContext *gc,
              CL_Vec2f position, PlantPlayer* player)
   : GameObject(world, position),
-    energy_(100),
     player_(player),
     eating_bug_(NULL),
     co2_collected_per_second_(0),
@@ -60,6 +59,7 @@ void Plant::Draw(CL_GraphicContext *gc, CL_Vec2f position) {
 
   spriteImage->draw(*gc, pos.x, pos.y);
 
+  // Draw energy
   if (energy_ > 20) {
     CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 20,
                   pos.x + energy_ / 3., pos.y - 20, CL_Colorf::green);

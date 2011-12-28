@@ -25,7 +25,8 @@
 
 Bug::Bug(World *world, CL_GraphicContext &gc, const CL_StringRef &name,
          BugPlayer* player)
-  : GameObject(world),
+  // TODO(rggjan): Real position
+  : GameObject(world, CL_Vec2f(0, 0)),
     energy_(START_ENERGY),
     direction(0, -1),
     target_plant_(NULL),
@@ -83,16 +84,10 @@ bool Bug::update(int time_ms) {
 
   if (target_plant_ != NULL and distance < ATTACK_MIN_DISTANCE) {
     double amount = EAT_PER_SECOND * time_ms / 1000.;
-    if (amount > target_plant_->energy_) {
-      food_eaten_ += target_plant_->energy_;
+    food_eaten_ += target_plant_->DecreaseEnergy(amount);
 
-      target_plant_->set_dead();
+    if (!target_plant_->is_alive())
       target_plant_ = NULL;
-      return true;
-    }
-
-    target_plant_->energy_ -= amount;
-    food_eaten_ += amount;
 
     return true;
   }

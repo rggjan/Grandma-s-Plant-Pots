@@ -12,15 +12,17 @@ bool GameObject::Update(int time_ms) {
   return is_alive();
 }
 
-GameObject::GameObject(World* world)
-  : world_(world),
-    alive_(true),
-    dead_time_(0) {
+double GameObject::DecreaseEnergy(double amount) {
+  if (amount > energy_)
+    amount = energy_;
+
+  energy_ -= amount;
+  return amount;
 }
 
 GameObject::GameObject(World* world, CL_Vec2f position)
   : position_(position),
+    energy_(1),
     world_(world),
-    alive_(true),
     dead_time_(0) {
 }

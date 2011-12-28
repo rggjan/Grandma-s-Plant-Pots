@@ -14,9 +14,6 @@ class Plant : public GameObject {
     Plant(World *world, CL_GraphicContext *gc,
           CL_Vec2f position, PlantPlayer* player);
 
-    // Attributes
-    double energy_;
-
     // Operations
     void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
     void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
