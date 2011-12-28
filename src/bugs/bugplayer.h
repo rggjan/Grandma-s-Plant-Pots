@@ -32,7 +32,6 @@ class BugPlayer : public Player {
     CL_Sprite *selectedImage;
     Plant* nearest_free_plant_;
 
-
     // Queries
     Plant* GetFreePlant();
     Bug* GetFreeBug();
