@@ -21,12 +21,18 @@ class Bug : public GameObject {
     inline void set_target_position(CL_Vec2f target_position) {
       target_position_ = target_position;
     }
+
     void SetTargetPlant(Plant *flower);
+
     virtual bool update(int timeElapsed_ms);
+
     inline bool is_free() {
       return target_plant_ == NULL;
     }
+
     void StopEating();
+
+    virtual double DecreaseEnergy(double amount);
 
     double energy_;
 

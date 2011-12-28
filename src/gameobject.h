@@ -28,7 +28,7 @@ class GameObject {
     virtual void Draw(CL_GraphicContext *gc, CL_Vec2f target);
     virtual bool Update(int time_ms);
 
-    double DecreaseEnergy(double amount);
+    virtual double DecreaseEnergy(double amount);
 
     inline CL_Vec2f position() {
       return position_;

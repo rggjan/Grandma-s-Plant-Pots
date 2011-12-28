@@ -55,13 +55,20 @@ void Bug::StopEating() {
   target_plant_ = NULL;
 }
 
-bool Bug::update(int time_ms) {
-  if (energy_ <= 0) {
-    spriteImage->set_color(CL_Color::red);
-    return true;
-  }
+double Bug::DecreaseEnergy(double amount) {
+  amount = GameObject::DecreaseEnergy(amount);
 
+  if (!is_alive())
+    spriteImage->set_color(CL_Color::red);
+
+  return amount;
+}
+
+bool Bug::update(int time_ms) {
   GameObject::Update(time_ms);
+
+  if (!is_alive())
+    return true;
 
   // Check if we can reproduce
   if (food_eaten_ > FOOD_NEEDED_TO_DUPLICATE) {
