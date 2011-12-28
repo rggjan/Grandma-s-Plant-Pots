@@ -10,17 +10,17 @@
 Player::Player(CL_GraphicContext* gc, World* world, int width, int height)
   : gc_(gc),
     map_position_(300, 300),
+    window_width_(gc->get_width()),
+    window_height_(gc->get_height()),
     cross_position_(window_width_ / 2, window_height_ / 2),
     moving_down_(false),
     moving_up_(false),
     moving_left_(false),
     moving_right_(false),
-    window_width_(gc_->get_width()),
-    window_height_(gc_->get_height()),
+    world_(world),
     map_width_(width),
     map_height_(height),
-    cross_(*gc, "Cross", &world->resources),
-    world_(world) {
+    cross_(*gc, "Cross", &world->resources) {
   CL_FontDescription desc;
   desc.set_height(20);
   default_font_ = CL_Font_System(*gc_, desc);
@@ -167,7 +167,7 @@ void Player::DrawFloor() {
 }
 
 void Player::DrawTop() {
-  // Draw cross_
+  // Draw cross
   cross_.set_scale(0.5, 0.5);
   cross_.draw(*gc_, cross_position_.x, cross_position_.y);
   cross_.set_scale(0.25, 0.25);

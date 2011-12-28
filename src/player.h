@@ -24,9 +24,12 @@ class Player {
     inline CL_Vec2f cross_position() { return cross_position_; }
     inline CL_Vec2f map_position() { return map_position_; }
 
+    bool Visible(CL_Vec2f position);
+
     CL_GraphicContext *gc_;
 
     CL_Vec2f map_position_;
+    int window_width_, window_height_;
     CL_Vec2f cross_position_;
 
     bool moving_down_;
@@ -34,15 +37,12 @@ class Player {
     bool moving_left_;
     bool moving_right_;
 
-    bool Visible(CL_Vec2f position);
-
   protected:
-    int window_width_, window_height_;
+    World* world_;
+
     int map_width_, map_height_;
     CL_Font default_font_;
     CL_Sprite cross_;
-
-    World* world_;
 };
 
 #endif  // SRC_PLAYER_H_
