@@ -37,7 +37,7 @@ BugPlayer::BugPlayer(CL_GraphicContext* gc, World* world,
 }
 
 void BugPlayer::CreateBug(CL_StringRef name, CL_Vec2f position) {
-  Bug * bug = new Bug(world, *gc_, name, this);
+  Bug * bug = new Bug(world_, *gc_, name, this);
   bug->set_position(position);
 
   AddBug(bug);
@@ -45,7 +45,7 @@ void BugPlayer::CreateBug(CL_StringRef name, CL_Vec2f position) {
 
 void BugPlayer::AddBug(Bug* bug) {
   bugs.push_back(bug);
-  world->AddBug(bug);
+  world_->AddBug(bug);
 }
 
 void BugPlayer::SelectButtonPressed() {
@@ -55,7 +55,7 @@ void BugPlayer::SelectButtonPressed() {
     sound_bug_attack_->play();
     bug->SetTargetPlant(nearest_free_plant_);
   } else {
-    world->PlayBeep();
+    world_->PlayBeep();
   }
 }
 
@@ -70,7 +70,7 @@ void BugPlayer::BuildButtonPressed() {
 }
 
 Plant* BugPlayer::GetFreePlant() {
-  vector<Plant*> *plants = world->NearestPlants(position());
+  vector<Plant*> *plants = world_->NearestPlants(position());
 
   int size = plants->size();
   for (int i = 0; i < size; i++) {
@@ -113,7 +113,7 @@ void BugPlayer::DrawTop() {
   }
 
   CL_Colorf color = CL_Colorf::white;
-  default_font.draw_text(*gc_, CL_Pointf(10, 30),
+  default_font_.draw_text(*gc_, CL_Pointf(10, 30),
                          cl_format("Bugs: %1", size), color);
   Player::DrawTop();
 }

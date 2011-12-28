@@ -20,8 +20,6 @@
     <File Name="src/app.h"/>
     <File Name="src/gameobject.h"/>
     <File Name="src/program.h"/>
-    <File Name="src/background.h"/>
-    <File Name="src/background.cpp"/>
     <File Name="src/gameobject.cpp"/>
     <File Name="src/world.h"/>
     <File Name="src/player.h"/>
@@ -61,6 +59,7 @@
       <General OutputFile="" IntermediateDirectory="./debug" Command="$(IntermediateDirectory)/gpp" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="." PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -98,6 +97,7 @@
       <General OutputFile="" IntermediateDirectory="./Release" Command="$(IntermediateDirectory)/gpp" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">

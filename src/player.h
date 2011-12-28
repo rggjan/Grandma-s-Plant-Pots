@@ -29,20 +29,20 @@ class Player {
     CL_Vec2f map_position_;
     CL_Vec2f cross_position_;
 
-    bool moving_down;
-    bool moving_up;
-    bool moving_left;
-    bool moving_right;
+    bool moving_down_;
+    bool moving_up_;
+    bool moving_left_;
+    bool moving_right_;
 
     bool Visible(CL_Vec2f position);
 
   protected:
-    int window_width, window_height;
-    int map_width, map_height;
-    CL_Font default_font;
-    CL_Sprite *cross;
+    int window_width_, window_height_;
+    int map_width_, map_height_;
+    CL_Font default_font_;
+    CL_Sprite cross_;
 
-    World* world;
+    World* world_;
 };
 
 #endif  // SRC_PLAYER_H_
