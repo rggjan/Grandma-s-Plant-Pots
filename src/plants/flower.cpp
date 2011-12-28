@@ -89,8 +89,6 @@ bool Flower::Update(int time_ms) {
           bug->is_alive()) {
         targeting_bug = bug;
         break;
-      } else {
-        break;
       }
     }
 
