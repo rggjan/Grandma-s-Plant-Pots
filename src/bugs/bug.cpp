@@ -36,6 +36,9 @@ Bug::Bug(World *world, CL_GraphicContext &gc, const CL_StringRef &name,
   spriteImage = new CL_Sprite(gc, name, &world->resources);
   spriteImage->set_play_loop(true);
 
+  dead_color_ = CL_Color::red;
+
+  // Set curve with variance
   double max_add = CURVE_VARIANCE / 100.*MAX_CURVE;
   double diff = (static_cast<double>(rand()) / RAND_MAX) *
                 max_add * 2 - max_add;
@@ -53,15 +56,6 @@ void Bug::StopEating() {
 
   target_plant_->remove_flies();
   target_plant_ = NULL;
-}
-
-double Bug::DecreaseEnergy(double amount) {
-  amount = GameObject::DecreaseEnergy(amount);
-
-  if (!is_alive())
-    spriteImage->set_color(CL_Color::red);
-
-  return amount;
 }
 
 bool Bug::update(int time_ms) {

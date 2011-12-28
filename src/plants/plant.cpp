@@ -4,8 +4,6 @@
 
 #include "plants/plantplayer.h"
 
-#define ZOMBIE_SECONDS 10
-
 Plant::Plant(World *world, CL_GraphicContext *gc,
              CL_Vec2f position, PlantPlayer* player)
   : GameObject(world, position),
@@ -13,6 +11,7 @@ Plant::Plant(World *world, CL_GraphicContext *gc,
     eating_bug_(NULL),
     co2_collected_per_second_(0),
     sun_collected_per_second_(0) {
+  dead_color_ = CL_Color::brown;
 }
 
 void Plant::DrawRed(CL_GraphicContext *gc, CL_Vec2f position) {
@@ -32,11 +31,8 @@ void Plant::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
 }
 
 bool Plant::Update(int time_ms) {
-  if (!is_alive()) {
-    dead_time_ += time_ms;
-    // TODO(rggjan): Leaves!
-    return (dead_time_ <= ZOMBIE_SECONDS * 1000.);
-  }
+  if (!GameObject::Update(time_ms, false))
+    return false;
 
   // Update CO2 production
   player_->co2_ += co2_collected_per_second_ * time_ms / 1000.;
@@ -50,14 +46,10 @@ bool Plant::Update(int time_ms) {
 void Plant::Draw(CL_GraphicContext *gc, CL_Vec2f position) {
   CL_Vec2f pos = position_ - position;
 
-  if (!is_alive()) {
-    spriteImage->set_color(CL_Color::brown);
-    spriteImage->set_alpha(1 - dead_time_ / (ZOMBIE_SECONDS * 1000.));
-    spriteImage->draw(*gc, pos.x, pos.y);
-    return;
-  }
+  GameObject::Draw(gc, position);
 
-  spriteImage->draw(*gc, pos.x, pos.y);
+  if (!is_alive())
+    return;
 
   // Draw energy
   if (energy_ > 20) {

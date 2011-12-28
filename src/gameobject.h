@@ -26,7 +26,7 @@ class GameObject {
 
     // Operations
     virtual void Draw(CL_GraphicContext *gc, CL_Vec2f target);
-    virtual bool Update(int time_ms);
+    virtual bool Update(int time_ms, bool update_animation = true);
 
     virtual double DecreaseEnergy(double amount);
 
@@ -42,6 +42,8 @@ class GameObject {
     CL_Sprite *spriteImage;
     World *world_;
     double dead_time_;
+
+    CL_Color dead_color_;
 };
 
 #endif  // SRC_GAMEOBJECT_H_

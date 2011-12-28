@@ -32,8 +32,6 @@ class Bug : public GameObject {
 
     void StopEating();
 
-    virtual double DecreaseEnergy(double amount);
-
     double energy_;
 
     // Implementation:
