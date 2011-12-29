@@ -69,7 +69,7 @@ void Bug::StopEating() {
   if (this->is_free())
     return;
 
-  target_plant_->remove_flies();
+  target_plant_->remove_bugs();
   target_plant_ = NULL;
 }
 

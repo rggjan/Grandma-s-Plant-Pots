@@ -32,7 +32,7 @@ class Plant : public GameObject {
       eating_bug_ = bug;
     }
 
-    void remove_flies() {
+    void remove_bugs() {
       eating_bug_ = NULL;
     }
 
