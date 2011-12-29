@@ -496,6 +496,7 @@ void World::Draw() {
 
     players[i]->DrawTop();
 
+    // Draw splitscreen
     default_gc.reset_frame_buffer();
     default_gc.set_texture(0, *texture_);
     CL_Draw::texture(default_gc,

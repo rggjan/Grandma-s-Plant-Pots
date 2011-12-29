@@ -2,7 +2,6 @@
 
 #include "bugs/bugplayer.h"
 
-#include <ClanLib/sound.h>
 #include <ClanLib/core.h>
 #include <list>
 #include <algorithm>
@@ -18,9 +17,10 @@ using std::count_if;
 
 BugPlayer::BugPlayer(CL_GraphicContext* gc, World* world,
                      int width, int height)
-  : Player(gc, world, width, height) {
-  selectedImage = new CL_Sprite(*gc_, "Cross2", &world->resources);
-  selectedImage->set_alpha(0.5);
+  : Player(gc, world, width, height),
+    select_sprite_(*gc_, "Cross2", &world->resources),
+    sound_bug_attack_("BugAttack", &world->resources) {
+  select_sprite_.set_alpha(0.5);
 
   for (int i = 0; i < NUM_BUGS; i++) {
     const char* name;
@@ -33,9 +33,8 @@ BugPlayer::BugPlayer(CL_GraphicContext* gc, World* world,
     CreateBug(name, CL_Vec2f(i * 60, i * 60));
   }
 
-  sound_bug_attack_ = new CL_SoundBuffer("BugAttack", &world->resources);
-  sound_bug_attack_->set_volume(0.1f);
-  sound_bug_attack_->prepare();
+  sound_bug_attack_.set_volume(0.1f);
+  sound_bug_attack_.prepare();
 }
 
 void BugPlayer::CreateBug(CL_StringRef name, CL_Vec2f position) {
@@ -50,7 +49,7 @@ void BugPlayer::SelectButtonPressed() {
   Bug* bug = GetFreeBug();
 
   if (bug != NULL && nearest_free_plant_ != NULL) {
-    sound_bug_attack_->play();
+    sound_bug_attack_.play();
     bug->SetTargetPlant(nearest_free_plant_);
   } else {
     world_->PlayBeep();
@@ -58,14 +57,16 @@ void BugPlayer::SelectButtonPressed() {
 }
 
 void BugPlayer::CancelButtonPressed() {
-  for_each(bugs.begin(), bugs.end(), [](Bug* bug) { bug->StopEating(); });
+  for_each(bugs.begin(), bugs.end(), [](Bug * bug) {
+    bug->StopEating();
+  });
 }
 
 void BugPlayer::BuildButtonPressed() {
 }
 
 Plant* BugPlayer::GetFreePlant() {
-  for (Plant *plant : *world_->NearestPlants(position()))
+for (Plant * plant : *world_->NearestPlants(position()))
     if (plant->is_alive() && plant->free_space() && Visible(plant->position()))
       return plant;
 
@@ -73,7 +74,7 @@ Plant* BugPlayer::GetFreePlant() {
 }
 
 Bug* BugPlayer::GetFreeBug() {
-  for (Bug* bug : bugs)
+for (Bug * bug : bugs)
     if (bug->is_alive() && bug->is_free())
       return bug;
 
@@ -83,24 +84,26 @@ Bug* BugPlayer::GetFreeBug() {
 void BugPlayer::DrawFloor() {
   if (nearest_free_plant_ != NULL) {
     CL_Vec2f pos = nearest_free_plant_->position() - map_position();
-    selectedImage->draw(*gc_, pos.x, pos.y);
+    select_sprite_.draw(*gc_, pos.x, pos.y);
   }
   /*  } else if (state == Selected || state == SelectedBuilding) {
-      selectedImage->set_alpha(0.8);
+      select_sprite_.set_alpha(0.8);
 
       CL_Vec2f pos = selectedFlower->position() - map_position();
-      selectedImage->draw(*gc, pos.x, pos.y);
+      select_sprite_.draw(*gc, pos.x, pos.y);
     }*/
 }
 
-bool IsAlive(Bug *bug) { return bug->is_alive(); }
+bool IsAlive(Bug *bug) {
+  return bug->is_alive();
+}
 
 void BugPlayer::DrawTop() {
   int size = count_if(bugs.begin(), bugs.end(), IsAlive);
 
   CL_Colorf color = CL_Colorf::white;
   default_font_.draw_text(*gc_, CL_Pointf(10, 30),
-                         cl_format("Bugs: %1", size), color);
+                          cl_format("Bugs: %1", size), color);
   Player::DrawTop();
 }
 

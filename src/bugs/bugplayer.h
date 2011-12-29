@@ -4,6 +4,7 @@
 #define SRC_BUGS_BUGPLAYER_H_
 
 #include <list>
+#include <ClanLib/sound.h>
 
 #include "./player.h"
 #include "bugs/bug.h"
@@ -28,16 +29,13 @@ class BugPlayer : public Player {
   private:
     // Attributes
     std::list<Bug*> bugs;
-
-    //std::vector<Bug*> tmp_bugs;
-    CL_Sprite *selectedImage;
+    CL_Sprite select_sprite_;
     Plant* nearest_free_plant_;
 
     // Queries
     Plant* GetFreePlant();
     Bug* GetFreeBug();
-    CL_SoundBuffer *sound_leafgrowing_;
-    CL_SoundBuffer *sound_bug_attack_;
+    CL_SoundBuffer sound_bug_attack_;
 };
 
 #endif  // SRC_BUGS_BUGPLAYER_H_

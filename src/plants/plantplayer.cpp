@@ -2,7 +2,6 @@
 
 #include "./plantplayer.h"
 
-#include <ClanLib/sound.h>
 #include <ClanLib/core.h>
 #include <vector>
 
@@ -26,32 +25,33 @@ PlantPlayer::PlantPlayer(CL_GraphicContext* gc, World* world,
     sugar_(START_SUGAR),
     sun_(START_SUN),
     state(Idle),
-    cross_green_(false) {
-  selectedImage = new CL_Sprite(*gc_, "Cross2", &world_->resources);
+    select_sprite_(*gc_, "Cross2", &world_->resources),
+    cross_green_(false),
+    sound_plantgrowing_("PlantgrowingMusic", &world_->resources),
+    sound_leafgrowing_("LeafgrowingMusic", &world_->resources) {
+  tmp_flower_ = new Flower(world_, gc_, CL_Vec2f(0, 0), this);
+  tmp_leaf_ = new Leaf(world_, gc_, CL_Vec2f(0, 0), "Leaf2", tmp_flower_);
 
-  tmpFlower = new Flower(world_, gc_, CL_Vec2f(0, 0), this);
-  tmpLeaf = new Leaf(world_, gc_, CL_Vec2f(0, 0), "Leaf2", tmpFlower);
+  sound_plantgrowing_.set_volume(1.0f);
+  sound_plantgrowing_.prepare();
 
+  sound_leafgrowing_.set_volume(0.1f);
+  sound_leafgrowing_.prepare();
+}
 
-  sound_plantgrowing_ =
-    new CL_SoundBuffer("PlantgrowingMusic", &world_->resources);
-  sound_plantgrowing_->set_volume(1.0f);
-  sound_plantgrowing_->prepare();
-
-  sound_leafgrowing_ = new CL_SoundBuffer("LeafgrowingMusic",
-                                          &world_->resources);
-  sound_leafgrowing_->set_volume(0.1f);
-  sound_leafgrowing_->prepare();
+PlantPlayer::~PlantPlayer() {
+  delete tmp_flower_;
+  delete tmp_leaf_;
 }
 
 bool PlantPlayer::BuildLeaf() {
   if (sugar_ >= Leaf::kSugarCost && cross_green_) {
-    Leaf *leaf = new Leaf(world_, gc_, position(), "Leaf2", selectedFlower);
-    leaf->set_angle(tmpLeaf->angle());
+    Leaf *leaf = new Leaf(world_, gc_, position(), "Leaf2", selected_flower_);
+    leaf->set_angle(tmp_leaf_->angle());
 
     sugar_ -= Leaf::kSugarCost;
-    sound_leafgrowing_->play();
-    selectedFlower->AddLeaf(leaf);
+    sound_leafgrowing_.play();
+    selected_flower_->AddLeaf(leaf);
 
     return true;
   } else {
@@ -65,7 +65,7 @@ bool PlantPlayer::BuildFlower() {
     flowers.push_back(new Flower(world_, gc_, position(), this));
 
     sugar_ -= Flower::kSugarCost;
-    sound_plantgrowing_->play();
+    sound_plantgrowing_.play();
 
     return true;
   } else {
@@ -86,7 +86,7 @@ void PlantPlayer::SelectButtonPressed() {
   case Selecting:
     state = Selected;
     // TODO(rggjan): cache nearestflower
-    selectedFlower = NearestFlower();
+    selected_flower_ = NearestFlower();
     break;
   case Selected:
     state = Selecting;
@@ -143,7 +143,7 @@ Flower* PlantPlayer::NearestFlower() {
   Flower *nearest_flower = NULL;
 
   // Get nearest flower
-  for (Flower *flower : flowers) {
+for (Flower * flower : flowers) {
     if (!flower->is_alive())
       continue;
 
@@ -162,16 +162,16 @@ void PlantPlayer::DrawFloor() {
   if (state == Selecting) {
     Flower* nearest_flower = NearestFlower();
 
-    selectedImage->set_alpha(0.3);
+    select_sprite_.set_alpha(0.3);
     if (nearest_flower != NULL) {
       CL_Vec2f pos = nearest_flower->position() - map_position();
-      selectedImage->draw(*gc_, pos.x, pos.y);
+      select_sprite_.draw(*gc_, pos.x, pos.y);
     }
   } else if (state == Selected || state == SelectedBuilding) {
-    selectedImage->set_alpha(0.8);
+    select_sprite_.set_alpha(0.8);
 
-    CL_Vec2f pos = selectedFlower->position() - map_position();
-    selectedImage->draw(*gc_, pos.x, pos.y);
+    CL_Vec2f pos = selected_flower_->position() - map_position();
+    select_sprite_.draw(*gc_, pos.x, pos.y);
   }
 }
 
@@ -179,49 +179,51 @@ void PlantPlayer::DrawEnergy() {
   switch (state) {
   case Building: {
     CL_Colorf color = CL_Colorf::white;
-    if (tmpFlower->kSugarCost > sugar_)
+    if (tmp_flower_->kSugarCost > sugar_)
       color = CL_Colorf::red;
     default_font_.draw_text(*gc_, CL_Pointf(10, 30),
-                           cl_format("Sugar: %1 (%2)",
-                                     static_cast<int>(sugar_),
-                                     tmpFlower->kSugarCost), color);
+                            cl_format("Sugar: %1 (%2)",
+                                      static_cast<int>(sugar_),
+                                      tmp_flower_->kSugarCost), color);
     break;
   }
   case SelectedBuilding: {
     CL_Colorf color = CL_Colorf::white;
-    if (tmpLeaf->kSugarCost > sugar_)
+    if (tmp_leaf_->kSugarCost > sugar_)
       color = CL_Colorf::red;
     default_font_.draw_text(*gc_, CL_Pointf(10, 30),
-                           cl_format("Sugar: %1 (%2)",
-                                     static_cast<int>(sugar_),
-                                     tmpLeaf->kSugarCost), color);
+                            cl_format("Sugar: %1 (%2)",
+                                      static_cast<int>(sugar_),
+                                      tmp_leaf_->kSugarCost), color);
     break;
   }
   default: {
     default_font_.draw_text(*gc_, CL_Pointf(10, 30),
-                           cl_format("Sugar: %1", static_cast<int>(sugar_)),
-                           CL_Colorf::white);
+                            cl_format("Sugar: %1", static_cast<int>(sugar_)),
+                            CL_Colorf::white);
   }
   }
 }
 
 void PlantPlayer::DrawCO2() {
   default_font_.draw_text(*gc_, CL_Pointf(10, 50),
-                         cl_format("CO2: %1",  static_cast<int>(co2_)),
-                         CL_Colorf::white);
+                          cl_format("CO2: %1",  static_cast<int>(co2_)),
+                          CL_Colorf::white);
 }
 
 void PlantPlayer::DrawSun() {
   default_font_.draw_text(*gc_, CL_Pointf(10, 70),
-                         cl_format("Sun: %1",  static_cast<int>(sun_ * 60)),
-                         CL_Colorf::white);
+                          cl_format("Sun: %1",  static_cast<int>(sun_ * 60)),
+                          CL_Colorf::white);
 }
 
 void PlantPlayer::Update(int time_ms) {
   // Set sun to zero... will be added up in the update function!
   sun_ = 0;
 
-  remove_if(flowers.begin(), flowers.end(), [time_ms](Flower *flower) { return !flower->Update(time_ms); });
+  remove_if(flowers.begin(), flowers.end(), [time_ms](Flower * flower) {
+    return !flower->Update(time_ms);
+  });
 
   // Produce sugar
   double sugar_production = sun_ * time_ms / 1000.;
@@ -240,36 +242,36 @@ void PlantPlayer::DrawTop() {
     Player::DrawTop();
     break;
   case Building:
-    if (tmpFlower->CanBuild(position())) {
-      tmpFlower->DrawGreen(gc_, cross_position());
+    if (tmp_flower_->CanBuild(position())) {
+      tmp_flower_->DrawGreen(gc_, cross_position());
       cross_green_ = true;
     } else {
-      tmpFlower->DrawRed(gc_, cross_position());
+      tmp_flower_->DrawRed(gc_, cross_position());
       cross_green_ = false;
     }
     // Player::draw_cross(); TODO(rggjan): better with this?
     break;
   case SelectedBuilding: {
     CL_Vec2f diff = cross_position() -
-                    (selectedFlower->position() - map_position());
+                    (selected_flower_->position() - map_position());
 
     float angle = atan2(diff.y, diff.x);
-    tmpLeaf->set_angle(CL_Angle(angle, cl_radians));
+    tmp_leaf_->set_angle(CL_Angle(angle, cl_radians));
 
     CL_Colorf line_color;
 
     if (diff.length() < LEAF_MAX_DISTANCE &&
-        tmpLeaf->CanBuild(position(), selectedFlower)) {
-      tmpLeaf->DrawGreen(gc_, cross_position());
+        tmp_leaf_->CanBuild(position(), selected_flower_)) {
+      tmp_leaf_->DrawGreen(gc_, cross_position());
       line_color = CL_Colorf::green;
       cross_green_ = true;
     } else {
-      tmpLeaf->DrawRed(gc_, cross_position());
+      tmp_leaf_->DrawRed(gc_, cross_position());
       line_color = CL_Colorf::red;
       cross_green_ = false;
     }
 
-    diff = selectedFlower->position() - map_position();
+    diff = selected_flower_->position() - map_position();
     CL_Draw::line(*gc_, diff.x, diff.y, cross_position().x, cross_position().y,
                   line_color);
     break;
