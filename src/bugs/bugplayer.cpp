@@ -39,15 +39,12 @@ BugPlayer::BugPlayer(CL_GraphicContext* gc, World* world,
 }
 
 void BugPlayer::CreateBug(CL_StringRef name, CL_Vec2f position) {
-  Bug * bug = new Bug(world_, gc_, name, this);
-  bug->set_position(position);
-
+  Bug * bug = new Bug(world_, gc_, position, name, this);
   AddBug(bug);
 }
 
 void BugPlayer::AddBug(Bug* bug) {
   bugs.push_back(bug);
-  world_->AddBug(bug);
 }
 
 void BugPlayer::SelectButtonPressed() {
@@ -125,7 +122,6 @@ void BugPlayer::Update(int time_ms) {
     bug->set_target_position(position());
 
     if (!bug->Update(time_ms)) {
-      world_->RemoveBug(bug);
       delete bug;
       it = bugs.erase(it);
     } else {

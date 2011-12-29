@@ -19,7 +19,7 @@ class BugPlayer : public Player {
     void SelectButtonPressed();
     void CancelButtonPressed();
 
-    void AddBug(Bug* fly);
+    void AddBug(Bug* bug);
     void CreateBug(CL_StringRef name, CL_Vec2f position);
     void Update(int time_ms);
     void DrawTop();

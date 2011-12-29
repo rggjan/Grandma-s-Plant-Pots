@@ -23,10 +23,10 @@
 // General
 #define START_ENERGY 30
 
-Bug::Bug(World *world, CL_GraphicContext *gc, const CL_StringRef name,
-         BugPlayer* player)
-  // TODO(rggjan): Real position
-  : GameObject(world, gc, CL_Vec2f(0, 0), name),
+Bug::Bug(World *world, CL_GraphicContext *gc, CL_Vec2f position,
+         const CL_StringRef name, BugPlayer* player)
+// TODO(rggjan): Real position
+  : GameObject(world, gc, position, name),
     direction(0, -1),
     target_plant_(NULL),
     food_eaten_(0),
@@ -42,6 +42,22 @@ Bug::Bug(World *world, CL_GraphicContext *gc, const CL_StringRef name,
   double diff = (static_cast<double>(rand()) / RAND_MAX) *
                 max_add * 2 - max_add;
   curve_ = MAX_CURVE + diff;
+
+  // Add to world
+  world->AddBug(this);  
+}
+
+Bug::~Bug() {
+  world_->RemoveBug(this);
+}
+
+double Bug::DecreaseEnergy(double amount) {
+  amount = GameObject::DecreaseEnergy(amount);
+
+  if (!is_alive())
+    StopEating();
+
+  return amount;
 }
 
 void Bug::SetTargetPlant(Plant *plant) {

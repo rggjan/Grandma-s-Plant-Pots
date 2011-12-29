@@ -11,8 +11,9 @@ class BugPlayer;
 class Bug : public GameObject {
   public:
     // Construction
-    Bug(World *world, CL_GraphicContext *gc, const CL_StringRef name,
-        BugPlayer* player);
+    Bug(World *world, CL_GraphicContext *gc, CL_Vec2f position,
+        const CL_StringRef name, BugPlayer* player);
+    ~Bug();
 
     // Operations:
     inline void set_position(CL_Vec2f position) {
@@ -30,6 +31,7 @@ class Bug : public GameObject {
       return target_plant_ == NULL;
     }
 
+    virtual double DecreaseEnergy(double amount);
     void StopEating();
 
     // Implementation:
@@ -43,6 +45,6 @@ class Bug : public GameObject {
     BugPlayer *player_;
 
     double curve_;
-  };
+};
 
 #endif  // SRC_BUGS_BUG_H_
