@@ -51,7 +51,6 @@ bool PlantPlayer::BuildLeaf() {
     sugar_ -= Leaf::kSugarCost;
     sound_leafgrowing_->play();
     selectedFlower->AddLeaf(leaf);
-    world_->AddPlant(leaf);
 
     return true;
   } else {

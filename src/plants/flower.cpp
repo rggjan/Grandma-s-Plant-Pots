@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <list>
+#include <algorithm>
 
 #include "bugs/bug.h"
 #include "./leaf.h"
@@ -43,16 +44,7 @@ void Flower::AddLeaf(Leaf* leaf) {
 
 bool Flower::Update(int time_ms) {
   // Update leaves
-  std::list<Leaf *>::iterator it;
-  for (it = leaves.begin(); it != leaves.end();) {
-    if (!(*it)->Update(time_ms)) {
-      world_->RemovePlant(*it);
-      delete *it;
-      it = leaves.erase(it);
-    } else {
-      ++it;
-    }
-  }
+  remove_if(leaves.begin(), leaves.end(), [time_ms](Leaf *leaf) { return !leaf->Update(time_ms); });
 
   if (!is_alive()) {
     return Plant::Update(time_ms) || leaves.size() > 0;

@@ -16,6 +16,12 @@ Leaf::Leaf(World *world, CL_GraphicContext *gc,
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;
+
+  world_->AddPlant(this);
+}
+
+Leaf::~Leaf() {
+  world_->RemovePlant(this);
 }
 
 bool Leaf::CanBuild(CL_Vec2f position, Flower* flower) {
