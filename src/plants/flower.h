@@ -30,6 +30,7 @@ class Flower : public Plant {
     // Construction
     Flower(World *world, CL_GraphicContext *gc,
            CL_Vec2f position, PlantPlayer* player);
+    ~Flower();
 
     // Operations
     void AddLeaf(Leaf* leaf);

@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <list>
+#include <algorithm>
 
 #include "plants/flower.h"
 #include "plants/leaf.h"
@@ -61,10 +62,7 @@ bool PlantPlayer::BuildLeaf() {
 
 bool PlantPlayer::BuildFlower() {
   if (sugar_ >= Flower::kSugarCost && cross_green_) {
-    Flower *flower = new Flower(world_, gc_, position(), this);
-
-    flowers.push_back(flower);
-    world_->AddFlower(flower);
+    flowers.push_back(new Flower(world_, gc_, position(), this));
 
     sugar_ -= Flower::kSugarCost;
     sound_plantgrowing_->play();
@@ -145,16 +143,15 @@ Flower* PlantPlayer::NearestFlower() {
   Flower *nearest_flower = NULL;
 
   // Get nearest flower
-  std::list<Flower *>::iterator it;
-  for (it = flowers.begin(); it != flowers.end(); ++it) {
-    if (!(*it)->is_alive())
+  for (Flower *flower : flowers) {
+    if (!flower->is_alive())
       continue;
 
-    float distance = ((*it)->position() - position()).length();
+    float distance = (flower->position() - position()).length();
 
     if (nearest_flower == NULL || distance < best_dist) {
       best_dist = distance;
-      nearest_flower = (*it);
+      nearest_flower = flower;
     }
   }
 
@@ -223,16 +220,8 @@ void PlantPlayer::DrawSun() {
 void PlantPlayer::Update(int time_ms) {
   // Set sun to zero... will be added up in the update function!
   sun_ = 0;
-  std::list<Flower *>::iterator it;
-  for (it = flowers.begin(); it != flowers.end();) {
-    if (!(*it)->Update(time_ms)) {
-      world_->RemoveFlower(*it);
-      delete *it;
-      it = flowers.erase(it);
-    } else {
-      ++it;
-    }
-  }
+
+  remove_if(flowers.begin(), flowers.end(), [time_ms](Flower *flower) { return !flower->Update(time_ms); });
 
   // Produce sugar
   double sugar_production = sun_ * time_ms / 1000.;

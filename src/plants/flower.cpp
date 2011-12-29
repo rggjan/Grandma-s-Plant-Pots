@@ -35,6 +35,12 @@ Flower::Flower(World *world, CL_GraphicContext *gc,
 
   sound_shot_.set_volume(0.5f);
   sound_session_shot_ = sound_shot_.prepare();
+
+  world_->AddFlower(this);
+}
+
+Flower::~Flower() {
+  world_->RemoveFlower(this);
 }
 
 void Flower::AddLeaf(Leaf* leaf) {
@@ -72,10 +78,7 @@ bool Flower::Update(int time_ms) {
 
     targeting_bug = NULL;
 
-    std::list<Bug *>::iterator it;
-    for (it = bugs->begin(); it != bugs->end(); ++it) {
-      Bug* bug = *it;
-
+    for (Bug *bug : *bugs) {
       if ((position() - bug->position()).length() <= ATTACK_DISTANCE &&
           bug->is_alive()) {
         targeting_bug = bug;
