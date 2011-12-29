@@ -12,8 +12,8 @@ class Flower;
 class Leaf : public Plant {
     // Construction
   public:
-    Leaf(World *world, CL_GraphicContext *gc, const CL_StringRef &name,
-         CL_Vec2f position, Flower *flower);
+    Leaf(World *world, CL_GraphicContext *gc,
+           CL_Vec2f position, const CL_StringRef &name, Flower* flower);
 
     static const int kSugarCost = LEAF_SUGAR_COST;
 

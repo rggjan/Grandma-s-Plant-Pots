@@ -5,8 +5,8 @@
 #include "plants/plantplayer.h"
 
 Plant::Plant(World *world, CL_GraphicContext *gc,
-             CL_Vec2f position, PlantPlayer* player)
-  : GameObject(world, position),
+             CL_Vec2f position, CL_StringRef name, PlantPlayer* player)
+  : GameObject(world, gc, position, name),
     player_(player),
     eating_bug_(NULL),
     co2_collected_per_second_(0),
@@ -16,18 +16,18 @@ Plant::Plant(World *world, CL_GraphicContext *gc,
 
 void Plant::DrawRed(CL_GraphicContext *gc, CL_Vec2f position) {
   // Draw graphic
-  spriteImage->set_color(CL_Color::red);
-  spriteImage->set_alpha(0.8);
-  spriteImage->set_frame(2);
-  spriteImage->draw(*gc, position.x, position.y);
+  sprite_.set_color(CL_Color::red);
+  sprite_.set_alpha(0.8);
+  sprite_.set_frame(2);
+  sprite_.draw(*gc, position.x, position.y);
 }
 
 void Plant::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
   // Draw graphic
-  spriteImage->set_color(CL_Color::green);
-  spriteImage->set_alpha(0.8);
-  spriteImage->set_frame(2);
-  spriteImage->draw(*gc, position.x, position.y);
+  sprite_.set_color(CL_Color::green);
+  sprite_.set_alpha(0.8);
+  sprite_.set_frame(2);
+  sprite_.draw(*gc, position.x, position.y);
 }
 
 bool Plant::Update(int time_ms) {

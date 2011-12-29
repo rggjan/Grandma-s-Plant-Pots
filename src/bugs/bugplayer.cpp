@@ -39,7 +39,7 @@ BugPlayer::BugPlayer(CL_GraphicContext* gc, World* world,
 }
 
 void BugPlayer::CreateBug(CL_StringRef name, CL_Vec2f position) {
-  Bug * bug = new Bug(world_, *gc_, name, this);
+  Bug * bug = new Bug(world_, gc_, name, this);
   bug->set_position(position);
 
   AddBug(bug);

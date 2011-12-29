@@ -9,12 +9,10 @@
 #define SUN_COLLECTED_PER_SECOND 0.02
 #define START_ENERGY 30
 
-Leaf::Leaf(World *world, CL_GraphicContext *gc, const CL_StringRef &name,
-           CL_Vec2f position, Flower* flower)
-  : Plant(world, gc, position, flower->player()),
+Leaf::Leaf(World *world, CL_GraphicContext *gc,
+           CL_Vec2f position, const CL_StringRef &name, Flower* flower)
+  : Plant(world, gc, position, name, flower->player()),
     flower_(flower) {
-  spriteImage = new CL_Sprite(*gc, name, &world->resources);
-
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;

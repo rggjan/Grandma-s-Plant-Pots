@@ -23,17 +23,16 @@
 // General
 #define START_ENERGY 30
 
-Bug::Bug(World *world, CL_GraphicContext &gc, const CL_StringRef &name,
+Bug::Bug(World *world, CL_GraphicContext *gc, const CL_StringRef name,
          BugPlayer* player)
   // TODO(rggjan): Real position
-  : GameObject(world, CL_Vec2f(0, 0)),
+  : GameObject(world, gc, CL_Vec2f(0, 0), name),
     direction(0, -1),
     target_plant_(NULL),
     food_eaten_(0),
     bug_name_(name),
     player_(player) {
-  spriteImage = new CL_Sprite(gc, name, &world->resources);
-  spriteImage->set_play_loop(true);
+  sprite_.set_play_loop(true);
 
   dead_color_ = CL_Color::red;
   energy_ = START_ENERGY;
@@ -116,7 +115,7 @@ bool Bug::Update(int time_ms) {
   if (direction.x < 0)
     angle = 360.0f - angle;
 
-  spriteImage->set_angle(CL_Angle(angle, cl_degrees));
+  sprite_.set_angle(CL_Angle(angle, cl_degrees));
 
   // Update position
   // posX += direction.x * 10*(rand()%100)/100;

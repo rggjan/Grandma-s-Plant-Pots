@@ -12,7 +12,7 @@ class Plant : public GameObject {
   public:
     // Construction
     Plant(World *world, CL_GraphicContext *gc,
-          CL_Vec2f position, PlantPlayer* player);
+          CL_Vec2f position, CL_StringRef name, PlantPlayer* player);
 
     // Operations
     void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);

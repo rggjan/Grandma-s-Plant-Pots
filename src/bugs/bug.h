@@ -11,7 +11,7 @@ class BugPlayer;
 class Bug : public GameObject {
   public:
     // Construction
-    Bug(World *world, CL_GraphicContext &gc, const CL_StringRef &name,
+    Bug(World *world, CL_GraphicContext *gc, const CL_StringRef name,
         BugPlayer* player);
 
     // Operations:

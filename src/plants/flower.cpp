@@ -24,11 +24,10 @@ CL_SoundBuffer_Session Flower::sound_session_shot_;
 
 Flower::Flower(World *world, CL_GraphicContext *gc,
                CL_Vec2f position, PlantPlayer* player)
-  : Plant(world, gc, position, player),
+  : Plant(world, gc, position, "Plant1", player),
     state_(kClosed),
     age_(0),
     sound_shot_("FlowerShoot", &world->resources) {
-  spriteImage = new CL_Sprite(*gc, "Plant1", &world->resources);
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;
@@ -65,14 +64,14 @@ bool Flower::Update(int time_ms) {
   if (state_ == kClosed) {
     if (age_ > TIME_TO_OPEN) {
       state_ = kOpen;
-      spriteImage->set_frame(1);
+      sprite_.set_frame(1);
     }
   }
 
   if (state_ == kOpen) {
     if (age_ > TIME_TO_OPEN + TIME_TO_FINAL) {
       state_ = kShooting;
-      spriteImage->set_frame(2);
+      sprite_.set_frame(2);
     }
   }
 

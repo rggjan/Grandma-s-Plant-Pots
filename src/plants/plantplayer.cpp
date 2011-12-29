@@ -29,7 +29,7 @@ PlantPlayer::PlantPlayer(CL_GraphicContext* gc, World* world,
   selectedImage = new CL_Sprite(*gc_, "Cross2", &world_->resources);
 
   tmpFlower = new Flower(world_, gc_, CL_Vec2f(0, 0), this);
-  tmpLeaf = new Leaf(world_, gc_, "Leaf2", CL_Vec2f(0, 0), tmpFlower);
+  tmpLeaf = new Leaf(world_, gc_, CL_Vec2f(0, 0), "Leaf2", tmpFlower);
 
 
   sound_plantgrowing_ =
@@ -45,7 +45,7 @@ PlantPlayer::PlantPlayer(CL_GraphicContext* gc, World* world,
 
 bool PlantPlayer::BuildLeaf() {
   if (sugar_ >= Leaf::kSugarCost && cross_green_) {
-    Leaf *leaf = new Leaf(world_, gc_, "Leaf2", position(), selectedFlower);
+    Leaf *leaf = new Leaf(world_, gc_, position(), "Leaf2", selectedFlower);
     leaf->set_angle(tmpLeaf->angle());
 
     sugar_ -= Leaf::kSugarCost;
