@@ -10,16 +10,16 @@
 #include "./leaf.h"
 #include "plants/plantplayer.h"
 
-#define TIME_TO_OPEN 1500
-#define TIME_TO_FINAL 3000
-#define MIN_FLOWER_DISTANCE 50
+#define TIME_TO_OPEN 15000
+#define TIME_TO_FINAL 30000
+#define MIN_FLOWER_DISTANCE 100
 
 #define CO2_COLLECTED_PER_SECOND 0.1
 #define SUN_COLLECTED_PER_SECOND 0.01
 #define START_ENERGY 100
 
 #define ATTACK_DISTANCE 100
-#define ATTACK_ENERGY_PER_SECOND 0.5
+#define ATTACK_ENERGY_PER_SECOND 2
 
 CL_SoundBuffer_Session Flower::sound_session_shot_;
 
@@ -87,7 +87,9 @@ bool Flower::Update(int time_ms) {
     }
 
     if (targeting_bug)
-      targeting_bug->DecreaseEnergy(ATTACK_ENERGY_PER_SECOND * time_ms / 100);
+      targeting_bug->DecreaseEnergy(ATTACK_ENERGY_PER_SECOND * time_ms / 1000);
+
+    return true;
   }
 
   return Plant::Update(time_ms);

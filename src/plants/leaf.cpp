@@ -4,7 +4,7 @@
 
 #include "plants/flower.h"
 
-#define MIN_LEAF_DISTANCE 30
+#define MIN_LEAF_DISTANCE 50
 #define CO2_COLLECTED_PER_SECOND 0.001
 #define SUN_COLLECTED_PER_SECOND 0.02
 #define START_ENERGY 30

@@ -9,16 +9,16 @@
 #include "bugs/bugplayer.h"
 
 // Buging
-#define CONSTANT_ANGLE false
+#define CONSTANT_ANGLE true
 #define SPEED 300
 #define MAX_CURVE 5
-#define CURVE_VARIANCE 20
+#define CURVE_VARIANCE 30
 
 // Attacking
 #define ATTACK_SPEED_DECREASE_DISTANCE 200
 #define ATTACK_MIN_DISTANCE 5
-#define EAT_PER_SECOND 30
-#define FOOD_NEEDED_TO_DUPLICATE 45
+#define EAT_PER_SECOND 1
+#define FOOD_NEEDED_TO_DUPLICATE 30
 
 // General
 #define START_ENERGY 30
