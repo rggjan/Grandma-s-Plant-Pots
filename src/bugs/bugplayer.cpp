@@ -39,8 +39,7 @@ BugPlayer::BugPlayer(CL_GraphicContext* gc, World* world,
 }
 
 void BugPlayer::CreateBug(CL_StringRef name, CL_Vec2f position) {
-  Bug * bug = new Bug(world_, gc_, position, name, this);
-  AddBug(bug);
+  AddBug(new Bug(world_, gc_, position, name, this));
 }
 
 void BugPlayer::AddBug(Bug* bug) {
@@ -59,24 +58,16 @@ void BugPlayer::SelectButtonPressed() {
 }
 
 void BugPlayer::CancelButtonPressed() {
-  std::list<Bug *>::iterator it;
-  for (it = bugs.begin(); it != bugs.end(); ++it) {
-    (*it)->StopEating();
-  }
+  for_each(bugs.begin(), bugs.end(), [](Bug* bug) { bug->StopEating(); });
 }
 
 void BugPlayer::BuildButtonPressed() {
 }
 
 Plant* BugPlayer::GetFreePlant() {
-  list<Plant*> *plants = world_->NearestPlants(position());
-
-  list<Plant*>::iterator it;
-  for (it = plants->begin(); it != plants->end(); ++it) {
-    Plant* plant = *it;
+  for (Plant *plant : *world_->NearestPlants(position()))
     if (plant->is_alive() && plant->free_space() && Visible(plant->position()))
       return plant;
-  }
 
   return NULL;
 }
