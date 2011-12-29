@@ -19,13 +19,10 @@ class Bug : public GameObject {
     inline void set_position(CL_Vec2f position) {
       position_ = position;
     }
-    inline void set_target_position(CL_Vec2f target_position) {
-      target_position_ = target_position;
-    }
 
     void SetTargetPlant(Plant *flower);
 
-    virtual bool Update(int time_ms);
+    virtual bool Update(int time_ms, CL_Vec2f target_position);
 
     inline bool is_free() {
       return target_plant_ == NULL;

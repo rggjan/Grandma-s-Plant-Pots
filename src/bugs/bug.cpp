@@ -73,7 +73,9 @@ void Bug::StopEating() {
   target_plant_ = NULL;
 }
 
-bool Bug::Update(int time_ms) {
+bool Bug::Update(int time_ms, CL_Vec2f target_position) {
+  target_position_ = target_position;
+
   GameObject::Update(time_ms);
 
   if (!is_alive())

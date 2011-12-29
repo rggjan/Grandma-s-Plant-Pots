@@ -73,11 +73,9 @@ Plant* BugPlayer::GetFreePlant() {
 }
 
 Bug* BugPlayer::GetFreeBug() {
-  std::list<Bug *>::iterator it;
-  for (it = bugs.begin(); it != bugs.end(); ++it) {
-    if ((*it)->is_alive() && (*it)->is_free())
-      return *it;
-  }
+  for (Bug* bug : bugs)
+    if (bug->is_alive() && bug->is_free())
+      return bug;
 
   return NULL;
 }
@@ -110,9 +108,8 @@ void BugPlayer::Update(int time_ms) {
   std::list<Bug *>::iterator it;
   for (it = bugs.begin(); it != bugs.end();) {
     Bug* bug = *it;
-    bug->set_target_position(position());
 
-    if (!bug->Update(time_ms)) {
+    if (!bug->Update(time_ms, position())) {
       delete bug;
       it = bugs.erase(it);
     } else {
