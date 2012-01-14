@@ -22,6 +22,8 @@
 
 // General
 #define START_ENERGY 30
+#define START_SIZE 0.3
+#define END_SIZE 0.1
 
 Bug::Bug(World *world, CL_GraphicContext *gc, CL_Vec2f position,
          const CL_StringRef name, BugPlayer* player)
@@ -36,6 +38,7 @@ Bug::Bug(World *world, CL_GraphicContext *gc, CL_Vec2f position,
 
   dead_color_ = CL_Color::red;
   energy_ = START_ENERGY;
+  sprite_.set_scale(START_SIZE, START_SIZE);
 
   // Set curve with variance
   double max_add = CURVE_VARIANCE / 100.*MAX_CURVE;
@@ -81,7 +84,8 @@ bool Bug::Update(int time_ms, CL_Vec2f target_position) {
   if (!is_alive())
     return true;
 
-  sprite_.set_scale(energy_/START_ENERGY*0.2 + 0.1, energy_/START_ENERGY*0.2 + 0.1);
+  float scale = (START_SIZE - END_SIZE)*energy_/START_ENERGY + END_SIZE;
+  sprite_.set_scale(scale, scale);
 
   // Check if we can reproduce
   if (food_eaten_ > FOOD_NEEDED_TO_DUPLICATE) {
