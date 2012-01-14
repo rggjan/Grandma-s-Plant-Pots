@@ -84,9 +84,10 @@ void PlantPlayer::SelectButtonPressed() {
     state = Selecting;
     break;
   case Selecting:
-    state = Selected;
-    // TODO(rggjan): cache nearestflower
     selected_flower_ = NearestFlower();
+    // TODO(rggjan): cache nearestflower
+    if (selected_flower_ != NULL)
+      state = Selected;
     break;
   case Selected:
     state = Selecting;
