@@ -17,9 +17,8 @@
 	</sprite>
 
 	<sprite name="Plant1">
-		<image file="Gfx/flower1_2.png" />
 		<image file="Gfx/flower1_1.png" />
-		<image file="Gfx/flower1_3.png" />
+		<image file="Gfx/flower1_2.png" />
 		<translation origin="center"/>
 		<rotation origin="center"/>
                 <scale x="0.2" y="0.2" />

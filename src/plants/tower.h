@@ -15,6 +15,13 @@
 
 class Leaf;
 
+enum FlowerState {
+  kClosed,
+  kOpen,
+  kProducing,
+  kShooting
+};
+
 class Flower : public Plant {
   public:
     // Static
@@ -34,12 +41,18 @@ class Flower : public Plant {
     bool CanBuild(CL_Vec2f position);
     Leaf* NearestLeaf(CL_Vec2f position);
 
-    bool open() { return open_; }
+    inline FlowerState state() {
+      return state_;
+    };
 
   private:
+    FlowerState state_;
     std::list<Leaf*> leaves;
     int age_;
-    bool open_;
+
+    CL_SoundBuffer sound_shot_;
+    static CL_SoundBuffer_Session sound_session_shot_;
+    Bug *targeting_bug;
 };
 
 #endif  // SRC_PLANTS_FLOWER_H_

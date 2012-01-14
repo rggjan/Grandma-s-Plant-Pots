@@ -10,21 +10,31 @@
 #include "./leaf.h"
 #include "plants/plantplayer.h"
 
-#define TIME_TO_OPEN 15000
+#define TIME_TO_OPEN 150
+#define TIME_TO_FINAL 300
 #define MIN_FLOWER_DISTANCE 100
 
 #define CO2_COLLECTED_PER_SECOND 0.1
 #define SUN_COLLECTED_PER_SECOND 0.01
 #define START_ENERGY 30
 
+#define ATTACK_DISTANCE 100
+#define ATTACK_ENERGY_PER_SECOND 10
+
+CL_SoundBuffer_Session Flower::sound_session_shot_;
+
 Flower::Flower(World *world, CL_GraphicContext *gc,
                CL_Vec2f position, PlantPlayer* player)
   : Plant(world, gc, position, "Plant1", player),
+    state_(kClosed),
     age_(0),
-    open_(false) {
+    sound_shot_("FlowerShoot", &world->resources) {
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;
+
+  sound_shot_.set_volume(0.5f);
+  sound_session_shot_ = sound_shot_.prepare();
 
   world_->AddFlower(this);
 }
@@ -35,13 +45,12 @@ Flower::~Flower() {
 
 void Flower::AddLeaf(Leaf* leaf) {
   leaves.push_back(leaf);
+  state_ = kProducing;
 }
 
 bool Flower::Update(int time_ms) {
   // Update leaves
-  remove_if(leaves.begin(), leaves.end(), [time_ms](Leaf * leaf) {
-    return !leaf->Update(time_ms);
-  });
+  remove_if(leaves.begin(), leaves.end(), [time_ms](Leaf *leaf) { return !leaf->Update(time_ms); });
 
   if (!is_alive()) {
     return Plant::Update(time_ms) || leaves.size() > 0;
@@ -50,10 +59,37 @@ bool Flower::Update(int time_ms) {
   // Update state
   age_ += time_ms;
 
-  if (!open() && age_ > TIME_TO_OPEN) {
-    open_ = true;
-    sprite_.set_frame(1);
+  if (state_ == kClosed) {
+    if (age_ > TIME_TO_OPEN) {
+      state_ = kOpen;
+      sprite_.set_frame(1);
+    }
+  }
 
+  if (state_ == kOpen) {
+    if (age_ > TIME_TO_OPEN + TIME_TO_FINAL) {
+      state_ = kShooting;
+      sprite_.set_frame(2);
+    }
+  }
+
+  if (state_ == kShooting) {
+    std::list<Bug*> *bugs = world_->NearestBugs(position());
+
+    targeting_bug = NULL;
+
+    for (Bug *bug : *bugs) {
+      if ((position() - bug->position()).length() <= ATTACK_DISTANCE &&
+          bug->is_alive()) {
+        targeting_bug = bug;
+        break;
+      }
+    }
+
+    if (targeting_bug)
+      targeting_bug->DecreaseEnergy(ATTACK_ENERGY_PER_SECOND * time_ms / 1000.);
+
+    return true;
   }
 
   return Plant::Update(time_ms);
@@ -103,6 +139,15 @@ void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
   if (!is_alive()) {
     Plant::Draw(gc, target);
     return;
+  }
+
+  // Shoot!
+  if (state_ == kShooting && targeting_bug) {
+    CL_Draw::line(*gc, position() - target,
+                  targeting_bug->position() - target,
+                  CL_Colorf::green);
+    if (!sound_session_shot_.is_playing())
+      sound_session_shot_ = sound_shot_.play();
   }
 
   Plant::Draw(gc, target);

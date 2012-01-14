@@ -25,9 +25,8 @@ Leaf::~Leaf() {
 }
 
 bool Leaf::CanBuild(CL_Vec2f position, Flower* flower) {
-  if (flower->state() != kOpen && flower->state() != kProducing) {
+  if (!flower->open())
     return false;
-  }
 
   Leaf* nearest_leaf = flower->NearestLeaf(position);
 
