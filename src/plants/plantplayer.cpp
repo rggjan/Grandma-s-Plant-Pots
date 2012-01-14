@@ -30,7 +30,9 @@ PlantPlayer::PlantPlayer(CL_GraphicContext* gc, World* world,
     sound_plantgrowing_("PlantgrowingMusic", &world_->resources),
     sound_leafgrowing_("LeafgrowingMusic", &world_->resources) {
   tmp_flower_ = new Flower(world_, gc_, CL_Vec2f(0, 0), this);
+  world->RemoveFlower(tmp_flower_);
   tmp_leaf_ = new Leaf(world_, gc_, CL_Vec2f(0, 0), "Leaf2", tmp_flower_);
+  world->RemovePlant(tmp_leaf_);
 
   sound_plantgrowing_.set_volume(1.0f);
   sound_plantgrowing_.prepare();
