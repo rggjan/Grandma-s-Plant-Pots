@@ -150,5 +150,7 @@ bool Bug::Update(int time_ms, CL_Vec2f target_position) {
   }
   position_ += direction * time_ms / 1000 * speed;
 
+  sprite_.set_scale(energy_/START_ENERGY*0.2 + 0.1, energy_/START_ENERGY*0.2 + 0.1);
+
   return true;
 }
