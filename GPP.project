@@ -14,14 +14,12 @@
     <VirtualDirectory Name="bugs">
       <File Name="src/bugs/bugplayer.cpp"/>
       <File Name="src/bugs/bugplayer.h"/>
-      <File Name="src/bugs/fly.h"/>
-      <File Name="src/bugs/fly.cpp"/>
+      <File Name="src/bugs/bug.cpp"/>
+      <File Name="src/bugs/bug.h"/>
     </VirtualDirectory>
     <File Name="src/app.h"/>
     <File Name="src/gameobject.h"/>
     <File Name="src/program.h"/>
-    <File Name="src/background.h"/>
-    <File Name="src/background.cpp"/>
     <File Name="src/gameobject.cpp"/>
     <File Name="src/world.h"/>
     <File Name="src/player.h"/>
@@ -85,7 +83,9 @@
       <Completion>
         <ClangCmpFlags/>
         <ClangPP/>
-        <SearchPaths/>
+        <SearchPaths>$(ProjectPath)/src/
+$(ProjectPath)/src/bugs/
+$(ProjectPath)/src/plants/</SearchPaths>
       </Completion>
     </Configuration>
     <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
@@ -96,7 +96,9 @@
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="" IntermediateDirectory="./Release" Command="$(IntermediateDirectory)/gpp" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[]]>
+        <![CDATA[
+      
+      ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>

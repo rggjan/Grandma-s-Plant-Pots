@@ -1,50 +1,59 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
 #include "./flower.h"
-#include "bugs/fly.h"
 
 #include <vector>
+#include <list>
+#include <algorithm>
 
+#include "bugs/bug.h"
 #include "./leaf.h"
 #include "plants/plantplayer.h"
 
 #define TIME_TO_OPEN 15000
 #define TIME_TO_FINAL 30000
-#define MIN_FLOWER_DISTANCE 50
+#define MIN_FLOWER_DISTANCE 100
 
 #define CO2_COLLECTED_PER_SECOND 0.1
 #define SUN_COLLECTED_PER_SECOND 0.01
 #define START_ENERGY 30
 
 #define ATTACK_DISTANCE 100
-#define ATTACK_ENERGY_PER_SECOND 0.3
+#define ATTACK_ENERGY_PER_SECOND 2
+
+CL_SoundBuffer_Session Flower::sound_session_shot_;
 
 Flower::Flower(World *world, CL_GraphicContext *gc,
                CL_Vec2f position, PlantPlayer* player)
-  : Plant(world, gc, position, player),
+  : Plant(world, gc, position, "Plant1", player),
     state_(kClosed),
-    age_(0) {
-  spriteImage = new CL_Sprite(*gc, "Plant1", &world->resources);
+    age_(0),
+    sound_shot_("FlowerShoot", &world->resources) {
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;
-  
-  sound_shot_ =
-    new CL_SoundBuffer("FlowerShoot", &world->resources);
-  sound_shot_->set_volume(1.0f);
-  sound_session_shot_= sound_shot_->prepare();
-  
+
+  sound_shot_.set_volume(0.5f);
+  sound_session_shot_ = sound_shot_.prepare();
+
+  world_->AddFlower(this);
+}
+
+Flower::~Flower() {
+  world_->RemoveFlower(this);
 }
 
 void Flower::AddLeaf(Leaf* leaf) {
   leaves.push_back(leaf);
+  state_ = kProducing;
 }
 
-void Flower::Update(int time_ms) {
+bool Flower::Update(int time_ms) {
   // Update leaves
-  unsigned int size = leaves.size();
-  for (unsigned int i = 0; i < size; i++) {
-    leaves[i]->Update(time_ms);
+  remove_if(leaves.begin(), leaves.end(), [time_ms](Leaf *leaf) { return !leaf->Update(time_ms); });
+
+  if (!is_alive()) {
+    return Plant::Update(time_ms) || leaves.size() > 0;
   }
 
   // Update state
@@ -53,42 +62,37 @@ void Flower::Update(int time_ms) {
   if (state_ == kClosed) {
     if (age_ > TIME_TO_OPEN) {
       state_ = kOpen;
-      spriteImage->set_frame(1);      
+      sprite_.set_frame(1);
     }
   }
 
   if (state_ == kOpen) {
     if (age_ > TIME_TO_OPEN + TIME_TO_FINAL) {
       state_ = kShooting;
-      spriteImage->set_frame(2);
+      sprite_.set_frame(2);
     }
   }
 
   if (state_ == kShooting) {
-    std::vector<Fly*> *bugs = world_->NearestBugs(position());
+    std::list<Bug*> *bugs = world_->NearestBugs(position());
 
-    targeting_fly = NULL;
+    targeting_bug = NULL;
 
-    int size = bugs->size();
-    for (int i = 0; i < size; i++) {
-      Fly* bug = (*bugs)[i];
-
-      if ((position() - bug->position()).length() <= ATTACK_DISTANCE) {
-        if (bug->energy_ > 0) {
-          targeting_fly = bug;
-          break;
-        }
-      } else {
+    for (Bug *bug : *bugs) {
+      if ((position() - bug->position()).length() <= ATTACK_DISTANCE &&
+          bug->is_alive()) {
+        targeting_bug = bug;
         break;
       }
     }
 
-    if(targeting_fly) {
-      targeting_fly->energy_ -= ATTACK_ENERGY_PER_SECOND*time_ms/100;
-    }
+    if (targeting_bug)
+      targeting_bug->DecreaseEnergy(ATTACK_ENERGY_PER_SECOND * time_ms / 1000);
+
+    return true;
   }
 
-  Plant::Update(time_ms);
+  return Plant::Update(time_ms);
 }
 
 Leaf* Flower::NearestLeaf(CL_Vec2f position) {
@@ -97,8 +101,11 @@ Leaf* Flower::NearestLeaf(CL_Vec2f position) {
   Leaf *nearest_leaf = NULL;
 
   // Get nearest flower
-  std::vector<Leaf *>::iterator it;
+  std::list<Leaf *>::iterator it;
   for (it = leaves.begin(); it != leaves.end(); ++it) {
+    if (!(*it)->is_alive())
+      continue;
+
     float distance = ((*it)->position() - position).length();
 
     if (nearest_leaf == NULL || distance < best_dist) {
@@ -109,7 +116,6 @@ Leaf* Flower::NearestLeaf(CL_Vec2f position) {
 
   return nearest_leaf;
 }
-
 
 bool Flower::CanBuild(CL_Vec2f position) {
   Flower *nearest_flower = world_->NearestFlower(position);
@@ -122,23 +128,27 @@ bool Flower::CanBuild(CL_Vec2f position) {
 }
 
 void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
-  unsigned int size = leaves.size();
-  for (unsigned int i = 0; i < size; i++) {
+  std::list<Leaf *>::iterator it;
+  for (it = leaves.begin(); it != leaves.end(); ++it) {
+    (*it)->Draw(gc, target);
     /*CL_Draw::line(*gc, position() - player_->map_position(),
                   leaves[i]->position() - player_->map_position(),
                   CL_Colorf::green);*/
-    leaves[i]->Draw(gc, target);
+  }
+
+  if (!is_alive()) {
+    Plant::Draw(gc, target);
+    return;
   }
 
   // Shoot!
-  if (state_ == kShooting && targeting_fly) {
+  if (state_ == kShooting && targeting_bug) {
     CL_Draw::line(*gc, position() - target,
-                  targeting_fly->position() - target,
+                  targeting_bug->position() - target,
                   CL_Colorf::green);
-      if(!sound_session_shot_.is_playing())
-        sound_session_shot_ = sound_shot_->play();
+    if (!sound_session_shot_.is_playing())
+      sound_session_shot_ = sound_shot_.play();
   }
-
 
   Plant::Draw(gc, target);
 }

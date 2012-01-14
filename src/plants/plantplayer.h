@@ -3,7 +3,9 @@
 #ifndef SRC_PLANTS_PLANTPLAYER_H_
 #define SRC_PLANTS_PLANTPLAYER_H_
 
-#include <vector>
+#include <list>
+
+#include <ClanLib/sound.h>
 
 #include "./player.h"
 
@@ -23,6 +25,7 @@ class PlantPlayer : public Player {
   public:
     // Constructor
     PlantPlayer(CL_GraphicContext* gc, World *world, int width, int height);
+    ~PlantPlayer();
 
     // Operations
     void BuildButtonPressed();
@@ -49,16 +52,16 @@ class PlantPlayer : public Player {
     Flower* NearestFlower();
 
     // Attributes
-    std::vector<Flower*> flowers;
+    std::list<Flower*> flowers;
     State state;
-    CL_Sprite *selectedImage;
-    Flower *selectedFlower;    
-    Flower *tmpFlower;
-    Leaf *tmpLeaf;
+    CL_Sprite select_sprite_;
+    Flower *selected_flower_;
+    Flower *tmp_flower_;
+    Leaf *tmp_leaf_;
     bool cross_green_;
 
-    CL_SoundBuffer *sound_plantgrowing_;
-    CL_SoundBuffer *sound_leafgrowing_;
+    CL_SoundBuffer sound_plantgrowing_;
+    CL_SoundBuffer sound_leafgrowing_;
 };
 
 #endif  // SRC_PLANTS_PLANTPLAYER_H_

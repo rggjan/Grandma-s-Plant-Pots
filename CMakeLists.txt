@@ -10,7 +10,7 @@ cmake_minimum_required(VERSION 2.6)
 ## Compiler flags
 if(CMAKE_COMPILER_IS_GNUCXX)
   #set(CMAKE_CXX_FLAGS "-O2 -Wall -Wextra -pedantic -std=c99") ## Optimize
-  set(CMAKE_CXX_FLAGS "-O2 -Wall") ## Optimize
+  set(CMAKE_CXX_FLAGS "-O2 -Wall -ggdb3") ## Optimize
   set(CMAKE_EXE_LINKER_FLAGS "-s") ## Strip binary
 endif()
  
@@ -29,5 +29,5 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 add_subdirectory(src)
 
 add_custom_target(test WORKING_DIRECTORY ${GPP_SOURCE_DIR} COMMAND python2.7 ./cpplint.py --filter=-runtime/threadsafe_fn src/*.cpp src/*.h src/*/*.cpp src/*/*.h)
-
+add_custom_target(check WORKING_DIRECTORY ${GPP_SOURCE_DIR} COMMAND cppcheck src/*.cpp src/*.h src/*/*.cpp src/*/*.h)
 add_custom_target(run WORKING_DIRECTORY ${GPP_SOURCE_DIR} COMMAND ${PROJECT_BINARY_DIR}/gpp DEPENDS gpp)

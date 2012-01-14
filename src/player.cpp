@@ -9,24 +9,21 @@
 
 Player::Player(CL_GraphicContext* gc, World* world, int width, int height)
   : gc_(gc),
-    moving_down(false),
-    moving_up(false),
-    moving_left(false),
-    moving_right(false),
-    map_width(width),
-    map_height(height),
-    world(world) {
-  window_width = gc_->get_width();
-  window_height = gc_->get_height();
-
-  cross_position_ = CL_Vec2f(window_width / 2, window_height / 2);
-  map_position_ = CL_Vec2f(300, 300);
-
+    map_position_(300, 300),
+    window_width_(gc->get_width()),
+    window_height_(gc->get_height()),
+    cross_position_(window_width_ / 2, window_height_ / 2),
+    moving_down_(false),
+    moving_up_(false),
+    moving_left_(false),
+    moving_right_(false),
+    world_(world),
+    map_width_(width),
+    map_height_(height),
+    cross_(*gc, "Cross", &world->resources) {
   CL_FontDescription desc;
   desc.set_height(20);
-  default_font = CL_Font_System(*gc_, desc);
-
-  cross = new CL_Sprite(*gc_, "Cross", &world->resources);
+  default_font_ = CL_Font_System(*gc_, desc);
 }
 
 bool Player::Visible(CL_Vec2f position) {
@@ -36,9 +33,9 @@ bool Player::Visible(CL_Vec2f position) {
     return false;
   if (pos.y < 0)
     return false;
-  if (pos.x > window_width)
+  if (pos.x > window_width_)
     return false;
-  if (pos.y > window_height)
+  if (pos.y > window_height_)
     return false;
 
   return true;
@@ -47,23 +44,23 @@ bool Player::Visible(CL_Vec2f position) {
 void Player::Update(int timeElapsed_ms) {
   const int min_x = MIN_BORDER;
   const int min_y = MIN_BORDER;
-  const int max_x = window_width - MIN_BORDER - 1;
-  const int max_y = window_height - MIN_BORDER - 1;
+  const int max_x = window_width_ - MIN_BORDER - 1;
+  const int max_y = window_height_ - MIN_BORDER - 1;
 
-  const int max_map_x = map_width - window_width - 1;
-  const int max_map_y = map_height - window_height - 1;
+  const int max_map_x = map_width_ - window_width_ - 1;
+  const int max_map_y = map_height_ - window_height_ - 1;
 
   int move_x = 0;
   int move_y = 0;
 
   // Move camera
-  if (moving_down)
+  if (moving_down_)
     move_y += timeElapsed_ms * CROSS_SPEED;
-  if (moving_up)
+  if (moving_up_)
     move_y -= timeElapsed_ms * CROSS_SPEED;
-  if (moving_left)
+  if (moving_left_)
     move_x -= timeElapsed_ms * CROSS_SPEED;
-  if (moving_right)
+  if (moving_right_)
     move_x += timeElapsed_ms * CROSS_SPEED;
 
   // Cross Up
@@ -136,8 +133,8 @@ void Player::Update(int timeElapsed_ms) {
     }
     if (move_y > 0) {
       cross_position_.y += move_y;
-      if (cross_position_.y > window_height - 1)
-        cross_position_.y = window_height - 1;
+      if (cross_position_.y > window_height_ - 1)
+        cross_position_.y = window_height_ - 1;
     }
   }
   // Cross Right
@@ -160,8 +157,8 @@ void Player::Update(int timeElapsed_ms) {
     }
     if (move_x > 0) {
       cross_position_.x += move_x;
-      if (cross_position_.x > window_width - 1)
-        cross_position_.x = window_width - 1;
+      if (cross_position_.x > window_width_ - 1)
+        cross_position_.x = window_width_ - 1;
     }
   }
 }
@@ -171,8 +168,8 @@ void Player::DrawFloor() {
 
 void Player::DrawTop() {
   // Draw cross
-  cross->set_scale(0.5, 0.5);
-  cross->draw(*gc_, cross_position_.x, cross_position_.y);
-  cross->set_scale(0.25, 0.25);
-  cross->draw(*gc_, cross_position_.x, cross_position_.y);
+  cross_.set_scale(0.5, 0.5);
+  cross_.draw(*gc_, cross_position_.x, cross_position_.y);
+  cross_.set_scale(0.25, 0.25);
+  cross_.draw(*gc_, cross_position_.x, cross_position_.y);
 }

@@ -7,6 +7,7 @@
 #include <ClanLib/sound.h>
 #include <algorithm>
 #include <vector>
+#include <list>
 
 #include "plants/flower.h"
 #include "plants/plantplayer.h"
@@ -15,7 +16,7 @@
 #define BACKGROUND_BORDER 65
 #define NUM_PLAYERS 4
 
-using std::vector;
+using std::list;
 using std::sort;
 
 World::World(CL_DisplayWindow* window)
@@ -34,8 +35,8 @@ World::World(CL_DisplayWindow* window)
   if (width != height)
     CL_Console::write_line("Error, height and width should be the same!");
 
-  player_width_ = default_gc.get_width()/2;
-  player_height_ = default_gc.get_height()/2;
+  player_width_ = default_gc.get_width() / 2;
+  player_height_ = default_gc.get_height() / 2;
 
   texture_ = new CL_Texture(default_gc, CL_Size(player_width_, player_height_));
   framebuffer_ = new CL_FrameBuffer(default_gc);
@@ -89,8 +90,12 @@ bool World::CanBuild(CL_Vec2f position) {
   return diff.length() < (height / 2 - BACKGROUND_BORDER);
 }
 
-void World::AddFly(Fly *fly) {
-  flies.push_back(fly);
+void World::AddBug(Bug *bug) {
+  bugs.push_back(bug);
+}
+
+void World::RemoveBug(Bug *bug) {
+  bugs.remove(bug);
 }
 
 void World::AddFlower(Flower *flower) {
@@ -98,8 +103,17 @@ void World::AddFlower(Flower *flower) {
   flowers.push_back(flower);
 }
 
+void World::RemoveFlower(Flower *flower) {
+  RemovePlant(flower);
+  flowers.remove(flower);
+}
+
 void World::AddPlant(Plant *plant) {
   plants.push_back(plant);
+}
+
+void World::RemovePlant(Plant *plant) {
+  plants.remove(plant);
 }
 
 struct sort_class {
@@ -110,20 +124,20 @@ struct sort_class {
   CL_Vec2f position;
 };
 
-vector<Plant *>* World::NearestPlants(CL_Vec2f position) {
+list<Plant *>* World::NearestPlants(CL_Vec2f position) {
   sort_class sort_object;
   sort_object.position = position;
 
-  sort(plants.begin(), plants.end(), sort_object);
+  plants.sort(sort_object);
   return &plants;
 }
 
-vector<Fly*>* World::NearestBugs(CL_Vec2f position) {
+list<Bug*>* World::NearestBugs(CL_Vec2f position) {
   sort_class sort_object;
   sort_object.position = position;
 
-  sort(flies.begin(), flies.end(), sort_object);
-  return &flies;
+  bugs.sort(sort_object);
+  return &bugs;
 }
 
 Flower* World::NearestFlower(CL_Vec2f position) {
@@ -132,8 +146,11 @@ Flower* World::NearestFlower(CL_Vec2f position) {
   Flower *nearest_flower = NULL;
 
   // Get nearest flower
-  std::vector<Flower *>::iterator it;
+  std::list<Flower *>::iterator it;
   for (it = flowers.begin(); it != flowers.end(); ++it) {
+    if (!(*it)->is_alive())
+      continue;
+
     float distance = ((*it)->position() - position).length();
 
     if (nearest_flower == NULL || distance < best_dist) {
@@ -153,16 +170,16 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   if (num_players > 0) {
     switch (key.id) {
     case CL_KEY_DOWN:
-      players[0]->moving_down = true;
+      players[0]->moving_down_ = true;
       break;
     case CL_KEY_UP:
-      players[0]->moving_up = true;
+      players[0]->moving_up_ = true;
       break;
     case CL_KEY_LEFT:
-      players[0]->moving_left = true;
+      players[0]->moving_left_ = true;
       break;
     case CL_KEY_RIGHT:
-      players[0]->moving_right = true;
+      players[0]->moving_right_ = true;
       break;
     case CL_KEY_DELETE:
       players[0]->BuildButtonPressed();
@@ -176,19 +193,19 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
     }
     /*
     if (key.id == CL_KEY_DOWN) {
-      players[0]->moving_down = true;
+      players[0]->moving_down_ = true;
     }
 
     if (key.id == CL_KEY_UP) {
-      players[0]->moving_up = true;
+      players[0]->moving_up_ = true;
     }
 
     if (key.id == CL_KEY_LEFT) {
-      players[0]->moving_left = true;
+      players[0]->moving_left_ = true;
     }
 
     if (key.id == CL_KEY_RIGHT) {
-      players[0]->moving_right = true;
+      players[0]->moving_right_ = true;
     }
     if (key.id == CL_KEY_DELETE) {
       players[0]->BuildButtonPressed();
@@ -206,19 +223,19 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   // key Player 1 onKeyDown
   if (num_players > 1) {
     if (key.id == CL_KEY_NUMPAD2) {
-      players[1]->moving_down = true;
+      players[1]->moving_down_ = true;
     }
 
     if (key.id == CL_KEY_NUMPAD5) {
-      players[1]->moving_up = true;
+      players[1]->moving_up_ = true;
     }
 
     if (key.id == CL_KEY_NUMPAD1) {
-      players[1]->moving_left = true;
+      players[1]->moving_left_ = true;
     }
 
     if (key.id == CL_KEY_NUMPAD3) {
-      players[1]->moving_right = true;
+      players[1]->moving_right_ = true;
     }
 
     if (key.id == CL_KEY_NUMPAD6) {
@@ -236,77 +253,77 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   // key Player 2 onKeyDown
   if (num_players > 2) {
     if (key.id == CL_KEY_J) {
-      players[2]->moving_down = true;
+      players[2]->moving_down_ = true;
     }
 
     if (key.id == CL_KEY_U) {
-      players[2]->moving_up = true;
+      players[2]->moving_up_ = true;
     }
 
     if (key.id == CL_KEY_H) {
-      players[2]->moving_left = true;
+      players[2]->moving_left_ = true;
     }
 
     if (key.id == CL_KEY_K) {
-      players[2]->moving_right = true;
+      players[2]->moving_right_ = true;
     }
-    if (key.id == CL_KEY_7) {
+    if (key.id == CL_KEY_I) {
       players[2]->BuildButtonPressed();
     }
 
-    if (key.id == CL_KEY_8) {
+    if (key.id == CL_KEY_Z) {
       players[2]->SelectButtonPressed();
     }
 
-    if (key.id == CL_KEY_9) {
+    if (key.id == CL_KEY_N) {
       players[2]->CancelButtonPressed();
     }
   }
   // key Player 3 onKeyDown
   if (num_players > 3) {
     if (key.id == CL_KEY_S) {
-      players[3]->moving_down = true;
+      players[3]->moving_down_ = true;
     }
 
     if (key.id == CL_KEY_W) {
-      players[3]->moving_up = true;
+      players[3]->moving_up_ = true;
     }
 
     if (key.id == CL_KEY_A) {
-      players[3]->moving_left = true;
+      players[3]->moving_left_ = true;
     }
 
     if (key.id == CL_KEY_D) {
-      players[3]->moving_right = true;
+      players[3]->moving_right_ = true;
     }
-    if (key.id == CL_KEY_1) {
+    if (key.id == CL_KEY_E) {
       players[3]->BuildButtonPressed();
     }
 
-    if (key.id == CL_KEY_2) {
+    if (key.id == CL_KEY_Q) {
       players[3]->SelectButtonPressed();
     }
 
-    if (key.id == CL_KEY_3) {
+    if (key.id == CL_KEY_Y) {
       players[3]->CancelButtonPressed();
     }
   }
   // key Player 4 onKeyDown
   if (num_players > 4) {
     if (key.id == CL_KEY_DOWN) {
-      players[4]->moving_down = true;
+      players[4]->moving_down_ = true;
     }
 
     if (key.id == CL_KEY_UP) {
-      players[4]->moving_up = true;
+      players[4]->moving_up_ = true;
     }
 
     if (key.id == CL_KEY_LEFT) {
-      players[4]->moving_left = true;
+      players[4]->moving_left_ = true;
     }
 
     if (key.id == CL_KEY_RIGHT) {
-      players[4]->moving_right = true;
+      players[4]->moving_right_ = true;
     }
 
     if (key.id == CL_KEY_NUMPAD6) {
@@ -326,92 +343,92 @@ void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
   // key Player 0 onKeyUp
   if (num_players > 0) {
     if (key.id == CL_KEY_DOWN) {
-      players[0]->moving_down = false;
+      players[0]->moving_down_ = false;
     }
 
     if (key.id == CL_KEY_UP) {
-      players[0]->moving_up = false;
+      players[0]->moving_up_ = false;
     }
 
     if (key.id == CL_KEY_LEFT) {
-      players[0]->moving_left = false;
+      players[0]->moving_left_ = false;
     }
 
     if (key.id == CL_KEY_RIGHT) {
-      players[0]->moving_right = false;
+      players[0]->moving_right_ = false;
     }
   }
   // key Player 1 onKeyUp
   if (num_players > 1) {
     if (key.id == CL_KEY_NUMPAD2) {
-      players[1]->moving_down = false;
+      players[1]->moving_down_ = false;
     }
 
     if (key.id == CL_KEY_NUMPAD5) {
-      players[1]->moving_up = false;
+      players[1]->moving_up_ = false;
     }
 
     if (key.id == CL_KEY_NUMPAD1) {
-      players[1]->moving_left = false;
+      players[1]->moving_left_ = false;
     }
 
     if (key.id == CL_KEY_NUMPAD3) {
-      players[1]->moving_right = false;
+      players[1]->moving_right_ = false;
     }
   }
 
   // key Player 2 onKeyUp
   if (num_players > 2) {
     if (key.id == CL_KEY_J) {
-      players[2]->moving_down = false;
+      players[2]->moving_down_ = false;
     }
 
     if (key.id == CL_KEY_U) {
-      players[2]->moving_up = false;
+      players[2]->moving_up_ = false;
     }
 
     if (key.id == CL_KEY_H) {
-      players[2]->moving_left = false;
+      players[2]->moving_left_ = false;
     }
 
     if (key.id == CL_KEY_K) {
-      players[2]->moving_right = false;
+      players[2]->moving_right_ = false;
     }
   }
   // key Player 3 onKeyUp
   if (num_players > 3) {
     if (key.id == CL_KEY_S) {
-      players[3]->moving_down = false;
+      players[3]->moving_down_ = false;
     }
 
     if (key.id == CL_KEY_W) {
-      players[3]->moving_up = false;
+      players[3]->moving_up_ = false;
     }
 
     if (key.id == CL_KEY_A) {
-      players[3]->moving_left = false;
+      players[3]->moving_left_ = false;
     }
 
     if (key.id == CL_KEY_D) {
-      players[3]->moving_right = false;
+      players[3]->moving_right_ = false;
     }
   }
   // key Player 4 onKeyUp
   if (num_players > 4) {
     if (key.id == CL_KEY_DOWN) {
-      players[4]->moving_down = false;
+      players[4]->moving_down_ = false;
     }
 
     if (key.id == CL_KEY_UP) {
-      players[4]->moving_up = false;
+      players[4]->moving_up_ = false;
     }
 
     if (key.id == CL_KEY_LEFT) {
-      players[4]->moving_left = false;
+      players[4]->moving_left_ = false;
     }
 
     if (key.id == CL_KEY_RIGHT) {
-      players[4]->moving_right = false;
+      players[4]->moving_right_ = false;
     }
   }
 }
@@ -468,23 +485,27 @@ void World::Draw() {
 
     // Draw all gameobjects
     // Flowers
-    std::vector<Flower *>::iterator it1;
+    std::list<Flower *>::iterator it1;
     for (it1 = flowers.begin(); it1 != flowers.end(); ++it1)
       (*it1)->Draw(players[i]->gc_, players[i]->map_position());
 
-    // Flies
-    int size = flies.size();
-    for (int j = 0; j < size; j++) {
-      flies[j]->Draw(players[i]->gc_, players[i]->map_position());
-    }
+    // Bugs
+    std::list<Bug *>::iterator it2;
+    for (it2 = bugs.begin(); it2 != bugs.end(); ++it2)
+      (*it2)->Draw(players[i]->gc_, players[i]->map_position());
 
     players[i]->DrawTop();
 
+    // Draw splitscreen
     default_gc.reset_frame_buffer();
     default_gc.set_texture(0, *texture_);
-    CL_Draw::texture(default_gc, CL_Rect(((int)(i / 2)) * player_width_, (i % 2) * player_height_, CL_Size(player_width_, player_height_)));
+    CL_Draw::texture(default_gc,
+                     CL_Rect((static_cast<int>(i / 2)) * player_width_,
+                             (i % 2) * player_height_,
+                             CL_Size(player_width_, player_height_)));
     default_gc.reset_texture(0);
-    //default_gc.draw_pixels(((int)(i/2))*200, (i%2)*200, texture_->get_pixeldata(), CL_Rect(0, 0, 200, 200));
+    // default_gc.draw_pixels(((int)(i/2))*200,
+    // (i%2)*200, texture_->get_pixeldata(), CL_Rect(0, 0, 200, 200));
   }
 
   default_font_.draw_text(default_gc, CL_Pointf(10, 100),

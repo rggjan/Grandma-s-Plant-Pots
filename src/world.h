@@ -4,11 +4,11 @@
 #define SRC_WORLD_H_
 
 #include <ClanLib/display.h>
-#include <vector>
+#include <list>
 
 #define MAX_PLAYERS 8
 
-class Fly;
+class Bug;
 class Flower;
 class Plant;
 class Player;
@@ -31,16 +31,22 @@ class World {
     CL_SoundBuffer *sound_beep1_;
 
     // Operations
-    void AddFly(Fly *fly);
+    void AddBug(Bug *bug);
+    void RemoveBug(Bug *bug);
+
     void AddFlower(Flower *flower);
+    void RemoveFlower(Flower *flower);
+
     void AddPlant(Plant *plant);
+    void RemovePlant(Plant *plant);
+
     void Run();
     void PlayBeep();
 
     // Queries
     Flower* NearestFlower(CL_Vec2f position);
-    std::vector<Fly *>* NearestBugs(CL_Vec2f position);
-    std::vector<Plant *>* NearestPlants(CL_Vec2f position);
+    std::list<Bug *>* NearestBugs(CL_Vec2f position);
+    std::list<Plant *>* NearestPlants(CL_Vec2f position);
     bool CanBuild(CL_Vec2f position);
 
   private:
@@ -51,9 +57,10 @@ class World {
 
     CL_Sprite *background;
 
-    std::vector<Fly *> flies;
-    std::vector<Plant*> plants;
-    std::vector<Flower*> flowers;
+    std::list<Bug *> bugs;
+    std::list<Plant*> plants;
+    std::list<Flower*> flowers;
+
     std::vector<Player*> players;
 
     CL_GraphicContext default_gc;

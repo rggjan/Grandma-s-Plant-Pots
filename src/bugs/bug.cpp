@@ -1,6 +1,6 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#include "./fly.h"
+#include "./bug.h"
 
 #include <ClanLib/display.h>
 
@@ -8,62 +8,83 @@
 #include "plants/plant.h"
 #include "bugs/bugplayer.h"
 
-// Flying
+// Buging
 #define CONSTANT_ANGLE true
 #define SPEED 300
 #define MAX_CURVE 5
-#define CURVE_VARIANCE 20
+#define CURVE_VARIANCE 30
 
 // Attacking
 #define ATTACK_SPEED_DECREASE_DISTANCE 200
 #define ATTACK_MIN_DISTANCE 5
-#define EAT_PER_SECOND 30
-#define FOOD_NEEDED_TO_DUPLICATE 45
+#define EAT_PER_SECOND 1
+#define FOOD_NEEDED_TO_DUPLICATE 30
 
 // General
 #define START_ENERGY 30
 
-Fly::Fly(World *world, CL_GraphicContext &gc, const CL_StringRef &name, BugPlayer* player)
-  : GameObject(world),
-    energy_(START_ENERGY),
+Bug::Bug(World *world, CL_GraphicContext *gc, CL_Vec2f position,
+         const CL_StringRef name, BugPlayer* player)
+// TODO(rggjan): Real position
+  : GameObject(world, gc, position, name),
     direction(0, -1),
     target_plant_(NULL),
     food_eaten_(0),
-    fly_name_(name),
+    bug_name_(name),
     player_(player) {
-  spriteImage = new CL_Sprite(gc, name, &world->resources);
-  spriteImage->set_play_loop(true);
+  sprite_.set_play_loop(true);
 
-  double max_add = CURVE_VARIANCE/100.*MAX_CURVE;
-  double diff = ((double)rand()/RAND_MAX)*max_add*2-max_add;
+  dead_color_ = CL_Color::red;
+  energy_ = START_ENERGY;
+
+  // Set curve with variance
+  double max_add = CURVE_VARIANCE / 100.*MAX_CURVE;
+  double diff = (static_cast<double>(rand()) / RAND_MAX) *
+                max_add * 2 - max_add;
   curve_ = MAX_CURVE + diff;
+
+  // Add to world
+  world->AddBug(this);  
 }
 
-void Fly::SetTargetPlant(Plant *plant) {
+Bug::~Bug() {
+  world_->RemoveBug(this);
+}
+
+double Bug::DecreaseEnergy(double amount) {
+  amount = GameObject::DecreaseEnergy(amount);
+
+  if (!is_alive())
+    StopEating();
+
+  return amount;
+}
+
+void Bug::SetTargetPlant(Plant *plant) {
   target_plant_ = plant;
-  plant->add_eating_fly(this);
+  plant->add_eating_bug(this);
 }
 
-void Fly::StopEating() {
+void Bug::StopEating() {
   if (this->is_free())
     return;
 
-  target_plant_->remove_flies();
+  target_plant_->remove_bugs();
   target_plant_ = NULL;
 }
 
-bool Fly::update(int time_ms) {
-  if (energy_ <= 0) {
-    spriteImage->set_color(CL_Color::red);
-    return true;
-  }
+bool Bug::Update(int time_ms, CL_Vec2f target_position) {
+  target_position_ = target_position;
 
   GameObject::Update(time_ms);
+
+  if (!is_alive())
+    return true;
 
   // Check if we can reproduce
   if (food_eaten_ > FOOD_NEEDED_TO_DUPLICATE) {
     food_eaten_ -= FOOD_NEEDED_TO_DUPLICATE;
-    player_->CreateFly(fly_name_, position());
+    player_->CreateBug(bug_name_, position());
   }
 
   // Calculate target direction
@@ -81,16 +102,10 @@ bool Fly::update(int time_ms) {
 
   if (target_plant_ != NULL and distance < ATTACK_MIN_DISTANCE) {
     double amount = EAT_PER_SECOND * time_ms / 1000.;
-    if (amount > target_plant_->energy_) {
-      food_eaten_ += target_plant_->energy_;
+    food_eaten_ += target_plant_->DecreaseEnergy(amount);
 
-      target_plant_->set_dead();
+    if (!target_plant_->is_alive())
       target_plant_ = NULL;
-      return true;
-    }
-
-    target_plant_->energy_ -= amount;
-    food_eaten_ += amount;
 
     return true;
   }
@@ -118,7 +133,7 @@ bool Fly::update(int time_ms) {
   if (direction.x < 0)
     angle = 360.0f - angle;
 
-  spriteImage->set_angle(CL_Angle(angle, cl_degrees));
+  sprite_.set_angle(CL_Angle(angle, cl_degrees));
 
   // Update position
   // posX += direction.x * 10*(rand()%100)/100;

@@ -3,9 +3,11 @@
 #ifndef SRC_PLANTS_FLOWER_H_
 #define SRC_PLANTS_FLOWER_H_
 
-#include <vector>
+#include "./flower.h"
 
 #include <ClanLib/sound.h>
+
+#include <list>
 
 #include "./plant.h"
 
@@ -28,10 +30,11 @@ class Flower : public Plant {
     // Construction
     Flower(World *world, CL_GraphicContext *gc,
            CL_Vec2f position, PlantPlayer* player);
+    ~Flower();
 
     // Operations
     void AddLeaf(Leaf* leaf);
-    void Update(int time_ms);
+    bool Update(int time_ms);
     void Draw(CL_GraphicContext* gc, CL_Vec2f target);
 
     // Queries
@@ -44,12 +47,12 @@ class Flower : public Plant {
 
   private:
     FlowerState state_;
-    std::vector<Leaf*> leaves;
+    std::list<Leaf*> leaves;
     int age_;
 
-    CL_SoundBuffer *sound_shot_;
-    CL_SoundBuffer_Session sound_session_shot_;
-    Fly *targeting_fly;
+    CL_SoundBuffer sound_shot_;
+    static CL_SoundBuffer_Session sound_session_shot_;
+    Bug *targeting_bug;
 };
 
 #endif  // SRC_PLANTS_FLOWER_H_

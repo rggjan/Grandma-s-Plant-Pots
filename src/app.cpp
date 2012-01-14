@@ -3,6 +3,7 @@
 #include "./app.h"
 
 #include <ClanLib/sound.h>
+#include <vector>
 
 #include "./world.h"
 
@@ -14,13 +15,13 @@ int Application::main(const std::vector<CL_String> &args) {
   desc.set_title("Grandma's Plant Pots");
   desc.set_allow_resize(true);
   desc.set_size(CL_Size(640, 480), true);
-  CL_DisplayWindow *window = new CL_DisplayWindow(desc);
+  CL_DisplayWindow window(desc);
 
   // Maximise
-  window->maximize();
+  window.maximize();
 
   // Wait for window manager
-  while (!window->is_maximized()) {
+  while (!window.is_maximized()) {
     CL_KeepAlive::process();
   }
 
@@ -30,7 +31,7 @@ int Application::main(const std::vector<CL_String> &args) {
 
   try {
     // Create world
-    World world(window);
+    World world(&window);
 
     // Run the main loop
     world.Run();
