@@ -34,8 +34,8 @@ class World {
     void AddBug(Bug *bug);
     void RemoveBug(Bug *bug);
 
-    void AddFlower(Flower *flower);
-    void RemoveFlower(Flower *flower);
+    void AddMasterPlant(Plant *plant);
+    void RemoveMasterPlant(Plant *plant);
 
     void AddPlant(Plant *plant);
     void RemovePlant(Plant *plant);
@@ -44,7 +44,7 @@ class World {
     void PlayBeep();
 
     // Queries
-    Flower* NearestFlower(CL_Vec2f position);
+    Plant* NearestMasterPlant(CL_Vec2f position);
     std::list<Bug *>* NearestBugs(CL_Vec2f position);
     std::list<Plant *>* NearestPlants(CL_Vec2f position);
     bool CanBuild(CL_Vec2f position);
@@ -57,9 +57,9 @@ class World {
 
     CL_Sprite *background;
 
-    std::list<Bug *> bugs;
+    std::list<Bug*> bugs;
+    std::list<Plant*> master_plants;
     std::list<Plant*> plants;
-    std::list<Flower*> flowers;
 
     std::vector<Player*> players;
 

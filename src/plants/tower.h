@@ -1,53 +1,39 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#ifndef SRC_PLANTS_FLOWER_H_
-#define SRC_PLANTS_FLOWER_H_
+#ifndef SRC_PLANTS_TOWER_H_
+#define SRC_PLANTS_TOWER_H_
 
-#include "./flower.h"
+#include "./tower.h"
 
 #include <ClanLib/sound.h>
-
-#include <list>
 
 #include "./plant.h"
 
 #define ENERGY_COST 6
 
-class Leaf;
-
-enum FlowerState {
-  kClosed,
-  kOpen,
-  kProducing,
-  kShooting
-};
-
-class Flower : public Plant {
+class Tower : public Plant {
   public:
     // Static
     static const int kSugarCost = ENERGY_COST;
 
     // Construction
-    Flower(World *world, CL_GraphicContext *gc,
+    Tower(World *world, CL_GraphicContext *gc,
            CL_Vec2f position, PlantPlayer* player);
-    ~Flower();
+    ~Tower();
 
     // Operations
-    void AddLeaf(Leaf* leaf);
     bool Update(int time_ms);
     void Draw(CL_GraphicContext* gc, CL_Vec2f target);
 
     // Queries
     bool CanBuild(CL_Vec2f position);
-    Leaf* NearestLeaf(CL_Vec2f position);
 
-    inline FlowerState state() {
-      return state_;
+    inline bool open() {
+      return open_;
     };
 
   private:
-    FlowerState state_;
-    std::list<Leaf*> leaves;
+    bool open_;
     int age_;
 
     CL_SoundBuffer sound_shot_;
@@ -55,4 +41,4 @@ class Flower : public Plant {
     Bug *targeting_bug;
 };
 
-#endif  // SRC_PLANTS_FLOWER_H_
+#endif  // SRC_PLANTS_TOWER_H_

@@ -98,14 +98,14 @@ void World::RemoveBug(Bug *bug) {
   bugs.remove(bug);
 }
 
-void World::AddFlower(Flower *flower) {
-  AddPlant(flower);
-  flowers.push_back(flower);
+void World::AddMasterPlant(Plant *plant) {
+  AddPlant(plant);
+  master_plants.push_back(plant);
 }
 
-void World::RemoveFlower(Flower *flower) {
-  RemovePlant(flower);
-  flowers.remove(flower);
+void World::RemoveMasterPlant(Plant *plant) {
+  RemovePlant(plant);
+  master_plants.remove(plant);
 }
 
 void World::AddPlant(Plant *plant) {
@@ -140,26 +140,26 @@ list<Bug*>* World::NearestBugs(CL_Vec2f position) {
   return &bugs;
 }
 
-Flower* World::NearestFlower(CL_Vec2f position) {
+Plant* World::NearestMasterPlant(CL_Vec2f position) {
   // TODO(rggjan): infinity
   int best_dist = -1;
-  Flower *nearest_flower = NULL;
+  Plant *nearest_plant = NULL;
 
   // Get nearest flower
-  std::list<Flower *>::iterator it;
-  for (it = flowers.begin(); it != flowers.end(); ++it) {
+  std::list<Plant *>::iterator it;
+  for (it = master_plants.begin(); it != master_plants.end(); ++it) {
     if (!(*it)->is_alive())
       continue;
 
     float distance = ((*it)->position() - position).length();
 
-    if (nearest_flower == NULL || distance < best_dist) {
+    if (nearest_plant == NULL || distance < best_dist) {
       best_dist = distance;
-      nearest_flower = (*it);
+      nearest_plant = (*it);
     }
   }
 
-  return nearest_flower;
+  return nearest_plant;
 }
 
 void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
@@ -484,15 +484,13 @@ void World::Draw() {
     players[i]->DrawFloor();
 
     // Draw all gameobjects
-    // Flowers
-    std::list<Flower *>::iterator it1;
-    for (it1 = flowers.begin(); it1 != flowers.end(); ++it1)
-      (*it1)->Draw(players[i]->gc_, players[i]->map_position());
+    // Plants
+    for (Plant *plant : master_plants)
+      plant->Draw(players[i]->gc_, players[i]->map_position());
 
     // Bugs
-    std::list<Bug *>::iterator it2;
-    for (it2 = bugs.begin(); it2 != bugs.end(); ++it2)
-      (*it2)->Draw(players[i]->gc_, players[i]->map_position());
+    for (Bug *bug : bugs)
+      bug->Draw(players[i]->gc_, players[i]->map_position());
 
     players[i]->DrawTop();
 

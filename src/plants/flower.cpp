@@ -11,7 +11,7 @@
 #include "plants/plantplayer.h"
 
 #define TIME_TO_OPEN 15000
-#define MIN_FLOWER_DISTANCE 100
+#define MIN_MASTER_PLANT_DISTANCE 100
 
 #define CO2_COLLECTED_PER_SECOND 0.1
 #define SUN_COLLECTED_PER_SECOND 0.01
@@ -26,11 +26,11 @@ Flower::Flower(World *world, CL_GraphicContext *gc,
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;
 
-  world_->AddFlower(this);
+  world_->AddMasterPlant(this);
 }
 
 Flower::~Flower() {
-  world_->RemoveFlower(this);
+  world_->RemoveMasterPlant(this);
 }
 
 void Flower::AddLeaf(Leaf* leaf) {
@@ -82,10 +82,10 @@ Leaf* Flower::NearestLeaf(CL_Vec2f position) {
 }
 
 bool Flower::CanBuild(CL_Vec2f position) {
-  Flower *nearest_flower = world_->NearestFlower(position);
+  Plant *nearest_plant = world_->NearestMasterPlant(position);
 
-  if (nearest_flower &&
-      (nearest_flower->position() - position).length() < MIN_FLOWER_DISTANCE)
+  if (nearest_plant &&
+      (nearest_plant->position() - position).length() < MIN_MASTER_PLANT_DISTANCE)
     return false;
 
   return world_->CanBuild(position);
