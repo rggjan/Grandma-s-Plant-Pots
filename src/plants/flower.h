@@ -3,8 +3,6 @@
 #ifndef SRC_PLANTS_FLOWER_H_
 #define SRC_PLANTS_FLOWER_H_
 
-#include "./flower.h"
-
 #include <ClanLib/sound.h>
 
 #include <list>

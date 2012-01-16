@@ -2,13 +2,10 @@
 
 #include "./flower.h"
 
-#include <vector>
-#include <list>
 #include <algorithm>
+#include <list>
 
-#include "bugs/bug.h"
 #include "./leaf.h"
-#include "plants/plantplayer.h"
 
 #define TIME_TO_OPEN 15000
 #define MIN_MASTER_PLANT_DISTANCE 100
