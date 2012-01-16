@@ -53,7 +53,6 @@ bool Flower::Update(int time_ms) {
   if (!open() && age_ > TIME_TO_OPEN) {
     open_ = true;
     sprite_.set_frame(1);
-
   }
 
   return Plant::Update(time_ms);
@@ -84,8 +83,8 @@ Leaf* Flower::NearestLeaf(CL_Vec2f position) {
 bool Flower::CanBuild(CL_Vec2f position) {
   Plant *nearest_plant = world_->NearestMasterPlant(position);
 
-  if (nearest_plant &&
-      (nearest_plant->position() - position).length() < MIN_MASTER_PLANT_DISTANCE)
+  if (nearest_plant && (nearest_plant->position() - position).length()
+      < MIN_MASTER_PLANT_DISTANCE)
     return false;
 
   return world_->CanBuild(position);

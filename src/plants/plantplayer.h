@@ -3,9 +3,9 @@
 #ifndef SRC_PLANTS_PLANTPLAYER_H_
 #define SRC_PLANTS_PLANTPLAYER_H_
 
-#include <list>
-
 #include <ClanLib/sound.h>
+
+#include <list>
 
 #include "./player.h"
 

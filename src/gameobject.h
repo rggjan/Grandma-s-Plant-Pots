@@ -33,7 +33,7 @@ class GameObject {
     virtual bool Update(int time_ms);
     virtual double DecreaseEnergy(double amount);
 
-protected:
+  protected:
     // Functions
     virtual void UpdateAnimation(int time_ms);
 

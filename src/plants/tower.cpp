@@ -55,7 +55,7 @@ bool Tower::Update(int time_ms) {
 
     targeting_bug = NULL;
 
-    for (Bug * bug : *bugs) {
+for (Bug * bug : *bugs) {
       if ((position() - bug->position()).length() <= ATTACK_DISTANCE &&
           bug->is_alive()) {
         targeting_bug = bug;
@@ -75,8 +75,8 @@ bool Tower::Update(int time_ms) {
 bool Tower::CanBuild(CL_Vec2f position) {
   Plant *nearest_plant = world_->NearestMasterPlant(position);
 
-  if (nearest_plant &&
-      (nearest_plant->position() - position).length() < MIN_MASTER_PLANT_DISTANCE)
+  if (nearest_plant && (nearest_plant->position() - position).length()
+      < MIN_MASTER_PLANT_DISTANCE)
     return false;
 
   return world_->CanBuild(position);

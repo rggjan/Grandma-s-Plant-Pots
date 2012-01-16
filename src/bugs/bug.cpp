@@ -47,7 +47,7 @@ Bug::Bug(World *world, CL_GraphicContext *gc, CL_Vec2f position,
   curve_ = MAX_CURVE + diff;
 
   // Add to world
-  world->AddBug(this);  
+  world->AddBug(this);
 }
 
 Bug::~Bug() {

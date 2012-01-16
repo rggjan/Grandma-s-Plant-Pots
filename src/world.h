@@ -5,6 +5,7 @@
 
 #include <ClanLib/display.h>
 #include <list>
+#include <vector>
 
 #define MAX_PLAYERS 8
 
