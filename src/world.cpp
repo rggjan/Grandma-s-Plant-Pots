@@ -170,16 +170,16 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   if (num_players > 0) {
     switch (key.id) {
     case CL_KEY_DOWN:
-      players[0]->moving_down_ = true;
+      players[0]->MovingDownButtonPressed();
       break;
     case CL_KEY_UP:
-      players[0]->moving_up_ = true;
+      players[0]->MovingUpButtonPressed();
       break;
     case CL_KEY_LEFT:
-      players[0]->moving_left_ = true;
+      players[0]->MovingLeftButtonPressed();
       break;
     case CL_KEY_RIGHT:
-      players[0]->moving_right_ = true;
+      players[0]->MovingRightButtonPressed();
       break;
     case CL_KEY_DELETE:
       players[0]->BuildButtonPressed();
@@ -193,19 +193,19 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
     }
     /*
     if (key.id == CL_KEY_DOWN) {
-      players[0]->moving_down_ = true;
+      players[0]->MovingDownButtonPressed();
     }
 
     if (key.id == CL_KEY_UP) {
-      players[0]->moving_up_ = true;
+      players[0]->MovingUpButtonPressed();
     }
 
     if (key.id == CL_KEY_LEFT) {
-      players[0]->moving_left_ = true;
+      players[0]->MovingLeftButtonPressed();
     }
 
     if (key.id == CL_KEY_RIGHT) {
-      players[0]->moving_right_ = true;
+      players[0]->MovingRightButtonPressed();
     }
     if (key.id == CL_KEY_DELETE) {
       players[0]->BuildButtonPressed();
@@ -223,19 +223,19 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   // key Player 1 onKeyDown
   if (num_players > 1) {
     if (key.id == CL_KEY_NUMPAD2) {
-      players[1]->moving_down_ = true;
+      players[1]->MovingDownButtonPressed();
     }
 
     if (key.id == CL_KEY_NUMPAD5) {
-      players[1]->moving_up_ = true;
+      players[1]->MovingUpButtonPressed();
     }
 
     if (key.id == CL_KEY_NUMPAD1) {
-      players[1]->moving_left_ = true;
+      players[1]->MovingLeftButtonPressed();
     }
 
     if (key.id == CL_KEY_NUMPAD3) {
-      players[1]->moving_right_ = true;
+      players[1]->MovingRightButtonPressed();
     }
 
     if (key.id == CL_KEY_NUMPAD6) {
@@ -253,19 +253,19 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   // key Player 2 onKeyDown
   if (num_players > 2) {
     if (key.id == CL_KEY_J) {
-      players[2]->moving_down_ = true;
+      players[2]->MovingDownButtonPressed();
     }
 
     if (key.id == CL_KEY_U) {
-      players[2]->moving_up_ = true;
+      players[2]->MovingUpButtonPressed();
     }
 
     if (key.id == CL_KEY_H) {
-      players[2]->moving_left_ = true;
+      players[2]->MovingLeftButtonPressed();
     }
 
     if (key.id == CL_KEY_K) {
-      players[2]->moving_right_ = true;
+      players[2]->MovingRightButtonPressed();
     }
     if (key.id == CL_KEY_I) {
       players[2]->BuildButtonPressed();
@@ -282,19 +282,19 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   // key Player 3 onKeyDown
   if (num_players > 3) {
     if (key.id == CL_KEY_S) {
-      players[3]->moving_down_ = true;
+      players[3]->MovingDownButtonPressed();
     }
 
     if (key.id == CL_KEY_W) {
-      players[3]->moving_up_ = true;
+      players[3]->MovingUpButtonPressed();
     }
 
     if (key.id == CL_KEY_A) {
-      players[3]->moving_left_ = true;
+      players[3]->MovingLeftButtonPressed();
     }
 
     if (key.id == CL_KEY_D) {
-      players[3]->moving_right_ = true;
+      players[3]->MovingRightButtonPressed();
     }
     if (key.id == CL_KEY_E) {
       players[3]->BuildButtonPressed();
@@ -311,19 +311,19 @@ void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
   // key Player 4 onKeyDown
   if (num_players > 4) {
     if (key.id == CL_KEY_DOWN) {
-      players[4]->moving_down_ = true;
+      players[4]->MovingDownButtonPressed();
     }
 
     if (key.id == CL_KEY_UP) {
-      players[4]->moving_up_ = true;
+      players[4]->MovingUpButtonPressed();
     }
 
     if (key.id == CL_KEY_LEFT) {
-      players[4]->moving_left_ = true;
+      players[4]->MovingLeftButtonPressed();
     }
 
     if (key.id == CL_KEY_RIGHT) {
-      players[4]->moving_right_ = true;
+      players[4]->MovingRightButtonPressed();
     }
 
     if (key.id == CL_KEY_NUMPAD6) {
@@ -343,92 +343,92 @@ void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
   // key Player 0 onKeyUp
   if (num_players > 0) {
     if (key.id == CL_KEY_DOWN) {
-      players[0]->moving_down_ = false;
+      players[0]->MovingDownButtonReleased();
     }
 
     if (key.id == CL_KEY_UP) {
-      players[0]->moving_up_ = false;
+      players[0]->MovingUpButtonReleased();
     }
 
     if (key.id == CL_KEY_LEFT) {
-      players[0]->moving_left_ = false;
+      players[0]->MovingLeftButtonReleased();
     }
 
     if (key.id == CL_KEY_RIGHT) {
-      players[0]->moving_right_ = false;
+      players[0]->MovingRightButtonReleased();
     }
   }
   // key Player 1 onKeyUp
   if (num_players > 1) {
     if (key.id == CL_KEY_NUMPAD2) {
-      players[1]->moving_down_ = false;
+      players[1]->MovingDownButtonReleased();
     }
 
     if (key.id == CL_KEY_NUMPAD5) {
-      players[1]->moving_up_ = false;
+      players[1]->MovingUpButtonReleased();
     }
 
     if (key.id == CL_KEY_NUMPAD1) {
-      players[1]->moving_left_ = false;
+      players[1]->MovingLeftButtonReleased();
     }
 
     if (key.id == CL_KEY_NUMPAD3) {
-      players[1]->moving_right_ = false;
+      players[1]->MovingRightButtonReleased();
     }
   }
 
   // key Player 2 onKeyUp
   if (num_players > 2) {
     if (key.id == CL_KEY_J) {
-      players[2]->moving_down_ = false;
+      players[2]->MovingDownButtonReleased();
     }
 
     if (key.id == CL_KEY_U) {
-      players[2]->moving_up_ = false;
+      players[2]->MovingUpButtonReleased();
     }
 
     if (key.id == CL_KEY_H) {
-      players[2]->moving_left_ = false;
+      players[2]->MovingLeftButtonReleased();
     }
 
     if (key.id == CL_KEY_K) {
-      players[2]->moving_right_ = false;
+      players[2]->MovingRightButtonReleased();
     }
   }
   // key Player 3 onKeyUp
   if (num_players > 3) {
     if (key.id == CL_KEY_S) {
-      players[3]->moving_down_ = false;
+      players[3]->MovingDownButtonReleased();
     }
 
     if (key.id == CL_KEY_W) {
-      players[3]->moving_up_ = false;
+      players[3]->MovingUpButtonReleased();
     }
 
     if (key.id == CL_KEY_A) {
-      players[3]->moving_left_ = false;
+      players[3]->MovingLeftButtonReleased();
     }
 
     if (key.id == CL_KEY_D) {
-      players[3]->moving_right_ = false;
+      players[3]->MovingRightButtonReleased();
     }
   }
   // key Player 4 onKeyUp
   if (num_players > 4) {
     if (key.id == CL_KEY_DOWN) {
-      players[4]->moving_down_ = false;
+      players[4]->MovingDownButtonReleased();
     }
 
     if (key.id == CL_KEY_UP) {
-      players[4]->moving_up_ = false;
+      players[4]->MovingUpButtonReleased();
     }
 
     if (key.id == CL_KEY_LEFT) {
-      players[4]->moving_left_ = false;
+      players[4]->MovingLeftButtonReleased();
     }
 
     if (key.id == CL_KEY_RIGHT) {
-      players[4]->moving_right_ = false;
+      players[4]->MovingRightButtonReleased();
     }
   }
 }

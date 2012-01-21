@@ -14,20 +14,15 @@ Plant::Plant(World *world, CL_GraphicContext *gc,
   dead_color_ = CL_Color::brown;
 }
 
-void Plant::DrawRed(CL_GraphicContext *gc, CL_Vec2f position) {
-  // Draw graphic
-  sprite_.set_color(CL_Color::red);
-  sprite_.set_alpha(0.8);
-  sprite_.set_frame(2);
-  sprite_.draw(*gc, position.x, position.y);
-}
+void Plant::DrawTmp(CL_GraphicContext *gc) {
+  if (CanBuild(player_->position()))
+    sprite_.set_color(CL_Color::green);
+  else
+    sprite_.set_color(CL_Color::red);
 
-void Plant::DrawGreen(CL_GraphicContext *gc, CL_Vec2f position) {
-  // Draw graphic
-  sprite_.set_color(CL_Color::green);
   sprite_.set_alpha(0.8);
-  sprite_.set_frame(2);
-  sprite_.draw(*gc, position.x, position.y);
+  sprite_.set_frame(sprite_.get_frame_count() - 1);
+  sprite_.draw(*gc, player_->cross_position().x, player_->cross_position().y);
 }
 
 bool Plant::Update(int time_ms) {

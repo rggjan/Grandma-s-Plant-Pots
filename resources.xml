@@ -16,9 +16,17 @@
 		<rotation origin="center"/>
 	</sprite>
 
-	<sprite name="Plant1">
+	<sprite name="Flower">
 		<image file="Gfx/flower1_1.png" />
 		<image file="Gfx/flower1_2.png" />
+		<translation origin="center"/>
+		<rotation origin="center"/>
+                <scale x="0.2" y="0.2" />
+	</sprite>
+
+	<sprite name="Tower">
+		<image file="Gfx/flower2_1.png" />
+		<image file="Gfx/flower2_2.png" />
 		<translation origin="center"/>
 		<rotation origin="center"/>
                 <scale x="0.2" y="0.2" />
@@ -82,7 +90,7 @@
 	
 
 
-	<sample name="FlowerShoot" file="Sound/flower_shot.ogg"/>	
+	<sample name="TowerShoot" file="Sound/flower_shot.ogg"/>	
 
 	<sample name="BackgroundMusic" file="Sound/Background.ogg"/>
 

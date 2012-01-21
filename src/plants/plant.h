@@ -15,8 +15,7 @@ class Plant : public GameObject {
           CL_Vec2f position, CL_StringRef name, PlantPlayer* player);
 
     // Operations
-    void DrawRed(CL_GraphicContext *gc, CL_Vec2f position);
-    void DrawGreen(CL_GraphicContext *gc, CL_Vec2f position);
+    void DrawTmp(CL_GraphicContext *gc);
     void Draw(CL_GraphicContext *gc, CL_Vec2f position);
 
     // Queries

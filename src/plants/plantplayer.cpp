@@ -10,6 +10,7 @@
 
 #include "plants/flower.h"
 #include "plants/leaf.h"
+#include "plants/tower.h"
 
 using std::vector;
 
@@ -26,13 +27,17 @@ PlantPlayer::PlantPlayer(CL_GraphicContext* gc, World* world,
     sun_(START_SUN),
     state(Idle),
     select_sprite_(*gc_, "Cross2", &world_->resources),
-    cross_green_(false),
+    menu_item_(0),    
     sound_plantgrowing_("PlantgrowingMusic", &world_->resources),
     sound_leafgrowing_("LeafgrowingMusic", &world_->resources) {
-  tmp_flower_ = new Flower(world_, gc_, CL_Vec2f(0, 0), this);
-  world->RemoveMasterPlant(tmp_flower_);
-  tmp_leaf_ = new Leaf(world_, gc_, CL_Vec2f(0, 0), "Leaf2", tmp_flower_);
-  world->RemovePlant(tmp_leaf_);
+  //tmp_plant_ = new Tower(world_, gc_, CL_Vec2f(0, 0), this);
+  plant_menu_.push_back(Tower(world_, gc_, CL_Vec2f(0, 0), this));
+  plant_menu_.push_back(Flower(world_, gc_, CL_Vec2f(0, 0), this));
+  world->RemoveMasterPlant(&plant_menu_[0]);
+  world->RemoveMasterPlant(&plant_menu_[1]);
+
+  //tmp_leaf_ = new Leaf(world_, gc_, CL_Vec2f(0, 0), "Leaf2", tmp_flower_);
+  //world->RemovePlant(tmp_leaf_);
 
   sound_plantgrowing_.set_volume(1.0f);
   sound_plantgrowing_.prepare();
@@ -42,12 +47,12 @@ PlantPlayer::PlantPlayer(CL_GraphicContext* gc, World* world,
 }
 
 PlantPlayer::~PlantPlayer() {
-  delete tmp_flower_;
-  delete tmp_leaf_;
+  //delete tmp_plant_;
+  //delete tmp_leaf_;
 }
 
 bool PlantPlayer::BuildLeaf() {
-  if (sugar_ >= Leaf::kSugarCost && cross_green_) {
+  /*if (sugar_ >= Leaf::kSugarCost && cross_green_) {
     Leaf *leaf = new Leaf(world_, gc_, position(), "Leaf2", selected_flower_);
     leaf->set_angle(tmp_leaf_->angle());
 
@@ -59,12 +64,13 @@ bool PlantPlayer::BuildLeaf() {
   } else {
     world_->PlayBeep();
     return false;
-  }
+  }*/
+  return false;
 }
 
-bool PlantPlayer::BuildFlower() {
-  if (sugar_ >= Flower::kSugarCost && cross_green_) {
-    flowers.push_back(new Flower(world_, gc_, position(), this));
+/*bool PlantPlayer::BuildPlant() {
+  if (sugar_ >= tmp_plant_->kSugarCost && cross_green_) {
+    flowers.push_back(new Tower(world_, gc_, position(), this));
 
     sugar_ -= Flower::kSugarCost;
     sound_plantgrowing_.play();
@@ -74,10 +80,10 @@ bool PlantPlayer::BuildFlower() {
     world_->PlayBeep();
     return false;
   }
-}
+}*/
 
 void PlantPlayer::SelectButtonPressed() {
-  switch (state) {
+  /*switch (state) {
   case Building:
     if (BuildFlower())
       state = Idle;
@@ -99,15 +105,17 @@ void PlantPlayer::SelectButtonPressed() {
       state = Idle;
   default:
     break;
-  }
+  }*/
 }
 
 void PlantPlayer::CancelButtonPressed() {
   switch (state) {
+  case Idle:
+    break;
   case Building:
     state = Idle;
     break;
-  case Selecting:
+  /*case Selecting:
     state = Idle;
     break;
   case Selected:
@@ -117,7 +125,7 @@ void PlantPlayer::CancelButtonPressed() {
     state = Selecting;
     break;
   default:
-    break;
+    break;*/
   }
 }
 
@@ -126,7 +134,7 @@ void PlantPlayer::BuildButtonPressed() {
   case Idle:
     state = Building;
     break;
-  case Building:
+  /*case Building:
     BuildFlower();
     break;
   case Selected:
@@ -134,7 +142,7 @@ void PlantPlayer::BuildButtonPressed() {
     break;
   case SelectedBuilding:
     BuildLeaf();
-    break;
+    break;*/
   default:
     break;
   }
@@ -144,25 +152,25 @@ Flower* PlantPlayer::NearestFlower() {
   // TODO(rggjan): infinity
   int best_dist = -1;
   Flower *nearest_flower = NULL;
+  /*
+    // Get nearest flower
+  for (Tower * flower : flowers) {
+      if (!flower->is_alive())
+        continue;
 
-  // Get nearest flower
-for (Flower * flower : flowers) {
-    if (!flower->is_alive())
-      continue;
+      float distance = (flower->position() - position()).length();
 
-    float distance = (flower->position() - position()).length();
-
-    if (nearest_flower == NULL || distance < best_dist) {
-      best_dist = distance;
-      nearest_flower = flower;
-    }
-  }
+      if (nearest_flower == NULL || distance < best_dist) {
+        best_dist = distance;
+        nearest_flower = flower;
+      }
+    }*/
 
   return nearest_flower;
 }
 
 void PlantPlayer::DrawFloor() {
-  if (state == Selecting) {
+  /*if (state == Selecting) {
     Flower* nearest_flower = NearestFlower();
 
     select_sprite_.set_alpha(0.3);
@@ -175,11 +183,11 @@ void PlantPlayer::DrawFloor() {
 
     CL_Vec2f pos = selected_flower_->position() - map_position();
     select_sprite_.draw(*gc_, pos.x, pos.y);
-  }
+  }*/
 }
 
 void PlantPlayer::DrawEnergy() {
-  switch (state) {
+  /*switch (state) {
   case Building: {
     CL_Colorf color = CL_Colorf::white;
     if (tmp_flower_->kSugarCost > sugar_)
@@ -205,7 +213,21 @@ void PlantPlayer::DrawEnergy() {
                             cl_format("Sugar: %1", static_cast<int>(sugar_)),
                             CL_Colorf::white);
   }
-  }
+  }*/
+}
+
+void PlantPlayer::MovingLeftButtonPressed() {
+  if (state == Building)
+    menu_item_ = (menu_item_+(plant_menu_.size()-1))%plant_menu_.size();
+  else
+    Player::MovingLeftButtonPressed();
+}
+
+void PlantPlayer::MovingRightButtonPressed() {
+  if (state == Building)
+    menu_item_ = (menu_item_+1)%plant_menu_.size();
+  else
+    Player::MovingRightButtonPressed();
 }
 
 void PlantPlayer::DrawCO2() {
@@ -224,19 +246,20 @@ void PlantPlayer::Update(int time_ms) {
   // Set sun to zero... will be added up in the update function!
   sun_ = 0;
 
-  remove_if(flowers.begin(), flowers.end(), [time_ms](Flower * flower) {
-    return !flower->Update(time_ms);
+  // Remove dead and invisible plants
+  remove_if(plants.begin(), plants.end(), [time_ms](Plant * plants) {
+    return !plants->Update(time_ms);
   });
 
   // Produce sugar
   double sugar_production = sun_ * time_ms / 1000.;
   if (co2_ < sun_)
     sugar_production = co2_;
-
   co2_ -= sugar_production;
   sugar_ += sugar_production;
 
-  Player::Update(time_ms);
+  if (state != Building)
+    Player::Update(time_ms);
 }
 
 void PlantPlayer::DrawTop() {
@@ -244,41 +267,35 @@ void PlantPlayer::DrawTop() {
   case Idle:
     Player::DrawTop();
     break;
-  case Building:
-    if (tmp_flower_->CanBuild(position())) {
-      tmp_flower_->DrawGreen(gc_, cross_position());
-      cross_green_ = true;
-    } else {
-      tmp_flower_->DrawRed(gc_, cross_position());
-      cross_green_ = false;
-    }
-    // Player::draw_cross(); TODO(rggjan): better with this?
-    break;
-  case SelectedBuilding: {
-    CL_Vec2f diff = cross_position() -
-                    (selected_flower_->position() - map_position());
+    case Building:
+      plant_menu_[menu_item_].DrawTmp(gc_);
+      // Player::draw_cross(); TODO(rggjan): better with this?
+      break;
+    /*case SelectedBuilding: {
+      CL_Vec2f diff = cross_position() -
+                      (selected_flower_->position() - map_position());
 
-    float angle = atan2(diff.y, diff.x);
-    tmp_leaf_->set_angle(CL_Angle(angle, cl_radians));
+      float angle = atan2(diff.y, diff.x);
+      tmp_leaf_->set_angle(CL_Angle(angle, cl_radians));
 
-    CL_Colorf line_color;
+      CL_Colorf line_color;
 
-    if (diff.length() < LEAF_MAX_DISTANCE &&
-        tmp_leaf_->CanBuild(position(), selected_flower_)) {
-      tmp_leaf_->DrawGreen(gc_, cross_position());
-      line_color = CL_Colorf::green;
-      cross_green_ = true;
-    } else {
-      tmp_leaf_->DrawRed(gc_, cross_position());
-      line_color = CL_Colorf::red;
-      cross_green_ = false;
-    }
+      if (diff.length() < LEAF_MAX_DISTANCE &&
+          tmp_leaf_->CanBuild(position(), selected_flower_)) {
+        tmp_leaf_->DrawGreen(gc_, cross_position());
+        line_color = CL_Colorf::green;
+        cross_green_ = true;
+      } else {
+        tmp_leaf_->DrawRed(gc_, cross_position());
+        line_color = CL_Colorf::red;
+        cross_green_ = false;
+      }
 
-    diff = selected_flower_->position() - map_position();
-    CL_Draw::line(*gc_, diff.x, diff.y, cross_position().x, cross_position().y,
-                  line_color);
-    break;
-  }
+      diff = selected_flower_->position() - map_position();
+      CL_Draw::line(*gc_, diff.x, diff.y, cross_position().x, cross_position().y,
+                    line_color);
+      break;
+    }*/
   default: {
     Player::DrawTop();
     break;

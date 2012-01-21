@@ -10,8 +10,10 @@
 #include "./player.h"
 
 class Flower;
+class Tower;
 class Leaf;
 class CL_SoundBuffer;
+class Plant;
 
 enum State {
   Idle,
@@ -26,6 +28,9 @@ class PlantPlayer : public Player {
     // Constructor
     PlantPlayer(CL_GraphicContext* gc, World *world, int width, int height);
     ~PlantPlayer();
+
+    void MovingLeftButtonPressed();
+    void MovingRightButtonPressed();
 
     // Operations
     void BuildButtonPressed();
@@ -52,13 +57,14 @@ class PlantPlayer : public Player {
     Flower* NearestFlower();
 
     // Attributes
-    std::list<Flower*> flowers;
+    std::list<Plant*> plants;
     State state;
     CL_Sprite select_sprite_;
-    Flower *selected_flower_;
-    Flower *tmp_flower_;
-    Leaf *tmp_leaf_;
-    bool cross_green_;
+    Plant *selected_plant_;
+
+    std::vector<Plant> plant_menu_;
+    int menu_item_;
+    //Leaf *tmp_leaf_;
 
     CL_SoundBuffer sound_plantgrowing_;
     CL_SoundBuffer sound_leafgrowing_;

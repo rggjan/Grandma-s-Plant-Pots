@@ -16,6 +16,16 @@ class Player {
     virtual void SelectButtonPressed() {}
     virtual void CancelButtonPressed() {}
 
+    virtual void MovingUpButtonPressed() { moving_up_ = true; }
+    virtual void MovingDownButtonPressed() { moving_down_ = true; }
+    virtual void MovingLeftButtonPressed() { moving_left_ = true; }
+    virtual void MovingRightButtonPressed() { moving_right_ = true; }
+
+    virtual void MovingUpButtonReleased() { moving_up_ = false; }
+    virtual void MovingDownButtonReleased() { moving_down_ = false; }
+    virtual void MovingLeftButtonReleased() { moving_left_ = false; }
+    virtual void MovingRightButtonReleased() { moving_right_ = false; }
+
     virtual void Update(int time_ms);
     virtual void DrawTop();
     virtual void DrawFloor();

@@ -16,7 +16,7 @@
 
 Flower::Flower(World *world, CL_GraphicContext *gc,
                CL_Vec2f position, PlantPlayer* player)
-  : Plant(world, gc, position, "Plant1", player),
+  : Plant(world, gc, position, "Flower", player),
     age_(0),
     open_(false) {
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;

@@ -9,7 +9,7 @@
 #include "bugs/bug.h"
 #include "plants/plantplayer.h"
 
-#define TIME_TO_OPEN 15000
+#define TIME_TO_OPEN 150
 #define MIN_MASTER_PLANT_DISTANCE 100
 
 #define START_ENERGY 30
@@ -21,7 +21,7 @@ CL_SoundBuffer_Session Tower::sound_session_shot_;
 
 Tower::Tower(World *world, CL_GraphicContext *gc,
              CL_Vec2f position, PlantPlayer* player)
-  : Plant(world, gc, position, "Plant1", player),
+  : Plant(world, gc, position, "Tower", player),
     open_(false),
     age_(0),
     sound_shot_("TowerShoot", &world->resources) {
