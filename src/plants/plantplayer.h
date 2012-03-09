@@ -47,11 +47,13 @@ class PlantPlayer : public Player {
 
   private:
     // Operations
-    bool BuildFlower();
+    bool BuildPlant();
     bool BuildLeaf();
     void DrawEnergy();
     void DrawCO2();
     void DrawSun();
+
+    bool CanBuild(Plant *plant);
 
     // Queries
     Flower* NearestFlower();
@@ -62,7 +64,7 @@ class PlantPlayer : public Player {
     CL_Sprite select_sprite_;
     Plant *selected_plant_;
 
-    std::vector<Plant> plant_menu_;
+    std::vector<Plant*> plant_menu_;
     int menu_item_;
     //Leaf *tmp_leaf_;
 

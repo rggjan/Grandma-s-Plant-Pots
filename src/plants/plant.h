@@ -14,8 +14,10 @@ class Plant : public GameObject {
     Plant(World *world, CL_GraphicContext *gc,
           CL_Vec2f position, CL_StringRef name, PlantPlayer* player);
 
+    virtual inline int sugar_cost() = 0;
+
     // Operations
-    void DrawTmp(CL_GraphicContext *gc);
+    void DrawTmp(CL_GraphicContext *gc, bool green);
     void Draw(CL_GraphicContext *gc, CL_Vec2f position);
 
     // Queries

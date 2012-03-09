@@ -14,8 +14,8 @@ Plant::Plant(World *world, CL_GraphicContext *gc,
   dead_color_ = CL_Color::brown;
 }
 
-void Plant::DrawTmp(CL_GraphicContext *gc) {
-  if (CanBuild(player_->position()))
+void Plant::DrawTmp(CL_GraphicContext *gc, bool green) {
+  if (green)
     sprite_.set_color(CL_Color::green);
   else
     sprite_.set_color(CL_Color::red);

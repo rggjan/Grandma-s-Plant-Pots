@@ -31,10 +31,10 @@ PlantPlayer::PlantPlayer(CL_GraphicContext* gc, World* world,
     sound_plantgrowing_("PlantgrowingMusic", &world_->resources),
     sound_leafgrowing_("LeafgrowingMusic", &world_->resources) {
   //tmp_plant_ = new Tower(world_, gc_, CL_Vec2f(0, 0), this);
-  plant_menu_.push_back(Tower(world_, gc_, CL_Vec2f(0, 0), this));
-  plant_menu_.push_back(Flower(world_, gc_, CL_Vec2f(0, 0), this));
-  world->RemoveMasterPlant(&plant_menu_[0]);
-  world->RemoveMasterPlant(&plant_menu_[1]);
+  plant_menu_.push_back(new Tower(world_, gc_, CL_Vec2f(0, 0), this));
+  plant_menu_.push_back(new Flower(world_, gc_, CL_Vec2f(0, 0), this));
+  world->RemoveMasterPlant(plant_menu_[0]);
+  world->RemoveMasterPlant(plant_menu_[1]);
 
   //tmp_leaf_ = new Leaf(world_, gc_, CL_Vec2f(0, 0), "Leaf2", tmp_flower_);
   //world->RemovePlant(tmp_leaf_);
@@ -68,8 +68,9 @@ bool PlantPlayer::BuildLeaf() {
   return false;
 }
 
-/*bool PlantPlayer::BuildPlant() {
-  if (sugar_ >= tmp_plant_->kSugarCost && cross_green_) {
+//bool PlantPlayer::BuildPlant(Plant *plant) {
+  /*if (plant->CanBuild(position())
+  if (sugar_ >= tmp_plant_->kSugarCost && plant_menu_[menu_item_].CanBuild(position())) {
     flowers.push_back(new Tower(world_, gc_, position(), this));
 
     sugar_ -= Flower::kSugarCost;
@@ -79,16 +80,16 @@ bool PlantPlayer::BuildLeaf() {
   } else {
     world_->PlayBeep();
     return false;
-  }
-}*/
+  }*/
+//}
 
 void PlantPlayer::SelectButtonPressed() {
-  /*switch (state) {
+  switch (state) {
   case Building:
-    if (BuildFlower())
-      state = Idle;
+    //if (BuildFlower())
+      //state = Idle;
     break;
-  case Idle:
+  /*case Idle:
     state = Selecting;
     break;
   case Selecting:
@@ -102,10 +103,10 @@ void PlantPlayer::SelectButtonPressed() {
     break;
   case SelectedBuilding:
     if (BuildLeaf())
-      state = Idle;
+      state = Idle;*/
   default:
     break;
-  }*/
+  }
 }
 
 void PlantPlayer::CancelButtonPressed() {
@@ -262,13 +263,17 @@ void PlantPlayer::Update(int time_ms) {
     Player::Update(time_ms);
 }
 
+bool PlantPlayer::CanBuild(Plant *plant) {
+  return (sugar_ >= plant->sugar_cost() && plant->CanBuild(position()));
+}
+
 void PlantPlayer::DrawTop() {
   switch (state) {
   case Idle:
     Player::DrawTop();
     break;
     case Building:
-      plant_menu_[menu_item_].DrawTmp(gc_);
+      plant_menu_[menu_item_]->DrawTmp(gc_, CanBuild(plant_menu_[menu_item_]));
       // Player::draw_cross(); TODO(rggjan): better with this?
       break;
     /*case SelectedBuilding: {

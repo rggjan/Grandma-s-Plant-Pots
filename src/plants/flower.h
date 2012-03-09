@@ -16,7 +16,7 @@ class Leaf;
 class Flower : public Plant {
   public:
     // Static
-    static const int kSugarCost = ENERGY_COST;
+    virtual inline int sugar_cost() { return ENERGY_COST; }
 
     // Construction
     Flower(World *world, CL_GraphicContext *gc,
