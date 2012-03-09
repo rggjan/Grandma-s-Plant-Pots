@@ -54,12 +54,13 @@ class PlantPlayer : public Player {
     void DrawSun();
 
     bool CanBuild(Plant *plant);
+    bool BuildPlant(Plant *plant);    
 
     // Queries
     Flower* NearestFlower();
 
     // Attributes
-    std::list<Plant*> plants;
+    std::list<Plant*> plants_;
     State state;
     CL_Sprite select_sprite_;
     Plant *selected_plant_;

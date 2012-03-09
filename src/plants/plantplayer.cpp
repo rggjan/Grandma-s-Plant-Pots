@@ -68,26 +68,26 @@ bool PlantPlayer::BuildLeaf() {
   return false;
 }
 
-//bool PlantPlayer::BuildPlant(Plant *plant) {
-  /*if (plant->CanBuild(position())
-  if (sugar_ >= tmp_plant_->kSugarCost && plant_menu_[menu_item_].CanBuild(position())) {
-    flowers.push_back(new Tower(world_, gc_, position(), this));
+bool PlantPlayer::BuildPlant(Plant *plant) {
+  if (plant->CanBuild(position())) {
+    //plants_.push_back()
+    plants_.push_back(new Flower(world_, gc_, position(), this));
 
-    sugar_ -= Flower::kSugarCost;
+    sugar_ -= plant->sugar_cost();
     sound_plantgrowing_.play();
 
     return true;
   } else {
     world_->PlayBeep();
     return false;
-  }*/
-//}
+  }
+}
 
 void PlantPlayer::SelectButtonPressed() {
   switch (state) {
   case Building:
-    //if (BuildFlower())
-      //state = Idle;
+    if (BuildPlant(plant_menu_[menu_item_]))
+      state = Idle;
     break;
   /*case Idle:
     state = Selecting;
@@ -248,8 +248,8 @@ void PlantPlayer::Update(int time_ms) {
   sun_ = 0;
 
   // Remove dead and invisible plants
-  remove_if(plants.begin(), plants.end(), [time_ms](Plant * plants) {
-    return !plants->Update(time_ms);
+  remove_if(plants_.begin(), plants_.end(), [time_ms](Plant * plant) {
+    return !plant->Update(time_ms);
   });
 
   // Produce sugar
