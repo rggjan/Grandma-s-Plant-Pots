@@ -58,7 +58,7 @@ class PlantPlayer : public Player {
     bool BuildPlant(Plant *plant);    
 
     // Queries
-    Flower* NearestFlower();
+    Plant* NearestPlant();
 
     // Attributes
     std::list<Plant*> plants_;

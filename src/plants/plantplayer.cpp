@@ -89,16 +89,16 @@ void PlantPlayer::SelectButtonPressed() {
     if (BuildPlant(plant_menu_[menu_item_]))
       state = Idle;
     break;
-  /*case Idle:
+  case Idle:
     state = Selecting;
     break;
   case Selecting:
-    selected_flower_ = NearestFlower();
+/*    selected_flower_ = NearestFlower();
     // TODO(rggjan): cache nearestflower
     if (selected_flower_ != NULL)
       state = Selected;
-    break;
-  case Selected:
+    break;*/
+  /*case Selected:
     state = Selecting;
     break;
   case SelectedBuilding:
@@ -114,10 +114,9 @@ void PlantPlayer::CancelButtonPressed() {
   case Idle:
     break;
   case BuildMenu:
-    state = Idle;
-    break;
   case Building:
-    state = BuildMenu;
+  case Selecting:
+    state = Idle;
     break;
   /*case Selecting:
     state = Idle;
@@ -156,37 +155,38 @@ void PlantPlayer::BuildButtonPressed() {
   }
 }
 
-Flower* PlantPlayer::NearestFlower() {
+Plant* PlantPlayer::NearestPlant() {
   // TODO(rggjan): infinity
   int best_dist = -1;
-  Flower *nearest_flower = NULL;
-  /*
-    // Get nearest flower
-  for (Tower * flower : flowers) {
-      if (!flower->is_alive())
+  Plant *nearest_plant = NULL;
+
+  // Get nearest flower
+  for (Plant *plant : plants_) {
+      if (!plant->is_alive())
         continue;
 
-      float distance = (flower->position() - position()).length();
+      float distance = (plant->position() - position()).length();
 
-      if (nearest_flower == NULL || distance < best_dist) {
+      if (nearest_plant == NULL || distance < best_dist) {
         best_dist = distance;
-        nearest_flower = flower;
+        nearest_plant = plant;
       }
-    }*/
+    }
 
-  return nearest_flower;
+  return nearest_plant;
 }
 
 void PlantPlayer::DrawFloor() {
-  /*if (state == Selecting) {
-    Flower* nearest_flower = NearestFlower();
+  if (state == Selecting) {
+    Plant* nearest_plant = NearestPlant();
 
     select_sprite_.set_alpha(0.3);
-    if (nearest_flower != NULL) {
-      CL_Vec2f pos = nearest_flower->position() - map_position();
+    if (nearest_plant != NULL) {
+      printf("feund nearest flower\n");
+      CL_Vec2f pos = nearest_plant->position() - map_position();
       select_sprite_.draw(*gc_, pos.x, pos.y);
     }
-  } else if (state == Selected || state == SelectedBuilding) {
+  }/* else if (state == Selected || state == SelectedBuilding) {
     select_sprite_.set_alpha(0.8);
 
     CL_Vec2f pos = selected_flower_->position() - map_position();

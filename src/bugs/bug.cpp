@@ -22,7 +22,7 @@
 
 // General
 #define START_ENERGY 30
-#define START_SIZE 0.3
+#define START_SIZE 0.2
 #define END_SIZE 0.1
 
 Bug::Bug(World *world, CL_GraphicContext *gc, CL_Vec2f position,
