@@ -113,8 +113,11 @@ void PlantPlayer::CancelButtonPressed() {
   switch (state) {
   case Idle:
     break;
-  case Building:
+  case BuildMenu:
     state = Idle;
+    break;
+  case Building:
+    state = BuildMenu;
     break;
   /*case Selecting:
     state = Idle;
@@ -133,12 +136,16 @@ void PlantPlayer::CancelButtonPressed() {
 void PlantPlayer::BuildButtonPressed() {
   switch (state) {
   case Idle:
+    state = BuildMenu;
+    break;
+  case BuildMenu:
+    BuildPlant(plant_menu_[menu_item_]);
     state = Building;
     break;
-  /*case Building:
-    BuildFlower();
+  case Building:
+    BuildPlant(plant_menu_[menu_item_]);
     break;
-  case Selected:
+  /*case Selected:
     state = SelectedBuilding;
     break;
   case SelectedBuilding:
@@ -218,14 +225,14 @@ void PlantPlayer::DrawEnergy() {
 }
 
 void PlantPlayer::MovingLeftButtonPressed() {
-  if (state == Building)
+  if (state == BuildMenu)
     menu_item_ = (menu_item_+(plant_menu_.size()-1))%plant_menu_.size();
   else
     Player::MovingLeftButtonPressed();
 }
 
 void PlantPlayer::MovingRightButtonPressed() {
-  if (state == Building)
+  if (state == BuildMenu)
     menu_item_ = (menu_item_+1)%plant_menu_.size();
   else
     Player::MovingRightButtonPressed();
@@ -259,7 +266,7 @@ void PlantPlayer::Update(int time_ms) {
   co2_ -= sugar_production;
   sugar_ += sugar_production;
 
-  if (state != Building)
+  if (state != BuildMenu)
     Player::Update(time_ms);
 }
 
@@ -272,6 +279,7 @@ void PlantPlayer::DrawTop() {
   case Idle:
     Player::DrawTop();
     break;
+    case BuildMenu:
     case Building:
       plant_menu_[menu_item_]->DrawTmp(gc_, CanBuild(plant_menu_[menu_item_]));
       // Player::draw_cross(); TODO(rggjan): better with this?

@@ -17,6 +17,7 @@ class Plant;
 
 enum State {
   Idle,
+  BuildMenu,
   Building,
   Selecting,
   Selected,
