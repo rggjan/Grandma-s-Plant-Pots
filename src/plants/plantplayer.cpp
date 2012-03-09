@@ -93,11 +93,11 @@ void PlantPlayer::SelectButtonPressed() {
     state = Selecting;
     break;
   case Selecting:
-/*    selected_flower_ = NearestFlower();
+    selected_plant_ = NearestPlant();
     // TODO(rggjan): cache nearestflower
-    if (selected_flower_ != NULL)
+    if (selected_plant_ != NULL)
       state = Selected;
-    break;*/
+    break;
   /*case Selected:
     state = Selecting;
     break;
@@ -118,13 +118,10 @@ void PlantPlayer::CancelButtonPressed() {
   case Selecting:
     state = Idle;
     break;
-  /*case Selecting:
-    state = Idle;
-    break;
   case Selected:
     state = Selecting;
     break;
-  case SelectedBuilding:
+  /*case SelectedBuilding:
     state = Selecting;
     break;
   default:
@@ -186,12 +183,12 @@ void PlantPlayer::DrawFloor() {
       CL_Vec2f pos = nearest_plant->position() - map_position();
       select_sprite_.draw(*gc_, pos.x, pos.y);
     }
-  }/* else if (state == Selected || state == SelectedBuilding) {
+  } else if (state == Selected /*|| state == SelectedBuilding*/) {
     select_sprite_.set_alpha(0.8);
 
-    CL_Vec2f pos = selected_flower_->position() - map_position();
+    CL_Vec2f pos = selected_plant_->position() - map_position();
     select_sprite_.draw(*gc_, pos.x, pos.y);
-  }*/
+  }
 }
 
 void PlantPlayer::DrawEnergy() {
