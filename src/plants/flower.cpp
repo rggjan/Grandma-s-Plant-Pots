@@ -26,6 +26,10 @@ Flower::Flower(World *world, CL_GraphicContext *gc,
   world_->AddMasterPlant(this);
 }
 
+Plant* Flower::GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc) {
+  return new Flower(world_, gc, position, player_);
+}
+
 Flower::~Flower() {
   world_->RemoveMasterPlant(this);
 }

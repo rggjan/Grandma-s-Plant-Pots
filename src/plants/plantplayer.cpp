@@ -71,7 +71,7 @@ bool PlantPlayer::BuildLeaf() {
 bool PlantPlayer::BuildPlant(Plant *plant) {
   if (plant->CanBuild(position())) {
     //plants_.push_back()
-    plants_.push_back(new Flower(world_, gc_, position(), this));
+    plants_.push_back(plant->GetNewPlant(position(), gc_));
 
     sugar_ -= plant->sugar_cost();
     sound_plantgrowing_.play();

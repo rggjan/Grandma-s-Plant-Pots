@@ -16,6 +16,8 @@ class Plant : public GameObject {
 
     virtual inline int sugar_cost() = 0;
 
+    virtual Plant *GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc) = 0;
+
     // Operations
     void DrawTmp(CL_GraphicContext *gc, bool green);
     void Draw(CL_GraphicContext *gc, CL_Vec2f position);

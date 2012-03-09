@@ -19,6 +19,9 @@ class Tower : public Plant {
     // Construction
     Tower(World *world, CL_GraphicContext *gc,
            CL_Vec2f position, PlantPlayer* player);
+
+    virtual Plant *GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc);
+           
     ~Tower();
 
     // Operations

@@ -33,6 +33,10 @@ Tower::Tower(World *world, CL_GraphicContext *gc,
   world_->AddMasterPlant(this);
 }
 
+Plant* Tower::GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc) {
+  return new Tower(world_, gc, position, player_);
+}
+
 Tower::~Tower() {
   world_->RemoveMasterPlant(this);
 }
