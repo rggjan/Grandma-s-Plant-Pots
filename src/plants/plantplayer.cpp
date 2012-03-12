@@ -85,6 +85,7 @@ bool PlantPlayer::BuildPlant(Plant *plant) {
 
 void PlantPlayer::SelectButtonPressed() {
   switch (state) {
+  case BuildMenu:
   case Building:
     if (BuildPlant(plant_menu_[menu_item_]))
       state = Idle;
@@ -116,6 +117,7 @@ void PlantPlayer::CancelButtonPressed() {
   case BuildMenu:
   case Building:
   case Selecting:
+  case SelectedBuilding:
     state = Idle;
     break;
   case Selected:
@@ -141,10 +143,10 @@ void PlantPlayer::BuildButtonPressed() {
   case Building:
     BuildPlant(plant_menu_[menu_item_]);
     break;
-  /*case Selected:
+  case Selected:
     state = SelectedBuilding;
     break;
-  case SelectedBuilding:
+  /*case SelectedBuilding:
     BuildLeaf();
     break;*/
   default:
@@ -281,7 +283,10 @@ void PlantPlayer::DrawTop() {
       plant_menu_[menu_item_]->DrawTmp(gc_, CanBuild(plant_menu_[menu_item_]));
       // Player::draw_cross(); TODO(rggjan): better with this?
       break;
-    /*case SelectedBuilding: {
+    case SelectedBuilding:
+      plant_menu_[menu_item_]->DrawTmpChild(gc_, /*CanBuildChild(selected_plant_)*/ true);
+
+/* {
       CL_Vec2f diff = cross_position() -
                       (selected_flower_->position() - map_position());
 

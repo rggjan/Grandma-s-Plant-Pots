@@ -23,6 +23,7 @@ class Flower : public Plant {
            CL_Vec2f position, PlantPlayer* player);
 
     virtual Plant *GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc);
+    void DrawTmpChild(CL_GraphicContext *gc, bool green);
 
     ~Flower();
 

@@ -1,6 +1,7 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
 #include "./flower.h"
+#include "player.h"
 
 #include <algorithm>
 #include <list>
@@ -89,6 +90,17 @@ bool Flower::CanBuild(CL_Vec2f position) {
     return false;
 
   return world_->CanBuild(position);
+}
+
+void Flower::DrawTmpChild(CL_GraphicContext *gc, bool green) {
+  if (green)
+    sprite_.set_color(CL_Color::green);
+  else
+    sprite_.set_color(CL_Color::red);
+
+  sprite_.set_alpha(0.8);
+  sprite_.set_frame(sprite_.get_frame_count() - 1);
+  sprite_.draw(*gc, player_->cross_position().x, player_->cross_position().y);
 }
 
 void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {

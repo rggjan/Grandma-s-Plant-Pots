@@ -19,8 +19,9 @@ class Plant : public GameObject {
     virtual Plant *GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc) = 0;
 
     // Operations
-    void DrawTmp(CL_GraphicContext *gc, bool green);
-    void Draw(CL_GraphicContext *gc, CL_Vec2f position);
+    virtual void DrawTmp(CL_GraphicContext *gc, bool green);
+    virtual void DrawTmpChild(CL_GraphicContext *gc, bool green) {};
+    virtual void Draw(CL_GraphicContext *gc, CL_Vec2f position);
 
     // Queries
     virtual inline bool CanBuild(CL_Vec2f position) {
