@@ -20,7 +20,7 @@
 CL_SoundBuffer_Session Tower::sound_session_shot_;
 
 Tower::Tower(World *world, CL_GraphicContext *gc,
-             CL_Vec2f position, PlantPlayer* player)
+             CL_Vec2f position, PlantPlayer* player, bool menu)
   : Plant(world, gc, position, "Tower", player),
     open_(false),
     age_(0),
@@ -30,7 +30,8 @@ Tower::Tower(World *world, CL_GraphicContext *gc,
   sound_shot_.set_volume(0.5f);
   sound_session_shot_ = sound_shot_.prepare();
 
-  world_->AddMasterPlant(this);
+  if (!menu)
+    world_->AddMasterPlant(this);
 }
 
 Plant* Tower::GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc) {

@@ -31,10 +31,8 @@ PlantPlayer::PlantPlayer(CL_GraphicContext* gc, World* world,
     sound_plantgrowing_("PlantgrowingMusic", &world_->resources),
     sound_leafgrowing_("LeafgrowingMusic", &world_->resources) {
   //tmp_plant_ = new Tower(world_, gc_, CL_Vec2f(0, 0), this);
-  plant_menu_.push_back(new Tower(world_, gc_, CL_Vec2f(0, 0), this));
-  plant_menu_.push_back(new Flower(world_, gc_, CL_Vec2f(0, 0), this));
-  world->RemoveMasterPlant(plant_menu_[0]);
-  world->RemoveMasterPlant(plant_menu_[1]);
+  plant_menu_.push_back(new Tower(world_, gc_, CL_Vec2f(0, 0), this, true));
+  plant_menu_.push_back(new Flower(world_, gc_, CL_Vec2f(0, 0), this, true));
 
   //tmp_leaf_ = new Leaf(world_, gc_, CL_Vec2f(0, 0), "Leaf2", tmp_flower_);
   //world->RemovePlant(tmp_leaf_);

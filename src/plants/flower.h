@@ -20,7 +20,7 @@ class Flower : public Plant {
 
     // Construction
     Flower(World *world, CL_GraphicContext *gc,
-           CL_Vec2f position, PlantPlayer* player);
+           CL_Vec2f position, PlantPlayer* player, bool menu = false);
 
     virtual Plant *GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc);
     void DrawTmpChild(CL_GraphicContext *gc);
@@ -43,6 +43,8 @@ class Flower : public Plant {
     std::list<Leaf*> leaves;
     int age_;
     bool open_;
+
+    Leaf *menu_leaf_;    
 };
 
 #endif  // SRC_PLANTS_FLOWER_H_

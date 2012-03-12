@@ -16,7 +16,7 @@
 #define START_ENERGY 30
 
 Flower::Flower(World *world, CL_GraphicContext *gc,
-               CL_Vec2f position, PlantPlayer* player)
+               CL_Vec2f position, PlantPlayer* player, bool menu)
   : Plant(world, gc, position, "Flower", player),
     age_(0),
     open_(false) {
@@ -24,7 +24,11 @@ Flower::Flower(World *world, CL_GraphicContext *gc,
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;
 
-  world_->AddMasterPlant(this);
+  if (menu) {
+    menu_leaf_ = new Leaf(world, gc, CL_Vec2f(0, 0), "Leaf2", this);
+  } else {
+    world_->AddMasterPlant(this);
+  }
 }
 
 Plant* Flower::GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc) {

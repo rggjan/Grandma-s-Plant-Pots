@@ -17,7 +17,8 @@ class Leaf : public Plant {
 
     ~Leaf();
 
-    static const int kSugarCost = LEAF_SUGAR_COST;
+    virtual int sugar_cost() { return LEAF_SUGAR_COST; }
+    virtual Plant *GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc) {return NULL;}
 
     bool CanBuild(CL_Vec2f position, Flower* flower);
 
