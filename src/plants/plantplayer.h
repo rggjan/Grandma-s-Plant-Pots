@@ -46,6 +46,9 @@ class PlantPlayer : public Player {
     double sugar_;
     double sun_;
 
+    // Can the player build it? (Sugar etc.)
+    bool CanBuild(Plant *plant);
+
   private:
     // Operations
     bool BuildPlant();
@@ -54,8 +57,7 @@ class PlantPlayer : public Player {
     void DrawCO2();
     void DrawSun();
 
-    bool CanBuild(Plant *plant);
-    bool BuildPlant(Plant *plant);    
+    bool BuildPlant(Plant *plant);
 
     // Queries
     Plant* NearestPlant();

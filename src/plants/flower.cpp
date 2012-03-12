@@ -1,11 +1,11 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
 #include "./flower.h"
-#include "player.h"
 
 #include <algorithm>
 #include <list>
 
+#include "./plantplayer.h"
 #include "./leaf.h"
 
 #define TIME_TO_OPEN 15000
@@ -89,18 +89,35 @@ bool Flower::CanBuild(CL_Vec2f position) {
       < MIN_MASTER_PLANT_DISTANCE)
     return false;
 
+  if (!player_->CanBuild(this))
+    return false;
+
   return world_->CanBuild(position);
 }
 
-void Flower::DrawTmpChild(CL_GraphicContext *gc, bool green) {
-  if (green)
-    sprite_.set_color(CL_Color::green);
-  else
-    sprite_.set_color(CL_Color::red);
+void Flower::DrawTmpChild(CL_GraphicContext *gc) {
+    CL_Vec2f diff = player_->cross_position() -
+                    (position() - player_->map_position());
 
-  sprite_.set_alpha(0.8);
-  sprite_.set_frame(sprite_.get_frame_count() - 1);
-  sprite_.draw(*gc, player_->cross_position().x, player_->cross_position().y);
+    float angle = atan2(diff.y, diff.x);
+    //tmp_leaf_->set_angle(CL_Angle(angle, cl_radians));
+
+    CL_Colorf line_color;
+
+    /*if (diff.length() < LEAF_MAX_DISTANCE &&
+        tmp_leaf_->CanBuild(position(), selected_flower_)) {
+      tmp_leaf_->DrawGreen(gc_, cross_position());
+      line_color = CL_Colorf::green;
+      cross_green_ = true;
+    } else {
+      tmp_leaf_->DrawRed(gc_, cross_position());*/
+      line_color = CL_Colorf::red;
+//      cross_green_ = false;
+    //}
+
+    diff = position() - player_->map_position();
+    CL_Draw::line(*gc, diff.x, diff.y, player_->cross_position().x,
+    player_->cross_position().y, line_color);
 }
 
 void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {

@@ -270,7 +270,7 @@ void PlantPlayer::Update(int time_ms) {
 }
 
 bool PlantPlayer::CanBuild(Plant *plant) {
-  return (sugar_ >= plant->sugar_cost() && plant->CanBuild(position()));
+  return sugar_ >= plant->sugar_cost();
 }
 
 void PlantPlayer::DrawTop() {
@@ -280,11 +280,11 @@ void PlantPlayer::DrawTop() {
     break;
     case BuildMenu:
     case Building:
-      plant_menu_[menu_item_]->DrawTmp(gc_, CanBuild(plant_menu_[menu_item_]));
+      plant_menu_[menu_item_]->DrawTmp(gc_);
       // Player::draw_cross(); TODO(rggjan): better with this?
       break;
     case SelectedBuilding:
-      plant_menu_[menu_item_]->DrawTmpChild(gc_, /*CanBuildChild(selected_plant_)*/ true);
+      selected_plant_->DrawTmpChild(gc_);
 
 /* {
       CL_Vec2f diff = cross_position() -
