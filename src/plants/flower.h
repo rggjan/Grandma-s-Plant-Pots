@@ -31,6 +31,7 @@ class Flower : public Plant {
     void AddLeaf(Leaf* leaf);
     bool Update(int time_ms);
     void Draw(CL_GraphicContext* gc, CL_Vec2f target);
+    virtual bool has_children() { return true; }    
 
     // Queries
     bool CanBuild(CL_Vec2f position);

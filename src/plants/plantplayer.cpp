@@ -144,7 +144,10 @@ void PlantPlayer::BuildButtonPressed() {
     BuildPlant(plant_menu_[menu_item_]);
     break;
   case Selected:
-    state = SelectedBuilding;
+    if (selected_plant_->has_children())
+      state = SelectedBuilding;
+    else
+      world_->PlayBeep();        
     break;
   /*case SelectedBuilding:
     BuildLeaf();
