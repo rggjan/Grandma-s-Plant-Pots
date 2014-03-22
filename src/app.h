@@ -12,7 +12,7 @@ class Application {
     Application() {}
     virtual ~Application() {}
 
-    virtual int main(const std::vector<clan::String> &args);
+    virtual int main(const std::vector<std::string> &args);
 };
 
 #endif  // SRC_APP_H_

@@ -33,8 +33,8 @@ class Bug : public GameObject {
 
     // Implementation:
   private:
-    clan::Vec2f direction;
-    clan::Vec2f target_position_;
+    clan::Vec2d direction;
+    clan::Vec2d target_position_;
     Plant *target_plant_;
 
     double food_eaten_;

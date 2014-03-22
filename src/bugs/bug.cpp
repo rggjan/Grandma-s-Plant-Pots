@@ -117,16 +117,16 @@ bool Bug::Update(int time_ms, clan::Vec2f target_position) {
   }
 
   // Right angle
-  clan::Vec2f right;
+  clan::Vec2d right;
   right.x = -direction.y;
   right.y = direction.x;
 
 #if CONSTANT_ANGLE
   if (right.dot(target_direction) > 0)
-    direction = direction + right * curve_ * time_ms / 1000;
+    direction = direction + right * curve_ * time_ms;// / 1000;
   else
     direction = direction - right * curve_ * time_ms / 1000;
-#else
+#else CLANLIB_ROOT
   direction = direction + target_direction * curve_ * time_ms / 1000;
 #endif
 
@@ -139,7 +139,7 @@ bool Bug::Update(int time_ms, clan::Vec2f target_position) {
   if (direction.x < 0)
     angle = 360.0f - angle;
 
-  sprite_.set_angle(clan::Angle(angle, clan::degrees));
+  sprite_.set_angle(clan::Angle(angle, clan::angle_degrees));
 
   // Update position
   // posX += direction.x * 10*(rand()%100)/100;

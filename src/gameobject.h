@@ -33,7 +33,7 @@ class GameObject {
     }
 
     // Operations
-	virtual void Draw(clan::Canvas *canvas, clan::Vec2f target);
+    virtual void Draw(clan::Canvas *canvas, clan::Vec2f target);
     virtual bool Update(int time_ms);
     virtual double DecreaseEnergy(double amount);
 

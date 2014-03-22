@@ -23,7 +23,7 @@ Player::Player(clan::Canvas* canvas, World* world, int width, int height)
     cross_(clan::Sprite::resource(*canvas, "Cross", world->resources)) {
   clan::FontDescription desc;
   desc.set_height(20);
-  default_font_ = clan::Font_System(*gc_, desc);
+  default_font_ = clan::Font(*gc_, desc);
 }
 
 bool Player::Visible(clan::Vec2f position) {
