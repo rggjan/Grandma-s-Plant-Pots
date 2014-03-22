@@ -498,6 +498,11 @@ void World::Draw() {
                           clan::string_format("FPS: %1", static_cast<int>(fps_)),
                           clan::Colorf::white);
 
+  // Draw borders
+  const int border_width = 6;
+  canvas_.fill_rect(clan::Rectf(clan::Pointf(player_width_ - border_width/2, 0), clan::Sizef(border_width, canvas_.get_height())), clan::Colorf::silver);
+  canvas_.fill_rect(clan::Rectf(clan::Pointf(0, player_height_ - border_width/2), clan::Sizef(canvas_.get_width(), border_width)), clan::Colorf::silver);
+
   /*
     clan::PixelBuffer buffer(256, 256, clan::rgba8);
     unsigned int *pixel_data = (unsigned int *) buffer.get_data();
