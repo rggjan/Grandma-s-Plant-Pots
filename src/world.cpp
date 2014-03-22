@@ -485,8 +485,10 @@ void World::Draw() {
 
     // Draw all gameobjects
     // Plants
-    for (Plant *plant : master_plants)
-      plant->Draw(players[i]->gc_, players[i]->map_position());
+    std::list<Plant*>::iterator plant;
+    for (plant = master_plants.begin(); plant != master_plants.end(); ++plant) {
+      (*plant)->Draw(players[i]->gc_, players[i]->map_position());
+    }
 
     // Bugs
     for (Bug *bug : bugs)
