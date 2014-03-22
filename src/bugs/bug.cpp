@@ -123,11 +123,11 @@ bool Bug::Update(int time_ms, clan::Vec2f target_position) {
 
 #if CONSTANT_ANGLE
   if (right.dot(target_direction) > 0)
-    direction = direction + right * curve_ * time_ms / 1000;
+    direction = direction + right * curve_ * static_cast<float>(time_ms) / 1000.0f;
   else
-    direction = direction - right * curve_ * time_ms / 1000;
+    direction = direction - right * curve_ * static_cast<float>(time_ms) / 1000.0f;
 #else
-  direction = direction + target_direction * curve_ * time_ms / 1000;
+  direction = direction + target_direction * curve_ * static_cast<float>(time_ms) / 1000.0f;
 #endif
 
   // Normalize direction
@@ -139,7 +139,7 @@ bool Bug::Update(int time_ms, clan::Vec2f target_position) {
   if (direction.x < 0)
     angle = 360.0f - angle;
 
-  sprite_.set_angle(clan::Angle(angle, clan::degrees));
+  sprite_.set_angle(clan::Angle(angle, clan::angle_degrees));
 
   // Update position
   // posX += direction.x * 10*(rand()%100)/100;
@@ -154,7 +154,7 @@ bool Bug::Update(int time_ms, clan::Vec2f target_position) {
       speed = SPEED * distance / ATTACK_SPEED_DECREASE_DISTANCE;
     }
   }
-  position_ += direction * time_ms / 1000 * speed;
+  position_ += direction * static_cast<float>(time_ms) / 1000.0f * speed;
 
   return true;
 }

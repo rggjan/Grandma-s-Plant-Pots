@@ -46,6 +46,6 @@ GameObject::GameObject(World* world, clan::Canvas *canvas,
     energy_(1),
     dead_time_(0),
     position_(position),
-    sprite_(*canvas, name, &world->resources),
+    sprite_(clan::Sprite::resource(*canvas, name, world->resources)),
     dead_color_(clan::Color::black) {
 }

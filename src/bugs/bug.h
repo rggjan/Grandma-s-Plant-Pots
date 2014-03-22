@@ -41,7 +41,7 @@ class Bug : public GameObject {
     std::string bug_name_;
     BugPlayer *player_;
 
-    double curve_;
+    float curve_;
 };
 
 #endif  // SRC_BUGS_BUG_H_

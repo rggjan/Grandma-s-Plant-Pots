@@ -9,7 +9,7 @@
 
 using std::vector;
 
-int Application::main(const std::vector<clan::String> &args) {
+int Application::main(const std::vector<std::string> &args) {
   // Create window
   clan::DisplayWindowDescription desc;
   desc.set_title("Grandma's Plant Pots");

@@ -3,7 +3,7 @@
 #ifndef SRC_PLANTS_TOWER_H_
 #define SRC_PLANTS_TOWER_H_
 
-#include "./tower.h"
+#include <string>
 
 #include <ClanLib/sound.h>
 
