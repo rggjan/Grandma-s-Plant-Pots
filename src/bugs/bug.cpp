@@ -117,17 +117,17 @@ bool Bug::Update(int time_ms, clan::Vec2f target_position) {
   }
 
   // Right angle
-  clan::Vec2d right;
+  clan::Vec2f right;
   right.x = -direction.y;
   right.y = direction.x;
 
 #if CONSTANT_ANGLE
   if (right.dot(target_direction) > 0)
-    direction = direction + right * curve_ * time_ms;// / 1000;
+    direction = direction + right * curve_ * static_cast<float>(time_ms) / 1000.0f;
   else
-    direction = direction - right * curve_ * time_ms / 1000;
-#else CLANLIB_ROOT
-  direction = direction + target_direction * curve_ * time_ms / 1000;
+    direction = direction - right * curve_ * static_cast<float>(time_ms) / 1000.0f;
+#else
+  direction = direction + target_direction * curve_ * static_cast<float>(time_ms) / 1000.0f;
 #endif
 
   // Normalize direction
@@ -154,7 +154,7 @@ bool Bug::Update(int time_ms, clan::Vec2f target_position) {
       speed = SPEED * distance / ATTACK_SPEED_DECREASE_DISTANCE;
     }
   }
-  position_ += direction * time_ms / 1000 * speed;
+  position_ += direction * static_cast<float>(time_ms) / 1000.0f * speed;
 
   return true;
 }

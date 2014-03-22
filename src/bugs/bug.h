@@ -33,15 +33,15 @@ class Bug : public GameObject {
 
     // Implementation:
   private:
-    clan::Vec2d direction;
-    clan::Vec2d target_position_;
+    clan::Vec2f direction;
+    clan::Vec2f target_position_;
     Plant *target_plant_;
 
     double food_eaten_;
     std::string bug_name_;
     BugPlayer *player_;
 
-    double curve_;
+    float curve_;
 };
 
 #endif  // SRC_BUGS_BUG_H_
