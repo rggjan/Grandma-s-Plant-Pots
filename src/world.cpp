@@ -42,9 +42,9 @@ World::World(clan::DisplayWindow *window)
     Player *player;
 
     if (i % 2 == 0) {
-      player = new BugPlayer(&canvas_, this, background);
+      player = new BugPlayer(&canvas_, this, background, clan::Size(player_width_, player_height_));
     } else {
-      player = new PlantPlayer(&canvas_, this, background);
+      player = new PlantPlayer(&canvas_, this, background, clan::Size(player_width_, player_height_));
     }
     players.push_back(player);
   }

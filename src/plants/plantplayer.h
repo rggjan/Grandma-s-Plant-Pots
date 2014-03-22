@@ -27,7 +27,7 @@ enum State {
 class PlantPlayer : public Player {
   public:
     // Constructor
-    PlantPlayer(clan::Canvas* canvas, World *world, clan::Sprite map);
+    PlantPlayer(clan::Canvas* canvas, World *world, clan::Sprite map, clan::Size window_size);
     ~PlantPlayer();
 
     void MovingLeftButtonPressed();

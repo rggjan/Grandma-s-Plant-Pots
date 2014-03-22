@@ -10,7 +10,7 @@ class World;
 
 class Player {
   public:
-    Player(clan::Canvas* canvas, World* world, clan::Sprite map);
+    Player(clan::Canvas* canvas, World* world, clan::Sprite map, clan::Size window_size);
     virtual ~Player() {}
 
     virtual void BuildButtonPressed() {}
@@ -40,7 +40,6 @@ class Player {
     clan::Canvas *gc_;
 
     clan::Vec2f map_position_;
-    int window_width_, window_height_;
     clan::Vec2f cross_position_;
 
     bool moving_down_;
@@ -50,6 +49,8 @@ class Player {
 
   protected:
     World* world_;
+
+    clan::Size window_size_;
 
     clan::Sprite map_;
     clan::Font default_font_;

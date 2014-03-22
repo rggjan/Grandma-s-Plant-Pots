@@ -16,8 +16,8 @@ using std::list;
 using std::count_if;
 
 BugPlayer::BugPlayer(clan::Canvas* canvas, World* world,
-                     clan::Sprite map)
-  : Player(canvas, world, map),
+                     clan::Sprite map, clan::Size window_size)
+  : Player(canvas, world, map, window_size),
     select_sprite_(clan::Sprite::resource(*gc_, "Cross2", world->resources)),
     sound_bug_attack_(clan::SoundBuffer::resource("BugAttack", world->resources)) {
   select_sprite_.set_alpha(0.5);

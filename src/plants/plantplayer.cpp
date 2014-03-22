@@ -20,8 +20,8 @@ using std::vector;
 #define START_SUN 0
 
 PlantPlayer::PlantPlayer(clan::Canvas* canvas, World* world,
-                         clan::Sprite map)
-  : Player(canvas, world, map),
+                         clan::Sprite map, clan::Size window_size)
+  : Player(canvas, world, map, window_size),
     co2_(START_CO2),
     sugar_(START_SUGAR),
     sun_(START_SUN),

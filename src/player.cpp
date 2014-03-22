@@ -7,12 +7,11 @@
 #define CROSS_SPEED 0.6
 #define MIN_BORDER 100
 
-Player::Player(clan::Canvas* canvas, World* world, clan::Sprite map)
+Player::Player(clan::Canvas* canvas, World* world, clan::Sprite map, clan::Size window_size)
   : gc_(canvas),
     map_position_(300, 300),
-    window_width_(canvas->get_width()),
-    window_height_(canvas->get_height()),
-    cross_position_(window_width_ / 2, window_height_ / 2),
+    window_size_(window_size),
+    cross_position_(window_size_.width / 2, window_size.height / 2),
     moving_down_(false),
     moving_up_(false),
     moving_left_(false),
@@ -32,9 +31,9 @@ bool Player::Visible(clan::Vec2f position) {
     return false;
   if (pos.y < 0)
     return false;
-  if (pos.x > window_width_)
+  if (pos.x > window_size_.width)
     return false;
-  if (pos.y > window_height_)
+  if (pos.y > window_size_.height)
     return false;
 
   return true;
@@ -43,11 +42,11 @@ bool Player::Visible(clan::Vec2f position) {
 void Player::Update(int timeElapsed_ms) {
   const int min_x = MIN_BORDER;
   const int min_y = MIN_BORDER;
-  const int max_x = window_width_ - MIN_BORDER - 1;
-  const int max_y = window_height_ - MIN_BORDER - 1;
+  const int max_x = window_size_.width - MIN_BORDER - 1;
+  const int max_y = window_size_.height - MIN_BORDER - 1;
 
-  const int max_map_x = map_.get_width() - window_width_ - 1;
-  const int max_map_y = map_.get_height() - window_height_ - 1;
+  const int max_map_x = map_.get_width() - window_size_.width - 1;
+  const int max_map_y = map_.get_height() - window_size_.height - 1;
 
   int move_x = 0;
   int move_y = 0;
@@ -132,8 +131,8 @@ void Player::Update(int timeElapsed_ms) {
     }
     if (move_y > 0) {
       cross_position_.y += move_y;
-      if (cross_position_.y > window_height_ - 1)
-        cross_position_.y = window_height_ - 1;
+      if (cross_position_.y > window_size_.height - 1)
+        cross_position_.y = window_size_.height - 1;
     }
   }
   // Cross Right
@@ -156,8 +155,8 @@ void Player::Update(int timeElapsed_ms) {
     }
     if (move_x > 0) {
       cross_position_.x += move_x;
-      if (cross_position_.x > window_width_ - 1)
-        cross_position_.x = window_width_ - 1;
+      if (cross_position_.x > window_size_.width - 1)
+        cross_position_.x = window_size_.width - 1;
     }
   }
 }
