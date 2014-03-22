@@ -256,7 +256,7 @@ void PlantPlayer::Update(int time_ms) {
   sun_ = 0;
 
   // Remove dead and invisible plants
-  remove_if(plants_.begin(), plants_.end(), [time_ms](Plant * plant) {
+  std::remove_if(plants_.begin(), plants_.end(), [time_ms](Plant * plant) {
     return !plant->Update(time_ms);
   });
 

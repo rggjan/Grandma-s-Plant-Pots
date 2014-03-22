@@ -106,7 +106,7 @@ bool Bug::Update(int time_ms, clan::Vec2f target_position) {
   distance = target_direction.length();
   target_direction.normalize();
 
-  if (target_plant_ != NULL and distance < ATTACK_MIN_DISTANCE) {
+  if (target_plant_ != NULL && distance < ATTACK_MIN_DISTANCE) {
     double amount = EAT_PER_SECOND * time_ms / 1000.;
     food_eaten_ += target_plant_->DecreaseEnergy(amount);
 
@@ -121,7 +121,7 @@ bool Bug::Update(int time_ms, clan::Vec2f target_position) {
   right.x = -direction.y;
   right.y = direction.x;
 
-#if CONSTANT_ANGLE
+#ifdef CONSTANT_ANGLE
   if (right.dot(target_direction) > 0)
     direction = direction + right * curve_ * static_cast<float>(time_ms) / 1000.0f;
   else

@@ -57,7 +57,7 @@ void BugPlayer::SelectButtonPressed() {
 }
 
 void BugPlayer::CancelButtonPressed() {
-  for_each(bugs.begin(), bugs.end(), [](Bug * bug) {
+   std::for_each(bugs.begin(), bugs.end(), [](Bug * bug) {
     bug->StopEating();
   });
 }
