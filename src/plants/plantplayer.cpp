@@ -185,7 +185,6 @@ void PlantPlayer::DrawFloor() {
 
     select_sprite_.set_alpha(0.3);
     if (nearest_plant != NULL) {
-      printf("feund nearest flower\n");
       clan::Vec2f pos = nearest_plant->position() - map_position();
       select_sprite_.draw(*gc_, pos.x, pos.y);
     }
