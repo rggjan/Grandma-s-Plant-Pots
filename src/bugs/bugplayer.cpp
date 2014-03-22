@@ -66,17 +66,21 @@ void BugPlayer::BuildButtonPressed() {
 }
 
 Plant* BugPlayer::GetFreePlant() {
-for (Plant * plant : *world_->NearestPlants(position()))
-    if (plant->is_alive() && plant->free_space() && Visible(plant->position()))
-      return plant;
+  list<Plant*>* plants = world_->NearestPlants(position());
+  list<Plant*>::iterator plant;
+  for (plant = plants->begin(); plant != plants->end(); ++plant) {
+    if ((*plant)->is_alive() && (*plant)->free_space() && Visible((*plant)->position()))
+      return *plant;
+  }
 
   return NULL;
 }
 
 Bug* BugPlayer::GetFreeBug() {
-for (Bug * bug : bugs)
-    if (bug->is_alive() && bug->is_free())
-      return bug;
+  list<Bug*>::iterator bug;
+  for (bug = bugs.begin(); bug != bugs.end(); ++bug)
+    if ((*bug)->is_alive() && (*bug)->is_free())
+      return *bug;
 
   return NULL;
 }

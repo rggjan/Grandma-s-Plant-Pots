@@ -491,8 +491,10 @@ void World::Draw() {
     }
 
     // Bugs
-    for (Bug *bug : bugs)
-      bug->Draw(players[i]->gc_, players[i]->map_position());
+    std::list<Bug*>::iterator bug;
+    for (bug = bugs.begin(); bug != bugs.end(); ++bug) {
+      (*bug)->Draw(players[i]->gc_, players[i]->map_position());
+    }
 
     players[i]->DrawTop();
 

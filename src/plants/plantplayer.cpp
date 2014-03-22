@@ -161,15 +161,16 @@ Plant* PlantPlayer::NearestPlant() {
   Plant *nearest_plant = NULL;
 
   // Get nearest flower
-  for (Plant *plant : plants_) {
-      if (!plant->is_alive())
+  std::list<Plant*>::iterator plant;
+  for (plant = plants_.begin(); plant != plants_.end(); ++plant) {
+      if (!(*plant)->is_alive())
         continue;
 
-      float distance = (plant->position() - position()).length();
+      float distance = ((*plant)->position() - position()).length();
 
       if (nearest_plant == NULL || distance < best_dist) {
         best_dist = distance;
-        nearest_plant = plant;
+        nearest_plant = *plant;
       }
     }
 

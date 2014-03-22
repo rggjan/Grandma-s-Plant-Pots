@@ -60,10 +60,11 @@ bool Tower::Update(int time_ms) {
 
     targeting_bug = NULL;
 
-for (Bug * bug : *bugs) {
-      if ((position() - bug->position()).length() <= ATTACK_DISTANCE &&
-          bug->is_alive()) {
-        targeting_bug = bug;
+    std::list<Bug*>::iterator bug;
+    for (bug = bugs->begin(); bug != bugs->end(); ++bug) {
+      if ((position() - (*bug)->position()).length() <= ATTACK_DISTANCE &&
+          (*bug)->is_alive()) {
+        targeting_bug = *bug;
         break;
       }
     }
