@@ -38,7 +38,7 @@ World::World(clan::DisplayWindow *window)
   player_width_ = default_gc.get_width() / 2;
   player_height_ = default_gc.get_height() / 2;
 
-  texture_ = new clan::Texture(default_gc, clan::Size(player_width_, player_height_));
+  texture_ = new clan::Texture(default_gc, clan::Size(player_width_, player_height_);
   framebuffer_ = new clan::FrameBuffer(default_gc);
   framebuffer_->attach_color_buffer(0, *texture_);
 

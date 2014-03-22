@@ -49,7 +49,7 @@ int Program::main(const std::vector<std::string> &args) {
 #endif
 
     clan::SetupSound setup_sound;
-    clan::SetupVorbis setup_vorbis;
+    //clan::SetupVorbis setup_vorbis;
 
     // Start the Application
     Application app;
@@ -67,4 +67,4 @@ int Program::main(const std::vector<std::string> &args) {
 }
 
 // Instantiate clan::ClanApplication, informing it where the Program is located
-clan::ClanApplication app(&Program::main);
+clan::Application app(&Program::main);
