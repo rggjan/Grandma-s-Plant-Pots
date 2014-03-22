@@ -7,19 +7,18 @@
 #define CROSS_SPEED 0.6
 #define MIN_BORDER 100
 
-Player::Player(clan::Canvas* canvas, World* world, int width, int height)
+Player::Player(clan::Canvas* canvas, World* world, clan::Sprite map)
   : gc_(canvas),
     map_position_(300, 300),
-	window_width_(canvas->get_width()),
-	window_height_(canvas->get_height()),
+    window_width_(canvas->get_width()),
+    window_height_(canvas->get_height()),
     cross_position_(window_width_ / 2, window_height_ / 2),
     moving_down_(false),
     moving_up_(false),
     moving_left_(false),
     moving_right_(false),
     world_(world),
-    map_width_(width),
-    map_height_(height),
+    map_(map),
     cross_(clan::Sprite::resource(*canvas, "Cross", world->resources)) {
   clan::FontDescription desc;
   desc.set_height(20);
@@ -47,8 +46,8 @@ void Player::Update(int timeElapsed_ms) {
   const int max_x = window_width_ - MIN_BORDER - 1;
   const int max_y = window_height_ - MIN_BORDER - 1;
 
-  const int max_map_x = map_width_ - window_width_ - 1;
-  const int max_map_y = map_height_ - window_height_ - 1;
+  const int max_map_x = map_.get_width() - window_width_ - 1;
+  const int max_map_y = map_.get_height() - window_height_ - 1;
 
   int move_x = 0;
   int move_y = 0;
@@ -164,6 +163,7 @@ void Player::Update(int timeElapsed_ms) {
 }
 
 void Player::DrawFloor() {
+  map_.draw(*gc_, -map_position_.x, -map_position_.y);
 }
 
 void Player::DrawTop() {

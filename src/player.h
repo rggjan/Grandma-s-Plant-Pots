@@ -10,7 +10,7 @@ class World;
 
 class Player {
   public:
-    Player(clan::Canvas* canvas, World* world, int width, int height);
+    Player(clan::Canvas* canvas, World* world, clan::Sprite map);
     virtual ~Player() {}
 
     virtual void BuildButtonPressed() {}
@@ -51,7 +51,7 @@ class Player {
   protected:
     World* world_;
 
-    int map_width_, map_height_;
+    clan::Sprite map_;
     clan::Font default_font_;
     clan::Sprite cross_;
 };

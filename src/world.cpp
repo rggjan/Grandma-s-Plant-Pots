@@ -29,7 +29,7 @@ World::World(clan::DisplayWindow *window)
 
   // Setup resources
   resources = clan::XMLResourceManager::create(clan::XMLResourceDocument("resources.xml"));
-  background = clan::Sprite::resource(canvas_, "Background", resources);
+  clan::Sprite background = clan::Sprite::resource(canvas_, "Background", resources);
   width = background.get_width();
   height = background.get_height();
   if (width != height)
@@ -42,9 +42,9 @@ World::World(clan::DisplayWindow *window)
     Player *player;
 
     if (i % 2 == 0) {
-      player = new BugPlayer(&canvas_, this, width, height);
+      player = new BugPlayer(&canvas_, this, background);
     } else {
-      player = new PlantPlayer(&canvas_, this, width, height);
+      player = new PlantPlayer(&canvas_, this, background);
     }
     players.push_back(player);
   }
@@ -469,10 +469,6 @@ int World::CalcTimeElapsed() {
 void World::Draw() {
   for (int i = 0; i < num_players; i++) {
     canvas_.set_cliprect(clan::Rect(clan::Point((i%2)*player_width_, (i/2)*player_height_), clan::Size(player_width_, player_height_)));
-
-    background.draw(*(players[i]->gc_),
-                     -players[i]->map_position_.x,
-                     -players[i]->map_position_.y);
 
     players[i]->DrawFloor();
 

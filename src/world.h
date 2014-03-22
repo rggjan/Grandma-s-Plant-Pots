@@ -62,8 +62,6 @@ class World {
   clan::Slot slotKeyUp[MAX_PLAYERS];
   clan::Slot slotQuit[MAX_PLAYERS];
 
-  clan::Sprite background;
-
   std::list<Bug*> bugs;
   std::list<Plant*> master_plants;
   std::list<Plant*> plants;
