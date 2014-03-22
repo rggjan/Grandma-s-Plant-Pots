@@ -56,8 +56,9 @@ MACRO(ClanLib_FIND_COMPONENT COMPONENT)
   ClanLib_MSG("Checking for Clan${COMPONENT}")
 
   IF (WIN32)
-    FIND_LIBRARY(ClanLib_${COMPONENT}_LIBRARY clan${ClanLib_MAJOR_VERSION}${ClanLib_MINOR_VERSION}${COMPONENT}
+    FIND_LIBRARY(ClanLib_${COMPONENT}_LIBRARY clan${COMPONENT}-static-mt
       ${CLANLIB_ROOT_DIR}/lib /lib /usr/lib /usr/local/lib
+	  $ENV{CLANLIB_ROOT}/Lib/Win32
       DOC "Library name for clan${COMPONENT}.")
   ELSE (WIN32)
     LIBFIND_PKG_CHECK_MODULES(${COMPONENT}_PKGCONF clan${COMPONENT}-${ClanLib_MAJOR_VERSION}.${ClanLib_MINOR_VERSION})
@@ -83,6 +84,7 @@ FIND_PATH(ClanLib_INCLUDE_DIRS ClanLib/core.h
   ${ClanLib_ROOT_DIR}/include ${ClanLib_ROOT_DIR}/include/ClanLib-${ClanLib_MAJOR_VERSION}.${ClanLib_MINOR_VERSION}
   /usr/local/include          /usr/local/include/ClanLib-${ClanLib_MAJOR_VERSION}.${ClanLib_MINOR_VERSION}
   /usr/include                /usr/include/ClanLib-${ClanLib_MAJOR_VERSION}.${ClanLib_MINOR_VERSION}
+  $ENV{CLANLIB_ROOT}/include
   DOC "Where to find the ClanLib includes.")
 IF(ClanLib_INCLUDE_DIRS)
   ClanLib_MSG("Checking for ClanLib -- headers")
