@@ -120,7 +120,7 @@ void Flower::DrawTmpChild(clan::Canvas *canvas) {
     //}
 
     diff = position() - player_->map_position();
-    clan::Draw::line(*canvas, diff.x, diff.y, player_->cross_position().x,
+    canvas->draw_line(diff.x, diff.y, player_->cross_position().x,
     player_->cross_position().y, line_color);
 }
 

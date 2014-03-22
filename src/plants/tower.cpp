@@ -95,7 +95,7 @@ void Tower::Draw(clan::Canvas* canvas, clan::Vec2f target) {
 
   // Shoot!
   if (open() && targeting_bug) {
-    clan::Draw::line(*canvas, position() - target,
+      canvas->draw_line(position() - target,
                   targeting_bug->position() - target,
                   clan::Colorf::green);
     if (!sound_session_shot_.is_playing())
