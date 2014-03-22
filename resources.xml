@@ -90,7 +90,7 @@
 	
 
 
-	<sample name="TowerShoot" file="Sound/flower_shot.ogg"/>	
+  <sample name="TowerShoot" file="Sound/flower_shot.ogg"/>
 
 	<sample name="BackgroundMusic" file="Sound/Background.ogg"/>
 

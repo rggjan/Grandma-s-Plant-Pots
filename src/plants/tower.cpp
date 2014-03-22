@@ -24,7 +24,7 @@ Tower::Tower(World *world, clan::Canvas *canvas,
   : Plant(world, canvas, position, "Tower", player),
     open_(false),
     age_(0),
-    sound_shot_("TowerShoot", &world->resources) {
+    sound_shot_(clan::SoundBuffer::resource("TowerShoot", world->resources)) {
   energy_ = START_ENERGY;
 
   sound_shot_.set_volume(0.5f);

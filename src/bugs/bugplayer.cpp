@@ -18,8 +18,8 @@ using std::count_if;
 BugPlayer::BugPlayer(clan::Canvas* canvas, World* world,
                      int width, int height)
   : Player(canvas, world, width, height),
-    select_sprite_(*gc_, "Cross2", &world->resources),
-    sound_bug_attack_("BugAttack", &world->resources) {
+    select_sprite_(clan::Sprite::resource(*gc_, "Cross2", world->resources)),
+    sound_bug_attack_(clan::SoundBuffer::resource("BugAttack", world->resources)) {
   select_sprite_.set_alpha(0.5);
 
   for (int i = 0; i < NUM_BUGS; i++) {
@@ -103,7 +103,7 @@ void BugPlayer::DrawTop() {
 
   clan::Colorf color = clan::Colorf::white;
   default_font_.draw_text(*gc_, clan::Pointf(10, 30),
-                          clan::format("Bugs: %1", size), color);
+                          clan::string_format("Bugs: %1", size), color);
   Player::DrawTop();
 }
 

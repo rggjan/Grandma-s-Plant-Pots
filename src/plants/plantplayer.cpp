@@ -26,10 +26,10 @@ PlantPlayer::PlantPlayer(clan::Canvas* canvas, World* world,
     sugar_(START_SUGAR),
     sun_(START_SUN),
     state(Idle),
-    select_sprite_(*gc_, "Cross2", &world_->resources),
+    select_sprite_(clan::Sprite::resource(*gc_, "Cross2", world_->resources)),
     menu_item_(0),    
-    sound_plantgrowing_("PlantgrowingMusic", &world_->resources),
-    sound_leafgrowing_("LeafgrowingMusic", &world_->resources) {
+    sound_plantgrowing_(clan::SoundBuffer::resource("PlantgrowingMusic", world_->resources)),
+    sound_leafgrowing_(clan::SoundBuffer::resource("LeafgrowingMusic", world_->resources)) {
   //tmp_plant_ = new Tower(world_, gc_, clan::Vec2f(0, 0), this);
   plant_menu_.push_back(new Tower(world_, gc_, clan::Vec2f(0, 0), this, true));
   plant_menu_.push_back(new Flower(world_, gc_, clan::Vec2f(0, 0), this, true));
@@ -201,7 +201,7 @@ void PlantPlayer::DrawEnergy() {
     if (tmp_flower_->kSugarCost > sugar_)
       color = clan::Colorf::red;
     default_font_.draw_text(*gc_, clan::Pointf(10, 30),
-                            clan::format("Sugar: %1 (%2)",
+                            clan::string_format("Sugar: %1 (%2)",
                                       static_cast<int>(sugar_),
                                       tmp_flower_->kSugarCost), color);
     break;
@@ -211,14 +211,14 @@ void PlantPlayer::DrawEnergy() {
     if (tmp_leaf_->kSugarCost > sugar_)
       color = clan::Colorf::red;
     default_font_.draw_text(*gc_, clan::Pointf(10, 30),
-                            clan::format("Sugar: %1 (%2)",
+                            clan::string_format("Sugar: %1 (%2)",
                                       static_cast<int>(sugar_),
                                       tmp_leaf_->kSugarCost), color);
     break;
   }
   default: {
     default_font_.draw_text(*gc_, clan::Pointf(10, 30),
-                            clan::format("Sugar: %1", static_cast<int>(sugar_)),
+                            clan::string_format("Sugar: %1", static_cast<int>(sugar_)),
                             clan::Colorf::white);
   }
   }*/
@@ -240,13 +240,13 @@ void PlantPlayer::MovingRightButtonPressed() {
 
 void PlantPlayer::DrawCO2() {
   default_font_.draw_text(*gc_, clan::Pointf(10, 50),
-                          clan::format("CO2: %1",  static_cast<int>(co2_)),
+                          clan::string_format("CO2: %1",  static_cast<int>(co2_)),
                           clan::Colorf::white);
 }
 
 void PlantPlayer::DrawSun() {
   default_font_.draw_text(*gc_, clan::Pointf(10, 70),
-                          clan::format("Sun: %1",  static_cast<int>(sun_ * 60)),
+                          clan::string_format("Sun: %1",  static_cast<int>(sun_ * 60)),
                           clan::Colorf::white);
 }
 

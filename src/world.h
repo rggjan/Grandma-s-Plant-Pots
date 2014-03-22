@@ -6,6 +6,7 @@
 #include <ClanLib/core.h>
 #include <ClanLib/display.h>
 #include <ClanLib/Core/Resources/resource_manager.h>
+#include <ClanLib/Sound/soundbuffer.h>
 #include <list>
 #include <vector>
 
@@ -34,7 +35,7 @@ class World {
     int height;
     int player_width_;
     int player_height_;
-	clan::SoundBuffer *sound_beep1_;
+    clan::SoundBuffer sound_beep1_;
 
     // Operations
     void AddBug(Bug *bug);
@@ -61,7 +62,7 @@ class World {
 	clan::Slot slotKeyUp[MAX_PLAYERS];
 	clan::Slot slotQuit[MAX_PLAYERS];
 
-	clan::Sprite *background;
+	clan::Sprite background;
 
     std::list<Bug*> bugs;
     std::list<Plant*> master_plants;
@@ -69,7 +70,7 @@ class World {
 
     std::vector<Player*> players;
 
-	clan::Canvas default_gc;
+	clan::Canvas canvas_;
 	clan::Font default_font_;
 
     int time_elapsed_ms_;

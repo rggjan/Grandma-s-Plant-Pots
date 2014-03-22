@@ -3,6 +3,7 @@
 #ifndef SRC_BUGS_BUGPLAYER_H_
 #define SRC_BUGS_BUGPLAYER_H_
 
+#include <string>
 #include <ClanLib/sound.h>
 #include <list>
 
