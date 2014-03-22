@@ -13,7 +13,6 @@
 class Flower;
 class Tower;
 class Leaf;
-class clan::SoundBuffer;
 class Plant;
 
 enum State {
