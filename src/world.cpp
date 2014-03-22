@@ -36,13 +36,8 @@ World::World(clan::DisplayWindow *window)
     clan::Console::write_line("Error, height and width should be the same!");
 
   player_width_ = canvas_.get_width() / 2;
-  player_height_ = canvas_.get_height() / 2;
+  player_height_ = canvas_.get_height() / ((num_players+1)/2);
 
-  /*texture_ = new clan::Texture(default_gc, clan::Size(player_width_, player_height_);
-  framebuffer_ = new clan::FrameBuffer(canvas_);
-  framebuffer_->attach_color_buffer(0, *texture_);
-
-  canvas_.set_frame_buffer(*framebuffer_);*/
   for (int i = 0; i < num_players; i++) {
     Player *player;
 
@@ -53,7 +48,6 @@ World::World(clan::DisplayWindow *window)
     }
     players.push_back(player);
   }
-  //canvas_.reset_frame_buffer();
 
   slotQuit[0] = window->sig_window_close()
                 .connect(this, &World::on_window_close);
@@ -61,7 +55,6 @@ World::World(clan::DisplayWindow *window)
                    sig_key_down().connect(this, &World::onKeyDown);
   slotKeyUp[0] = window->get_ic().get_keyboard().
                  sig_key_up().connect(this, &World::onKeyUp);
-
 
   clan::FontDescription desc;
   desc.set_height(20);
@@ -437,7 +430,7 @@ void World::Run() {
   clan::SoundBuffer sound = clan::SoundBuffer::resource("BackgroundMusic", resources);
   sound.set_volume(1.0f);
   sound.prepare();
-  sound.play();
+  //sound.play();
 
   while (!quit) {
     Update();
@@ -475,7 +468,7 @@ int World::CalcTimeElapsed() {
 
 void World::Draw() {
   for (int i = 0; i < num_players; i++) {
-    //canvas_.set_frame_buffer(*framebuffer_);
+    canvas_.set_cliprect(clan::Rect(clan::Point((i%2)*player_width_, (i/2)*player_height_), clan::Size(player_width_, player_height_)));
 
     background.draw(*(players[i]->gc_),
                      -players[i]->map_position_.x,
@@ -497,18 +490,9 @@ void World::Draw() {
     }
 
     players[i]->DrawTop();
-
-    // Draw splitscreen
-    /*canvas_.reset_frame_buffer();
-    canvas_.set_texture(0, *texture_);
-    clan::Draw::texture(canvas_,
-                     clan::Rect((static_cast<int>(i / 2)) * player_width_,
-                             (i % 2) * player_height_,
-                             clan::Size(player_width_, player_height_)));
-    canvas_.reset_texture(0);*/
-    // default_gc.draw_pixels(((int)(i/2))*200,
-    // (i%2)*200, texture_->get_pixeldata(), clan::Rect(0, 0, 200, 200));
   }
+
+  canvas_.reset_cliprect();
 
   default_font_.draw_text(canvas_, clan::Pointf(10, 100),
                           clan::string_format("FPS: %1", static_cast<int>(fps_)),

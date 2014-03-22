@@ -13,17 +13,18 @@ int Application::main(const std::vector<std::string> &args) {
   // Create window
   clan::DisplayWindowDescription desc;
   desc.set_title("Grandma's Plant Pots");
-  desc.set_allow_resize(true);
-  desc.set_size(clan::Size(640, 480), true);
+  //desc.set_allow_resize(true);
+  //desc.set_size(clan::Size(640, 480), true);
+  desc.set_fullscreen(true);
   clan::DisplayWindow window(desc);
 
   // Maximise
-  window.maximize();
+  //window.maximize();
 
   // Wait for window manager
-  while (!window.is_maximized()) {
+  /*while (!window.is_maximized()) {
     clan::KeepAlive::process();
-  }
+  }*/
 
   clan::KeepAlive::process();
 
