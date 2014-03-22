@@ -16,8 +16,8 @@ using std::list;
 using std::count_if;
 
 BugPlayer::BugPlayer(clan::Canvas* canvas, World* world,
-                     int width, int height)
-  : Player(canvas, world, width, height),
+                     clan::Sprite map)
+  : Player(canvas, world, map),
     select_sprite_(clan::Sprite::resource(*gc_, "Cross2", world->resources)),
     sound_bug_attack_(clan::SoundBuffer::resource("BugAttack", world->resources)) {
   select_sprite_.set_alpha(0.5);
@@ -86,6 +86,8 @@ Bug* BugPlayer::GetFreeBug() {
 }
 
 void BugPlayer::DrawFloor() {
+  Player::DrawFloor();
+
   if (nearest_free_plant_ != NULL) {
     clan::Vec2f pos = nearest_free_plant_->position() - map_position();
     select_sprite_.draw(*gc_, pos.x, pos.y);

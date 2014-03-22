@@ -20,53 +20,53 @@ using std::list;
 using std::sort;
 
 World::World(clan::DisplayWindow *window)
-    : quit(false),
-      canvas_(*window),
-      time_elapsed_ms_(1),
-      fps_(0),
-      window_(window) {
-    num_players = NUM_PLAYERS;
+  : quit(false),
+    canvas_(*window),
+    time_elapsed_ms_(1),
+    fps_(0),
+    window_(window) {
+  num_players = NUM_PLAYERS;
 
-    // Setup resources
-    resources = clan::XMLResourceManager::create(clan::XMLResourceDocument("resources.xml"));
-    background = clan::Sprite::resource(canvas_, "Background", resources);
-    width = background.get_width();
-    height = background.get_height();
-    if (width != height)
-        clan::Console::write_line("Error, height and width should be the same!");
+  // Setup resources
+  resources = clan::XMLResourceManager::create(clan::XMLResourceDocument("resources.xml"));
+  clan::Sprite background = clan::Sprite::resource(canvas_, "Background", resources);
+  width = background.get_width();
+  height = background.get_height();
+  if (width != height)
+    clan::Console::write_line("Error, height and width should be the same!");
 
-    player_width_ = canvas_.get_width() / 2;
-    player_height_ = canvas_.get_height() / ((num_players+1)/2);
+  player_width_ = canvas_.get_width() / 2;
+  player_height_ = canvas_.get_height() / ((num_players+1)/2);
 
-    for (int i = 0; i < num_players; i++) {
-        Player *player;
+  for (int i = 0; i < num_players; i++) {
+    Player *player;
 
-        if (i % 2 == 0) {
-            player = new BugPlayer(&canvas_, this, width, height);
-        } else {
-            player = new PlantPlayer(&canvas_, this, width, height);
-        }
-        players.push_back(player);
+    if (i % 2 == 0) {
+      player = new BugPlayer(&canvas_, this, background);
+    } else {
+      player = new PlantPlayer(&canvas_, this, background);
     }
+    players.push_back(player);
+  }
 
-    slotQuit[0] = window->sig_window_close()
-            .connect(this, &World::on_window_close);
-    slotKeyDown[0] = window->get_ic().get_keyboard().
-            sig_key_down().connect(this, &World::onKeyDown);
-    slotKeyUp[0] = window->get_ic().get_keyboard().
-            sig_key_up().connect(this, &World::onKeyUp);
+  slotQuit[0] = window->sig_window_close()
+                .connect(this, &World::on_window_close);
+  slotKeyDown[0] = window->get_ic().get_keyboard().
+                   sig_key_down().connect(this, &World::onKeyDown);
+  slotKeyUp[0] = window->get_ic().get_keyboard().
+                 sig_key_up().connect(this, &World::onKeyUp);
 
-    clan::FontDescription desc;
-    desc.set_height(20);
-    default_font_ = clan::Font(canvas_, desc);
+  clan::FontDescription desc;
+  desc.set_height(20);
+  default_font_ = clan::Font(canvas_, desc);
 
-    // Setup sounds
-    sound_beep1_ = clan::SoundBuffer::resource("Beep1Music", resources);
-    sound_beep1_.set_volume(0.1f);
-    sound_beep1_.prepare();
+  // Setup sounds
+  sound_beep1_ = clan::SoundBuffer::resource("Beep1Music", resources);
+  sound_beep1_.set_volume(0.1f);
+  sound_beep1_.prepare();
 
-    // Run the main loop
-    Run();
+  // Run the main loop
+  Run();
 }
 
 World::~World() {
@@ -405,11 +405,7 @@ void World::Draw() {
     for (int i = 0; i < num_players; i++) {
         canvas_.set_cliprect(clan::Rect(clan::Point((i%2)*player_width_, (i/2)*player_height_), clan::Size(player_width_, player_height_)));
 
-        background.draw(*(players[i]->gc_),
-                        -players[i]->map_position_.x,
-                        -players[i]->map_position_.y);
-
-        players[i]->DrawFloor();
+    players[i]->DrawFloor();
 
         // Draw all gameobjects
         // Plants

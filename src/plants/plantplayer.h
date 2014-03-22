@@ -13,7 +13,6 @@
 class Flower;
 class Tower;
 class Leaf;
-class clan::SoundBuffer;
 class Plant;
 
 enum State {
@@ -28,7 +27,7 @@ enum State {
 class PlantPlayer : public Player {
   public:
     // Constructor
-    PlantPlayer(clan::Canvas* canvas, World *world, int width, int height);
+    PlantPlayer(clan::Canvas* canvas, World *world, clan::Sprite map);
     ~PlantPlayer();
 
     void MovingLeftButtonPressed();

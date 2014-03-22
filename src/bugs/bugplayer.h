@@ -15,7 +15,7 @@ class clan::SoundBuffer;
 
 class BugPlayer : public Player {
   public:
-    BugPlayer(clan::Canvas* canvas, World *world, int width, int height);
+    BugPlayer(clan::Canvas* canvas, World *world, clan::Sprite map);
 
     void BuildButtonPressed();
     void SelectButtonPressed();

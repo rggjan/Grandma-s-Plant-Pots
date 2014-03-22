@@ -20,8 +20,8 @@ using std::vector;
 #define START_SUN 0
 
 PlantPlayer::PlantPlayer(clan::Canvas* canvas, World* world,
-                         int width, int height)
-  : Player(canvas, world, width, height),
+                         clan::Sprite map)
+  : Player(canvas, world, map),
     co2_(START_CO2),
     sugar_(START_SUGAR),
     sun_(START_SUN),
@@ -178,6 +178,8 @@ Plant* PlantPlayer::NearestPlant() {
 }
 
 void PlantPlayer::DrawFloor() {
+  Player::DrawFloor();
+
   if (state == Selecting) {
     Plant* nearest_plant = NearestPlant();
 
