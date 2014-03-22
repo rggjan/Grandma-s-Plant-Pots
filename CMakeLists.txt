@@ -13,6 +13,22 @@ if(CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS "-O3 -Wall -ggdb3 -std=c++11") ## Optimize
   set(CMAKE_EXE_LINKER_FLAGS "-s") ## Strip binary
 endif()
+
+if(WIN32)
+#  set(CompilerFlags
+#          CMAKE_CXX_FLAGS
+#          CMAKE_CXX_FLAGS_DEBUG
+#          CMAKE_CXX_FLAGS_RELEASE
+#          CMAKE_C_FLAGS
+#          CMAKE_C_FLAGS_DEBUG
+#          CMAKE_C_FLAGS_RELEASE
+#          )
+#  foreach(CompilerFlag ${CompilerFlags})
+#    string(REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
+#  endforeach()
+  set(CMAKE_CXX_FLAGS_RELEASE "/MT") ## Optimize
+
+endif()
  
 # Appends the cmake/modules path inside the MAKE_MODULE_PATH variable which stores the
 # directories of additional CMake modules (eg MacroOutOfSourceBuild.cmake):

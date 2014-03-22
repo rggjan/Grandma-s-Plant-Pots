@@ -26,6 +26,8 @@
 
 #include <vector>
 
+#pragma comment(linker, "/SUBSYSTEM:WINDOWS")
+
 #include "./app.h"
 
 int Program::main(const std::vector<std::string> &args) {
