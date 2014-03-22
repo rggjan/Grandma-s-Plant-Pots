@@ -6,6 +6,7 @@
 #include <ClanLib/core.h>
 
 #include <vector>
+#include <string>
 
 class Application {
   public:

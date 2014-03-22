@@ -3,6 +3,7 @@
 #ifndef SRC_WORLD_H_
 #define SRC_WORLD_H_
 
+#include <ClanLib/core.h>
 #include <ClanLib/display.h>
 #include <ClanLib/Core/Resources/resource_manager.h>
 #include <list>
@@ -72,7 +73,7 @@ class World {
 	clan::Font default_font_;
 
     int time_elapsed_ms_;
-    float fps_;
+    double fps_;
 
     // Operations
     void Draw();

@@ -163,31 +163,31 @@ Plant* World::NearestMasterPlant(clan::Vec2f position) {
 }
 
 void World::onKeyDown(const clan::InputEvent &key, const clan::InputState &state) {
-  if (key.id == clan::KEY_ESCAPE)
+  if (key.id == clan::keycode_escape)
     quit = true;
 
   // key Player 0 onKeyDown
   if (num_players > 0) {
     switch (key.id) {
-    case clan::KEY_DOWN:
+    case clan::keycode_down:
       players[0]->MovingDownButtonPressed();
       break;
-    case clan::KEY_UP:
+    case clan::keycode_up:
       players[0]->MovingUpButtonPressed();
       break;
-    case clan::KEY_LEFT:
+    case clan::keycode_left:
       players[0]->MovingLeftButtonPressed();
       break;
-    case clan::KEY_RIGHT:
+    case clan::keycode_right:
       players[0]->MovingRightButtonPressed();
       break;
-    case clan::KEY_DELETE:
+    case clan::keycode_delete:
       players[0]->BuildButtonPressed();
       break;
-    case clan::KEY_END:
+    case clan::keycode_end:
       players[0]->SelectButtonPressed();
       break;
-    case clan::KEY_HOME:
+    case clan::keycode_home:
       players[0]->CancelButtonPressed();
       break;
     }
@@ -222,119 +222,119 @@ void World::onKeyDown(const clan::InputEvent &key, const clan::InputState &state
   }
   // key Player 1 onKeyDown
   if (num_players > 1) {
-    if (key.id == clan::KEY_NUMPAD2) {
+    if (key.id == clan::keycode_numpad2) {
       players[1]->MovingDownButtonPressed();
     }
 
-    if (key.id == clan::KEY_NUMPAD5) {
+    if (key.id == clan::keycode_numpad5) {
       players[1]->MovingUpButtonPressed();
     }
 
-    if (key.id == clan::KEY_NUMPAD1) {
+    if (key.id == clan::keycode_numpad1) {
       players[1]->MovingLeftButtonPressed();
     }
 
-    if (key.id == clan::KEY_NUMPAD3) {
+    if (key.id == clan::keycode_numpad3) {
       players[1]->MovingRightButtonPressed();
     }
 
-    if (key.id == clan::KEY_NUMPAD6) {
+    if (key.id == clan::keycode_numpad6) {
       players[1]->BuildButtonPressed();
     }
 
-    if (key.id == clan::KEY_NUMPAD4) {
+    if (key.id == clan::keycode_numpad4) {
       players[1]->SelectButtonPressed();
     }
 
-    if (key.id == clan::KEY_NUMPAD0) {
+    if (key.id == clan::keycode_numpad0) {
       players[1]->CancelButtonPressed();
     }
   }
   // key Player 2 onKeyDown
   if (num_players > 2) {
-    if (key.id == clan::KEY_J) {
+    if (key.id == clan::keycode_j) {
       players[2]->MovingDownButtonPressed();
     }
 
-    if (key.id == clan::KEY_U) {
+    if (key.id == clan::keycode_u) {
       players[2]->MovingUpButtonPressed();
     }
 
-    if (key.id == clan::KEY_H) {
+    if (key.id == clan::keycode_h) {
       players[2]->MovingLeftButtonPressed();
     }
 
-    if (key.id == clan::KEY_K) {
+    if (key.id == clan::keycode_k) {
       players[2]->MovingRightButtonPressed();
     }
-    if (key.id == clan::KEY_I) {
+    if (key.id == clan::keycode_i) {
       players[2]->BuildButtonPressed();
     }
 
-    if (key.id == clan::KEY_Z) {
+    if (key.id == clan::keycode_z) {
       players[2]->SelectButtonPressed();
     }
 
-    if (key.id == clan::KEY_N) {
+    if (key.id == clan::keycode_n) {
       players[2]->CancelButtonPressed();
     }
   }
   // key Player 3 onKeyDown
   if (num_players > 3) {
-    if (key.id == clan::KEY_S) {
+    if (key.id == clan::keycode_s) {
       players[3]->MovingDownButtonPressed();
     }
 
-    if (key.id == clan::KEY_W) {
+    if (key.id == clan::keycode_w) {
       players[3]->MovingUpButtonPressed();
     }
 
-    if (key.id == clan::KEY_A) {
+    if (key.id == clan::keycode_a) {
       players[3]->MovingLeftButtonPressed();
     }
 
-    if (key.id == clan::KEY_D) {
+    if (key.id == clan::keycode_d) {
       players[3]->MovingRightButtonPressed();
     }
-    if (key.id == clan::KEY_E) {
+    if (key.id == clan::keycode_e) {
       players[3]->BuildButtonPressed();
     }
 
-    if (key.id == clan::KEY_Q) {
+    if (key.id == clan::keycode_q) {
       players[3]->SelectButtonPressed();
     }
 
-    if (key.id == clan::KEY_Y) {
+    if (key.id == clan::keycode_y) {
       players[3]->CancelButtonPressed();
     }
   }
   // key Player 4 onKeyDown
   if (num_players > 4) {
-    if (key.id == clan::KEY_DOWN) {
+    if (key.id == clan::keycode_down) {
       players[4]->MovingDownButtonPressed();
     }
 
-    if (key.id == clan::KEY_UP) {
+    if (key.id == clan::keycode_up) {
       players[4]->MovingUpButtonPressed();
     }
 
-    if (key.id == clan::KEY_LEFT) {
+    if (key.id == clan::keycode_left) {
       players[4]->MovingLeftButtonPressed();
     }
 
-    if (key.id == clan::KEY_RIGHT) {
+    if (key.id == clan::keycode_right) {
       players[4]->MovingRightButtonPressed();
     }
 
-    if (key.id == clan::KEY_NUMPAD6) {
+    if (key.id == clan::keycode_numpad6) {
       players[4]->BuildButtonPressed();
     }
 
-    if (key.id == clan::KEY_NUMPAD4) {
+    if (key.id == clan::keycode_numpad4) {
       players[4]->SelectButtonPressed();
     }
 
-    if (key.id == clan::KEY_NUMPAD0) {
+    if (key.id == clan::keycode_numpad0) {
       players[4]->CancelButtonPressed();
     }
   }
@@ -342,92 +342,92 @@ void World::onKeyDown(const clan::InputEvent &key, const clan::InputState &state
 void World::onKeyUp(const clan::InputEvent &key, const clan::InputState &state) {
   // key Player 0 onKeyUp
   if (num_players > 0) {
-    if (key.id == clan::KEY_DOWN) {
+    if (key.id == clan::keycode_down) {
       players[0]->MovingDownButtonReleased();
     }
 
-    if (key.id == clan::KEY_UP) {
+    if (key.id == clan::keycode_up) {
       players[0]->MovingUpButtonReleased();
     }
 
-    if (key.id == clan::KEY_LEFT) {
+    if (key.id == clan::keycode_left) {
       players[0]->MovingLeftButtonReleased();
     }
 
-    if (key.id == clan::KEY_RIGHT) {
+    if (key.id == clan::keycode_right) {
       players[0]->MovingRightButtonReleased();
     }
   }
   // key Player 1 onKeyUp
   if (num_players > 1) {
-    if (key.id == clan::KEY_NUMPAD2) {
+    if (key.id == clan::keycode_numpad2) {
       players[1]->MovingDownButtonReleased();
     }
 
-    if (key.id == clan::KEY_NUMPAD5) {
+    if (key.id == clan::keycode_numpad5) {
       players[1]->MovingUpButtonReleased();
     }
 
-    if (key.id == clan::KEY_NUMPAD1) {
+    if (key.id == clan::keycode_numpad1) {
       players[1]->MovingLeftButtonReleased();
     }
 
-    if (key.id == clan::KEY_NUMPAD3) {
+    if (key.id == clan::keycode_numpad3) {
       players[1]->MovingRightButtonReleased();
     }
   }
 
   // key Player 2 onKeyUp
   if (num_players > 2) {
-    if (key.id == clan::KEY_J) {
+    if (key.id == clan::keycode_j) {
       players[2]->MovingDownButtonReleased();
     }
 
-    if (key.id == clan::KEY_U) {
+    if (key.id == clan::keycode_u) {
       players[2]->MovingUpButtonReleased();
     }
 
-    if (key.id == clan::KEY_H) {
+    if (key.id == clan::keycode_h) {
       players[2]->MovingLeftButtonReleased();
     }
 
-    if (key.id == clan::KEY_K) {
+    if (key.id == clan::keycode_k) {
       players[2]->MovingRightButtonReleased();
     }
   }
   // key Player 3 onKeyUp
   if (num_players > 3) {
-    if (key.id == clan::KEY_S) {
+    if (key.id == clan::keycode_s) {
       players[3]->MovingDownButtonReleased();
     }
 
-    if (key.id == clan::KEY_W) {
+    if (key.id == clan::keycode_w) {
       players[3]->MovingUpButtonReleased();
     }
 
-    if (key.id == clan::KEY_A) {
+    if (key.id == clan::keycode_a) {
       players[3]->MovingLeftButtonReleased();
     }
 
-    if (key.id == clan::KEY_D) {
+    if (key.id == clan::keycode_d) {
       players[3]->MovingRightButtonReleased();
     }
   }
   // key Player 4 onKeyUp
   if (num_players > 4) {
-    if (key.id == clan::KEY_DOWN) {
+    if (key.id == clan::keycode_down) {
       players[4]->MovingDownButtonReleased();
     }
 
-    if (key.id == clan::KEY_UP) {
+    if (key.id == clan::keycode_up) {
       players[4]->MovingUpButtonReleased();
     }
 
-    if (key.id == clan::KEY_LEFT) {
+    if (key.id == clan::keycode_left) {
       players[4]->MovingLeftButtonReleased();
     }
 
-    if (key.id == clan::KEY_RIGHT) {
+    if (key.id == clan::keycode_right) {
       players[4]->MovingRightButtonReleased();
     }
   }

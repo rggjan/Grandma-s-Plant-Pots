@@ -28,7 +28,7 @@
 
 #include "./app.h"
 
-int Program::main(const std::vector<clan::String> &args) {
+int Program::main(const std::vector<std::string> &args) {
   try {
     // Initialize ClanLib base components
     clan::SetupCore setup_core;
