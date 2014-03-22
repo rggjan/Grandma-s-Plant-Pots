@@ -15,9 +15,9 @@
 #define SUN_COLLECTED_PER_SECOND 0.01
 #define START_ENERGY 30
 
-Flower::Flower(World *world, CL_GraphicContext *gc,
-               CL_Vec2f position, PlantPlayer* player, bool menu)
-  : Plant(world, gc, position, "Flower", player),
+Flower::Flower(World *world, clan::Canvas *canvas,
+               clan::Vec2f position, PlantPlayer* player, bool menu)
+  : Plant(world, canvas, position, "Flower", player),
     age_(0),
     open_(false) {
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
@@ -25,14 +25,14 @@ Flower::Flower(World *world, CL_GraphicContext *gc,
   energy_ = START_ENERGY;
 
   if (menu) {
-    menu_leaf_ = new Leaf(world, gc, CL_Vec2f(0, 0), "Leaf2", this);
+    menu_leaf_ = new Leaf(world, canvas, clan::Vec2f(0, 0), "Leaf2", this);
   } else {
     world_->AddMasterPlant(this);
   }
 }
 
-Plant* Flower::GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc) {
-  return new Flower(world_, gc, position, player_);
+Plant* Flower::GetNewPlant(clan::Vec2f position, clan::Canvas *canvas) {
+  return new Flower(world_, canvas, position, player_);
 }
 
 Flower::~Flower() {
@@ -64,7 +64,7 @@ bool Flower::Update(int time_ms) {
   return Plant::Update(time_ms);
 }
 
-Leaf* Flower::NearestLeaf(CL_Vec2f position) {
+Leaf* Flower::NearestLeaf(clan::Vec2f position) {
   // TODO(rggjan): infinity
   int best_dist = -1;
   Leaf *nearest_leaf = NULL;
@@ -86,7 +86,7 @@ Leaf* Flower::NearestLeaf(CL_Vec2f position) {
   return nearest_leaf;
 }
 
-bool Flower::CanBuild(CL_Vec2f position) {
+bool Flower::CanBuild(clan::Vec2f position) {
   Plant *nearest_plant = world_->NearestMasterPlant(position);
 
   if (nearest_plant && (nearest_plant->position() - position).length()
@@ -99,44 +99,44 @@ bool Flower::CanBuild(CL_Vec2f position) {
   return world_->CanBuild(position);
 }
 
-void Flower::DrawTmpChild(CL_GraphicContext *gc) {
-    CL_Vec2f diff = player_->cross_position() -
+void Flower::DrawTmpChild(clan::Canvas *canvas) {
+    clan::Vec2f diff = player_->cross_position() -
                     (position() - player_->map_position());
 
     float angle = atan2(diff.y, diff.x);
-    //tmp_leaf_->set_angle(CL_Angle(angle, cl_radians));
+    //tmp_leaf_->set_angle(clan::Angle(angle, clan::radians));
 
-    CL_Colorf line_color;
+    clan::Colorf line_color;
 
     /*if (diff.length() < LEAF_MAX_DISTANCE &&
         tmp_leaf_->CanBuild(position(), selected_flower_)) {
       tmp_leaf_->DrawGreen(gc_, cross_position());
-      line_color = CL_Colorf::green;
+      line_color = clan::Colorf::green;
       cross_green_ = true;
     } else {
       tmp_leaf_->DrawRed(gc_, cross_position());*/
-      line_color = CL_Colorf::red;
+      line_color = clan::Colorf::red;
 //      cross_green_ = false;
     //}
 
     diff = position() - player_->map_position();
-    CL_Draw::line(*gc, diff.x, diff.y, player_->cross_position().x,
+    clan::Draw::line(*canvas, diff.x, diff.y, player_->cross_position().x,
     player_->cross_position().y, line_color);
 }
 
-void Flower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
+void Flower::Draw(clan::Canvas* canvas, clan::Vec2f target) {
   std::list<Leaf *>::iterator it;
   for (it = leaves.begin(); it != leaves.end(); ++it) {
-    (*it)->Draw(gc, target);
-    /*CL_Draw::line(*gc, position() - player_->map_position(),
+    (*it)->Draw(canvas, target);
+    /*clan::Draw::line(*canvas, position() - player_->map_position(),
                   leaves[i]->position() - player_->map_position(),
-                  CL_Colorf::green);*/
+                  clan::Colorf::green);*/
   }
 
   if (!is_alive()) {
-    Plant::Draw(gc, target);
+    Plant::Draw(canvas, target);
     return;
   }
 
-  Plant::Draw(gc, target);
+  Plant::Draw(canvas, target);
 }

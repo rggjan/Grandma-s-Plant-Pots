@@ -12,15 +12,15 @@ class Flower;
 class Leaf : public Plant {
     // Construction
   public:
-    Leaf(World *world, CL_GraphicContext *gc,
-           CL_Vec2f position, const CL_StringRef &name, Flower* flower);
+    Leaf(World *world, clan::Canvas *canvas,
+           clan::Vec2f position, const std::string &name, Flower* flower);
 
     ~Leaf();
 
     virtual int sugar_cost() { return LEAF_SUGAR_COST; }
-    virtual Plant *GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc) {return NULL;}
+    virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas *canvas) {return NULL;}
 
-    bool CanBuild(CL_Vec2f position, Flower* flower);
+    bool CanBuild(clan::Vec2f position, Flower* flower);
 
     Flower* flower_;
 };

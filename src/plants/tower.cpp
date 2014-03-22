@@ -17,11 +17,11 @@
 #define ATTACK_DISTANCE 100
 #define ATTACK_ENERGY_PER_SECOND 10
 
-CL_SoundBuffer_Session Tower::sound_session_shot_;
+clan::SoundBuffer_Session Tower::sound_session_shot_;
 
-Tower::Tower(World *world, CL_GraphicContext *gc,
-             CL_Vec2f position, PlantPlayer* player, bool menu)
-  : Plant(world, gc, position, "Tower", player),
+Tower::Tower(World *world, clan::Canvas *canvas,
+             clan::Vec2f position, PlantPlayer* player, bool menu)
+  : Plant(world, canvas, position, "Tower", player),
     open_(false),
     age_(0),
     sound_shot_("TowerShoot", &world->resources) {
@@ -34,8 +34,8 @@ Tower::Tower(World *world, CL_GraphicContext *gc,
     world_->AddMasterPlant(this);
 }
 
-Plant* Tower::GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc) {
-  return new Tower(world_, gc, position, player_);
+Plant* Tower::GetNewPlant(clan::Vec2f position, clan::Canvas *canvas) {
+  return new Tower(world_, canvas, position, player_);
 }
 
 Tower::~Tower() {
@@ -77,7 +77,7 @@ for (Bug * bug : *bugs) {
   return Plant::Update(time_ms);
 }
 
-bool Tower::CanBuild(CL_Vec2f position) {
+bool Tower::CanBuild(clan::Vec2f position) {
   Plant *nearest_plant = world_->NearestMasterPlant(position);
 
   if (nearest_plant && (nearest_plant->position() - position).length()
@@ -87,20 +87,20 @@ bool Tower::CanBuild(CL_Vec2f position) {
   return world_->CanBuild(position);
 }
 
-void Tower::Draw(CL_GraphicContext* gc, CL_Vec2f target) {
+void Tower::Draw(clan::Canvas* canvas, clan::Vec2f target) {
   if (!is_alive()) {
-    Plant::Draw(gc, target);
+    Plant::Draw(canvas, target);
     return;
   }
 
   // Shoot!
   if (open() && targeting_bug) {
-    CL_Draw::line(*gc, position() - target,
+    clan::Draw::line(*canvas, position() - target,
                   targeting_bug->position() - target,
-                  CL_Colorf::green);
+                  clan::Colorf::green);
     if (!sound_session_shot_.is_playing())
       sound_session_shot_ = sound_shot_.play();
   }
 
-  Plant::Draw(gc, target);
+  Plant::Draw(canvas, target);
 }

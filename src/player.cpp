@@ -7,11 +7,11 @@
 #define CROSS_SPEED 0.6
 #define MIN_BORDER 100
 
-Player::Player(CL_GraphicContext* gc, World* world, int width, int height)
-  : gc_(gc),
+Player::Player(clan::Canvas* canvas, World* world, int width, int height)
+  : gc_(canvas),
     map_position_(300, 300),
-    window_width_(gc->get_width()),
-    window_height_(gc->get_height()),
+	window_width_(canvas->get_width()),
+	window_height_(canvas->get_height()),
     cross_position_(window_width_ / 2, window_height_ / 2),
     moving_down_(false),
     moving_up_(false),
@@ -20,14 +20,14 @@ Player::Player(CL_GraphicContext* gc, World* world, int width, int height)
     world_(world),
     map_width_(width),
     map_height_(height),
-    cross_(*gc, "Cross", &world->resources) {
-  CL_FontDescription desc;
+    cross_(clan::Sprite::resource(*canvas, "Cross", world->resources)) {
+  clan::FontDescription desc;
   desc.set_height(20);
-  default_font_ = CL_Font_System(*gc_, desc);
+  default_font_ = clan::Font_System(*gc_, desc);
 }
 
-bool Player::Visible(CL_Vec2f position) {
-  CL_Vec2f pos = position - map_position_;
+bool Player::Visible(clan::Vec2f position) {
+  clan::Vec2f pos = position - map_position_;
 
   if (pos.x < 0)
     return false;

@@ -10,18 +10,18 @@
 #include "bugs/bug.h"
 
 
-class CL_SoundBuffer;
+class clan::SoundBuffer;
 
 class BugPlayer : public Player {
   public:
-    BugPlayer(CL_GraphicContext* gc, World *world, int width, int height);
+    BugPlayer(clan::Canvas* canvas, World *world, int width, int height);
 
     void BuildButtonPressed();
     void SelectButtonPressed();
     void CancelButtonPressed();
 
     void AddBug(Bug* bug);
-    void CreateBug(CL_StringRef name, CL_Vec2f position);
+    void CreateBug(std::string name, clan::Vec2f position);
     void Update(int time_ms);
     void DrawTop();
     void DrawFloor();
@@ -29,13 +29,13 @@ class BugPlayer : public Player {
   private:
     // Attributes
     std::list<Bug*> bugs;
-    CL_Sprite select_sprite_;
+    clan::Sprite select_sprite_;
     Plant* nearest_free_plant_;
 
     // Queries
     Plant* GetFreePlant();
     Bug* GetFreeBug();
-    CL_SoundBuffer sound_bug_attack_;
+    clan::SoundBuffer sound_bug_attack_;
 };
 
 #endif  // SRC_BUGS_BUGPLAYER_H_

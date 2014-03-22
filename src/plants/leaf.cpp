@@ -9,9 +9,9 @@
 #define SUN_COLLECTED_PER_SECOND 0.02
 #define START_ENERGY 30
 
-Leaf::Leaf(World *world, CL_GraphicContext *gc,
-           CL_Vec2f position, const CL_StringRef &name, Flower* flower)
-  : Plant(world, gc, position, name, flower->player()),
+Leaf::Leaf(World *world, clan::Canvas *canvas,
+           clan::Vec2f position, const std::string &name, Flower* flower)
+  : Plant(world, canvas, position, name, flower->player()),
     flower_(flower) {
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
@@ -24,7 +24,7 @@ Leaf::~Leaf() {
   world_->RemovePlant(this);
 }
 
-bool Leaf::CanBuild(CL_Vec2f position, Flower* flower) {
+bool Leaf::CanBuild(clan::Vec2f position, Flower* flower) {
   if (!flower->open())
     return false;
 

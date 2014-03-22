@@ -4,13 +4,13 @@
 
 #define ZOMBIE_SECONDS 10
 
-void GameObject::Draw(CL_GraphicContext *gc, CL_Vec2f target) {
-  CL_Vec2f pos = position_ - target;
+void GameObject::Draw(clan::Canvas *canvas, clan::Vec2f target) {
+  clan::Vec2f pos = position_ - target;
 
   if (!is_alive())
     sprite_.set_alpha(1 - dead_time_ / (ZOMBIE_SECONDS * 1000.));
 
-  sprite_.draw(*gc, pos.x, pos.y);
+  sprite_.draw(*canvas, pos.x, pos.y);
 }
 
 void GameObject::UpdateAnimation(int time_ms) {
@@ -40,12 +40,12 @@ double GameObject::DecreaseEnergy(double amount) {
   return amount;
 }
 
-GameObject::GameObject(World* world, CL_GraphicContext *gc,
-                       CL_Vec2f position, CL_StringRef name)
+GameObject::GameObject(World* world, clan::Canvas *canvas,
+					   clan::Vec2f position, std::string name)
   : world_(world),
     energy_(1),
     dead_time_(0),
     position_(position),
-    sprite_(*gc, name, &world->resources),
-    dead_color_(CL_Color::black) {
+    sprite_(*canvas, name, &world->resources),
+    dead_color_(clan::Color::black) {
 }

@@ -25,10 +25,10 @@
 #define START_SIZE 0.2
 #define END_SIZE 0.1
 
-Bug::Bug(World *world, CL_GraphicContext *gc, CL_Vec2f position,
-         const CL_StringRef name, BugPlayer* player)
+Bug::Bug(World *world, clan::Canvas *canvas, clan::Vec2f position,
+         const std::string name, BugPlayer* player)
 // TODO(rggjan): Real position
-  : GameObject(world, gc, position, name),
+  : GameObject(world, canvas, position, name),
     direction(0, -1),
     target_plant_(NULL),
     food_eaten_(0),
@@ -36,7 +36,7 @@ Bug::Bug(World *world, CL_GraphicContext *gc, CL_Vec2f position,
     player_(player) {
   sprite_.set_play_loop(true);
 
-  dead_color_ = CL_Color::red;
+  dead_color_ = clan::Color::red;
   energy_ = START_ENERGY;
   sprite_.set_scale(START_SIZE, START_SIZE);
 
@@ -76,7 +76,7 @@ void Bug::StopEating() {
   target_plant_ = NULL;
 }
 
-bool Bug::Update(int time_ms, CL_Vec2f target_position) {
+bool Bug::Update(int time_ms, clan::Vec2f target_position) {
   target_position_ = target_position;
 
   GameObject::Update(time_ms);
@@ -94,7 +94,7 @@ bool Bug::Update(int time_ms, CL_Vec2f target_position) {
   }
 
   // Calculate target direction
-  CL_Vec2f target_direction;
+  clan::Vec2f target_direction;
 
   if (target_plant_ == NULL)
     target_direction = target_position_ - position_;
@@ -117,7 +117,7 @@ bool Bug::Update(int time_ms, CL_Vec2f target_position) {
   }
 
   // Right angle
-  CL_Vec2f right;
+  clan::Vec2f right;
   right.x = -direction.y;
   right.y = direction.x;
 
@@ -134,12 +134,12 @@ bool Bug::Update(int time_ms, CL_Vec2f target_position) {
   direction.normalize();
 
   // Update angle
-  CL_Vec2f up(0.0f, -1.0f);
+  clan::Vec2f up(0.0f, -1.0f);
   float angle = up.angle(direction).to_degrees();
   if (direction.x < 0)
     angle = 360.0f - angle;
 
-  sprite_.set_angle(CL_Angle(angle, cl_degrees));
+  sprite_.set_angle(clan::Angle(angle, clan::degrees));
 
   // Update position
   // posX += direction.x * 10*(rand()%100)/100;

@@ -19,23 +19,23 @@ class Flower : public Plant {
     virtual inline int sugar_cost() { return ENERGY_COST; }
 
     // Construction
-    Flower(World *world, CL_GraphicContext *gc,
-           CL_Vec2f position, PlantPlayer* player, bool menu = false);
+    Flower(World *world, clan::Canvas *canvas,
+           clan::Vec2f position, PlantPlayer* player, bool menu = false);
 
-    virtual Plant *GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc);
-    void DrawTmpChild(CL_GraphicContext *gc);
+    virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas *canvas);
+    void DrawTmpChild(clan::Canvas *canvas);
 
     ~Flower();
 
     // Operations
     void AddLeaf(Leaf* leaf);
     bool Update(int time_ms);
-    void Draw(CL_GraphicContext* gc, CL_Vec2f target);
+    void Draw(clan::Canvas* canvas, clan::Vec2f target);
     virtual bool has_children() { return true; }    
 
     // Queries
-    bool CanBuild(CL_Vec2f position);
-    Leaf* NearestLeaf(CL_Vec2f position);
+    bool CanBuild(clan::Vec2f position);
+    Leaf* NearestLeaf(clan::Vec2f position);
 
     bool open() { return open_; }
 

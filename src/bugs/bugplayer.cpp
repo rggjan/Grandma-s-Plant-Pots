@@ -15,9 +15,9 @@
 using std::list;
 using std::count_if;
 
-BugPlayer::BugPlayer(CL_GraphicContext* gc, World* world,
+BugPlayer::BugPlayer(clan::Canvas* canvas, World* world,
                      int width, int height)
-  : Player(gc, world, width, height),
+  : Player(canvas, world, width, height),
     select_sprite_(*gc_, "Cross2", &world->resources),
     sound_bug_attack_("BugAttack", &world->resources) {
   select_sprite_.set_alpha(0.5);
@@ -30,14 +30,14 @@ BugPlayer::BugPlayer(CL_GraphicContext* gc, World* world,
     else
       name = "Bug2";
 
-    CreateBug(name, CL_Vec2f(i * 60, i * 60));
+    CreateBug(name, clan::Vec2f(i * 60, i * 60));
   }
 
   sound_bug_attack_.set_volume(0.1f);
   sound_bug_attack_.prepare();
 }
 
-void BugPlayer::CreateBug(CL_StringRef name, CL_Vec2f position) {
+void BugPlayer::CreateBug(std::string name, clan::Vec2f position) {
   AddBug(new Bug(world_, gc_, position, name, this));
 }
 
@@ -83,14 +83,14 @@ for (Bug * bug : bugs)
 
 void BugPlayer::DrawFloor() {
   if (nearest_free_plant_ != NULL) {
-    CL_Vec2f pos = nearest_free_plant_->position() - map_position();
+    clan::Vec2f pos = nearest_free_plant_->position() - map_position();
     select_sprite_.draw(*gc_, pos.x, pos.y);
   }
   /*  } else if (state == Selected || state == SelectedBuilding) {
       select_sprite_.set_alpha(0.8);
 
-      CL_Vec2f pos = selectedFlower->position() - map_position();
-      select_sprite_.draw(*gc, pos.x, pos.y);
+      clan::Vec2f pos = selectedFlower->position() - map_position();
+      select_sprite_.draw(*canvas, pos.x, pos.y);
     }*/
 }
 
@@ -101,9 +101,9 @@ bool IsAlive(Bug *bug) {
 void BugPlayer::DrawTop() {
   int size = count_if(bugs.begin(), bugs.end(), IsAlive);
 
-  CL_Colorf color = CL_Colorf::white;
-  default_font_.draw_text(*gc_, CL_Pointf(10, 30),
-                          cl_format("Bugs: %1", size), color);
+  clan::Colorf color = clan::Colorf::white;
+  default_font_.draw_text(*gc_, clan::Pointf(10, 30),
+                          clan::format("Bugs: %1", size), color);
   Player::DrawTop();
 }
 

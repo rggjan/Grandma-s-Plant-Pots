@@ -19,7 +19,7 @@
 using std::list;
 using std::sort;
 
-World::World(CL_DisplayWindow* window)
+World::World(clan::DisplayWindow *window)
   : quit(false),
     default_gc(window->get_gc()),
     time_elapsed_ms_(1),
@@ -28,18 +28,18 @@ World::World(CL_DisplayWindow* window)
   num_players = NUM_PLAYERS;
 
   // Setup resources
-  resources = CL_ResourceManager("resources.xml");
-  background = new CL_Sprite(default_gc, "Background", &resources);
+  resources = clan::ResourceManager("resources.xml");
+  background = new clan::Sprite(default_gc, "Background", &resources);
   width = background->get_width();
   height = background->get_height();
   if (width != height)
-    CL_Console::write_line("Error, height and width should be the same!");
+    clan::Console::write_line("Error, height and width should be the same!");
 
   player_width_ = default_gc.get_width() / 2;
   player_height_ = default_gc.get_height() / 2;
 
-  texture_ = new CL_Texture(default_gc, CL_Size(player_width_, player_height_));
-  framebuffer_ = new CL_FrameBuffer(default_gc);
+  texture_ = new clan::Texture(default_gc, clan::Size(player_width_, player_height_));
+  framebuffer_ = new clan::FrameBuffer(default_gc);
   framebuffer_->attach_color_buffer(0, *texture_);
 
   default_gc.set_frame_buffer(*framebuffer_);
@@ -63,12 +63,12 @@ World::World(CL_DisplayWindow* window)
                  sig_key_up().connect(this, &World::onKeyUp);
 
 
-  CL_FontDescription desc;
+  clan::FontDescription desc;
   desc.set_height(20);
-  default_font_ = CL_Font_System(default_gc, desc);
+  default_font_ = clan::Font_System(default_gc, desc);
 
   // Setup sounds
-  sound_beep1_ = new CL_SoundBuffer("Beep1Music", &resources);
+  sound_beep1_ = new clan::SoundBuffer("Beep1Music", &resources);
   sound_beep1_->set_volume(0.1f);
   sound_beep1_->prepare();
 
@@ -85,8 +85,8 @@ void World::PlayBeep() {
   sound_beep1_->play();
 }
 
-bool World::CanBuild(CL_Vec2f position) {
-  CL_Vec2f diff = CL_Vec2f(width / 2, height / 2) - position;
+bool World::CanBuild(clan::Vec2f position) {
+  clan::Vec2f diff = clan::Vec2f(width / 2, height / 2) - position;
   return diff.length() < (height / 2 - BACKGROUND_BORDER);
 }
 
@@ -121,10 +121,10 @@ struct sort_class {
     return ((plant2->position() - position).length() -
             (plant1->position() - position).length()) > 0;
   }
-  CL_Vec2f position;
+  clan::Vec2f position;
 };
 
-list<Plant *>* World::NearestPlants(CL_Vec2f position) {
+list<Plant *>* World::NearestPlants(clan::Vec2f position) {
   sort_class sort_object;
   sort_object.position = position;
 
@@ -132,7 +132,7 @@ list<Plant *>* World::NearestPlants(CL_Vec2f position) {
   return &plants;
 }
 
-list<Bug*>* World::NearestBugs(CL_Vec2f position) {
+list<Bug*>* World::NearestBugs(clan::Vec2f position) {
   sort_class sort_object;
   sort_object.position = position;
 
@@ -140,7 +140,7 @@ list<Bug*>* World::NearestBugs(CL_Vec2f position) {
   return &bugs;
 }
 
-Plant* World::NearestMasterPlant(CL_Vec2f position) {
+Plant* World::NearestMasterPlant(clan::Vec2f position) {
   // TODO(rggjan): infinity
   int best_dist = -1;
   Plant *nearest_plant = NULL;
@@ -162,279 +162,279 @@ Plant* World::NearestMasterPlant(CL_Vec2f position) {
   return nearest_plant;
 }
 
-void World::onKeyDown(const CL_InputEvent &key, const CL_InputState &state) {
-  if (key.id == CL_KEY_ESCAPE)
+void World::onKeyDown(const clan::InputEvent &key, const clan::InputState &state) {
+  if (key.id == clan::KEY_ESCAPE)
     quit = true;
 
   // key Player 0 onKeyDown
   if (num_players > 0) {
     switch (key.id) {
-    case CL_KEY_DOWN:
+    case clan::KEY_DOWN:
       players[0]->MovingDownButtonPressed();
       break;
-    case CL_KEY_UP:
+    case clan::KEY_UP:
       players[0]->MovingUpButtonPressed();
       break;
-    case CL_KEY_LEFT:
+    case clan::KEY_LEFT:
       players[0]->MovingLeftButtonPressed();
       break;
-    case CL_KEY_RIGHT:
+    case clan::KEY_RIGHT:
       players[0]->MovingRightButtonPressed();
       break;
-    case CL_KEY_DELETE:
+    case clan::KEY_DELETE:
       players[0]->BuildButtonPressed();
       break;
-    case CL_KEY_END:
+    case clan::KEY_END:
       players[0]->SelectButtonPressed();
       break;
-    case CL_KEY_HOME:
+    case clan::KEY_HOME:
       players[0]->CancelButtonPressed();
       break;
     }
     /*
-    if (key.id == CL_KEY_DOWN) {
+    if (key.id == clan::KEY_DOWN) {
       players[0]->MovingDownButtonPressed();
     }
 
-    if (key.id == CL_KEY_UP) {
+    if (key.id == clan::KEY_UP) {
       players[0]->MovingUpButtonPressed();
     }
 
-    if (key.id == CL_KEY_LEFT) {
+    if (key.id == clan::KEY_LEFT) {
       players[0]->MovingLeftButtonPressed();
     }
 
-    if (key.id == CL_KEY_RIGHT) {
+    if (key.id == clan::KEY_RIGHT) {
       players[0]->MovingRightButtonPressed();
     }
-    if (key.id == CL_KEY_DELETE) {
+    if (key.id == clan::KEY_DELETE) {
       players[0]->BuildButtonPressed();
     }
 
-    if (key.id == CL_KEY_END) {
+    if (key.id == clan::KEY_END) {
       players[0]->SelectButtonPressed();
     }
 
-    if (key.id == CL_KEY_HOME) {
+    if (key.id == clan::KEY_HOME) {
       players[0]->CancelButtonPressed();
     }
      */
   }
   // key Player 1 onKeyDown
   if (num_players > 1) {
-    if (key.id == CL_KEY_NUMPAD2) {
+    if (key.id == clan::KEY_NUMPAD2) {
       players[1]->MovingDownButtonPressed();
     }
 
-    if (key.id == CL_KEY_NUMPAD5) {
+    if (key.id == clan::KEY_NUMPAD5) {
       players[1]->MovingUpButtonPressed();
     }
 
-    if (key.id == CL_KEY_NUMPAD1) {
+    if (key.id == clan::KEY_NUMPAD1) {
       players[1]->MovingLeftButtonPressed();
     }
 
-    if (key.id == CL_KEY_NUMPAD3) {
+    if (key.id == clan::KEY_NUMPAD3) {
       players[1]->MovingRightButtonPressed();
     }
 
-    if (key.id == CL_KEY_NUMPAD6) {
+    if (key.id == clan::KEY_NUMPAD6) {
       players[1]->BuildButtonPressed();
     }
 
-    if (key.id == CL_KEY_NUMPAD4) {
+    if (key.id == clan::KEY_NUMPAD4) {
       players[1]->SelectButtonPressed();
     }
 
-    if (key.id == CL_KEY_NUMPAD0) {
+    if (key.id == clan::KEY_NUMPAD0) {
       players[1]->CancelButtonPressed();
     }
   }
   // key Player 2 onKeyDown
   if (num_players > 2) {
-    if (key.id == CL_KEY_J) {
+    if (key.id == clan::KEY_J) {
       players[2]->MovingDownButtonPressed();
     }
 
-    if (key.id == CL_KEY_U) {
+    if (key.id == clan::KEY_U) {
       players[2]->MovingUpButtonPressed();
     }
 
-    if (key.id == CL_KEY_H) {
+    if (key.id == clan::KEY_H) {
       players[2]->MovingLeftButtonPressed();
     }
 
-    if (key.id == CL_KEY_K) {
+    if (key.id == clan::KEY_K) {
       players[2]->MovingRightButtonPressed();
     }
-    if (key.id == CL_KEY_I) {
+    if (key.id == clan::KEY_I) {
       players[2]->BuildButtonPressed();
     }
 
-    if (key.id == CL_KEY_Z) {
+    if (key.id == clan::KEY_Z) {
       players[2]->SelectButtonPressed();
     }
 
-    if (key.id == CL_KEY_N) {
+    if (key.id == clan::KEY_N) {
       players[2]->CancelButtonPressed();
     }
   }
   // key Player 3 onKeyDown
   if (num_players > 3) {
-    if (key.id == CL_KEY_S) {
+    if (key.id == clan::KEY_S) {
       players[3]->MovingDownButtonPressed();
     }
 
-    if (key.id == CL_KEY_W) {
+    if (key.id == clan::KEY_W) {
       players[3]->MovingUpButtonPressed();
     }
 
-    if (key.id == CL_KEY_A) {
+    if (key.id == clan::KEY_A) {
       players[3]->MovingLeftButtonPressed();
     }
 
-    if (key.id == CL_KEY_D) {
+    if (key.id == clan::KEY_D) {
       players[3]->MovingRightButtonPressed();
     }
-    if (key.id == CL_KEY_E) {
+    if (key.id == clan::KEY_E) {
       players[3]->BuildButtonPressed();
     }
 
-    if (key.id == CL_KEY_Q) {
+    if (key.id == clan::KEY_Q) {
       players[3]->SelectButtonPressed();
     }
 
-    if (key.id == CL_KEY_Y) {
+    if (key.id == clan::KEY_Y) {
       players[3]->CancelButtonPressed();
     }
   }
   // key Player 4 onKeyDown
   if (num_players > 4) {
-    if (key.id == CL_KEY_DOWN) {
+    if (key.id == clan::KEY_DOWN) {
       players[4]->MovingDownButtonPressed();
     }
 
-    if (key.id == CL_KEY_UP) {
+    if (key.id == clan::KEY_UP) {
       players[4]->MovingUpButtonPressed();
     }
 
-    if (key.id == CL_KEY_LEFT) {
+    if (key.id == clan::KEY_LEFT) {
       players[4]->MovingLeftButtonPressed();
     }
 
-    if (key.id == CL_KEY_RIGHT) {
+    if (key.id == clan::KEY_RIGHT) {
       players[4]->MovingRightButtonPressed();
     }
 
-    if (key.id == CL_KEY_NUMPAD6) {
+    if (key.id == clan::KEY_NUMPAD6) {
       players[4]->BuildButtonPressed();
     }
 
-    if (key.id == CL_KEY_NUMPAD4) {
+    if (key.id == clan::KEY_NUMPAD4) {
       players[4]->SelectButtonPressed();
     }
 
-    if (key.id == CL_KEY_NUMPAD0) {
+    if (key.id == clan::KEY_NUMPAD0) {
       players[4]->CancelButtonPressed();
     }
   }
 }
-void World::onKeyUp(const CL_InputEvent &key, const CL_InputState &state) {
+void World::onKeyUp(const clan::InputEvent &key, const clan::InputState &state) {
   // key Player 0 onKeyUp
   if (num_players > 0) {
-    if (key.id == CL_KEY_DOWN) {
+    if (key.id == clan::KEY_DOWN) {
       players[0]->MovingDownButtonReleased();
     }
 
-    if (key.id == CL_KEY_UP) {
+    if (key.id == clan::KEY_UP) {
       players[0]->MovingUpButtonReleased();
     }
 
-    if (key.id == CL_KEY_LEFT) {
+    if (key.id == clan::KEY_LEFT) {
       players[0]->MovingLeftButtonReleased();
     }
 
-    if (key.id == CL_KEY_RIGHT) {
+    if (key.id == clan::KEY_RIGHT) {
       players[0]->MovingRightButtonReleased();
     }
   }
   // key Player 1 onKeyUp
   if (num_players > 1) {
-    if (key.id == CL_KEY_NUMPAD2) {
+    if (key.id == clan::KEY_NUMPAD2) {
       players[1]->MovingDownButtonReleased();
     }
 
-    if (key.id == CL_KEY_NUMPAD5) {
+    if (key.id == clan::KEY_NUMPAD5) {
       players[1]->MovingUpButtonReleased();
     }
 
-    if (key.id == CL_KEY_NUMPAD1) {
+    if (key.id == clan::KEY_NUMPAD1) {
       players[1]->MovingLeftButtonReleased();
     }
 
-    if (key.id == CL_KEY_NUMPAD3) {
+    if (key.id == clan::KEY_NUMPAD3) {
       players[1]->MovingRightButtonReleased();
     }
   }
 
   // key Player 2 onKeyUp
   if (num_players > 2) {
-    if (key.id == CL_KEY_J) {
+    if (key.id == clan::KEY_J) {
       players[2]->MovingDownButtonReleased();
     }
 
-    if (key.id == CL_KEY_U) {
+    if (key.id == clan::KEY_U) {
       players[2]->MovingUpButtonReleased();
     }
 
-    if (key.id == CL_KEY_H) {
+    if (key.id == clan::KEY_H) {
       players[2]->MovingLeftButtonReleased();
     }
 
-    if (key.id == CL_KEY_K) {
+    if (key.id == clan::KEY_K) {
       players[2]->MovingRightButtonReleased();
     }
   }
   // key Player 3 onKeyUp
   if (num_players > 3) {
-    if (key.id == CL_KEY_S) {
+    if (key.id == clan::KEY_S) {
       players[3]->MovingDownButtonReleased();
     }
 
-    if (key.id == CL_KEY_W) {
+    if (key.id == clan::KEY_W) {
       players[3]->MovingUpButtonReleased();
     }
 
-    if (key.id == CL_KEY_A) {
+    if (key.id == clan::KEY_A) {
       players[3]->MovingLeftButtonReleased();
     }
 
-    if (key.id == CL_KEY_D) {
+    if (key.id == clan::KEY_D) {
       players[3]->MovingRightButtonReleased();
     }
   }
   // key Player 4 onKeyUp
   if (num_players > 4) {
-    if (key.id == CL_KEY_DOWN) {
+    if (key.id == clan::KEY_DOWN) {
       players[4]->MovingDownButtonReleased();
     }
 
-    if (key.id == CL_KEY_UP) {
+    if (key.id == clan::KEY_UP) {
       players[4]->MovingUpButtonReleased();
     }
 
-    if (key.id == CL_KEY_LEFT) {
+    if (key.id == clan::KEY_LEFT) {
       players[4]->MovingLeftButtonReleased();
     }
 
-    if (key.id == CL_KEY_RIGHT) {
+    if (key.id == clan::KEY_RIGHT) {
       players[4]->MovingRightButtonReleased();
     }
   }
 }
 
 void World::Run() {
-  CL_SoundBuffer *sound = new CL_SoundBuffer("BackgroundMusic", &resources);
+  clan::SoundBuffer *sound = new clan::SoundBuffer("BackgroundMusic", &resources);
   sound->set_volume(1.0f);
   sound->prepare();
   // sound->play();
@@ -445,7 +445,7 @@ void World::Run() {
 
     window_->flip(0);
 
-    CL_KeepAlive::process();
+    clan::KeepAlive::process();
   }
 }
 
@@ -463,7 +463,7 @@ void World::Update() {
 int World::CalcTimeElapsed() {
   static unsigned int lastTime = 0;
 
-  unsigned int newTime = CL_System::get_time();
+  unsigned int newTime = clan::System::get_time();
   if (lastTime == 0)
     lastTime = newTime;
 
@@ -497,28 +497,28 @@ void World::Draw() {
     // Draw splitscreen
     default_gc.reset_frame_buffer();
     default_gc.set_texture(0, *texture_);
-    CL_Draw::texture(default_gc,
-                     CL_Rect((static_cast<int>(i / 2)) * player_width_,
+    clan::Draw::texture(default_gc,
+                     clan::Rect((static_cast<int>(i / 2)) * player_width_,
                              (i % 2) * player_height_,
-                             CL_Size(player_width_, player_height_)));
+                             clan::Size(player_width_, player_height_)));
     default_gc.reset_texture(0);
     // default_gc.draw_pixels(((int)(i/2))*200,
-    // (i%2)*200, texture_->get_pixeldata(), CL_Rect(0, 0, 200, 200));
+    // (i%2)*200, texture_->get_pixeldata(), clan::Rect(0, 0, 200, 200));
   }
 
-  default_font_.draw_text(default_gc, CL_Pointf(10, 100),
-                          cl_format("FPS: %1", static_cast<int>(fps_)),
-                          CL_Colorf::white);
+  default_font_.draw_text(default_gc, clan::Pointf(10, 100),
+                          clan::format("FPS: %1", static_cast<int>(fps_)),
+                          clan::Colorf::white);
 
   /*
-    CL_PixelBuffer buffer(256, 256, cl_rgba8);
+    clan::PixelBuffer buffer(256, 256, clan::rgba8);
     unsigned int *pixel_data = (unsigned int *) buffer.get_data();
-    CL_BezierCurve curve;
+    clan::BezierCurve curve;
     curve.add_control_point(0, 50);
     curve.add_control_point(50, 50);
     curve.add_control_point(50, 80);
 
-    CL_Pointf old_point(0, 0);
+    clan::Pointf old_point(0, 0);
 
     for (int p = 0; p < 100; p++) {
       unsigned char red = 0;
@@ -526,15 +526,15 @@ void World::Draw() {
       unsigned char blue = 0;
       unsigned char alpha = 255;
 
-      CL_Pointf point = curve.get_point_relative(p/100.);
-      CL_Pointf direction = point-old_point;
+      clan::Pointf point = curve.get_point_relative(p/100.);
+      clan::Pointf direction = point-old_point;
       direction.normalize();
       //direction.x
-      direction.rotate(CL_Vec2f(0, 0), CL_Angle(90, cl_degrees));
+      direction.rotate(clan::Vec2f(0, 0), clan::Angle(90, clan::degrees));
       int max_dist = p/10.+5.;
 
       for (int dist=0; dist<max_dist; dist++) {
-        CL_Pointf current = point + direction*dist;
+        clan::Pointf current = point + direction*dist;
         green = (max_dist-dist)/15.*255;
         int x = current.x;
         int y = current.y;
@@ -550,7 +550,7 @@ void World::Draw() {
       old_point = point;
     }
 
-    gc.draw_pixels(0, 0, buffer, CL_Rect(0, 0, 256, 256), CL_Colorf(1.0f, 0.0f, 0.0f));*/
+    canvas.draw_pixels(0, 0, buffer, clan::Rect(0, 0, 256, 256), clan::Colorf(1.0f, 0.0f, 0.0f));*/
 }
 
 void World::on_window_close() {

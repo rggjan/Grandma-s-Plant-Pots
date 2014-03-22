@@ -4,25 +4,25 @@
 
 #include "plants/plantplayer.h"
 
-Plant::Plant(World *world, CL_GraphicContext *gc,
-             CL_Vec2f position, CL_StringRef name, PlantPlayer* player)
-  : GameObject(world, gc, position, name),
+Plant::Plant(World *world, clan::Canvas *canvas,
+			 clan::Vec2f position, std::string name, PlantPlayer* player)
+  : GameObject(world, canvas, position, name),
     player_(player),
     eating_bug_(NULL),
     co2_collected_per_second_(0),
     sun_collected_per_second_(0) {
-  dead_color_ = CL_Color::brown;
+  dead_color_ = clan::Color::brown;
 }
 
-void Plant::DrawTmp(CL_GraphicContext *gc) {
+void Plant::DrawTmp(clan::Canvas *canvas) {
   if (CanBuild(player_->position()))
-    sprite_.set_color(CL_Color::green);
+    sprite_.set_color(clan::Color::green);
   else
-    sprite_.set_color(CL_Color::red);
+    sprite_.set_color(clan::Color::red);
 
   sprite_.set_alpha(0.8);
   sprite_.set_frame(sprite_.get_frame_count() - 1);
-  sprite_.draw(*gc, player_->cross_position().x, player_->cross_position().y);
+  sprite_.draw(*canvas, player_->cross_position().x, player_->cross_position().y);
 }
 
 bool Plant::Update(int time_ms) {
@@ -38,26 +38,26 @@ bool Plant::Update(int time_ms) {
   return true;
 }
 
-void Plant::Draw(CL_GraphicContext *gc, CL_Vec2f position) {
-  CL_Vec2f pos = position_ - position;
+void Plant::Draw(clan::Canvas *canvas, clan::Vec2f position) {
+  clan::Vec2f pos = position_ - position;
 
-  GameObject::Draw(gc, position);
+  GameObject::Draw(canvas, position);
 
   if (!is_alive())
     return;
 
   // Draw energy
   if (energy_ > 20) {
-    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 20,
-                  pos.x + energy_ / 3., pos.y - 20, CL_Colorf::green);
-    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 19,
-                  pos.x + energy_ / 3., pos.y - 19, CL_Colorf::darkgreen);
+	  canvas->draw_line(pos.x - energy_ / 3., pos.y - 20,
+                  pos.x + energy_ / 3., pos.y - 20, clan::Colorf::green);
+	clan::Draw::line(*canvas, pos.x - energy_ / 3., pos.y - 19,
+                  pos.x + energy_ / 3., pos.y - 19, clan::Colorf::darkgreen);
   } else {
-    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 20,
-                  pos.x + energy_ / 3., pos.y - 20, CL_Colorf::red);
-    CL_Draw::line(*gc, pos.x - energy_ / 3., pos.y - 19,
-                  pos.x + energy_ / 3., pos.y - 19, CL_Colorf::darkred);
+	clan::Draw::line(*canvas, pos.x - energy_ / 3., pos.y - 20,
+                  pos.x + energy_ / 3., pos.y - 20, clan::Colorf::red);
+	clan::Draw::line(*canvas, pos.x - energy_ / 3., pos.y - 19,
+                  pos.x + energy_ / 3., pos.y - 19, clan::Colorf::darkred);
   }
-  CL_Draw::line(*gc, pos.x - energy_ / 3. + 1, pos.y - 18,
-                pos.x + energy_ / 3. + 1, pos.y - 18, CL_Colorf::black);
+  clan::Draw::line(*canvas, pos.x - energy_ / 3. + 1, pos.y - 18,
+                pos.x + energy_ / 3. + 1, pos.y - 18, clan::Colorf::black);
 }

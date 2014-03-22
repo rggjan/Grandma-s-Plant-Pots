@@ -9,25 +9,25 @@
 
 using std::vector;
 
-int Application::main(const std::vector<CL_String> &args) {
+int Application::main(const std::vector<clan::String> &args) {
   // Create window
-  CL_DisplayWindowDescription desc;
+  clan::DisplayWindowDescription desc;
   desc.set_title("Grandma's Plant Pots");
   desc.set_allow_resize(true);
-  desc.set_size(CL_Size(640, 480), true);
-  CL_DisplayWindow window(desc);
+  desc.set_size(clan::Size(640, 480), true);
+  clan::DisplayWindow window(desc);
 
   // Maximise
   window.maximize();
 
   // Wait for window manager
   while (!window.is_maximized()) {
-    CL_KeepAlive::process();
+    clan::KeepAlive::process();
   }
 
-  CL_KeepAlive::process();
+  clan::KeepAlive::process();
 
-  CL_SoundOutput output(44100);
+  clan::SoundOutput output(44100);
 
   try {
     // Create world
@@ -35,10 +35,10 @@ int Application::main(const std::vector<CL_String> &args) {
 
     // Run the main loop
     world.Run();
-  } catch(CL_Exception exception) {
+  } catch(clan::Exception exception) {
     // Create a console window for text-output if not available
-    CL_ConsoleWindow console("Console", 80, 160);
-    CL_Console::write_line("Exception caught: " +
+    clan::ConsoleWindow console("Console", 80, 160);
+    clan::Console::write_line("Exception caught: " +
                            exception.get_message_and_stack_trace());
     console.display_close_message();
 

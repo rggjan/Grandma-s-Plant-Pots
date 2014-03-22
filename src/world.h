@@ -4,6 +4,7 @@
 #define SRC_WORLD_H_
 
 #include <ClanLib/display.h>
+#include <ClanLib/Core/Resources/resource_manager.h>
 #include <list>
 #include <vector>
 
@@ -13,23 +14,26 @@ class Bug;
 class Flower;
 class Plant;
 class Player;
-class CL_SoundBuffer;
+namespace clan {
+class SoundBuffer;
+class InputState;
+}
 
 class World {
   public:
     // Construction
-    explicit World(CL_DisplayWindow* window);
+	explicit World(clan::DisplayWindow* window);
     ~World();
 
     // Attributes
-    CL_ResourceManager resources;
+	clan::ResourceManager resources;
     bool quit;
     int num_players;
     int width;
     int height;
     int player_width_;
     int player_height_;
-    CL_SoundBuffer *sound_beep1_;
+	clan::SoundBuffer *sound_beep1_;
 
     // Operations
     void AddBug(Bug *bug);
@@ -45,18 +49,18 @@ class World {
     void PlayBeep();
 
     // Queries
-    Plant* NearestMasterPlant(CL_Vec2f position);
-    std::list<Bug *>* NearestBugs(CL_Vec2f position);
-    std::list<Plant *>* NearestPlants(CL_Vec2f position);
-    bool CanBuild(CL_Vec2f position);
+	Plant* NearestMasterPlant(clan::Vec2f position);
+	std::list<Bug *>* NearestBugs(clan::Vec2f position);
+	std::list<Plant *>* NearestPlants(clan::Vec2f position);
+	bool CanBuild(clan::Vec2f position);
 
   private:
     // Attributes
-    CL_Slot slotKeyDown[MAX_PLAYERS];
-    CL_Slot slotKeyUp[MAX_PLAYERS];
-    CL_Slot slotQuit[MAX_PLAYERS];
+	clan::Slot slotKeyDown[MAX_PLAYERS];
+	clan::Slot slotKeyUp[MAX_PLAYERS];
+	clan::Slot slotQuit[MAX_PLAYERS];
 
-    CL_Sprite *background;
+	clan::Sprite *background;
 
     std::list<Bug*> bugs;
     std::list<Plant*> master_plants;
@@ -64,8 +68,8 @@ class World {
 
     std::vector<Player*> players;
 
-    CL_GraphicContext default_gc;
-    CL_Font default_font_;
+	clan::Canvas default_gc;
+	clan::Font default_font_;
 
     int time_elapsed_ms_;
     float fps_;
@@ -75,14 +79,14 @@ class World {
     void Update();
     int CalcTimeElapsed();
 
-    void onKeyDown(const CL_InputEvent &key, const CL_InputState &state);
-    void onKeyUp(const CL_InputEvent &key, const CL_InputState &state);
+	void onKeyDown(const clan::InputEvent &key, const clan::InputState &state);
+	void onKeyUp(const clan::InputEvent &key, const clan::InputState &state);
     void on_window_close();
 
-    CL_DisplayWindow* window_;
+	clan::DisplayWindow* window_;
 
-    CL_FrameBuffer* framebuffer_;
-    CL_Texture* texture_;
+	clan::FrameBuffer* framebuffer_;
+	clan::Texture* texture_;
 };
 
 #endif  // SRC_WORLD_H_

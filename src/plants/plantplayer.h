@@ -12,7 +12,7 @@
 class Flower;
 class Tower;
 class Leaf;
-class CL_SoundBuffer;
+class clan::SoundBuffer;
 class Plant;
 
 enum State {
@@ -27,7 +27,7 @@ enum State {
 class PlantPlayer : public Player {
   public:
     // Constructor
-    PlantPlayer(CL_GraphicContext* gc, World *world, int width, int height);
+    PlantPlayer(clan::Canvas* canvas, World *world, int width, int height);
     ~PlantPlayer();
 
     void MovingLeftButtonPressed();
@@ -65,15 +65,15 @@ class PlantPlayer : public Player {
     // Attributes
     std::list<Plant*> plants_;
     State state;
-    CL_Sprite select_sprite_;
+    clan::Sprite select_sprite_;
     Plant *selected_plant_;
 
     std::vector<Plant*> plant_menu_;
     int menu_item_;
     //Leaf *tmp_leaf_;
 
-    CL_SoundBuffer sound_plantgrowing_;
-    CL_SoundBuffer sound_leafgrowing_;
+    clan::SoundBuffer sound_plantgrowing_;
+    clan::SoundBuffer sound_leafgrowing_;
 };
 
 #endif  // SRC_PLANTS_PLANTPLAYER_H_

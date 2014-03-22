@@ -11,21 +11,21 @@ class PlantPlayer;
 class Plant : public GameObject {
   public:
     // Construction
-    Plant(World *world, CL_GraphicContext *gc,
-          CL_Vec2f position, CL_StringRef name, PlantPlayer* player);
+    Plant(World *world, clan::Canvas *canvas,
+          clan::Vec2f position, std::string name, PlantPlayer* player);
 
     virtual inline int sugar_cost() = 0;
 
-    virtual Plant *GetNewPlant(CL_Vec2f position, CL_GraphicContext *gc) = 0;
+    virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas *canvas) = 0;
 
     // Operations
     virtual bool has_children() { return false; }
-    virtual void DrawTmp(CL_GraphicContext *gc);
-    virtual void DrawTmpChild(CL_GraphicContext *gc) {};
-    virtual void Draw(CL_GraphicContext *gc, CL_Vec2f position);
+    virtual void DrawTmp(clan::Canvas *canvas);
+    virtual void DrawTmpChild(clan::Canvas *canvas) {};
+    virtual void Draw(clan::Canvas *canvas, clan::Vec2f position);
 
     // Queries
-    virtual inline bool CanBuild(CL_Vec2f position) {
+    virtual inline bool CanBuild(clan::Vec2f position) {
       return world_->CanBuild(position);
     }
 
