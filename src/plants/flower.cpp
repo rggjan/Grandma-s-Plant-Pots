@@ -45,7 +45,7 @@ void Flower::AddLeaf(Leaf* leaf) {
 
 bool Flower::Update(int time_ms) {
   // Update leaves
-  remove_if(leaves.begin(), leaves.end(), [time_ms](Leaf * leaf) {
+  std::remove_if(leaves.begin(), leaves.end(), [time_ms](Leaf * leaf) {
     return !leaf->Update(time_ms);
   });
 
