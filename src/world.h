@@ -81,8 +81,8 @@ class World {
     void Update();
     int CalcTimeElapsed();
 
-	void onKeyDown(const clan::InputEvent &key, const clan::InputState &state);
-	void onKeyUp(const clan::InputEvent &key, const clan::InputState &state);
+	void onKeyDown(const clan::InputEvent &key);
+	void onKeyUp(const clan::InputEvent &key);
     void on_window_close();
 
 	clan::DisplayWindow* window_;

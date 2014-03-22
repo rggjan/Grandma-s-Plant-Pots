@@ -57,10 +57,10 @@ World::World(clan::DisplayWindow *window)
 
   slotQuit[0] = window->sig_window_close()
                 .connect(this, &World::on_window_close);
-  /*slotKeyDown[0] = window->get_ic().get_keyboard().
+  slotKeyDown[0] = window->get_ic().get_keyboard().
                    sig_key_down().connect(this, &World::onKeyDown);
   slotKeyUp[0] = window->get_ic().get_keyboard().
-                 sig_key_up().connect(this, &World::onKeyUp);*/
+                 sig_key_up().connect(this, &World::onKeyUp);
 
 
   clan::FontDescription desc;
@@ -162,7 +162,7 @@ Plant* World::NearestMasterPlant(clan::Vec2f position) {
   return nearest_plant;
 }
 
-void World::onKeyDown(const clan::InputEvent &key, const clan::InputState &state) {
+void World::onKeyDown(const clan::InputEvent &key) {
   if (key.id == clan::keycode_escape)
     quit = true;
 
@@ -339,7 +339,7 @@ void World::onKeyDown(const clan::InputEvent &key, const clan::InputState &state
     }
   }
 }
-void World::onKeyUp(const clan::InputEvent &key, const clan::InputState &state) {
+void World::onKeyUp(const clan::InputEvent &key) {
   // key Player 0 onKeyUp
   if (num_players > 0) {
     if (key.id == clan::keycode_down) {
