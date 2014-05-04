@@ -306,7 +306,24 @@ void PlantPlayer::DrawTop() {
     Player::DrawTop();
     break;
     case BuildMenu:
-      //canvas_.draw_box(0, 0, 100, 100, clan::Colorf::silver);
+      canvas_.fill_rect(0,0, window_size_.width, window_size_.height-30, clan::Colorf::silver);
+
+//      void World::Draw() {
+//          for (int i = 0; i < num_players; i++) {
+//              clan::Point playerPosition((i%2)*player_width_, (i/2)*player_height_);
+
+//              canvas_.set_cliprect(clan::Rect(playerPosition, clan::Size(player_width_, player_height_)));
+//              canvas_.push_translate(playerPosition);
+
+//              players[i]->DrawFloor();
+
+//              // Draw all gameobjects
+//              // Plants
+//              std::list<Plant*>::iterator plant;
+//              for (plant = master_plants.begin(); plant != master_plants.end(); ++plant) {
+//                  (*plant)->Draw(players[i]->canvas_, players[i]->map_position());
+//              }
+
     case Building:
       plant_menu_[menu_item_]->DrawTmp(canvas_);
       // Player::draw_cross(); TODO(rggjan): better with this?
