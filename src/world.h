@@ -77,7 +77,7 @@ class World {
   // Operations
   void Draw();
   void Update();
-  int CalcTimeElapsed();
+  clan::ubyte64 CalcTimeElapsed();
 
   void onKeyDown(const clan::InputEvent &key);
   void onKeyUp(const clan::InputEvent &key);

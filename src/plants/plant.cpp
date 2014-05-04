@@ -20,7 +20,7 @@ void Plant::DrawTmp(clan::Canvas *canvas) {
   else
     sprite_.set_color(clan::Color::red);
 
-  sprite_.set_alpha(0.8);
+  sprite_.set_alpha(0.8f);
   sprite_.set_frame(sprite_.get_frame_count() - 1);
   sprite_.draw(*canvas, player_->cross_position().x, player_->cross_position().y);
 }
@@ -48,16 +48,16 @@ void Plant::Draw(clan::Canvas *canvas, clan::Vec2f position) {
 
   // Draw energy
   if (energy_ > 20) {
-    canvas->draw_line(pos.x - energy_ / 3., pos.y - 20,
-                  pos.x + energy_ / 3., pos.y - 20, clan::Colorf::green);
-    canvas->draw_line(pos.x - energy_ / 3., pos.y - 19,
-                  pos.x + energy_ / 3., pos.y - 19, clan::Colorf::darkgreen);
+    canvas->draw_line(pos.x - energy_ / 3.f, pos.y - 20,
+                  pos.x + energy_ / 3.f, pos.y - 20, clan::Colorf::green);
+    canvas->draw_line(pos.x - energy_ / 3.f, pos.y - 19,
+                  pos.x + energy_ / 3.f, pos.y - 19, clan::Colorf::darkgreen);
   } else {
-    canvas->draw_line(pos.x - energy_ / 3., pos.y - 20,
-                  pos.x + energy_ / 3., pos.y - 20, clan::Colorf::red);
-    canvas->draw_line(pos.x - energy_ / 3., pos.y - 19,
-                  pos.x + energy_ / 3., pos.y - 19, clan::Colorf::darkred);
+    canvas->draw_line(pos.x - energy_ / 3.f, pos.y - 20,
+                  pos.x + energy_ / 3.f, pos.y - 20, clan::Colorf::red);
+    canvas->draw_line(pos.x - energy_ / 3.f, pos.y - 19,
+                  pos.x + energy_ / 3.f, pos.y - 19, clan::Colorf::darkred);
   }
-  canvas->draw_line(pos.x - energy_ / 3. + 1, pos.y - 18,
-                pos.x + energy_ / 3. + 1, pos.y - 18, clan::Colorf::black);
+  canvas->draw_line(pos.x - energy_ / 3.f + 1, pos.y - 18,
+                pos.x + energy_ / 3.f + 1, pos.y - 18, clan::Colorf::black);
 }

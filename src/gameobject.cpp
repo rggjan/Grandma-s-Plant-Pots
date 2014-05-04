@@ -8,7 +8,7 @@ void GameObject::Draw(clan::Canvas *canvas, clan::Vec2f target) {
   clan::Vec2f pos = position_ - target;
 
   if (!is_alive())
-    sprite_.set_alpha(1 - dead_time_ / (ZOMBIE_SECONDS * 1000.));
+    sprite_.set_alpha(1 - dead_time_ / (ZOMBIE_SECONDS * 1000.0f));
 
   sprite_.draw(*canvas, pos.x, pos.y);
 }
@@ -28,7 +28,7 @@ bool GameObject::Update(int time_ms) {
   return true;
 }
 
-double GameObject::DecreaseEnergy(double amount) {
+double GameObject::DecreaseEnergy(float amount) {
   if (amount > energy_)
     amount = energy_;
 

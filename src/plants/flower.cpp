@@ -66,7 +66,7 @@ bool Flower::Update(int time_ms) {
 
 Leaf* Flower::NearestLeaf(clan::Vec2f position) {
   // TODO(rggjan): infinity
-  int best_dist = -1;
+  float best_dist = -1;
   Leaf *nearest_leaf = NULL;
 
   // Get nearest flower
