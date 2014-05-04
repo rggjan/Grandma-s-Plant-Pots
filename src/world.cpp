@@ -19,9 +19,9 @@
 using std::list;
 using std::sort;
 
-World::World(clan::DisplayWindow *window)
+World::World(clan::DisplayWindow window)
   : quit(false),
-    canvas_(*window),
+    canvas_(window),
     time_elapsed_ms_(1),
     fps_(0),
     window_(window) {
@@ -49,11 +49,11 @@ World::World(clan::DisplayWindow *window)
     players.push_back(player);
   }
 
-  slotQuit[0] = window->sig_window_close()
+  slotQuit[0] = window.sig_window_close()
                 .connect(this, &World::on_window_close);
-  slotKeyDown[0] = window->get_ic().get_keyboard().
+  slotKeyDown[0] = window.get_ic().get_keyboard().
                    sig_key_down().connect(this, &World::onKeyDown);
-  slotKeyUp[0] = window->get_ic().get_keyboard().
+  slotKeyUp[0] = window.get_ic().get_keyboard().
                  sig_key_up().connect(this, &World::onKeyUp);
 
   clan::FontDescription desc;
@@ -372,7 +372,7 @@ void World::Run() {
         Update();
         Draw();
 
-        window_->flip(0);
+        window_.flip(0);
 
         clan::KeepAlive::process();
     }

@@ -28,7 +28,7 @@ int Application::main(const std::vector<std::string> &args) {
 
   try {
     // Create world
-    World world(&window);
+    World world(window);
 
     // Run the main loop
     world.Run();

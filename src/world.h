@@ -24,7 +24,7 @@ namespace clan {
 class World {
  public:
   // Construction
-  explicit World(clan::DisplayWindow* window);
+  explicit World(clan::DisplayWindow window);
   ~World();
 
   // Attributes
@@ -83,10 +83,9 @@ class World {
   void onKeyUp(const clan::InputEvent &key);
   void on_window_close();
 
-  clan::DisplayWindow* window_;
+  clan::DisplayWindow window_;
 
-  clan::FrameBuffer* framebuffer_;
-  clan::Texture* texture_;
+  //clan::Texture* texture_;
 };
 
 #endif  // SRC_WORLD_H_
