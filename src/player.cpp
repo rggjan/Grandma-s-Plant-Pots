@@ -10,13 +10,13 @@
 Player::Player(clan::Canvas* canvas, World* world, clan::Sprite map, clan::Size window_size)
   : gc_(canvas),
     map_position_(300, 300),
-    window_size_(window_size),
-    cross_position_(window_size_.width / 2, window_size.height / 2),
+    cross_position_(window_size.width / 2, window_size.height / 2),
     moving_down_(false),
     moving_up_(false),
     moving_left_(false),
     moving_right_(false),
     world_(world),
+    window_size_(window_size),
     map_(map),
     cross_(clan::Sprite::resource(*canvas, "Cross", world->resources)) {
   clan::FontDescription desc;
