@@ -4,13 +4,13 @@
 
 #include "./world.h"
 
-#define CROSS_SPEED 0.6
+#define CROSS_SPEED 0.6f
 #define MIN_BORDER 100
 
 Player::Player(clan::Canvas* canvas, World* world, clan::Sprite map, clan::Size window_size)
   : gc_(canvas),
     map_position_(300, 300),
-    cross_position_(window_size.width / 2, window_size.height / 2),
+    cross_position_(window_size.width / 2.f, window_size.height / 2.f),
     moving_down_(false),
     moving_up_(false),
     moving_left_(false),
@@ -40,16 +40,16 @@ bool Player::Visible(clan::Vec2f position) {
 }
 
 void Player::Update(int timeElapsed_ms) {
-  const int min_x = MIN_BORDER;
-  const int min_y = MIN_BORDER;
-  const int max_x = window_size_.width - MIN_BORDER - 1;
-  const int max_y = window_size_.height - MIN_BORDER - 1;
+  const float min_x = MIN_BORDER;
+  const float min_y = MIN_BORDER;
+  const float max_x = window_size_.width - MIN_BORDER - 1.f;
+  const float max_y = window_size_.height - MIN_BORDER - 1.f;
 
-  const int max_map_x = map_.get_width() - window_size_.width - 1;
-  const int max_map_y = map_.get_height() - window_size_.height - 1;
+  const float max_map_x = map_.get_width() - window_size_.width - 1.f;
+  const float max_map_y = map_.get_height() - window_size_.height - 1.f;
 
-  int move_x = 0;
-  int move_y = 0;
+  float move_x = 0;
+  float move_y = 0;
 
   // Move camera
   if (moving_down_)

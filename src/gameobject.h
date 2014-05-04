@@ -36,7 +36,7 @@ class GameObject {
     // Operations
     virtual void Draw(clan::Canvas *canvas, clan::Vec2f target);
     virtual bool Update(int time_ms);
-    virtual double DecreaseEnergy(double amount);
+    virtual double DecreaseEnergy(float amount);
 
   protected:
     // Functions
@@ -45,8 +45,8 @@ class GameObject {
     // Variables
     World *world_;
 
-    double energy_;
-    double dead_time_;
+    float energy_;
+    float dead_time_;
     clan::Vec2f position_;
 
     clan::Sprite sprite_;

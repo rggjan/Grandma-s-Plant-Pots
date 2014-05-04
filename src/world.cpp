@@ -79,7 +79,7 @@ void World::PlayBeep() {
 }
 
 bool World::CanBuild(clan::Vec2f position) {
-    clan::Vec2f diff = clan::Vec2f(width / 2, height / 2) - position;
+    clan::Vec2f diff = clan::Vec2f(width / 2.0f, height / 2.0f) - position;
     return diff.length() < (height / 2 - BACKGROUND_BORDER);
 }
 
@@ -135,7 +135,7 @@ list<Bug*>* World::NearestBugs(clan::Vec2f position) {
 
 Plant* World::NearestMasterPlant(clan::Vec2f position) {
     // TODO(rggjan): infinity
-    int best_dist = -1;
+    float best_dist = -1;
     Plant *nearest_plant = NULL;
 
     // Get nearest flower
@@ -388,14 +388,14 @@ void World::Update() {
 }
 
 // Calculate amount of time since last frame
-int World::CalcTimeElapsed() {
-    static unsigned int lastTime = 0;
+clan::ubyte64 World::CalcTimeElapsed() {
+    static clan::ubyte64 lastTime = 0;
 
-    unsigned int newTime = clan::System::get_time();
+    clan::ubyte64 newTime = clan::System::get_time();
     if (lastTime == 0)
         lastTime = newTime;
 
-    int deltaTime = (newTime - lastTime);
+    clan::ubyte64 deltaTime = (newTime - lastTime);
     lastTime = newTime;
 
     return deltaTime;
@@ -435,7 +435,7 @@ void World::Draw() {
                             clan::Colorf::white);
 
     // Draw borders
-    const int border_width = 6;
+    const float border_width = 6;
     canvas_.fill_rect(clan::Rectf(clan::Pointf(player_width_ - border_width/2, 0), clan::Sizef(border_width, canvas_.get_height())), clan::Colorf::silver);
     canvas_.fill_rect(clan::Rectf(clan::Pointf(0, player_height_ - border_width/2), clan::Sizef(canvas_.get_width(), border_width)), clan::Colorf::silver);
 
