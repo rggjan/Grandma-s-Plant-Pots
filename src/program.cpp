@@ -5,24 +5,9 @@
 #include <ClanLib/display.h>
 #include <ClanLib/sound.h>
 #include <ClanLib/application.h>
-//#include <ClanLib/vorbis.h>
-
-// Choose the target renderer
-#define USE_OPENGL_2
-// #define USE_OPENGL_1
-// #define USE_SOFTWARE_RENDERER
-
-#ifdef USE_SOFTWARE_RENDERER
-#include <ClanLib/swrender.h>
-#endif
-
-#ifdef USE_OPENGL_1
-#include <ClanLib/gl1.h>
-#endif
-
-#ifdef USE_OPENGL_2
+#include <ClanLib/d3d.h>
 #include <ClanLib/gl.h>
-#endif
+#include <ClanLib/swrender.h>
 
 #include <vector>
 
@@ -38,20 +23,11 @@ int Program::main(const std::vector<std::string> &args) {
     // Initialize the ClanLib display component
     clan::SetupDisplay setup_display;
 
-#ifdef USE_SOFTWARE_RENDERER
-    clan::SetupSWRender setup_swrender;
-#endif
-
-#ifdef USE_OPENGL_1
-    clan::SetupGL1 setup_gl1;
-#endif
-
-#ifdef USE_OPENGL_2
+    clan::SetupD3D setup_d3d;
     clan::SetupGL setup_gl;
-#endif
+    clan::SetupSWRender setup_swrender;
 
     clan::SetupSound setup_sound;
-    //clan::SetupVorbis setup_vorbis;
 
     // Start the Application
     Application app;

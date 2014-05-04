@@ -58,6 +58,7 @@ World::World(clan::DisplayWindow *window)
 
   clan::FontDescription desc;
   desc.set_height(20);
+  desc.set_typeface_name("Tahoma");
   default_font_ = clan::Font(canvas_, desc);
 
   // Setup sounds

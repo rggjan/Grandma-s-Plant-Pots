@@ -13,7 +13,7 @@ set(ClanLib_MAJOR_VERSION 3)
 set(ClanLib_MINOR_VERSION 0)
 
 # Add clanlib dependency
-find_package(ClanLib COMPONENTS App Display GL SWRender Sound REQUIRED)
+find_package(ClanLib COMPONENTS App Display GL SWRender Sound D3D REQUIRED)
 
 # Include clanlib
 include_directories(${ClanLib_INCLUDE_DIRS} /usr/local/include/ClanLib-2.3)
