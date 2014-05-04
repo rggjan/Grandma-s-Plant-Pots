@@ -14,11 +14,16 @@ Plant::Plant(World *world, clan::Canvas canvas,
   dead_color_ = clan::Color::brown;
 }
 
-void Plant::DrawTmp(clan::Canvas canvas, float x, float y, float alpha, clan::Color color) {
+void Plant::DrawTmp(clan::Canvas canvas, float x, float y, float alpha, float size, clan::Color color) {
   sprite_.set_color(color);
-  sprite_.set_alpha(0.8f);
+  sprite_.set_alpha(alpha);
   sprite_.set_frame(sprite_.get_frame_count() - 1);
+  float scale;
+  sprite_.get_scale(scale, scale);
+  sprite_.set_scale(size*scale, size*scale);
   sprite_.draw(canvas, x, y);
+  sprite_.set_scale(scale, scale);
+
 }
 
 bool Plant::Update(int time_ms) {
