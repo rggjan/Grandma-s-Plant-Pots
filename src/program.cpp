@@ -11,7 +11,9 @@
 
 #include <vector>
 
+#ifdef WIN32
 #pragma comment(linker, "/SUBSYSTEM:WINDOWS")
+#endif
 
 #include "./app.h"
 
