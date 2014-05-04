@@ -403,9 +403,12 @@ int World::CalcTimeElapsed() {
 
 void World::Draw() {
     for (int i = 0; i < num_players; i++) {
-        canvas_.set_cliprect(clan::Rect(clan::Point((i%2)*player_width_, (i/2)*player_height_), clan::Size(player_width_, player_height_)));
+        clan::Point playerPosition((i%2)*player_width_, (i/2)*player_height_);
 
-    players[i]->DrawFloor();
+        canvas_.set_cliprect(clan::Rect(playerPosition, clan::Size(player_width_, player_height_)));
+        canvas_.push_translate(playerPosition);
+
+        players[i]->DrawFloor();
 
         // Draw all gameobjects
         // Plants
@@ -421,6 +424,8 @@ void World::Draw() {
         }
 
         players[i]->DrawTop();
+
+        canvas_.pop_modelview();
     }
 
     canvas_.reset_cliprect();
