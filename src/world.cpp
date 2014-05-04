@@ -42,9 +42,9 @@ World::World(clan::DisplayWindow *window)
     Player *player;
 
     if (i % 2 == 0) {
-      player = new BugPlayer(&canvas_, this, background, clan::Size(player_width_, player_height_));
+      player = new BugPlayer(canvas_, this, background, clan::Size(player_width_, player_height_));
     } else {
-      player = new PlantPlayer(&canvas_, this, background, clan::Size(player_width_, player_height_));
+      player = new PlantPlayer(canvas_, this, background, clan::Size(player_width_, player_height_));
     }
     players.push_back(player);
   }
@@ -415,13 +415,13 @@ void World::Draw() {
         // Plants
         std::list<Plant*>::iterator plant;
         for (plant = master_plants.begin(); plant != master_plants.end(); ++plant) {
-            (*plant)->Draw(players[i]->gc_, players[i]->map_position());
+            (*plant)->Draw(players[i]->canvas_, players[i]->map_position());
         }
 
         // Bugs
         std::list<Bug*>::iterator bug;
         for (bug = bugs.begin(); bug != bugs.end(); ++bug) {
-            (*bug)->Draw(players[i]->gc_, players[i]->map_position());
+            (*bug)->Draw(players[i]->canvas_, players[i]->map_position());
         }
 
         players[i]->DrawTop();

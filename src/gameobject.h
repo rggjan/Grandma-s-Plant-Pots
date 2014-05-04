@@ -15,7 +15,7 @@ class StringRef;
 class GameObject {
   public:
     // Construction
-	GameObject(World* world, clan::Canvas *canvas,
+	GameObject(World* world, clan::Canvas canvas,
 			   clan::Vec2f position, std::string name);
     virtual ~GameObject() {}
 
@@ -34,7 +34,7 @@ class GameObject {
     }
 
     // Operations
-    virtual void Draw(clan::Canvas *canvas, clan::Vec2f target);
+    virtual void Draw(clan::Canvas canvas, clan::Vec2f target);
     virtual bool Update(int time_ms);
     virtual double DecreaseEnergy(float amount);
 

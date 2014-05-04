@@ -19,20 +19,20 @@ using std::vector;
 #define START_SUGAR 100
 #define START_SUN 0
 
-PlantPlayer::PlantPlayer(clan::Canvas* canvas, World* world,
+PlantPlayer::PlantPlayer(clan::Canvas canvas, World* world,
                          clan::Sprite map, clan::Size window_size)
   : Player(canvas, world, map, window_size),
     co2_(START_CO2),
     sugar_(START_SUGAR),
     sun_(START_SUN),
     state(Idle),
-    select_sprite_(clan::Sprite::resource(*gc_, "Cross2", world_->resources)),
+    select_sprite_(clan::Sprite::resource(canvas_, "Cross2", world_->resources)),
     menu_item_(0),    
     sound_plantgrowing_(clan::SoundBuffer::resource("PlantgrowingMusic", world_->resources)),
     sound_leafgrowing_(clan::SoundBuffer::resource("LeafgrowingMusic", world_->resources)) {
   //tmp_plant_ = new Tower(world_, gc_, clan::Vec2f(0, 0), this);
-  plant_menu_.push_back(new Tower(world_, gc_, clan::Vec2f(0, 0), this, true));
-  plant_menu_.push_back(new Flower(world_, gc_, clan::Vec2f(0, 0), this, true));
+  plant_menu_.push_back(new Tower(world_, canvas_, clan::Vec2f(0, 0), this, true));
+  plant_menu_.push_back(new Flower(world_, canvas_, clan::Vec2f(0, 0), this, true));
 
   //tmp_leaf_ = new Leaf(world_, gc_, clan::Vec2f(0, 0), "Leaf2", tmp_flower_);
   //world->RemovePlant(tmp_leaf_);
@@ -69,7 +69,7 @@ bool PlantPlayer::BuildLeaf() {
 bool PlantPlayer::BuildPlant(Plant *plant) {
   if (plant->CanBuild(position())) {
     //plants_.push_back()
-    plants_.push_back(plant->GetNewPlant(position(), gc_));
+    plants_.push_back(plant->GetNewPlant(position(), canvas_));
 
     sugar_ -= plant->sugar_cost();
     sound_plantgrowing_.play();
@@ -186,13 +186,13 @@ void PlantPlayer::DrawFloor() {
     select_sprite_.set_alpha(0.3);
     if (nearest_plant != NULL) {
       clan::Vec2f pos = nearest_plant->position() - map_position();
-      select_sprite_.draw(*gc_, pos.x, pos.y);
+      select_sprite_.draw(canvas_, pos.x, pos.y);
     }
   } else if (state == Selected /*|| state == SelectedBuilding*/) {
     select_sprite_.set_alpha(0.8);
 
     clan::Vec2f pos = selected_plant_->position() - map_position();
-    select_sprite_.draw(*gc_, pos.x, pos.y);
+    select_sprite_.draw(canvas_, pos.x, pos.y);
   }
 }
 
@@ -241,13 +241,13 @@ void PlantPlayer::MovingRightButtonPressed() {
 }
 
 void PlantPlayer::DrawCO2() {
-  default_font_.draw_text(*gc_, clan::Pointf(10, 50),
+  default_font_.draw_text(canvas_, clan::Pointf(10, 50),
                           clan::string_format("CO2: %1",  static_cast<int>(co2_)),
                           clan::Colorf::white);
 }
 
 void PlantPlayer::DrawSun() {
-  default_font_.draw_text(*gc_, clan::Pointf(10, 70),
+  default_font_.draw_text(canvas_, clan::Pointf(10, 70),
                           clan::string_format("Sun: %1",  static_cast<int>(sun_ * 60)),
                           clan::Colorf::white);
 }
@@ -283,11 +283,11 @@ void PlantPlayer::DrawTop() {
     break;
     case BuildMenu:
     case Building:
-      plant_menu_[menu_item_]->DrawTmp(gc_);
+      plant_menu_[menu_item_]->DrawTmp(canvas_);
       // Player::draw_cross(); TODO(rggjan): better with this?
       break;
     case SelectedBuilding:
-      selected_plant_->DrawTmpChild(gc_);
+      selected_plant_->DrawTmpChild(canvas_);
 
 /* {
       clan::Vec2f diff = cross_position() -

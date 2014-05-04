@@ -25,7 +25,7 @@
 #define START_SIZE 0.2
 #define END_SIZE 0.1
 
-Bug::Bug(World *world, clan::Canvas *canvas, clan::Vec2f position,
+Bug::Bug(World *world, clan::Canvas canvas, clan::Vec2f position,
          const std::string name, BugPlayer* player)
 // TODO(rggjan): Real position
   : GameObject(world, canvas, position, name),

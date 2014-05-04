@@ -9,7 +9,7 @@
 #define SUN_COLLECTED_PER_SECOND 0.02
 #define START_ENERGY 30
 
-Leaf::Leaf(World *world, clan::Canvas *canvas,
+Leaf::Leaf(World *world, clan::Canvas canvas,
            clan::Vec2f position, const std::string &name, Flower* flower)
   : Plant(world, canvas, position, name, flower->player()),
     flower_(flower) {

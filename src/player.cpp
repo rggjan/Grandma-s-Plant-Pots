@@ -7,8 +7,8 @@
 #define CROSS_SPEED 0.6f
 #define MIN_BORDER 100
 
-Player::Player(clan::Canvas* canvas, World* world, clan::Sprite map, clan::Size window_size)
-  : gc_(canvas),
+Player::Player(clan::Canvas canvas, World* world, clan::Sprite map, clan::Size window_size)
+  : canvas_(canvas),
     map_position_(300, 300),
     cross_position_(window_size.width / 2.f, window_size.height / 2.f),
     moving_down_(false),
@@ -18,11 +18,11 @@ Player::Player(clan::Canvas* canvas, World* world, clan::Sprite map, clan::Size 
     world_(world),
     window_size_(window_size),
     map_(map),
-    cross_(clan::Sprite::resource(*canvas, "Cross", world->resources)) {
+    cross_(clan::Sprite::resource(canvas, "Cross", world->resources)) {
   clan::FontDescription desc;
   desc.set_height(20);
   desc.set_typeface_name("Tahoma");
-  default_font_ = clan::Font(*gc_, desc);
+  default_font_ = clan::Font(canvas_, desc);
 }
 
 bool Player::Visible(clan::Vec2f position) {
@@ -163,13 +163,13 @@ void Player::Update(int timeElapsed_ms) {
 }
 
 void Player::DrawFloor() {
-  map_.draw(*gc_, -map_position_.x, -map_position_.y);
+  map_.draw(canvas_, -map_position_.x, -map_position_.y);
 }
 
 void Player::DrawTop() {
   // Draw cross
   cross_.set_scale(0.5, 0.5);
-  cross_.draw(*gc_, cross_position_.x, cross_position_.y);
+  cross_.draw(canvas_, cross_position_.x, cross_position_.y);
   cross_.set_scale(0.25, 0.25);
-  cross_.draw(*gc_, cross_position_.x, cross_position_.y);
+  cross_.draw(canvas_, cross_position_.x, cross_position_.y);
 }
