@@ -10,7 +10,8 @@
 using std::vector;
 
 int Application::main(const std::vector<std::string> &args) {
-  // Create window
+ clan::ConsoleWindow consoleWindows("Whats up");
+ // Create window
   clan::DisplayWindowDescription desc;
   desc.set_title("Grandma's Plant Pots");
   //desc.set_allow_resize(true);
