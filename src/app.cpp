@@ -19,7 +19,7 @@ int Application::main(const std::vector<std::string> &args) {
   desc.set_title("Grandma's Plant Pots");
   // desc.set_allow_resize(true);
   // desc.set_size(clan::Size(640, 480), true);
-  desc.set_fullscreen(true);
+  //desc.set_fullscreen(true);
   clan::DisplayWindow window(desc);
 
   clan::KeepAlive::process();
