@@ -18,6 +18,7 @@ using std::vector;
 #define START_CO2 10
 #define START_SUGAR 100
 #define START_SUN 0
+#define START_IRON 1000
 
 PlantPlayer::PlantPlayer(clan::Canvas canvas, World* world,
                          clan::Sprite map, clan::Size window_size)
@@ -25,6 +26,7 @@ PlantPlayer::PlantPlayer(clan::Canvas canvas, World* world,
     co2_(START_CO2),
     sugar_(START_SUGAR),
     sun_(START_SUN),
+    iron_(START_IRON),
     state(Idle),
     select_sprite_(clan::Sprite::resource(canvas_, "Cross2", world_->resources)),
     co2_sprite_(clan::Sprite::resource(canvas_, "Co2", world_->resources)),
