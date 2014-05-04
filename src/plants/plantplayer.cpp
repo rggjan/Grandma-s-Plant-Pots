@@ -27,12 +27,12 @@ PlantPlayer::PlantPlayer(clan::Canvas canvas, World* world,
     sugar_(START_SUGAR),
     sun_(START_SUN),
     iron_(START_IRON),
-    state(Idle),
+    state_(Idle),
     select_sprite_(clan::Sprite::resource(canvas_, "Cross2", world_->resources)),
     co2_sprite_(clan::Sprite::resource(canvas_, "Co2", world_->resources)),
-    iron_sprite_(clan::Sprite::resource(canvas_, "Iron", world_->resources)),
     sun_sprite_(clan::Sprite::resource(canvas_, "Sun", world_->resources)),
     sugar_sprite_(clan::Sprite::resource(canvas_, "Sugar", world_->resources)),
+    iron_sprite_(clan::Sprite::resource(canvas_, "Iron", world_->resources)),
     menu_item_(0),    
     sound_plantgrowing_(clan::SoundBuffer::resource("PlantgrowingMusic", world_->resources)),
     sound_leafgrowing_(clan::SoundBuffer::resource("LeafgrowingMusic", world_->resources)) {
@@ -88,20 +88,20 @@ bool PlantPlayer::BuildPlant(Plant *plant) {
 }
 
 void PlantPlayer::SelectButtonPressed() {
-  switch (state) {
+  switch (state_) {
   case BuildMenu:
   case Building:
     if (BuildPlant(plant_menu_[menu_item_]))
-      state = Idle;
+      state_ = Idle;
     break;
   case Idle:
-    state = Selecting;
+    state_ = Selecting;
     break;
   case Selecting:
     selected_plant_ = NearestPlant();
     // TODO(rggjan): cache nearestflower
     if (selected_plant_ != NULL)
-      state = Selected;
+      state_ = Selected;
     break;
   /*case Selected:
     state = Selecting;
@@ -115,17 +115,17 @@ void PlantPlayer::SelectButtonPressed() {
 }
 
 void PlantPlayer::CancelButtonPressed() {
-  switch (state) {
+  switch (state_) {
   case Idle:
     break;
   case BuildMenu:
   case Building:
   case Selecting:
   case SelectedBuilding:
-    state = Idle;
+    state_ = Idle;
     break;
   case Selected:
-    state = Selecting;
+    state_ = Selecting;
     break;
   /*case SelectedBuilding:
     state = Selecting;
@@ -136,20 +136,20 @@ void PlantPlayer::CancelButtonPressed() {
 }
 
 void PlantPlayer::BuildButtonPressed() {
-  switch (state) {
+  switch (state_) {
   case Idle:
-    state = BuildMenu;
+    state_ = BuildMenu;
     break;
   case BuildMenu:
     BuildPlant(plant_menu_[menu_item_]);
-    state = Building;
+    state_ = Building;
     break;
   case Building:
     BuildPlant(plant_menu_[menu_item_]);
     break;
   case Selected:
     if (selected_plant_->has_children())
-      state = SelectedBuilding;
+      state_ = SelectedBuilding;
     else
       world_->PlayBeep();        
     break;
@@ -186,7 +186,7 @@ Plant* PlantPlayer::NearestPlant() {
 void PlantPlayer::DrawFloor() {
   Player::DrawFloor();
 
-  if (state == Selecting) {
+  if (state_ == Selecting) {
     Plant* nearest_plant = NearestPlant();
 
     select_sprite_.set_alpha(0.3);
@@ -194,7 +194,7 @@ void PlantPlayer::DrawFloor() {
       clan::Vec2f pos = nearest_plant->position() - map_position();
       select_sprite_.draw(canvas_, pos.x, pos.y);
     }
-  } else if (state == Selected /*|| state == SelectedBuilding*/) {
+  } else if (state_ == Selected /*|| state == SelectedBuilding*/) {
     select_sprite_.set_alpha(0.8);
 
     clan::Vec2f pos = selected_plant_->position() - map_position();
@@ -242,14 +242,14 @@ void PlantPlayer::DrawEnergy() {
 }
 
 void PlantPlayer::MovingLeftButtonPressed() {
-  if (state == BuildMenu)
+  if (state_ == BuildMenu)
     menu_item_ = (menu_item_+(plant_menu_.size()-1))%plant_menu_.size();
   else
     Player::MovingLeftButtonPressed();
 }
 
 void PlantPlayer::MovingRightButtonPressed() {
-  if (state == BuildMenu)
+  if (state_ == BuildMenu)
     menu_item_ = (menu_item_+1)%plant_menu_.size();
   else
     Player::MovingRightButtonPressed();
@@ -292,7 +292,7 @@ void PlantPlayer::Update(int time_ms) {
   co2_ -= sugar_production;
   sugar_ += sugar_production;
 
-  if (state != BuildMenu)
+  if (state_ != BuildMenu)
     Player::Update(time_ms);
 }
 
@@ -301,11 +301,12 @@ bool PlantPlayer::CanBuild(Plant *plant) {
 }
 
 void PlantPlayer::DrawTop() {
-  switch (state) {
+  switch (state_) {
   case Idle:
     Player::DrawTop();
     break;
     case BuildMenu:
+      //canvas_.draw_box(0, 0, 100, 100, clan::Colorf::silver);
     case Building:
       plant_menu_[menu_item_]->DrawTmp(canvas_);
       // Player::draw_cross(); TODO(rggjan): better with this?

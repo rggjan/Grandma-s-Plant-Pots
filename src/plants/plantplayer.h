@@ -37,6 +37,7 @@ class PlantPlayer : public Player {
     void BuildButtonPressed();
     void SelectButtonPressed();
     void CancelButtonPressed();
+
     void DrawFloor();
     void DrawTop();
 
@@ -66,7 +67,7 @@ class PlantPlayer : public Player {
 
     // Attributes
     std::list<Plant*> plants_;
-    State state;
+    State state_;
     clan::Sprite select_sprite_;
     clan::Sprite co2_sprite_;
     clan::Sprite sun_sprite_;
