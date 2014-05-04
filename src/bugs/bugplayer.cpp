@@ -19,6 +19,7 @@ BugPlayer::BugPlayer(clan::Canvas canvas, World* world,
                      clan::Sprite map, clan::Size window_size)
   : Player(canvas, world, map, window_size),
     select_sprite_(clan::Sprite::resource(canvas_, "Cross2", world->resources)),
+    count_sprite_(clan::Sprite::resource(canvas_, "Count", world_->resources)),
     sound_bug_attack_(clan::SoundBuffer::resource("BugAttack", world->resources)) {
   select_sprite_.set_alpha(0.5);
 
@@ -108,7 +109,8 @@ void BugPlayer::DrawTop() {
   int size = count_if(bugs.begin(), bugs.end(), IsAlive);
 
   clan::Colorf color = clan::Colorf::white;
-  default_font_.draw_text(canvas_, clan::Pointf(10, 30),
+  count_sprite_.draw(canvas_, 10,5);
+  default_font_.draw_text(canvas_, clan::Pointf(50, 30),
                           clan::string_format("Bugs: %1", size), color);
   Player::DrawTop();
 }

@@ -45,6 +45,7 @@ class PlantPlayer : public Player {
     double co2_;
     double sugar_;
     double sun_;
+    double iron_;
 
     // Can the player build it? (Sugar etc.)
     bool CanBuild(Plant *plant);
@@ -56,6 +57,7 @@ class PlantPlayer : public Player {
     void DrawEnergy();
     void DrawCO2();
     void DrawSun();
+    void DrawIron();
 
     bool BuildPlant(Plant *plant);
 
@@ -66,6 +68,10 @@ class PlantPlayer : public Player {
     std::list<Plant*> plants_;
     State state;
     clan::Sprite select_sprite_;
+    clan::Sprite co2_sprite_;
+    clan::Sprite sun_sprite_;
+    clan::Sprite sugar_sprite_;
+    clan::Sprite iron_sprite_;
     Plant *selected_plant_;
 
     std::vector<Plant*> plant_menu_;

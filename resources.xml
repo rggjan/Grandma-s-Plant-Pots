@@ -41,7 +41,7 @@
 		<image file="Gfx/leaf2_1.png" />
 		<translation origin="center"/>
 		<rotation origin="center"/>
-                <scale x="0.2" y="0.2" />
+        <scale x="0.2" y="0.2" />
 	</sprite>
 
 	<sprite name="Bug1">
@@ -62,18 +62,27 @@
 
 	<sprite name="Count">
 		<image file="Gfx/menu_Count.png" />
+		<scale x="0.15" y="0.15" />
 	</sprite>
 	
 	<sprite name="Co2">
 		<image file="Gfx/menu_Co2.png" />
+		<scale x="0.15" y="0.15" />
 	</sprite>
 	
 	<sprite name="Sun">
 		<image file="Gfx/menu_Sun.png" />
+		<scale x="0.15" y="0.15" />
 	</sprite>
 	
 	<sprite name="Sugar">
 		<image file="Gfx/menu_Sugar.png" />
+		<scale x="0.15" y="0.15" />
+	</sprite>
+
+    <sprite name="Iron">
+		<image file="Gfx/menu_bug2.png" />
+		<scale x="0.15" y="0.15" />
 	</sprite>
 
 	<sample name="BackgroundMusic" file="Sound/Background.ogg"/>

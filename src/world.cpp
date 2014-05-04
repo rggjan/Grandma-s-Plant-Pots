@@ -157,8 +157,11 @@ Plant* World::NearestMasterPlant(clan::Vec2f position) {
 }
 
 void World::onKeyDown(const clan::InputEvent &key) {
-    if (key.id == clan::keycode_escape)
+    if (key.id == clan::keycode_escape) {
         quit = true;
+    exit(0);
+      }
+
 
     // key Player 0 onKeyDown
     if (num_players > 0) {

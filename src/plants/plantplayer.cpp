@@ -27,6 +27,10 @@ PlantPlayer::PlantPlayer(clan::Canvas canvas, World* world,
     sun_(START_SUN),
     state(Idle),
     select_sprite_(clan::Sprite::resource(canvas_, "Cross2", world_->resources)),
+    co2_sprite_(clan::Sprite::resource(canvas_, "Co2", world_->resources)),
+    iron_sprite_(clan::Sprite::resource(canvas_, "Iron", world_->resources)),
+    sun_sprite_(clan::Sprite::resource(canvas_, "Sun", world_->resources)),
+    sugar_sprite_(clan::Sprite::resource(canvas_, "Sugar", world_->resources)),
     menu_item_(0),    
     sound_plantgrowing_(clan::SoundBuffer::resource("PlantgrowingMusic", world_->resources)),
     sound_leafgrowing_(clan::SoundBuffer::resource("LeafgrowingMusic", world_->resources)) {
@@ -197,6 +201,15 @@ void PlantPlayer::DrawFloor() {
 }
 
 void PlantPlayer::DrawEnergy() {
+
+
+
+      sugar_sprite_.draw(canvas_, 310,5);
+    default_font_.draw_text(canvas_, clan::Pointf(350, 30),
+                            clan::string_format("Sugar: %1",  static_cast<int>(sugar_)),
+                            clan::Colorf::white);
+
+
   /*switch (state) {
   case Building: {
     clan::Colorf color = clan::Colorf::white;
@@ -241,14 +254,23 @@ void PlantPlayer::MovingRightButtonPressed() {
 }
 
 void PlantPlayer::DrawCO2() {
-  default_font_.draw_text(canvas_, clan::Pointf(10, 50),
+  co2_sprite_.draw(canvas_, 10,5);
+  default_font_.draw_text(canvas_, clan::Pointf(50, 30),
                           clan::string_format("CO2: %1",  static_cast<int>(co2_)),
                           clan::Colorf::white);
 }
 
 void PlantPlayer::DrawSun() {
-  default_font_.draw_text(canvas_, clan::Pointf(10, 70),
+    sun_sprite_.draw(canvas_, 160,5);
+  default_font_.draw_text(canvas_, clan::Pointf(200, 30),
                           clan::string_format("Sun: %1",  static_cast<int>(sun_ * 60)),
+                          clan::Colorf::white);
+}
+
+void PlantPlayer::DrawIron() {
+    iron_sprite_.draw(canvas_, 460,5);
+  default_font_.draw_text(canvas_, clan::Pointf(500, 30),
+                          clan::string_format("Iron: %1",  static_cast<int>(iron_)),
                           clan::Colorf::white);
 }
 
@@ -323,4 +345,5 @@ void PlantPlayer::DrawTop() {
   DrawEnergy();
   DrawCO2();
   DrawSun();
+  DrawIron();
 }

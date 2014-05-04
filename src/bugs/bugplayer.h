@@ -28,6 +28,7 @@ class BugPlayer : public Player {
     // Attributes
     std::list<Bug*> bugs;
     clan::Sprite select_sprite_;
+    clan::Sprite count_sprite_;
     Plant* nearest_free_plant_;
 
     // Queries
