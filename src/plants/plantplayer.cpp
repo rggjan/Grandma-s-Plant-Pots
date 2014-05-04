@@ -306,10 +306,12 @@ void PlantPlayer::DrawTop() {
     Player::DrawTop();
     break;
     case BuildMenu:
-      //canvas_.draw_box(0, 0, 100, 100, clan::Colorf::silver);
+      canvas_.draw_box(0, 0, 100, 100, clan::Colorf::silver);
+      for (size_t i=0; i<plant_menu_.size(); i++) {
+        plant_menu_[i]->DrawTmp(canvas_, 100*i+100, 100);
+      }
     case Building:
-      plant_menu_[menu_item_]->DrawTmp(canvas_);
-      // Player::draw_cross(); TODO(rggjan): better with this?
+      plant_menu_[menu_item_]->DrawTmp(canvas_, cross_position().x, cross_position().y, 0.8f, plant_menu_[menu_item_]->CanBuild(position()) ? clan::Color::green : clan::Color::red);
       break;
     case SelectedBuilding:
       selected_plant_->DrawTmpChild(canvas_);

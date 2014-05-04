@@ -20,7 +20,7 @@ class Plant : public GameObject {
 
     // Operations
     virtual bool has_children() { return false; }
-    virtual void DrawTmp(clan::Canvas canvas);
+    virtual void DrawTmp(clan::Canvas canvas, float x, float y, float alpha = 1.0, clan::Color color = clan::Color::white);
     virtual void DrawTmpChild(clan::Canvas canvas) {};
     virtual void Draw(clan::Canvas canvas, clan::Vec2f position);
 

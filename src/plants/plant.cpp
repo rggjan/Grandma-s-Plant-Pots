@@ -14,15 +14,11 @@ Plant::Plant(World *world, clan::Canvas canvas,
   dead_color_ = clan::Color::brown;
 }
 
-void Plant::DrawTmp(clan::Canvas canvas) {
-  if (CanBuild(player_->position()))
-    sprite_.set_color(clan::Color::green);
-  else
-    sprite_.set_color(clan::Color::red);
-
+void Plant::DrawTmp(clan::Canvas canvas, float x, float y, float alpha, clan::Color color) {
+  sprite_.set_color(color);
   sprite_.set_alpha(0.8f);
   sprite_.set_frame(sprite_.get_frame_count() - 1);
-  sprite_.draw(canvas, player_->cross_position().x, player_->cross_position().y);
+  sprite_.draw(canvas, x, y);
 }
 
 bool Plant::Update(int time_ms) {
