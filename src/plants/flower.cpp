@@ -103,7 +103,7 @@ void Flower::DrawTmpChild(clan::Canvas *canvas) {
     clan::Vec2f diff = player_->cross_position() -
                     (position() - player_->map_position());
 
-    float angle = atan2(diff.y, diff.x);
+    //float angle = atan2(diff.y, diff.x);
     //tmp_leaf_->set_angle(clan::Angle(angle, clan::radians));
 
     clan::Colorf line_color;

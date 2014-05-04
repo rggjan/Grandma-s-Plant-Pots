@@ -10,9 +10,6 @@
 #include "./player.h"
 #include "bugs/bug.h"
 
-
-class clan::SoundBuffer;
-
 class BugPlayer : public Player {
   public:
     BugPlayer(clan::Canvas* canvas, World *world, clan::Sprite map, clan::Size window_size);
