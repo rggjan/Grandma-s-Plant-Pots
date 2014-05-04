@@ -17,16 +17,16 @@ class Tower : public Plant {
     virtual inline int sugar_cost() { return ENERGY_COST; }
 
     // Construction
-    Tower(World *world, clan::Canvas *canvas,
+    Tower(World *world, clan::Canvas canvas,
            clan::Vec2f position, PlantPlayer* player, bool menu=false);
 
-    virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas *canvas);
+    virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas canvas);
            
     ~Tower();
 
     // Operations
     bool Update(int time_ms);
-    void Draw(clan::Canvas* canvas, clan::Vec2f target);
+    void Draw(clan::Canvas canvas, clan::Vec2f target);
 
     // Queries
     bool CanBuild(clan::Vec2f position);

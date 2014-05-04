@@ -11,7 +11,7 @@ class BugPlayer;
 class Bug : public GameObject {
   public:
     // Construction
-    Bug(World *world, clan::Canvas *canvas, clan::Vec2f position,
+    Bug(World *world, clan::Canvas canvas, clan::Vec2f position,
         const std::string name, BugPlayer* player);
     ~Bug();
 

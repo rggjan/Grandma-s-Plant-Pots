@@ -19,7 +19,7 @@
 
 clan::SoundBuffer_Session Tower::sound_session_shot_;
 
-Tower::Tower(World *world, clan::Canvas *canvas,
+Tower::Tower(World *world, clan::Canvas canvas,
              clan::Vec2f position, PlantPlayer* player, bool menu)
   : Plant(world, canvas, position, "Tower", player),
     open_(false),
@@ -34,7 +34,7 @@ Tower::Tower(World *world, clan::Canvas *canvas,
     world_->AddMasterPlant(this);
 }
 
-Plant* Tower::GetNewPlant(clan::Vec2f position, clan::Canvas *canvas) {
+Plant* Tower::GetNewPlant(clan::Vec2f position, clan::Canvas canvas) {
   return new Tower(world_, canvas, position, player_);
 }
 
@@ -88,7 +88,7 @@ bool Tower::CanBuild(clan::Vec2f position) {
   return world_->CanBuild(position);
 }
 
-void Tower::Draw(clan::Canvas* canvas, clan::Vec2f target) {
+void Tower::Draw(clan::Canvas canvas, clan::Vec2f target) {
   if (!is_alive()) {
     Plant::Draw(canvas, target);
     return;
@@ -96,7 +96,7 @@ void Tower::Draw(clan::Canvas* canvas, clan::Vec2f target) {
 
   // Shoot!
   if (open() && targeting_bug) {
-      canvas->draw_line(position() - target,
+      canvas.draw_line(position() - target,
                   targeting_bug->position() - target,
                   clan::Colorf::green);
     if (!sound_session_shot_.is_playing())

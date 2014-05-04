@@ -15,7 +15,7 @@
 #define SUN_COLLECTED_PER_SECOND 0.01
 #define START_ENERGY 30
 
-Flower::Flower(World *world, clan::Canvas *canvas,
+Flower::Flower(World *world, clan::Canvas canvas,
                clan::Vec2f position, PlantPlayer* player, bool menu)
   : Plant(world, canvas, position, "Flower", player),
     age_(0),
@@ -31,7 +31,7 @@ Flower::Flower(World *world, clan::Canvas *canvas,
   }
 }
 
-Plant* Flower::GetNewPlant(clan::Vec2f position, clan::Canvas *canvas) {
+Plant* Flower::GetNewPlant(clan::Vec2f position, clan::Canvas canvas) {
   return new Flower(world_, canvas, position, player_);
 }
 
@@ -124,7 +124,7 @@ void Flower::DrawTmpChild(clan::Canvas *canvas) {
     player_->cross_position().y, line_color);
 }
 
-void Flower::Draw(clan::Canvas* canvas, clan::Vec2f target) {
+void Flower::Draw(clan::Canvas canvas, clan::Vec2f target) {
   std::list<Leaf *>::iterator it;
   for (it = leaves.begin(); it != leaves.end(); ++it) {
     (*it)->Draw(canvas, target);

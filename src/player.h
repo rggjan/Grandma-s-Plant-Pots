@@ -10,7 +10,7 @@ class World;
 
 class Player {
   public:
-    Player(clan::Canvas* canvas, World* world, clan::Sprite map, clan::Size window_size);
+    Player(clan::Canvas canvas, World* world, clan::Sprite map, clan::Size window_size);
     virtual ~Player() {}
 
     virtual void BuildButtonPressed() {}
@@ -37,7 +37,7 @@ class Player {
 
     bool Visible(clan::Vec2f position);
 
-    clan::Canvas *gc_;
+    clan::Canvas canvas_;
 
     clan::Vec2f map_position_;
     clan::Vec2f cross_position_;

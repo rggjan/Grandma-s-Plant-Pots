@@ -11,18 +11,18 @@ class PlantPlayer;
 class Plant : public GameObject {
   public:
     // Construction
-    Plant(World *world, clan::Canvas *canvas,
+    Plant(World *world, clan::Canvas canvas,
           clan::Vec2f position, std::string name, PlantPlayer* player);
 
     virtual inline int sugar_cost() = 0;
 
-    virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas *canvas) = 0;
+    virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas canvas) = 0;
 
     // Operations
     virtual bool has_children() { return false; }
-    virtual void DrawTmp(clan::Canvas *canvas);
-    virtual void DrawTmpChild(clan::Canvas *canvas) {};
-    virtual void Draw(clan::Canvas *canvas, clan::Vec2f position);
+    virtual void DrawTmp(clan::Canvas canvas);
+    virtual void DrawTmpChild(clan::Canvas canvas) {};
+    virtual void Draw(clan::Canvas canvas, clan::Vec2f position);
 
     // Queries
     virtual inline bool CanBuild(clan::Vec2f position) {

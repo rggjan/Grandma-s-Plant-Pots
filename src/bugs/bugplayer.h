@@ -12,7 +12,7 @@
 
 class BugPlayer : public Player {
   public:
-    BugPlayer(clan::Canvas* canvas, World *world, clan::Sprite map, clan::Size window_size);
+    BugPlayer(clan::Canvas canvas, World *world, clan::Sprite map, clan::Size window_size);
 
     void BuildButtonPressed();
     void SelectButtonPressed();

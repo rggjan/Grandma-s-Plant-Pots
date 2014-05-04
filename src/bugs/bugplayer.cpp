@@ -15,10 +15,10 @@
 using std::list;
 using std::count_if;
 
-BugPlayer::BugPlayer(clan::Canvas* canvas, World* world,
+BugPlayer::BugPlayer(clan::Canvas canvas, World* world,
                      clan::Sprite map, clan::Size window_size)
   : Player(canvas, world, map, window_size),
-    select_sprite_(clan::Sprite::resource(*gc_, "Cross2", world->resources)),
+    select_sprite_(clan::Sprite::resource(canvas_, "Cross2", world->resources)),
     sound_bug_attack_(clan::SoundBuffer::resource("BugAttack", world->resources)) {
   select_sprite_.set_alpha(0.5);
 
@@ -38,7 +38,7 @@ BugPlayer::BugPlayer(clan::Canvas* canvas, World* world,
 }
 
 void BugPlayer::CreateBug(std::string name, clan::Vec2f position) {
-  AddBug(new Bug(world_, gc_, position, name, this));
+  AddBug(new Bug(world_, canvas_, position, name, this));
 }
 
 void BugPlayer::AddBug(Bug* bug) {
@@ -90,7 +90,7 @@ void BugPlayer::DrawFloor() {
 
   if (nearest_free_plant_ != NULL) {
     clan::Vec2f pos = nearest_free_plant_->position() - map_position();
-    select_sprite_.draw(*gc_, pos.x, pos.y);
+    select_sprite_.draw(canvas_, pos.x, pos.y);
   }
   /*  } else if (state == Selected || state == SelectedBuilding) {
       select_sprite_.set_alpha(0.8);
@@ -108,7 +108,7 @@ void BugPlayer::DrawTop() {
   int size = count_if(bugs.begin(), bugs.end(), IsAlive);
 
   clan::Colorf color = clan::Colorf::white;
-  default_font_.draw_text(*gc_, clan::Pointf(10, 30),
+  default_font_.draw_text(canvas_, clan::Pointf(10, 30),
                           clan::string_format("Bugs: %1", size), color);
   Player::DrawTop();
 }
