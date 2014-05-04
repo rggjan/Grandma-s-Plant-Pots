@@ -59,6 +59,22 @@
 		<rotation origin="center"/>
 		<animation pingpong="no" loop="false" speed="100"/>
 	</sprite>
+	
+	<sprite name="Count"
+		<image file="Gfx/menu_Count.png" />
+	</sprite>
+	
+	<sprite name="Co2"
+		<image file="Gfx/menu_Co2.png" />
+	</sprite>
+	
+	<sprite name="Sun"
+		<image file="Gfx/menu_Sun.png" />
+	</sprite>
+	
+	<sprite name="Sugar"
+		<image file="Gfx/menu_Sugar.png" />
+	</sprite>
 
 	<sample name="BackgroundMusic" file="Sound/Background.ogg"/>
 

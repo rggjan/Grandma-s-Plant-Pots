@@ -12,10 +12,8 @@ set(ClanLib_MINOR_VERSION 0)
 # Add clanlib dependency
 if(WIN32)
   set(RENDERER "D3D")
-else()
-  set(RENDERER "GL")
 endif()
-find_package(ClanLib COMPONENTS App Display ${RENDERER} SWRender Sound REQUIRED)
+find_package(ClanLib COMPONENTS App Display GL ${RENDERER} SWRender Sound REQUIRED)
 
 # Include clanlib
 include_directories(${ClanLib_INCLUDE_DIRS} /usr/local/include/ClanLib-2.3)
