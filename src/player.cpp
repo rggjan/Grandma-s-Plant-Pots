@@ -21,6 +21,7 @@ Player::Player(clan::Canvas canvas, World* world, clan::Sprite map, clan::Size w
     cross_(clan::Sprite::resource(canvas, "Cross", world->resources)) {
   clan::FontDescription desc;
   desc.set_height(20);
+  desc.set_typeface_name("Tahoma");
   default_font_ = clan::Font(canvas_, desc);
 }
 
