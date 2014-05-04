@@ -84,8 +84,6 @@ class World {
   void on_window_close();
 
   clan::DisplayWindow window_;
-
-  //clan::Texture* texture_;
 };
 
 #endif  // SRC_WORLD_H_
