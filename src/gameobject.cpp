@@ -2,6 +2,8 @@
 
 #include "./gameobject.h"
 
+#include <string>
+
 #define ZOMBIE_SECONDS 10
 
 void GameObject::Draw(clan::Canvas canvas, clan::Vec2f target) {
@@ -41,7 +43,7 @@ double GameObject::DecreaseEnergy(float amount) {
 }
 
 GameObject::GameObject(World* world, clan::Canvas canvas,
-					   clan::Vec2f position, std::string name)
+                       clan::Vec2f position, std::string name)
   : world_(world),
     energy_(1),
     dead_time_(0),
