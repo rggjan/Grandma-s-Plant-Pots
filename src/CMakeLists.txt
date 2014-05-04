@@ -1,9 +1,6 @@
 # Include the directory itself as a path to include directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
- 
-# Create a variable called helloworld_SOURCES containing all .cpp files:
-# set(GPP_SOURCES *.cpp)
- 
+
 # For a large number of source files you can create it in a simpler way
 # using file() function:
 file(GLOB GPP_SOURCES *.cpp plants/*.cpp bugs/*.cpp)
@@ -16,8 +13,8 @@ set(ClanLib_MINOR_VERSION 0)
 if(WIN32)
   set(RENDERER "D3D")
 else()
-endif()
   set(RENDERER "GL")
+endif()
 find_package(ClanLib COMPONENTS App Display ${RENDERER} SWRender Sound REQUIRED)
 
 # Include clanlib
