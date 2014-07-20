@@ -12,7 +12,7 @@ class Plant : public GameObject {
   public:
     // Construction
     Plant(World *world, clan::Canvas canvas,
-          clan::Vec2f position, std::string name, PlantPlayer* player);
+          clan::Vec2f position, std::string name, PlantPlayer* player, bool menu);
 
     virtual inline int sugar_cost() = 0;
     virtual inline int iron_cost() { return 0; }

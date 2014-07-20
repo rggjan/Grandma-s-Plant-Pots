@@ -19,19 +19,15 @@
 
 Flower::Flower(World *world, clan::Canvas canvas,
                clan::Vec2f position, PlantPlayer* player, bool menu)
-  : Plant(world, canvas, position, "Flower", player),
+  : Plant(world, canvas, position, "Flower", player, menu),
     age_(0),
     open_(false),
-    menu_leaf_(new Leaf(world, canvas, clan::Vec2f(0, 0), "Leaf2", this)) {
+    menu_leaf_(new Leaf(world, canvas, clan::Vec2f(0, 0), this, true)) {
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;
 
   // Delete leave where?
-
-  if (!menu) {
-    world_->AddMasterPlant(this);
-  }
 }
 
 Plant* Flower::GetNewPlant(clan::Vec2f position, clan::Canvas canvas) {
@@ -39,7 +35,7 @@ Plant* Flower::GetNewPlant(clan::Vec2f position, clan::Canvas canvas) {
 }
 
 Flower::~Flower() {
-  world_->RemoveMasterPlant(this);
+  world_->RemovePlant(this);
 }
 
 void Flower::AddLeaf(Leaf* leaf) {

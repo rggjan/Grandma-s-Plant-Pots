@@ -92,22 +92,18 @@ void World::RemoveBug(Bug *bug) {
     bugs.remove(bug);
 }
 
-void World::AddMasterPlant(Plant *plant) {
-    AddPlant(plant);
-    master_plants.push_back(plant);
-}
-
-void World::RemoveMasterPlant(Plant *plant) {
-    RemovePlant(plant);
-    master_plants.remove(plant);
-}
-
 void World::AddPlant(Plant *plant) {
-    plants.push_back(plant);
+  if (plant->is_master_plant())
+    master_plants.push_back(plant);
+
+  plants.push_back(plant);
 }
 
 void World::RemovePlant(Plant *plant) {
-    plants.remove(plant);
+  if (plant->is_master_plant())
+    master_plants.remove(plant);
+
+  plants.remove(plant);
 }
 
 struct sort_class {

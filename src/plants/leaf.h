@@ -14,7 +14,7 @@ class Leaf : public Plant {
   // Construction
   public:
     Leaf(World *world, clan::Canvas canvas,
-         clan::Vec2f position, const std::string &name, Flower* flower);
+         clan::Vec2f position, Flower* flower, bool menu);
     ~Leaf();
 
     virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas canvas);

@@ -10,14 +10,12 @@
 #define START_ENERGY 30
 
 Leaf::Leaf(World *world, clan::Canvas canvas,
-           clan::Vec2f position, const std::string &name, Flower* flower)
-  : Plant(world, canvas, position, name, flower->player()),
+           clan::Vec2f position, Flower* flower, bool menu)
+  : Plant(world, canvas, position, "Leaf2", flower->player(), menu),
     flower_(flower) {
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;
-
-  world_->AddPlant(this);
 }
 
 Leaf::~Leaf() {
@@ -26,7 +24,7 @@ Leaf::~Leaf() {
 
 Plant *Leaf::GetNewPlant(clan::Vec2f position, clan::Canvas canvas)
 {
-  Leaf *new_leaf = new Leaf(world_, canvas, position, "Leaf2", flower_);
+  Leaf *new_leaf = new Leaf(world_, canvas, position, flower_, false);
   new_leaf->set_angle(angle());
   flower_->AddLeaf(new_leaf);
   return new_leaf;
