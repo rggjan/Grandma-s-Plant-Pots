@@ -54,6 +54,7 @@ class Player {
 
     clan::Sprite map_;
     clan::Font default_font_;
+    clan::Font small_font_;
     clan::Sprite cross_;
 };
 

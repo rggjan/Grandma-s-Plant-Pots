@@ -15,6 +15,7 @@ class Plant : public GameObject {
           clan::Vec2f position, std::string name, PlantPlayer* player);
 
     virtual inline int sugar_cost() = 0;
+    virtual inline int iron_cost() { return 0; }
 
     virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas canvas) = 0;
 
