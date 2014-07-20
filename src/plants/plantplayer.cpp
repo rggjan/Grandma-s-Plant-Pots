@@ -58,7 +58,9 @@ PlantPlayer::~PlantPlayer() {
 bool PlantPlayer::BuildPlant(Plant *plant) {
   if (plant->CanBuild(position())) {
     //plants_.push_back()
-    plants_.push_back(plant->GetNewPlant(position(), canvas_));
+    Plant *new_plant = plant->GetNewPlant(position(), canvas_);
+    if (new_plant->is_master_plant())
+      plants_.push_back(new_plant);
 
     sugar_ -= plant->sugar_cost();
     sound_plantgrowing_.play();

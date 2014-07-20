@@ -27,6 +27,8 @@ class Plant : public GameObject {
     virtual void Draw(clan::Canvas canvas, clan::Vec2f position);
 
     // Queries
+    virtual bool is_master_plant() { return true; }
+
     virtual inline bool CanBuild(clan::Vec2f position) {
       return world_->CanBuild(position);
     }
