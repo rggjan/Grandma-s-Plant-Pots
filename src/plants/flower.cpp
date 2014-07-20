@@ -9,17 +9,14 @@
 #include "./leaf.h"
 
 #define TIME_TO_OPEN 15000
-#define MIN_MASTER_PLANT_DISTANCE 100
 
 #define CO2_COLLECTED_PER_SECOND 0.1
 #define SUN_COLLECTED_PER_SECOND 0.01
 #define START_ENERGY 30
 
-#define LEAF_MAX_DISTANCE 80
-
 Flower::Flower(World *world, clan::Canvas canvas,
                clan::Vec2f position, PlantPlayer* player, bool menu)
-  : Plant(world, canvas, position, "Flower", player, menu),
+  : MasterPlant(world, canvas, position, "Flower", player, menu),
     age_(0),
     open_(false),
     menu_leaf_(new Leaf(world, canvas, clan::Vec2f(0, 0), this, true)) {
@@ -85,19 +82,6 @@ Leaf* Flower::NearestLeaf(clan::Vec2f position) {
   return nearest_leaf;
 }
 
-bool Flower::CanBuild(clan::Vec2f position) {
-  Plant *nearest_plant = world_->NearestMasterPlant(position);
-
-  if (nearest_plant && (nearest_plant->position() - position).length()
-      < MIN_MASTER_PLANT_DISTANCE)
-    return false;
-
-  if (!player_->CanBuild(this))
-    return false;
-
-  return world_->CanBuild(position);
-}
-
 void Flower::DrawTmpChild(clan::Canvas canvas) {
     clan::Vec2f diff = player_->cross_position() -
                     (position() - player_->map_position());
@@ -105,22 +89,11 @@ void Flower::DrawTmpChild(clan::Canvas canvas) {
     float angle = atan2(diff.y, diff.x);
     menu_leaf_->set_angle(clan::Angle(angle, clan::angle_radians));
 
-    bool canBuild = diff.length() < LEAF_MAX_DISTANCE;
+    bool canBuild = menu_leaf_->CanBuild(player_->position());
 
     clan::Colorf line_color = canBuild ? clan::Colorf::green : clan::Colorf::red;
 
     menu_leaf_->DrawTmp(canvas, player_->cross_position().x, player_->cross_position().y, 1.0, 1.0, line_color);
-
-    /*if (diff.length() < LEAF_MAX_DISTANCE &&
-      menu_leaf_->CanBuild(position(), selected_flower_)) {
-      menu_leaf_->DrawGreen(gc_, cross_position());
-      line_color = clan::Colorf::green;
-      cross_green_ = true;
-    } else {
-      menu_leaf__->DrawRed(gc_, cross_position());
-      line_color = clan::Colorf::red;
-//      cross_green_ = false;
-    }*/
 
     diff = position() - player_->map_position();
 

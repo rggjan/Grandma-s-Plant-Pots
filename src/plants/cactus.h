@@ -9,13 +9,13 @@
 
 #include <list>
 
-#include "./plant.h"
+#include "./masterplant.h"
 
 #define ENERGY_COST 20
 
 class Leaf;
 
-class Cactus : public Plant {
+class Cactus : public MasterPlant {
   public:
     // Static
     virtual inline int sugar_cost() { return ENERGY_COST; }
@@ -36,7 +36,6 @@ class Cactus : public Plant {
     virtual bool has_children() { return true; }    
 
     // Queries
-    bool CanBuild(clan::Vec2f position);
     Leaf* NearestLeaf(clan::Vec2f position);
 
     bool open() { return open_; }
