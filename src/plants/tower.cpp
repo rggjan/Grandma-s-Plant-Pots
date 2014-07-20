@@ -9,8 +9,7 @@
 #include "bugs/bug.h"
 #include "plants/plantplayer.h"
 
-#define TIME_TO_OPEN 150
-#define MIN_MASTER_PLANT_DISTANCE 100
+#define TIME_TO_OPEN 10000
 
 #define START_ENERGY 30
 
