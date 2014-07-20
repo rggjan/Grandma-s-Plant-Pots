@@ -106,9 +106,12 @@ void Flower::Draw(clan::Canvas canvas, clan::Vec2f target) {
   std::list<Leaf*>::iterator it;
   for (it = leaves.begin(); it != leaves.end(); ++it) {
     (*it)->Draw(canvas, target);
-    canvas.draw_line(position() - target,
-                     (*it)->position() - target,
-                     clan::Colorf::green);
+    if ((*it)->is_alive())
+    {
+      canvas.draw_line(position() - target,
+                       (*it)->position() - target,
+                       clan::Colorf::green);
+    }
   }
 
   if (!is_alive()) {

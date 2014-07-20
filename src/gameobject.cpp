@@ -22,7 +22,7 @@ void GameObject::Draw(clan::Canvas canvas, clan::Vec2f target) {
 
   if (!is_alive())
     sprite_.set_alpha(1 - dead_time_ / (ZOMBIE_SECONDS * 1000.0f));
-  sprite_.set_color(clan::Color::white);
+
   sprite_.draw(canvas, pos.x, pos.y);
 }
 
