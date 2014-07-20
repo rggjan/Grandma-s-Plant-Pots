@@ -305,7 +305,7 @@ void PlantPlayer::Update(int time_ms) {
 }
 
 bool PlantPlayer::CanBuild(Plant *plant) {
-  return sugar_ >= plant->sugar_cost();
+  return sugar_ >= plant->sugar_cost() && iron_ >= plant->iron_cost();
 }
 
 void PlantPlayer::DrawTop() {

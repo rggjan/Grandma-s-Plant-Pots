@@ -82,6 +82,9 @@ bool Tower::CanBuild(clan::Vec2f position) {
       < MIN_MASTER_PLANT_DISTANCE)
     return false;
 
+  if (!player_->CanBuild(this))
+    return false;
+
   return world_->CanBuild(position);
 }
 
