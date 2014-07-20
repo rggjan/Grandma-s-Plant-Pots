@@ -42,18 +42,13 @@ Cactus::~Cactus() {
   world_->RemovePlant(this);
 }
 
-void Cactus::AddLeaf(Leaf* leaf) {
-  leaves.push_back(leaf);
-}
+
 
 bool Cactus::Update(int time_ms) {
-  // Update leaves
-  std::remove_if(leaves.begin(), leaves.end(), [time_ms](Leaf * leaf) {
-    return !leaf->Update(time_ms);
-  });
+
 
   if (!is_alive()) {
-    return Plant::Update(time_ms) || leaves.size() > 0;
+    return Plant::Update(time_ms);
   }
 
   // Update state
@@ -67,27 +62,6 @@ bool Cactus::Update(int time_ms) {
   return Plant::Update(time_ms);
 }
 
-Leaf* Cactus::NearestLeaf(clan::Vec2f position) {
-  // TODO(rggjan): infinity
-  float best_dist = -1;
-  Leaf *nearest_leaf = NULL;
-
-  // Get nearest Cactus
-  std::list<Leaf *>::iterator it;
-  for (it = leaves.begin(); it != leaves.end(); ++it) {
-    if (!(*it)->is_alive())
-      continue;
-
-    float distance = ((*it)->position() - position).length();
-
-    if (nearest_leaf == NULL || distance < best_dist) {
-      best_dist = distance;
-      nearest_leaf = (*it);
-    }
-  }
-
-  return nearest_leaf;
-}
 
 void Cactus::DrawTmpChild(clan::Canvas *canvas) {
     clan::Vec2f diff = player_->cross_position() -
@@ -112,21 +86,4 @@ void Cactus::DrawTmpChild(clan::Canvas *canvas) {
     diff = position() - player_->map_position();
     canvas->draw_line(diff.x, diff.y, player_->cross_position().x,
     player_->cross_position().y, line_color);
-}
-
-void Cactus::Draw(clan::Canvas canvas, clan::Vec2f target) {
-  std::list<Leaf *>::iterator it;
-  for (it = leaves.begin(); it != leaves.end(); ++it) {
-    (*it)->Draw(canvas, target);
-    /*clan::Draw::line(*canvas, position() - player_->map_position(),
-                  leaves[i]->position() - player_->map_position(),
-                  clan::Colorf::green);*/
-  }
-
-  if (!is_alive()) {
-    Plant::Draw(canvas, target);
-    return;
-  }
-
-  Plant::Draw(canvas, target);
 }
