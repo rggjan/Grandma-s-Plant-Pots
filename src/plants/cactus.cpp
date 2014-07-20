@@ -13,9 +13,9 @@
 #define TIME_TO_OPEN 15000
 #define MIN_MASTER_PLANT_DISTANCE 100
 
-#define CO2_COLLECTED_PER_SECOND 0.01
-#define SUN_COLLECTED_PER_SECOND 0.005
-#define START_ENERGY 20
+#define CO2_COLLECTED_PER_SECOND 0.02
+#define SUN_COLLECTED_PER_SECOND 0.1
+#define START_ENERGY 40
 
 clan::SoundBuffer_Session Cactus::sound_session_shot_;
 
