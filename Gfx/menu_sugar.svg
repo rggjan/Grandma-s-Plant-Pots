@@ -560,7 +560,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.9899495"
-     inkscape:cx="589.05519"
+     inkscape:cx="352.17442"
      inkscape:cy="138.33243"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -582,7 +582,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -825,37 +825,37 @@
        style="fill:none;stroke:none;display:inline;filter:url(#filter5344-4-9)"
        sodipodi:type="inkscape:box3d">
       <path
-         d="m 375.5463,283.65339 95.07061,31.71545 0,112.35387 -95.07061,-31.71546 z"
+         d="m 84.622366,248.29805 95.070614,31.71545 0,112.35387 -95.070614,-31.71545 z"
          inkscape:box3dsidetype="11"
          style="fill:#e9e9ff;fill-rule:evenodd;stroke:none"
          id="path5358-0-6"
          sodipodi:type="inkscape:box3dside" />
       <path
-         d="m 277.89449,316.22993 0,112.35386 97.65181,-32.57654 0,-112.35386 z"
+         d="m -13.029437,280.87459 0,112.35386 97.651803,-32.57653 0,-112.35387 z"
          inkscape:box3dsidetype="6"
          style="fill:#353564;fill-rule:evenodd;stroke:none"
          id="path5360-7-2"
          sodipodi:type="inkscape:box3dside" />
       <path
-         d="m 277.89449,428.58379 95.07062,31.71545 97.6518,-32.57653 -95.07061,-31.71546 z"
+         d="M -13.029437,393.22845 82.041176,424.9439 179.69298,392.36737 84.622366,360.65192 z"
          inkscape:box3dsidetype="13"
          style="fill:#afafde;fill-rule:evenodd;stroke:none"
          id="path5362-0-6"
          sodipodi:type="inkscape:box3dside" />
       <path
-         d="m 277.89449,316.22993 95.07062,31.71545 97.6518,-32.57654 -95.07061,-31.71545 z"
+         d="M -13.029437,280.87459 82.041176,312.59004 179.69298,280.0135 84.622366,248.29805 z"
          inkscape:box3dsidetype="5"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
          id="path5364-9-6"
          sodipodi:type="inkscape:box3dside" />
       <path
-         d="m 372.96511,347.94538 0,112.35386 97.6518,-32.57653 0,-112.35387 z"
+         d="m 82.041176,312.59004 0,112.35386 97.651804,-32.57653 0,-112.35387 z"
          inkscape:box3dsidetype="14"
          style="fill:url(#linearGradient5438-3-8);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
          id="path5366-0-1"
          sodipodi:type="inkscape:box3dside" />
       <path
-         d="m 277.89449,316.22993 95.07062,31.71545 0,112.35386 -95.07062,-31.71545 z"
+         d="m -13.029437,280.87459 95.070613,31.71545 0,112.35386 -95.070613,-31.71545 z"
          inkscape:box3dsidetype="3"
          style="fill:url(#linearGradient5440-4-9);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
          id="path5368-0-6"
