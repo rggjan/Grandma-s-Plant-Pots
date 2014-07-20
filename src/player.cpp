@@ -23,6 +23,9 @@ Player::Player(clan::Canvas canvas, World* world, clan::Sprite map, clan::Size w
   desc.set_height(20);
   desc.set_typeface_name("Tahoma");
   default_font_ = clan::Font(canvas_, desc);
+
+  desc.set_height(15);
+  small_font_= clan::Font(canvas_,desc);
 }
 
 bool Player::Visible(clan::Vec2f position) {

@@ -39,6 +39,7 @@ PlantPlayer::PlantPlayer(clan::Canvas canvas, World* world,
   //tmp_plant_ = new Tower(world_, gc_, clan::Vec2f(0, 0), this);
   plant_menu_.push_back(new Tower(world_, canvas_, clan::Vec2f(0, 0), this, true));
   plant_menu_.push_back(new Flower(world_, canvas_, clan::Vec2f(0, 0), this, true));
+  plant_menu_.push_back(new Flower(world_, canvas_, clan::Vec2f(0, 0), this, true));
 
   //tmp_leaf_ = new Leaf(world_, gc_, clan::Vec2f(0, 0), "Leaf2", tmp_flower_);
   //world->RemovePlant(tmp_leaf_);
@@ -212,6 +213,13 @@ void PlantPlayer::DrawEnergy() {
                             clan::Colorf::white);
 
 
+    if(state_ == BuildMenu || state_ == Building)
+      {
+  small_font_.draw_text(canvas_, clan::Pointf(350, 48),
+                          clan::string_format("Cost: %1",  plant_menu_[menu_item_]->sugar_cost()),
+                          clan::Colorf::red);
+}
+
   /*switch (state) {
   case Building: {
     clan::Colorf color = clan::Colorf::white;
@@ -260,6 +268,8 @@ void PlantPlayer::DrawCO2() {
   default_font_.draw_text(canvas_, clan::Pointf(50, 30),
                           clan::string_format("CO2: %1",  static_cast<int>(co2_)),
                           clan::Colorf::white);
+
+
 }
 
 void PlantPlayer::DrawSun() {
@@ -274,6 +284,12 @@ void PlantPlayer::DrawIron() {
   default_font_.draw_text(canvas_, clan::Pointf(500, 30),
                           clan::string_format("Iron: %1",  static_cast<int>(iron_)),
                           clan::Colorf::white);
+  if(state_ == BuildMenu || state_ == Building)
+  {
+  small_font_.draw_text(canvas_, clan::Pointf(500, 48),
+                        clan::string_format("Cost: %1",  plant_menu_[menu_item_]->iron_cost()),
+                        clan::Colorf::red);
+    }
 }
 
 void PlantPlayer::Update(int time_ms) {
@@ -306,9 +322,10 @@ void PlantPlayer::DrawTop() {
     Player::DrawTop();
     break;
     case BuildMenu:
-      canvas_.fill_rect(0,window_size_.height, window_size_.width, window_size_.height-50, clan::Colorf::silver);
+      canvas_.fill_rect(0,window_size_.height, window_size_.width, window_size_.height-70, clan::Colorf::silver);
+      canvas_.fill_rect(50-30+(menu_item_*70),window_size_.height-35-30, 50+30+(menu_item_*70),window_size_.height-5, clan::Colorf::grey);
       for (size_t i=0; i<plant_menu_.size(); i++) {
-        plant_menu_[i]->DrawTmp(canvas_, -70*i+100, window_size_.height-25, 1.0, i== menu_item_ ? 0.7 : 0.5);
+        plant_menu_[i]->DrawTmp(canvas_,50+(i*70), window_size_.height-35, 1.0f, i== menu_item_ ? 0.6f : 0.5f);
       }
 
 

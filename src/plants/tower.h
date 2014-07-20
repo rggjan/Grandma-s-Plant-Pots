@@ -9,7 +9,7 @@
 
 #include "./plant.h"
 
-#define ENERGY_COST 6
+#define ENERGY_COST 8
 
 class Tower : public Plant {
   public:

@@ -11,7 +11,7 @@
 
 #include "./plant.h"
 
-#define ENERGY_COST 6
+#define ENERGY_COST 4
 
 class Leaf;
 
