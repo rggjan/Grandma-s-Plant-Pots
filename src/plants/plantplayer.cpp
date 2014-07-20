@@ -186,21 +186,24 @@ void PlantPlayer::DrawFloor() {
 }
 
 void PlantPlayer::DrawEnergy() {
+  sugar_sprite_.draw(canvas_, 310,5);
+  default_font_.draw_text(canvas_, clan::Pointf(350, 30),
+                          clan::string_format("Sugar: %1",  static_cast<int>(sugar_)),
+                          clan::Colorf::white);
 
 
+  if(state_ == BuildMenu || state_ == Building)
+  {
+    if (plant_menu_[menu_item_]->sugar_cost() > sugar_)
+      small_font_.draw_text(canvas_, clan::Pointf(350, 48),
+                            clan::string_format("Cost: %1",  plant_menu_[menu_item_]->sugar_cost()),
+                            clan::Colorf::red);
 
-      sugar_sprite_.draw(canvas_, 310,5);
-    default_font_.draw_text(canvas_, clan::Pointf(350, 30),
-                            clan::string_format("Sugar: %1",  static_cast<int>(sugar_)),
-                            clan::Colorf::white);
-
-
-    if(state_ == BuildMenu || state_ == Building)
-      {
-  small_font_.draw_text(canvas_, clan::Pointf(350, 48),
-                          clan::string_format("Cost: %1",  plant_menu_[menu_item_]->sugar_cost()),
-                          clan::Colorf::red);
-}
+    else
+      small_font_.draw_text(canvas_, clan::Pointf(350, 48),
+                            clan::string_format("Cost: %1",  plant_menu_[menu_item_]->sugar_cost()),
+                            clan::Colorf::green);
+  }
 
   /*switch (state) {
   case Building: {
@@ -262,16 +265,21 @@ void PlantPlayer::DrawSun() {
 }
 
 void PlantPlayer::DrawIron() {
-    iron_sprite_.draw(canvas_, 460,5);
+  iron_sprite_.draw(canvas_, 460,5);
   default_font_.draw_text(canvas_, clan::Pointf(500, 30),
                           clan::string_format("Iron: %1",  static_cast<int>(iron_)),
                           clan::Colorf::white);
   if(state_ == BuildMenu || state_ == Building)
   {
-  small_font_.draw_text(canvas_, clan::Pointf(500, 48),
-                        clan::string_format("Cost: %1",  plant_menu_[menu_item_]->iron_cost()),
-                        clan::Colorf::red);
-    }
+    if (plant_menu_[menu_item_]->iron_cost() > iron_)
+      small_font_.draw_text(canvas_, clan::Pointf(500, 48),
+                            clan::string_format("Cost: %1",  plant_menu_[menu_item_]->iron_cost()),
+                            clan::Colorf::red);
+    else
+      small_font_.draw_text(canvas_, clan::Pointf(500, 48),
+                            clan::string_format("Cost: %1",  plant_menu_[menu_item_]->iron_cost()),
+                            clan::Colorf::green);
+  }
 }
 
 void PlantPlayer::Update(int time_ms) {
