@@ -37,7 +37,7 @@ Bug::Bug(World *world, clan::Canvas canvas, clan::Vec2f position,
   sprite_.set_play_loop(true);
 
   dead_color_ = clan::Color::red;
-  energy_ = START_ENERGY;
+  energy_ = start_energy_ = START_ENERGY;
   sprite_.set_scale(START_SIZE, START_SIZE);
 
   // Set curve with variance
@@ -84,7 +84,7 @@ bool Bug::Update(int time_ms, clan::Vec2f target_position) {
   if (!is_alive())
     return true;
 
-  float scale = (START_SIZE - END_SIZE)*energy_/START_ENERGY + END_SIZE;
+  float scale = (START_SIZE - END_SIZE)*energy_/start_energy_ + END_SIZE;
   sprite_.set_scale(scale, scale);
 
   // Check if we can reproduce

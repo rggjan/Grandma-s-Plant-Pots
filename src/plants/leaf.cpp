@@ -18,7 +18,7 @@ Leaf::Leaf(World *world, clan::Canvas canvas,
     flower_(flower) {
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
-  energy_ = START_ENERGY;
+  energy_ = start_energy_ = START_ENERGY;
 }
 
 Leaf::~Leaf() {

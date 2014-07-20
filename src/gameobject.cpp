@@ -6,6 +6,17 @@
 
 #define ZOMBIE_SECONDS 10
 
+GameObject::GameObject(World* world, clan::Canvas canvas,
+                       clan::Vec2f position, std::string name)
+  : world_(world),
+    energy_(1),
+    start_energy_(1),
+    dead_time_(0),
+    position_(position),
+    sprite_(clan::Sprite::resource(canvas, name, world->resources)),
+    dead_color_(clan::Color::black) {
+}
+
 void GameObject::Draw(clan::Canvas canvas, clan::Vec2f target) {
   clan::Vec2f pos = position_ - target;
 
@@ -40,14 +51,4 @@ double GameObject::DecreaseEnergy(float amount) {
     sprite_.set_color(dead_color_);
 
   return amount;
-}
-
-GameObject::GameObject(World* world, clan::Canvas canvas,
-                       clan::Vec2f position, std::string name)
-  : world_(world),
-    energy_(1),
-    dead_time_(0),
-    position_(position),
-    sprite_(clan::Sprite::resource(canvas, name, world->resources)),
-    dead_color_(clan::Color::black) {
 }

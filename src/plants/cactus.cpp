@@ -31,7 +31,7 @@ Cactus::Cactus(World *world, clan::Canvas canvas,
 
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
-  energy_ = START_ENERGY;
+  energy_ = start_energy_ = START_ENERGY;
 }
 
 Plant* Cactus::GetNewPlant(clan::Vec2f position, clan::Canvas canvas) {

@@ -48,17 +48,6 @@ void Plant::Draw(clan::Canvas canvas, clan::Vec2f position) {
     return;
 
   // Draw energy
-  if (energy_ > 20) {
-    canvas.draw_line(pos.x - energy_ / 3.f, pos.y - 20,
-                     pos.x + energy_ / 3.f, pos.y - 20, clan::Colorf::green);
-    canvas.draw_line(pos.x - energy_ / 3.f, pos.y - 19,
-                     pos.x + energy_ / 3.f, pos.y - 19, clan::Colorf::darkgreen);
-  } else {
-    canvas.draw_line(pos.x - energy_ / 3.f, pos.y - 20,
-                     pos.x + energy_ / 3.f, pos.y - 20, clan::Colorf::red);
-    canvas.draw_line(pos.x - energy_ / 3.f, pos.y - 19,
-                     pos.x + energy_ / 3.f, pos.y - 19, clan::Colorf::darkred);
-  }
-  canvas.draw_line(pos.x - energy_ / 3.f + 1, pos.y - 18,
-                   pos.x + energy_ / 3.f + 1, pos.y - 18, clan::Colorf::black);
+  canvas.fill_rect(pos.x-20, pos.y-40, pos.x-20 + start_energy_, pos.y -40 + 4, clan::Colorf::red);
+  canvas.fill_rect(pos.x-20, pos.y-40, pos.x-20 + energy_,       pos.y -40 + 4, clan::Colorf::green);
 }

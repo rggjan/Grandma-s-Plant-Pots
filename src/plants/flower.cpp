@@ -22,7 +22,7 @@ Flower::Flower(World *world, clan::Canvas canvas,
     menu_leaf_(new Leaf(world, canvas, clan::Vec2f(0, 0), this, true)) {
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
-  energy_ = START_ENERGY;
+  energy_ = start_energy_ = START_ENERGY;
 
   // Delete leave where?
 }
