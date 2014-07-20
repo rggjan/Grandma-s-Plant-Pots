@@ -43,6 +43,11 @@ double Leaf::DecreaseEnergy(float amount)
   return amount;
 }
 
+void Leaf::Draw(clan::Canvas canvas, clan::Vec2f position)
+{
+  GameObject::Draw(canvas, position);
+}
+
 bool Leaf::CanBuild(clan::Vec2f position) {
   if (!flower_->open())
     return false;
