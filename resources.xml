@@ -32,6 +32,14 @@
                 <scale x="0.2" y="0.2" />
 	</sprite>
 
+  <sprite name="Cactus">
+    <image file="Gfx/cross2.png" />
+    <image file="Gfx/cross4.png" />
+    <translation origin="center"/>
+    <rotation origin="center"/>
+                <scale x="0.2" y="0.2" />
+  </sprite>
+
 	<sprite name="Leaf1">
 		<image file="Gfx/leaf1_1.png" />
                 <scale x="0.2" y="0.2" />
