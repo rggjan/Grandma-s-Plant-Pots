@@ -3,6 +3,7 @@
 #include "./leaf.h"
 
 #include "plants/flower.h"
+#include "./plantplayer.h"
 
 #define MIN_LEAF_DISTANCE 50
 #define CO2_COLLECTED_PER_SECOND 0.001
@@ -38,6 +39,9 @@ bool Leaf::CanBuild(clan::Vec2f position, Flower* flower) {
 
   if (nearest_leaf &&
       (nearest_leaf->position() - position).length() < MIN_LEAF_DISTANCE)
+    return false;
+
+  if (!player_->CanBuild(this))
     return false;
 
   return true;
