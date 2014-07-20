@@ -11,6 +11,7 @@
 #include "plants/flower.h"
 #include "plants/leaf.h"
 #include "plants/tower.h"
+#include "plants/cactus.h"
 
 using std::vector;
 
@@ -38,7 +39,7 @@ PlantPlayer::PlantPlayer(clan::Canvas canvas, World* world,
   //tmp_plant_ = new Tower(world_, gc_, clan::Vec2f(0, 0), this);
   plant_menu_.push_back(new Tower(world_, canvas_, clan::Vec2f(0, 0), this, true));
   plant_menu_.push_back(new Flower(world_, canvas_, clan::Vec2f(0, 0), this, true));
-  plant_menu_.push_back(new Flower(world_, canvas_, clan::Vec2f(0, 0), this, true));
+  plant_menu_.push_back(new Cactus(world_, canvas_, clan::Vec2f(0, 0), this, true));
 
   //tmp_leaf_ = new Leaf(world_, gc_, clan::Vec2f(0, 0), "Leaf2", tmp_flower_);
   //world->RemovePlant(tmp_leaf_);
