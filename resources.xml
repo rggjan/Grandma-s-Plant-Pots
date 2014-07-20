@@ -71,12 +71,12 @@
 	</sprite>
 	
 	<sprite name="Sun">
-		<image file="Gfx/menu_Sun.png" />
+    <image file="Gfx/menu_sun.png" />
 		<scale x="0.15" y="0.15" />
 	</sprite>
 	
 	<sprite name="Sugar">
-		<image file="Gfx/menu_Sugar.png" />
+    <image file="Gfx/menu_sugar.png" />
 		<scale x="0.15" y="0.15" />
 	</sprite>
 
