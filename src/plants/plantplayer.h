@@ -75,7 +75,6 @@ class PlantPlayer : public Player {
 
     std::vector<Plant*> plant_menu_;
     int menu_item_;
-    //Leaf *tmp_leaf_;
 
     clan::SoundBuffer sound_plantgrowing_;
     clan::SoundBuffer sound_leafgrowing_;

@@ -36,13 +36,9 @@ PlantPlayer::PlantPlayer(clan::Canvas canvas, World* world,
     menu_item_(0),
     sound_plantgrowing_(clan::SoundBuffer::resource("PlantgrowingMusic", world_->resources)),
     sound_leafgrowing_(clan::SoundBuffer::resource("LeafgrowingMusic", world_->resources)) {
-  //tmp_plant_ = new Tower(world_, gc_, clan::Vec2f(0, 0), this);
   plant_menu_.push_back(new Tower(world_, canvas_, clan::Vec2f(0, 0), this, true));
   plant_menu_.push_back(new Flower(world_, canvas_, clan::Vec2f(0, 0), this, true));
   plant_menu_.push_back(new Cactus(world_, canvas_, clan::Vec2f(0, 0), this, true));
-
-  //tmp_leaf_ = new Leaf(world_, gc_, clan::Vec2f(0, 0), "Leaf2", tmp_flower_);
-  //world->RemovePlant(tmp_leaf_);
 
   sound_plantgrowing_.set_volume(1.0f);
   sound_plantgrowing_.prepare();
@@ -52,14 +48,12 @@ PlantPlayer::PlantPlayer(clan::Canvas canvas, World* world,
 }
 
 PlantPlayer::~PlantPlayer() {
-  //delete tmp_plant_;
-  //delete tmp_leaf_;
 }
 
 bool PlantPlayer::BuildPlant(Plant *plant) {
   if (plant->CanBuild(position())) {
-    //plants_.push_back()
     Plant *new_plant = plant->GetNewPlant(position(), canvas_);
+
     if (new_plant->is_master_plant())
       plants_.push_back(new_plant);
 
@@ -113,11 +107,11 @@ void PlantPlayer::CancelButtonPressed() {
     case Selected:
       state_ = Selecting;
       break;
-      /*case SelectedBuilding:
-    state = Selecting;
-    break;
-  default:
-    break;*/
+    case SelectedBuilding:
+      state = Selecting;
+      break;
+    default:
+      break;
   }
 }
 
