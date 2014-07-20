@@ -9,12 +9,10 @@
 
 #include "./plant.h"
 
-#define ENERGY_COST 8
-
 class Tower : public Plant {
   public:
     // Static
-    virtual inline int sugar_cost() { return ENERGY_COST; }
+    virtual inline int sugar_cost() { return 8; }
 
     // Construction
     Tower(World *world, clan::Canvas canvas,

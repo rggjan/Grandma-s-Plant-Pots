@@ -15,18 +15,21 @@
 #define SUN_COLLECTED_PER_SECOND 0.01
 #define START_ENERGY 30
 
+#define LEAF_MAX_DISTANCE 80
+
 Flower::Flower(World *world, clan::Canvas canvas,
                clan::Vec2f position, PlantPlayer* player, bool menu)
   : Plant(world, canvas, position, "Flower", player),
     age_(0),
-    open_(false) {
+    open_(false),
+    menu_leaf_(new Leaf(world, canvas, clan::Vec2f(0, 0), "Leaf2", this)) {
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;
 
-  if (menu) {
-    menu_leaf_ = new Leaf(world, canvas, clan::Vec2f(0, 0), "Leaf2", this);
-  } else {
+  // Delete leave where?
+
+  if (!menu) {
     world_->AddMasterPlant(this);
   }
 }
@@ -99,29 +102,33 @@ bool Flower::CanBuild(clan::Vec2f position) {
   return world_->CanBuild(position);
 }
 
-void Flower::DrawTmpChild(clan::Canvas *canvas) {
+void Flower::DrawTmpChild(clan::Canvas canvas) {
     clan::Vec2f diff = player_->cross_position() -
                     (position() - player_->map_position());
 
-    //float angle = atan2(diff.y, diff.x);
-    //tmp_leaf_->set_angle(clan::Angle(angle, clan::radians));
+    float angle = atan2(diff.y, diff.x);
+    menu_leaf_->set_angle(clan::Angle(angle, clan::angle_radians));
 
-    clan::Colorf line_color;
+    bool canBuild = diff.length() < LEAF_MAX_DISTANCE;
+
+    clan::Colorf line_color = canBuild ? clan::Colorf::green : clan::Colorf::red;
+
+    menu_leaf_->DrawTmp(canvas, player_->cross_position().x, player_->cross_position().y, 1.0, 1.0, line_color);
 
     /*if (diff.length() < LEAF_MAX_DISTANCE &&
-        tmp_leaf_->CanBuild(position(), selected_flower_)) {
-      tmp_leaf_->DrawGreen(gc_, cross_position());
+      menu_leaf_->CanBuild(position(), selected_flower_)) {
+      menu_leaf_->DrawGreen(gc_, cross_position());
       line_color = clan::Colorf::green;
       cross_green_ = true;
     } else {
-      tmp_leaf_->DrawRed(gc_, cross_position());*/
+      menu_leaf__->DrawRed(gc_, cross_position());
       line_color = clan::Colorf::red;
 //      cross_green_ = false;
-    //}
+    }*/
 
     diff = position() - player_->map_position();
-    canvas->draw_line(diff.x, diff.y, player_->cross_position().x,
-    player_->cross_position().y, line_color);
+    canvas.draw_line(diff.x, diff.y, player_->cross_position().x,
+                     player_->cross_position().y, line_color);
 }
 
 void Flower::Draw(clan::Canvas canvas, clan::Vec2f target) {

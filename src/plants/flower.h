@@ -10,22 +10,20 @@
 #include <list>
 
 #include "./plant.h"
-
-#define ENERGY_COST 4
-
-class Leaf;
+#include "./leaf.h"
 
 class Flower : public Plant {
   public:
     // Static
-    virtual inline int sugar_cost() { return ENERGY_COST; }
+    virtual inline int sugar_cost() { return 4; }
 
     // Construction
     Flower(World *world, clan::Canvas canvas,
            clan::Vec2f position, PlantPlayer* player, bool menu = false);
 
     virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas canvas);
-    void DrawTmpChild(clan::Canvas *canvas);
+    void DrawTmpChild(clan::Canvas canvas);
+    virtual Plant *get_tmp_child() { return menu_leaf_; }
 
     ~Flower();
 
@@ -46,7 +44,7 @@ class Flower : public Plant {
     int age_;
     bool open_;
 
-    Leaf *menu_leaf_;    
+    Leaf *menu_leaf_;
 };
 
 #endif  // SRC_PLANTS_FLOWER_H_

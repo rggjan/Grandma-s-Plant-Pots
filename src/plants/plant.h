@@ -18,11 +18,12 @@ class Plant : public GameObject {
     virtual inline int iron_cost() { return 0; }
 
     virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas canvas) = 0;
+    virtual Plant *get_tmp_child() { return NULL; }
 
     // Operations
     virtual bool has_children() { return false; }
     virtual void DrawTmp(clan::Canvas canvas, float x, float y, float alpha = 1.0, float size=1.0, clan::Color color = clan::Color::white);
-    virtual void DrawTmpChild(clan::Canvas canvas) {};
+    virtual void DrawTmpChild(clan::Canvas /*canvas*/) {}
     virtual void Draw(clan::Canvas canvas, clan::Vec2f position);
 
     // Queries

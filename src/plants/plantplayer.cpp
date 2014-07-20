@@ -14,7 +14,6 @@
 
 using std::vector;
 
-#define LEAF_MAX_DISTANCE 80
 #define START_CO2 10
 #define START_SUGAR 100
 #define START_SUN 0
@@ -56,23 +55,6 @@ PlantPlayer::~PlantPlayer() {
   //delete tmp_leaf_;
 }
 
-bool PlantPlayer::BuildLeaf() {
-  /*if (sugar_ >= Leaf::kSugarCost && cross_green_) {
-    Leaf *leaf = new Leaf(world_, gc_, position(), "Leaf2", selected_flower_);
-    leaf->set_angle(tmp_leaf_->angle());
-
-    sugar_ -= Leaf::kSugarCost;
-    sound_leafgrowing_.play();
-    selected_flower_->AddLeaf(leaf);
-
-    return true;
-  } else {
-    world_->PlayBeep();
-    return false;
-  }*/
-  return false;
-}
-
 bool PlantPlayer::BuildPlant(Plant *plant) {
   if (plant->CanBuild(position())) {
     //plants_.push_back()
@@ -104,12 +86,12 @@ void PlantPlayer::SelectButtonPressed() {
     if (selected_plant_ != NULL)
       state_ = Selected;
     break;
-  /*case Selected:
-    state = Selecting;
+  case Selected:
+    state_ = Selecting;
     break;
   case SelectedBuilding:
-    if (BuildLeaf())
-      state = Idle;*/
+    if (BuildPlant(selected_plant_->get_tmp_child()))
+      state_ = Idle;
   default:
     break;
   }
@@ -138,27 +120,27 @@ void PlantPlayer::CancelButtonPressed() {
 
 void PlantPlayer::BuildButtonPressed() {
   switch (state_) {
-  case Idle:
-    state_ = BuildMenu;
-    break;
-  case BuildMenu:
-    BuildPlant(plant_menu_[menu_item_]);
-    state_ = Building;
-    break;
-  case Building:
-    BuildPlant(plant_menu_[menu_item_]);
-    break;
-  case Selected:
-    if (selected_plant_->has_children())
-      state_ = SelectedBuilding;
-    else
-      world_->PlayBeep();        
-    break;
-  /*case SelectedBuilding:
-    BuildLeaf();
-    break;*/
-  default:
-    break;
+    case Idle:
+      state_ = BuildMenu;
+      break;
+    case BuildMenu:
+      BuildPlant(plant_menu_[menu_item_]);
+      state_ = Building;
+      break;
+    case Building:
+      BuildPlant(plant_menu_[menu_item_]);
+      break;
+    case Selected:
+      if (selected_plant_->has_children())
+        state_ = SelectedBuilding;
+      else
+        world_->PlayBeep();
+      break;
+    case SelectedBuilding:
+      BuildPlant(selected_plant_->get_tmp_child());
+      break;
+    default:
+      break;
   }
 }
 
@@ -318,9 +300,9 @@ bool PlantPlayer::CanBuild(Plant *plant) {
 
 void PlantPlayer::DrawTop() {
   switch (state_) {
-  case Idle:
-    Player::DrawTop();
-    break;
+    case Idle:
+      Player::DrawTop();
+      break;
     case BuildMenu:
       canvas_.fill_rect(0,window_size_.height, window_size_.width, window_size_.height-70, clan::Colorf::silver);
       canvas_.fill_rect(50-30+(menu_item_*70),window_size_.height-35-30, 50+30+(menu_item_*70),window_size_.height-5, clan::Colorf::grey);
@@ -335,6 +317,7 @@ void PlantPlayer::DrawTop() {
       break;
     case SelectedBuilding:
       selected_plant_->DrawTmpChild(canvas_);
+      break;
 
 /* {
       clan::Vec2f diff = cross_position() -

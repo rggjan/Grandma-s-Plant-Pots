@@ -54,7 +54,6 @@ class PlantPlayer : public Player {
   private:
     // Operations
     bool BuildPlant();
-    bool BuildLeaf();
     void DrawEnergy();
     void DrawCO2();
     void DrawSun();

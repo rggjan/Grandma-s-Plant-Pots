@@ -24,6 +24,14 @@ Leaf::~Leaf() {
   world_->RemovePlant(this);
 }
 
+Plant *Leaf::GetNewPlant(clan::Vec2f position, clan::Canvas canvas)
+{
+  Leaf *new_leaf = new Leaf(world_, canvas, position, "Leaf2", flower_);
+  new_leaf->set_angle(angle());
+  flower_->AddLeaf(new_leaf);
+  return new_leaf;
+}
+
 bool Leaf::CanBuild(clan::Vec2f position, Flower* flower) {
   if (!flower->open())
     return false;
