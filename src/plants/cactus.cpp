@@ -21,30 +21,25 @@ clan::SoundBuffer_Session Cactus::sound_session_shot_;
 
 Cactus::Cactus(World *world, clan::Canvas canvas,
                clan::Vec2f position, PlantPlayer* player, bool menu)
-  : Plant(world, canvas, position, "Cactus", player),
+  : Plant(world, canvas, position, "Cactus", player, menu),
     age_(0),
     open_(false),
+    sound_shot_(clan::SoundBuffer::resource("TowerShoot", world->resources)) {
 
-  sound_shot_(clan::SoundBuffer::resource("TowerShoot", world->resources)) {
-
-sound_shot_.set_volume(0.8f);
-sound_session_shot_ = sound_shot_.prepare();
-
+  sound_shot_.set_volume(0.8f);
+  sound_session_shot_ = sound_shot_.prepare();
 
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;
-
-  if (!menu)
-    world_->AddMasterPlant(this);
-  }
+}
 
 Plant* Cactus::GetNewPlant(clan::Vec2f position, clan::Canvas canvas) {
   return new Cactus(world_, canvas, position, player_);
 }
 
 Cactus::~Cactus() {
-  world_->RemoveMasterPlant(this);
+  world_->RemovePlant(this);
 }
 
 void Cactus::AddLeaf(Leaf* leaf) {
