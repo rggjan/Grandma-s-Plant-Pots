@@ -12,20 +12,23 @@ class Plant : public GameObject {
   public:
     // Construction
     Plant(World *world, clan::Canvas canvas,
-          clan::Vec2f position, std::string name, PlantPlayer* player);
+          clan::Vec2f position, std::string name, PlantPlayer* player, bool menu);
 
     virtual inline int sugar_cost() = 0;
     virtual inline int iron_cost() { return 0; }
 
     virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas canvas) = 0;
+    virtual Plant *get_tmp_child() { return NULL; }
 
     // Operations
     virtual bool has_children() { return false; }
     virtual void DrawTmp(clan::Canvas canvas, float x, float y, float alpha = 1.0, float size=1.0, clan::Color color = clan::Color::white);
-    virtual void DrawTmpChild(clan::Canvas canvas) {};
+    virtual void DrawTmpChild(clan::Canvas /*canvas*/) {}
     virtual void Draw(clan::Canvas canvas, clan::Vec2f position);
 
     // Queries
+    virtual bool is_master_plant() { return false; }
+
     virtual inline bool CanBuild(clan::Vec2f position) {
       return world_->CanBuild(position);
     }

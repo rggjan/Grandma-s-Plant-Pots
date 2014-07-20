@@ -21,7 +21,7 @@ clan::SoundBuffer_Session Tower::sound_session_shot_;
 
 Tower::Tower(World *world, clan::Canvas canvas,
              clan::Vec2f position, PlantPlayer* player, bool menu)
-  : Plant(world, canvas, position, "Tower", player),
+  : MasterPlant(world, canvas, position, "Tower", player, menu),
     open_(false),
     age_(0),
     sound_shot_(clan::SoundBuffer::resource("TowerShoot", world->resources)) {
@@ -29,9 +29,6 @@ Tower::Tower(World *world, clan::Canvas canvas,
 
   sound_shot_.set_volume(0.5f);
   sound_session_shot_ = sound_shot_.prepare();
-
-  if (!menu)
-    world_->AddMasterPlant(this);
 }
 
 Plant* Tower::GetNewPlant(clan::Vec2f position, clan::Canvas canvas) {
@@ -39,7 +36,7 @@ Plant* Tower::GetNewPlant(clan::Vec2f position, clan::Canvas canvas) {
 }
 
 Tower::~Tower() {
-  world_->RemoveMasterPlant(this);
+  world_->RemovePlant(this);
 }
 
 bool Tower::Update(int time_ms) {
@@ -76,16 +73,6 @@ bool Tower::Update(int time_ms) {
   }
 
   return Plant::Update(time_ms);
-}
-
-bool Tower::CanBuild(clan::Vec2f position) {
-  Plant *nearest_plant = world_->NearestMasterPlant(position);
-
-  if (nearest_plant && (nearest_plant->position() - position).length()
-      < MIN_MASTER_PLANT_DISTANCE)
-    return false;
-
-  return world_->CanBuild(position);
 }
 
 void Tower::Draw(clan::Canvas canvas, clan::Vec2f target) {

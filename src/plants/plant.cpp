@@ -5,7 +5,7 @@
 #include "plants/plantplayer.h"
 
 Plant::Plant(World *world, clan::Canvas canvas,
-			 clan::Vec2f position, std::string name, PlantPlayer* player)
+                         clan::Vec2f position, std::string name, PlantPlayer* player, bool menu)
   : GameObject(world, canvas, position, name),
     player_(player),
     eating_bug_(NULL),

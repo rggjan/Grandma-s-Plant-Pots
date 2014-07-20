@@ -7,14 +7,12 @@
 
 #include <ClanLib/sound.h>
 
-#include "./plant.h"
+#include "./masterplant.h"
 
-#define ENERGY_COST 8
-
-class Tower : public Plant {
+class Tower : public MasterPlant {
   public:
     // Static
-    virtual inline int sugar_cost() { return ENERGY_COST; }
+    virtual inline int sugar_cost() { return 8; }
 
     // Construction
     Tower(World *world, clan::Canvas canvas,
@@ -29,11 +27,9 @@ class Tower : public Plant {
     void Draw(clan::Canvas canvas, clan::Vec2f target);
 
     // Queries
-    bool CanBuild(clan::Vec2f position);
-
     inline bool open() {
       return open_;
-    };
+    }
 
   private:
     bool open_;

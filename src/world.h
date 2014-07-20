@@ -41,9 +41,6 @@ class World {
   void AddBug(Bug *bug);
   void RemoveBug(Bug *bug);
 
-  void AddMasterPlant(Plant *plant);
-  void RemoveMasterPlant(Plant *plant);
-
   void AddPlant(Plant *plant);
   void RemovePlant(Plant *plant);
 

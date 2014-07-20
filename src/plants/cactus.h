@@ -1,7 +1,7 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#ifndef SRC_PLANTS_FLOWER_H_
-#define SRC_PLANTS_FLOWER_H_
+#ifndef SRC_PLANTS_CACTUS_H_
+#define SRC_PLANTS_CACTUS_H_
 
 #include <string>
 
@@ -10,22 +10,24 @@
 #include <list>
 
 #include "./masterplant.h"
-#include "./leaf.h"
 
-class Flower : public MasterPlant {
+#define ENERGY_COST 20
+
+class Leaf;
+
+class Cactus : public MasterPlant {
   public:
     // Static
-    virtual inline int sugar_cost() { return 4; }
+    virtual inline int sugar_cost() { return ENERGY_COST; }
 
     // Construction
-    Flower(World *world, clan::Canvas canvas,
+    Cactus(World *world, clan::Canvas canvas,
            clan::Vec2f position, PlantPlayer* player, bool menu = false);
 
     virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas canvas);
-    void DrawTmpChild(clan::Canvas canvas);
-    virtual Plant *get_tmp_child() { return menu_leaf_; }
+    void DrawTmpChild(clan::Canvas *canvas);
 
-    ~Flower();
+    ~Cactus();
 
     // Operations
     void AddLeaf(Leaf* leaf);
@@ -43,7 +45,10 @@ class Flower : public MasterPlant {
     int age_;
     bool open_;
 
-    Leaf *menu_leaf_;
+    clan::SoundBuffer sound_shot_;
+    static clan::SoundBuffer_Session sound_session_shot_;
+    Bug *targeting_bug;
+    Leaf *menu_leaf_;    
 };
 
-#endif  // SRC_PLANTS_FLOWER_H_
+#endif  // SRC_PLANTS_CACTUS_H_

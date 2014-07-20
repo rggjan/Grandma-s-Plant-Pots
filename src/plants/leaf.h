@@ -10,15 +10,18 @@
 class Flower;
 
 class Leaf : public Plant {
-    // Construction
+
+  // Construction
   public:
     Leaf(World *world, clan::Canvas canvas,
-           clan::Vec2f position, const std::string &name, Flower* flower);
-
+         clan::Vec2f position, Flower* flower, bool menu);
     ~Leaf();
 
+    virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas canvas);
+
+    // Queries
     virtual int sugar_cost() { return LEAF_SUGAR_COST; }
-    virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas canvas) {return NULL;}
+    virtual bool is_master_plant() { return false; }
 
     bool CanBuild(clan::Vec2f position, Flower* flower);
 

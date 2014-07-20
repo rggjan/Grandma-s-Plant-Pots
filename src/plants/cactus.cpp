@@ -1,47 +1,52 @@
 // Copyright 2011 Jan Rüegg <rggjan@gmail.com>
 
-#include "./flower.h"
+#include "./cactus.h"
 
+#include <vector>
 #include <algorithm>
 #include <list>
 
+#include "bugs/bug.h"
 #include "./plantplayer.h"
 #include "./leaf.h"
 
 #define TIME_TO_OPEN 15000
+#define MIN_MASTER_PLANT_DISTANCE 100
 
-#define CO2_COLLECTED_PER_SECOND 0.1
-#define SUN_COLLECTED_PER_SECOND 0.01
-#define START_ENERGY 30
+#define CO2_COLLECTED_PER_SECOND 0.01
+#define SUN_COLLECTED_PER_SECOND 0.005
+#define START_ENERGY 20
 
-#define LEAF_MAX_DISTANCE 80
+clan::SoundBuffer_Session Cactus::sound_session_shot_;
 
-Flower::Flower(World *world, clan::Canvas canvas,
+Cactus::Cactus(World *world, clan::Canvas canvas,
                clan::Vec2f position, PlantPlayer* player, bool menu)
-  : MasterPlant(world, canvas, position, "Flower", player, menu),
+  : MasterPlant(world, canvas, position, "Cactus", player, menu),
     age_(0),
     open_(false),
-    menu_leaf_(new Leaf(world, canvas, clan::Vec2f(0, 0), this, true)) {
+    sound_shot_(clan::SoundBuffer::resource("TowerShoot", world->resources)) {
+
+  sound_shot_.set_volume(0.8f);
+  sound_session_shot_ = sound_shot_.prepare();
+
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = START_ENERGY;
-
-  // Delete leave where?
 }
 
-Plant* Flower::GetNewPlant(clan::Vec2f position, clan::Canvas canvas) {
-  return new Flower(world_, canvas, position, player_);
+Plant* Cactus::GetNewPlant(clan::Vec2f position, clan::Canvas canvas) {
+  return new Cactus(world_, canvas, position, player_);
 }
 
-Flower::~Flower() {
+Cactus::~Cactus() {
   world_->RemovePlant(this);
 }
 
-void Flower::AddLeaf(Leaf* leaf) {
+void Cactus::AddLeaf(Leaf* leaf) {
   leaves.push_back(leaf);
 }
 
-bool Flower::Update(int time_ms) {
+bool Cactus::Update(int time_ms) {
   // Update leaves
   std::remove_if(leaves.begin(), leaves.end(), [time_ms](Leaf * leaf) {
     return !leaf->Update(time_ms);
@@ -62,12 +67,12 @@ bool Flower::Update(int time_ms) {
   return Plant::Update(time_ms);
 }
 
-Leaf* Flower::NearestLeaf(clan::Vec2f position) {
+Leaf* Cactus::NearestLeaf(clan::Vec2f position) {
   // TODO(rggjan): infinity
   float best_dist = -1;
   Leaf *nearest_leaf = NULL;
 
-  // Get nearest flower
+  // Get nearest Cactus
   std::list<Leaf *>::iterator it;
   for (it = leaves.begin(); it != leaves.end(); ++it) {
     if (!(*it)->is_alive())
@@ -84,44 +89,38 @@ Leaf* Flower::NearestLeaf(clan::Vec2f position) {
   return nearest_leaf;
 }
 
-void Flower::DrawTmpChild(clan::Canvas canvas) {
+void Cactus::DrawTmpChild(clan::Canvas *canvas) {
     clan::Vec2f diff = player_->cross_position() -
                     (position() - player_->map_position());
 
-    float angle = atan2(diff.y, diff.x);
-    menu_leaf_->set_angle(clan::Angle(angle, clan::angle_radians));
+    //float angle = atan2(diff.y, diff.x);
+    //tmp_leaf_->set_angle(clan::Angle(angle, clan::radians));
 
-    bool canBuild = diff.length() < LEAF_MAX_DISTANCE;
-
-    clan::Colorf line_color = canBuild ? clan::Colorf::green : clan::Colorf::red;
-
-    menu_leaf_->DrawTmp(canvas, player_->cross_position().x, player_->cross_position().y, 1.0, 1.0, line_color);
+    clan::Colorf line_color;
 
     /*if (diff.length() < LEAF_MAX_DISTANCE &&
-      menu_leaf_->CanBuild(position(), selected_flower_)) {
-      menu_leaf_->DrawGreen(gc_, cross_position());
+        tmp_leaf_->CanBuild(position(), selected_flower_)) {
+      tmp_leaf_->DrawGreen(gc_, cross_position());
       line_color = clan::Colorf::green;
       cross_green_ = true;
     } else {
-      menu_leaf__->DrawRed(gc_, cross_position());
+      tmp_leaf_->DrawRed(gc_, cross_position());*/
       line_color = clan::Colorf::red;
 //      cross_green_ = false;
-    }*/
+    //}
 
     diff = position() - player_->map_position();
-
-    // TODO(rggjan): Move to leaf draw
-    canvas.draw_line(diff.x, diff.y, player_->cross_position().x,
-                     player_->cross_position().y, line_color);
+    canvas->draw_line(diff.x, diff.y, player_->cross_position().x,
+    player_->cross_position().y, line_color);
 }
 
-void Flower::Draw(clan::Canvas canvas, clan::Vec2f target) {
-  std::list<Leaf*>::iterator it;
+void Cactus::Draw(clan::Canvas canvas, clan::Vec2f target) {
+  std::list<Leaf *>::iterator it;
   for (it = leaves.begin(); it != leaves.end(); ++it) {
     (*it)->Draw(canvas, target);
-    canvas.draw_line(position() - target,
-                     (*it)->position() - target,
-                     clan::Colorf::green);
+    /*clan::Draw::line(*canvas, position() - player_->map_position(),
+                  leaves[i]->position() - player_->map_position(),
+                  clan::Colorf::green);*/
   }
 
   if (!is_alive()) {
