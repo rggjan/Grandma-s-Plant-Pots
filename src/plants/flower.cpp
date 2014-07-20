@@ -9,7 +9,6 @@
 #include "./leaf.h"
 
 #define TIME_TO_OPEN 15000
-#define MIN_MASTER_PLANT_DISTANCE 100
 
 #define CO2_COLLECTED_PER_SECOND 0.1
 #define SUN_COLLECTED_PER_SECOND 0.01
@@ -19,7 +18,7 @@
 
 Flower::Flower(World *world, clan::Canvas canvas,
                clan::Vec2f position, PlantPlayer* player, bool menu)
-  : Plant(world, canvas, position, "Flower", player, menu),
+  : MasterPlant(world, canvas, position, "Flower", player, menu),
     age_(0),
     open_(false),
     menu_leaf_(new Leaf(world, canvas, clan::Vec2f(0, 0), this, true)) {
@@ -83,19 +82,6 @@ Leaf* Flower::NearestLeaf(clan::Vec2f position) {
   }
 
   return nearest_leaf;
-}
-
-bool Flower::CanBuild(clan::Vec2f position) {
-  Plant *nearest_plant = world_->NearestMasterPlant(position);
-
-  if (nearest_plant && (nearest_plant->position() - position).length()
-      < MIN_MASTER_PLANT_DISTANCE)
-    return false;
-
-  if (!player_->CanBuild(this))
-    return false;
-
-  return world_->CanBuild(position);
 }
 
 void Flower::DrawTmpChild(clan::Canvas canvas) {

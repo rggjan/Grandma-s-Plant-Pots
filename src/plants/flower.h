@@ -9,10 +9,10 @@
 
 #include <list>
 
-#include "./plant.h"
+#include "./masterplant.h"
 #include "./leaf.h"
 
-class Flower : public Plant {
+class Flower : public MasterPlant {
   public:
     // Static
     virtual inline int sugar_cost() { return 4; }
@@ -34,7 +34,6 @@ class Flower : public Plant {
     virtual bool has_children() { return true; }    
 
     // Queries
-    bool CanBuild(clan::Vec2f position);
     Leaf* NearestLeaf(clan::Vec2f position);
 
     bool open() { return open_; }

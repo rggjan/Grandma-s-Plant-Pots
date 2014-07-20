@@ -53,6 +53,7 @@ PlantPlayer::~PlantPlayer() {
 bool PlantPlayer::BuildPlant(Plant *plant) {
   if (plant->CanBuild(position())) {
     Plant *new_plant = plant->GetNewPlant(position(), canvas_);
+    world_->AddPlant(new_plant);
 
     if (new_plant->is_master_plant())
       plants_.push_back(new_plant);
@@ -106,9 +107,6 @@ void PlantPlayer::CancelButtonPressed() {
       break;
     case Selected:
       state_ = Selecting;
-      break;
-    case SelectedBuilding:
-      state = Selecting;
       break;
     default:
       break;

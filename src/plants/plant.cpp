@@ -12,9 +12,6 @@ Plant::Plant(World *world, clan::Canvas canvas,
     co2_collected_per_second_(0),
     sun_collected_per_second_(0) {
   dead_color_ = clan::Color::brown;
-
-  if (!menu)
-    world_->AddPlant(this);
 }
 
 void Plant::DrawTmp(clan::Canvas canvas, float x, float y, float alpha, float size, clan::Color color) {

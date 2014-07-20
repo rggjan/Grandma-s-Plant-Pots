@@ -21,7 +21,7 @@ clan::SoundBuffer_Session Cactus::sound_session_shot_;
 
 Cactus::Cactus(World *world, clan::Canvas canvas,
                clan::Vec2f position, PlantPlayer* player, bool menu)
-  : Plant(world, canvas, position, "Cactus", player, menu),
+  : MasterPlant(world, canvas, position, "Cactus", player, menu),
     age_(0),
     open_(false),
     sound_shot_(clan::SoundBuffer::resource("TowerShoot", world->resources)) {
@@ -87,19 +87,6 @@ Leaf* Cactus::NearestLeaf(clan::Vec2f position) {
   }
 
   return nearest_leaf;
-}
-
-bool Cactus::CanBuild(clan::Vec2f position) {
-  Plant *nearest_plant = world_->NearestMasterPlant(position);
-
-  if (nearest_plant && (nearest_plant->position() - position).length()
-      < MIN_MASTER_PLANT_DISTANCE)
-    return false;
-
-  if (!player_->CanBuild(this))
-    return false;
-
-  return world_->CanBuild(position);
 }
 
 void Cactus::DrawTmpChild(clan::Canvas *canvas) {
