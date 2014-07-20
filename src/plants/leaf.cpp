@@ -39,6 +39,8 @@ double Leaf::DecreaseEnergy(float amount)
   amount = GameObject::DecreaseEnergy(amount);
 
   sprite_.set_frame(energy_ / start_energy_ * sprite_.get_frame_count());
+  co2_collected_per_second_ = energy_ / start_energy_ * CO2_COLLECTED_PER_SECOND;
+  sun_collected_per_second_ = energy_ / start_energy_ * SUN_COLLECTED_PER_SECOND;
 
   return amount;
 }
