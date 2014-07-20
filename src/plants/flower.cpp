@@ -123,17 +123,19 @@ void Flower::DrawTmpChild(clan::Canvas canvas) {
     }*/
 
     diff = position() - player_->map_position();
+
+    // TODO(rggjan): Move to leaf draw
     canvas.draw_line(diff.x, diff.y, player_->cross_position().x,
                      player_->cross_position().y, line_color);
 }
 
 void Flower::Draw(clan::Canvas canvas, clan::Vec2f target) {
-  std::list<Leaf *>::iterator it;
+  std::list<Leaf*>::iterator it;
   for (it = leaves.begin(); it != leaves.end(); ++it) {
     (*it)->Draw(canvas, target);
-    /*clan::Draw::line(*canvas, position() - player_->map_position(),
-                  leaves[i]->position() - player_->map_position(),
-                  clan::Colorf::green);*/
+    canvas.draw_line(position() - player_->map_position(),
+                     (*it)->position() - player_->map_position(),
+                     clan::Colorf::green);
   }
 
   if (!is_alive()) {
