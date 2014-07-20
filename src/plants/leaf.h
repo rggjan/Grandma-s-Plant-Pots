@@ -18,6 +18,7 @@ class Leaf : public Plant {
     ~Leaf();
 
     virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas canvas);
+    virtual double DecreaseEnergy(float amount);
 
     // Queries
     virtual int sugar_cost() { return LEAF_SUGAR_COST; }

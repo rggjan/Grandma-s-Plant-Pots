@@ -19,6 +19,7 @@ Leaf::Leaf(World *world, clan::Canvas canvas,
   co2_collected_per_second_ = CO2_COLLECTED_PER_SECOND;
   sun_collected_per_second_ = SUN_COLLECTED_PER_SECOND;
   energy_ = start_energy_ = START_ENERGY;
+  sprite_.set_frame(sprite_.get_frame_count() - 1);
 }
 
 Leaf::~Leaf() {
@@ -31,6 +32,15 @@ Plant *Leaf::GetNewPlant(clan::Vec2f position, clan::Canvas canvas)
   new_leaf->set_angle(angle());
   flower_->AddLeaf(new_leaf);
   return new_leaf;
+}
+
+double Leaf::DecreaseEnergy(float amount)
+{
+  amount = GameObject::DecreaseEnergy(amount);
+
+  sprite_.set_frame(energy_ / start_energy_ * sprite_.get_frame_count());
+
+  return amount;
 }
 
 bool Leaf::CanBuild(clan::Vec2f position) {

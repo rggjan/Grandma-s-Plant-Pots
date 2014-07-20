@@ -40,14 +40,13 @@ bool Plant::Update(int time_ms) {
 }
 
 void Plant::Draw(clan::Canvas canvas, clan::Vec2f position) {
-  clan::Vec2f pos = position_ - position;
-
   GameObject::Draw(canvas, position);
 
   if (!is_alive())
     return;
 
   // Draw energy
+  clan::Vec2f pos = position_ - position;
   canvas.fill_rect(pos.x-20, pos.y-40, pos.x-20 + start_energy_, pos.y -40 + 4, clan::Colorf::red);
   canvas.fill_rect(pos.x-20, pos.y-40, pos.x-20 + energy_,       pos.y -40 + 4, clan::Colorf::green);
 }
