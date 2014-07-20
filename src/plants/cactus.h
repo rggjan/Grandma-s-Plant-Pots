@@ -11,7 +11,7 @@
 
 #include "./masterplant.h"
 
-#define ENERGY_COST 20
+#define ENERGY_COST 24
 
 class Leaf;
 
