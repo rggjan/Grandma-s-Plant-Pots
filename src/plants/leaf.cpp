@@ -5,6 +5,8 @@
 #include "plants/flower.h"
 
 #define MIN_LEAF_DISTANCE 50
+#define LEAF_MAX_DISTANCE 80
+
 #define CO2_COLLECTED_PER_SECOND 0.001
 #define SUN_COLLECTED_PER_SECOND 0.02
 #define START_ENERGY 30
@@ -30,14 +32,18 @@ Plant *Leaf::GetNewPlant(clan::Vec2f position, clan::Canvas canvas)
   return new_leaf;
 }
 
-bool Leaf::CanBuild(clan::Vec2f position, Flower* flower) {
-  if (!flower->open())
+bool Leaf::CanBuild(clan::Vec2f position) {
+  if (!flower_->open())
     return false;
 
-  Leaf* nearest_leaf = flower->NearestLeaf(position);
+  Leaf* nearest_leaf = flower_->NearestLeaf(position);
 
   if (nearest_leaf &&
       (nearest_leaf->position() - position).length() < MIN_LEAF_DISTANCE)
+    return false;
+
+  clan::Vec2f diff = position - flower_->position();
+  if (diff.length() > LEAF_MAX_DISTANCE)
     return false;
 
   return true;

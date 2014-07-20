@@ -23,7 +23,7 @@ class Leaf : public Plant {
     virtual int sugar_cost() { return LEAF_SUGAR_COST; }
     virtual bool is_master_plant() { return false; }
 
-    bool CanBuild(clan::Vec2f position, Flower* flower);
+    virtual bool CanBuild(clan::Vec2f position);
 
     Flower* flower_;
 };
