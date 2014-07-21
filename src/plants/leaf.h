@@ -18,12 +18,15 @@ class Leaf : public Plant {
     ~Leaf();
 
     virtual Plant *GetNewPlant(clan::Vec2f position, clan::Canvas canvas);
+    virtual double DecreaseEnergy(float amount);
+
+    virtual void Draw(clan::Canvas canvas, clan::Vec2f position);
 
     // Queries
     virtual int sugar_cost() { return LEAF_SUGAR_COST; }
     virtual bool is_master_plant() { return false; }
 
-    bool CanBuild(clan::Vec2f position, Flower* flower);
+    virtual bool CanBuild(clan::Vec2f position);
 
     Flower* flower_;
 };

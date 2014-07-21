@@ -9,8 +9,7 @@
 #include "bugs/bug.h"
 #include "plants/plantplayer.h"
 
-#define TIME_TO_OPEN 150
-#define MIN_MASTER_PLANT_DISTANCE 100
+#define TIME_TO_OPEN 10000
 
 #define START_ENERGY 30
 
@@ -25,7 +24,7 @@ Tower::Tower(World *world, clan::Canvas canvas,
     open_(false),
     age_(0),
     sound_shot_(clan::SoundBuffer::resource("TowerShoot", world->resources)) {
-  energy_ = START_ENERGY;
+  energy_ = start_energy_ = START_ENERGY;
 
   sound_shot_.set_volume(0.5f);
   sound_session_shot_ = sound_shot_.prepare();

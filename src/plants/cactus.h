@@ -11,7 +11,7 @@
 
 #include "./masterplant.h"
 
-#define ENERGY_COST 20
+#define ENERGY_COST 24
 
 class Leaf;
 
@@ -30,25 +30,24 @@ class Cactus : public MasterPlant {
     ~Cactus();
 
     // Operations
-    void AddLeaf(Leaf* leaf);
-    bool Update(int time_ms);
-    void Draw(clan::Canvas canvas, clan::Vec2f target);
-    virtual bool has_children() { return true; }    
 
-    // Queries
-    Leaf* NearestLeaf(clan::Vec2f position);
+    bool Update(int time_ms);
+
+
+
+
 
     bool open() { return open_; }
 
   private:
-    std::list<Leaf*> leaves;
+
     int age_;
     bool open_;
 
     clan::SoundBuffer sound_shot_;
     static clan::SoundBuffer_Session sound_session_shot_;
     Bug *targeting_bug;
-    Leaf *menu_leaf_;    
+
 };
 
 #endif  // SRC_PLANTS_CACTUS_H_

@@ -188,6 +188,7 @@ void PlantPlayer::DrawEnergy() {
 
 
   if(state_ == BuildMenu || state_ == Building)
+
   {
     if (plant_menu_[menu_item_]->sugar_cost() > sugar_)
       small_font_.draw_text(canvas_, clan::Pointf(350, 48),
@@ -197,6 +198,20 @@ void PlantPlayer::DrawEnergy() {
     else
       small_font_.draw_text(canvas_, clan::Pointf(350, 48),
                             clan::string_format("Cost: %1",  plant_menu_[menu_item_]->sugar_cost()),
+                            clan::Colorf::green);
+  }
+  //...................
+  if(state_ == SelectedBuilding)
+
+  {
+    if (selected_plant_->get_tmp_child()->sugar_cost() > sugar_)
+      small_font_.draw_text(canvas_, clan::Pointf(350, 48),
+                            clan::string_format("Cost: %1",  selected_plant_->get_tmp_child()->sugar_cost()),
+                            clan::Colorf::red);
+
+    else
+      small_font_.draw_text(canvas_, clan::Pointf(350, 48),
+                            clan::string_format("Cost: %1",  selected_plant_->get_tmp_child()->sugar_cost()),
                             clan::Colorf::green);
   }
 }

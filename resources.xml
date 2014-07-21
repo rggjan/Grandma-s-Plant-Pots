@@ -21,7 +21,7 @@
 		<image file="Gfx/flower1_2.png" />
 		<translation origin="center"/>
 		<rotation origin="center"/>
-                <scale x="0.2" y="0.2" />
+    <scale x="0.2" y="0.2" />
 	</sprite>
 
 	<sprite name="Tower">
@@ -46,11 +46,14 @@
 	</sprite>
 
 	<sprite name="Leaf2" base_angle="-90">
-		<image file="Gfx/leaf2_1.png" />
-		<translation origin="center"/>
-		<rotation origin="center"/>
-        <scale x="0.2" y="0.2" />
-	</sprite>
+    <image file="Gfx/leaf2_4.png" />
+    <image file="Gfx/leaf2_3.png" />
+    <image file="Gfx/leaf2_2.png" />
+    <image file="Gfx/leaf2_1.png" />
+    <translation origin="center"/>
+    <rotation origin="center"/>
+    <scale x="0.3" y="0.3" />
+  </sprite>
 
 	<sprite name="Bug1">
 		<image file="Gfx/bug1_1.png" />
